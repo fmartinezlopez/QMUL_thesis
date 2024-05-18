@@ -1,0 +1,134 @@
+\chapter{Neutrino physics}
+\label{chapter:neutrinos}
+
+\begin{comment}
+\begin{chapquote}{Terry Pratchett, \textit{Sourcery}}
+	Little particles of inspiration sleet through the universe all the time traveling through the densest matter in the same way that a neutrino passes through a candyfloss haystack, and most of them miss.
+\end{chapquote}
+\end{comment}
+	
+%\noindent
+Ever since they were postulated in 1930 by Wolfgang Pauli to explain the continuous $\beta$ decay spectrum \cite{Pauli1930} and later found by Reines and Cowan at the Savannah River reactor in 1953 \cite{Reines1953}, neutrinos have had a special place among all other elementary particles. They provide a unique way to probe a wide range of quite different physics, from nuclear physics to cosmology, from astrophysics to colliders. Moreover, there is compelling evidence to believe that the study of neutrinos may be key to unveil different aspects of physics beyond the SM, difficult to test elsewhere.
+
+In this Chapter I will review the basics of neutrino physics, from its role within the SM to the main open questions related to the neutrino sector, paying special attention to the phenomenology of neutrino oscillations.
+
+\section{Neutrinos in the SM}
+
+By definition, in the SM there are no right-handed neutrino fields. A direct implication of this fact is that neutrinos are strictly massless within the SM. This follows from the experimental observation that all neutrinos produced via weak interactions are pure left-handed helicity states (and similarly antineutrinos are pure right-handed states). The hypothetical existence of right-handed neutrinos could be indirectly inferred from the observation of non-zero neutrino masses, nevertheless the existence neutrino masses is not a sufficient condition for the existence of such fields.
+
+In the SM neutrinos appear in three flavours, namely $\nu_{e}$, $\nu_{\mu}$ and $\nu_{\tau}$. These are associated with the corresponding charged leptons $e$, $\mu$ and $\tau$, in such a way that the charged current part of the Lagrangian coupling them is diagonal. As in the electroweak theory neutrinos are coupled to the Z boson in a universal way, by measuring the so-called invisible decay width of the Z we have an estimate of the number of light (i.e. lighter than the Z boson) neutrino flavours. This number was measured by LEP in a combined analysis of $e^{+}e^{-} \rightarrow \mu^{+}\mu^{-}$ and $e^{+}e^{-} \rightarrow \mathrm{hadrons}$ to be $N_{\nu} = 2.9840 \pm 0.0082$ \cite{ALEPH2005}.
+
+\section{Neutrino oscillations}
+
+The evidence for neutrino oscillation \cite{SuperKamiokande1998}, and therefore the existence of non-zero neutrino masses, constitutes one of the groundbreaking discoveries of modern Physics and has acted as driving force for Beyond the Standard Model (BSM) Physics. The minimal extension of the Standard Model (SM) we can do to address these phenomena is introducing distinct masses for at least two of the neutrinos. This way, we are left with three neutrino mass eigenstates $\nu_{1}$, $\nu_{2}$ and $\nu_{3}$, with masses $m_{1}$, $m_{2}$ and $m_{3}$ respectively, which in general will not coincide with the flavour eigenstates $\nu_{e}$, $\nu_{\mu}$ and $\nu_{\tau}$.
+
+The way to relate these two sets of neutrino eigenstates is via a $3 \times 3$ unitary matrix, called the Pontecorvo-Maki-Nakagawa-Sakata (PMNS) matrix \cite{Pontecorvo1957, Maki1962}, as:
+\begin{equation}\label{2.1}
+\ket{\nu_{\alpha}} = \sum_{i=1}^{3} U^{*}_{\alpha i} \ket{\nu_{i}},
+\end{equation}
+where the Greek index $\alpha$ denotes the flavour $\{e,\mu,\tau\}$ and the Latin index $i$ the associated masses $\{1,2,3\}$. This leptonic mixing matrix may be parametrized in terms of 6 parameters, 3 of which are mixing angles $\theta_{12}$, $\theta_{13}$ and $\theta_{23}$, one CP-violating phase $\delta_{CP}$ and 2 Majorana phases $\alpha$ and $\beta$:
+\begin{equation}\label{2.2}
+U = \left(\begin{array}{ccc}1&0&0\\0&c_{23}&s_{23}\\0&-s_{23}&c_{23}\end{array}\right) \left(\begin{array}{ccc}c_{13}&0&s_{13} \mathrm{e}^{-i\delta_{CP}}\\0&1&0\\-s_{13} \mathrm{e}^{-i\delta_{CP}}&0&c_{13}\end{array}\right) \left(\begin{array}{ccc}c_{12}&s_{12}&0\\-s_{12}&c_{12}&0\\0&0&1\end{array}\right) \left(\begin{array}{ccc}1&0&0\\0&\mathrm{e}^{i\alpha}&0\\0&0&\mathrm{e}^{i\beta}\end{array}\right),
+\end{equation}
+where $c_{ij} \equiv \cos \theta_{ij}$ and $s_{ij} \equiv \sin \theta_{ij}$. This matrix is analogous to the Cabibbo-Kobayashi-Maskawa (CKM) matrix in the quark sector. If neutrinos are Dirac fermions, we can drop the Majorana phases in the PMNS matrix. But, in any case, these phases play no role on the neutrino oscillations.
+
+\subsection{Oscillations in vacuum}
+
+Consider the case where a neutrino of flavour $\alpha$ is produced at $t=0$, and then it propagates through vacuum. Such a state will evolve in time according to the relation:
+\begin{equation}\label{2.3}
+\ket{\nu_{\alpha}(t)} = \sum_{i=1}^{3} U^{*}_{\alpha i} \mathrm{e}^{-iE_{i}t} \ket{\nu_{i}(t=0)},
+\end{equation}
+as the mass eigenstates are also eigenstates of the free Hamiltonian. Now, if we express the mass eigenstates as a superposition of flavour eigenstates, the last expression can be rewritten as:
+\begin{equation}\label{2.4}
+\ket{\nu_{\alpha}(t)} = \sum_{i=1}^{3} U_{\beta i} \mathrm{e}^{-iE_{i}t} U^{*}_{\alpha i} \ket{\nu_{\beta}}.
+\end{equation}
+
+This way, the probability for the neutrino to transition from flavour $\alpha$ to flavour $\beta$ will be given by:
+\begin{equation}\label{2.5}
+P(\nu_{\alpha} \rightarrow \nu_{\beta}) = \left|\braket{\nu_{\beta}}{\nu_{\alpha}(t)}\right|^{2}=\left|\sum_{i=1}^{3} U_{\beta i} \mathrm{e}^{-iE_{i}t} U^{*}_{\alpha i}\right|^{2}.
+\end{equation}
+
+A usual approximation to take at this point is to consider ultra-relativistic neutrinos, i.e. $E \approx \left|\vec{p}\right|$, so we can write the dispersion relations as:
+\begin{equation}\label{2.6}
+E_{i} = \sqrt{p^{2} + m_{i}^{2}} \approx E + \frac{m_{i}^{2}}{2 E},
+\end{equation}
+so we can write the oscillation probability as:
+\begin{equation}\label{2.7}
+\begin{split}
+P(\nu_{\alpha} \rightarrow \nu_{\beta}) &= \sum_{i,j} U^{*}_{\alpha i} U_{\beta i} U_{\alpha j} U^{*}_{\beta j} \mathrm{e}^{-i\frac{\Delta m^{2}_{ij}}{2E}t}\\
+&=\delta_{\alpha\beta} - 4 \sum_{i<j} \mathfrak{Re}\left[U^{*}_{\alpha i} U_{\beta i} U_{\alpha j} U^{*}_{\beta j}\right] \sin^{2}\left(\frac{\Delta m^{2}_{ij}}{4E}t\right)\\
+&\phantom{=}+ 2  \sum_{i<j} \mathfrak{Im}\left[U^{*}_{\alpha i} U_{\beta i} U_{\alpha j} U^{*}_{\beta j}\right] \sin\left(\frac{\Delta m^{2}_{ij}}{2E}t\right),
+\end{split}
+\end{equation}
+where $\Delta m^{2}_{ij}$ is the difference of the squared masses of the $j$th and $i$th neutrino mass eigenvalues. At this point, it is usual to write the phase responsible for the oscillations as (under the approximate assumption $t \approx L$):
+\begin{equation}\label{2.8}
+\Delta_{ij} \equiv \frac{\Delta m^{2}_{ij}}{4E}L \simeq 1.27 \frac{\Delta m^{2}_{ij}}{(\mathrm{eV}^{2})} \frac{L}{(\mathrm{km})} \frac{(\mathrm{GeV})}{E}.
+\end{equation}
+
+Notice that, in the case of antineutrinos the only difference would be the sign of the last term in the oscillation probability. This way, one can write the CP asymmetry as:
+\begin{equation}\label{2.9}
+\begin{split}
+A^{\alpha\beta}_{CP}&=P(\nu_{\alpha} \rightarrow \nu_{\beta})-P(\bar{\nu}_{\alpha} \rightarrow \bar{\nu}_{\beta})\\
+&=4  \sum_{i<j} \mathfrak{Im}\left[U^{*}_{\alpha i} U_{\beta i} U_{\alpha j} U^{*}_{\beta j}\right] \sin 2\Delta_{ij}.
+\end{split}
+\end{equation}
+
+\subsection{Oscillations in matter}
+
+When neutrinos propagate through matter, their oscillation can be affected in mainly two ways. First, neutrinos can inelastically scatter with nuclei, thus destroying the coherent propagation of their quantum state. Nevertheless, in most cases this effect is negligible (even in very dense mediums like the core of the Sun). Second, neutrinos can also experience coherent or forward scatterings, that can affect their oscillation but not lose the coherent propagation of the state.
+
+The first proposed model to account for neutrino oscillations in matter was proposed by Mikhaev, Smirnov and Wolfenstein (MSW) \cite{Wolfenstein1977}. It relies on the fact that, as the only charged lepton present in ordinary matter is the electron, electron neutrinos can undergo both charged and neutral-current interactions with matter whereas for muon and tau neutrinos just neutral currents are possible.
+
+\subsection{Current status of neutrino oscillations}
+
+A wide range of neutrino experiments provide experimental input to the neutrino oscillation framework, both using natural or synthetic neutrino sources.
+
+\textbf{Solar neutrino experiments} detect neutrinos produced in thermonuclear reactions inside the Sun, mainly from the so-called $pp$ chain and the CNO cycle. These neutrinos have a typical energy in the range from $0.1$ to $20 \ \mathrm{MeV}$. These experiments (Homestake \cite{Homestake1998}, GALLEX \cite{GALLEX2010}, SAGE \cite{SAGE2009}, Borexino \cite{Borexino2011}, Super-Kamiokande \cite{Super-Kamiokande2005} and SNO \cite{SNO2011}) provide the best sensitivities to $\theta_{12}$ and $\Delta m^{2}_{21}$.
+
+\textbf{Atmospheric neutrino experiments} detect the neutrino flux produced when cosmic rays scatter with particles in Earth's atmosphere. These collisions generate particle showers that eventually produce electron and muon neutrinos (and antineutrinos). Their energies range from few $\mathrm{MeV}$ to about $10^{9} \ \mathrm{GeV}$. Experiments, like Super-Kamiokande \cite{Super-Kamiokande2017} and IceCube \cite{IceCube2017} use atmospheric neutrinos to measure oscillations and are specially sensitive to $\theta_{23}$ and $\Delta m^{2}_{32}$.
+
+\textbf{Reactor neutrino experiments} look for the $\bar{\nu}_{e}$ spectrum produced by nuclear reactors, with energies in the $\mathrm{MeV}$ scale. Depending on the distance to the source, long-baseline experiments like KamLAND \cite{KamLAND2013} are sensitive to the solar mass splitting $\Delta m^{2}_{21}$ whereas much shorter baseline experiment such as RENO \cite{RENO2018} or DayaBay \cite{DayaBay2018} measure $\theta_{13}$ and $\Delta m^{2}_{31}$.
+
+\textbf{Accelerator experiments} measure neutrino fluxes generated in particle accelerators. Usually mesons are produced in the accelerator to be focused into a beam, then some decay to muon neutrinos and the rest are absorbed by a target. Depending on the configuration one can obtain a beam made of mostly neutrinos or antineutrinos. The typical energies of these neutrinos are in the $\mathrm{GeV}$ range. Experiments such as NOvA \cite{Nova2020}, T2K \cite{T2K2020}, MINOS \cite{MINOS2014}, OPERA \cite{OPERA2018} and K2K \cite{K2K2006} (and in the future DUNE \cite{DUNE2020}) are primarily sensitive to $\theta_{13}$, $\theta_{23}$ and $\Delta m^{2}_{32}$. Also, in the coming years  DUNE \cite{DUNE2020} and Hyper-Kamiokande \cite{Hyper-Kamiokande2019} will be sensitive to $\delta_{CP}$.
+
+\begin{table}
+\centering
+\caption{Summary of neutrino oscillation parameters determined in the Neutrino Global Fit of 2020 \cite{deSalas2020}.}
+\begin{tabular}{|c|c|}
+	\hline
+	Parameter & Best fit $\pm \ 1\sigma$ \\
+	\hline
+	$\Delta m^{2}_{21}$ & $7.50^{+0.22}_{-0.20} \times 10^{-5} \ \mathrm{eV}^{2}$ \\
+	\hline
+	$\left|\Delta m^{2}_{31}\right|$ (NO) & $2.55^{+0.02}_{-0.03} \times 10^{-3} \ \mathrm{eV}^{2}$ \\
+	\hline
+	$\left|\Delta m^{2}_{31}\right|$ (IO) & $2.45^{+0.02}_{-0.03} \times 10^{-3} \ \mathrm{eV}^{2}$ \\
+	\hline
+	$\sin^{2} \theta_{12}$ & $(3.18 \pm 0.16) \times 10^{-1}$ \\
+	\hline
+	$\sin^{2} \theta_{23}$ (NO) & $(5.74 \pm 0.14) \times 10^{-1}$ \\
+	\hline
+	$\sin^{2} \theta_{23}$ (IO) & $5.78^{+0.10}_{-0.17}  \times 10^{-1}$ \\
+	\hline
+	$\sin^{2} \theta_{13}$ (NO) & $2.200^{+0.069}_{-0.062}  \times 10^{-2}$ \\
+	\hline
+	$\sin^{2} \theta_{13}$ (IO) & $2.225^{+0.064}_{-0.070}  \times 10^{-2}$ \\
+	\hline
+	$\delta_{CP}$ (NO) & $1.08^{+0.13}_{-0.12} \pi$ \\
+	\hline
+	$\delta_{CP}$ (IO) & $1.58^{+0.15}_{-0.16} \pi$ \\
+	\hline
+\end{tabular}
+\end{table}
+
+\section{Open questions in the neutrino sector}
+
+A crucial question that remains open these days, and is of vital importance for oscillation phenomena, is whether the mass eigenvalue $\nu_{3}$ is the heaviest (what we call normal ordering) or the lightest (refered to as inverted ordering) of the mass eigenstates. In other words, this means that we do not know the sign of $\Delta m^{2}_{32}$, so we can either have $m_{1}<m_{2}<m_{3}$ (NO) or $m_{3}<m_{1}<m_{2}$ (IO).
+
+Another big puzzle is related to the value of $\delta_{CP}$. Nowadays it is poorly constrained, with all values between $\pi$ and $2\pi$ being consistent with data. A prospective measurement different from $\delta_{CP}=0,\pi$ will predict CP-violation in the leptonic sector, and thus contribute along with the one measured in the quark sector to the total amount of CP-violation. Although it is true that these two contributions by themselves are not enough to explain the matter anti-matter asymmetry in our universe, the amount of CP-violation in the leptonic sector can be key to explain such imbalance.
+
+Both of these questions, because of their nature, could be understood thanks to future oscillation experiments.
+
+Notwithstanding, there are other mysteries that can not be unveiled just by conducting oscillation experiments, as certain quantities do not influence these phenomena. Among these there is the question of the absolute values of the neutrino masses. Depending on the value of the lightest of the neutrino masses we can have different mass spectra, from hierarchical $m_{1} \ll m_{2}<m_{3}$ (NO) or $m_{3} \ll m_{1}<m_{2}$ (IO) to quasi-degenerate $m_{1} \simeq m_{2} \simeq m_{3}$.
+
+Other open question concerns the nature itself of the neutrinos. If neutrinos are Dirac particles then their mass term can be generated through the usual Higgs mechanism by adding right-handed neutrino fields. However, if they are Majorana particles and therefore their own antiparticles, there is no need to add extra fields to have the mass term in the Lagrangian. Experiments like SuperNEMO \cite{SuperNEMO2010}, SNO+ \cite{SNO2015} and NEXT \cite{NEXT2020}, which search for neutrino-less double beta decay, will be able to determine whether neutrinos are Dirac or Majorana.

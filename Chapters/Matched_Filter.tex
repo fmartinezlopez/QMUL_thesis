@@ -1,0 +1,482 @@
+\chapter{Matched Filter approach to induction wire Trigger Primitives}\label{chapter:matched_filter}
+
+\section{Motivation}
+\label{sec:2.1}
+
+The filter implemented in the firmware of the upstream DUNE FD DAQ is a $32nd$-order low-pass finite impulse-response (FIR) filter. The output of such filter for a discrete system can be written as:
+\begin{equation}\label{2.1.1}
+	y[i] = \sum_{j=0}^{N} h[i] x[i-j],
+\end{equation}
+where $N$ is the order of the filter, $y$ is the output sequence, $x$ is the input sequence and $h$ is the set of coefficients of the filter. The current implementation within \texttt{dtp-firmware} \cite{dtp-firmware} uses a set of 16 non-zero integer coefficients.
+
+Filtering is a vital step in the hit finder chain. It helps to suppress the noise and enhance the signal peaks with respect to the noiseless baseline. A good filtering strategy allows us to use lower thresholds when forming the trigger primitives (TPs) and thus increasing the sensitivity of our detector to low energy physics events. In such events, the hits produced by the ionisation electrons tend to have lower amplitudes than those of interest to the baseline 
+physics programme of the DUNE experiment.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=1\linewidth]{Images/Matched_Filter/APA_wires}
+	\caption{\textit{Schematic representation of an APA. The black lines represent the APA steel frame. The green and magenta lines correspond to the direction of the U and V induction wires respectively. The blue lines indicate the direction of the X collection wires and the wire shielding G.}}
+	\label{fig:apa}
+\end{figure}
+
+This is particularly important for the induction planes. In general, signal peaks in the induction wires have smaller amplitude than the ones in the induction plane. This, together with the fact that the pulse shapes are bipolar, reduces our capacity to detect the hits on these channels. The inefficiency of detecting TPs in the induction planes (denoted as U and V planes) lead trigger algorithms to focus mainly on the TPs from the collection plane (so-called X plane). As a result, the possibility of making trigger decisions based on the coincidence of TPs across the three wire planes remains nowadays unexploited in DUNE. Fig. \ref{fig:apa} shows a schematic view of an anode plane assembly (APA), with the different wire plane orientations highlighted.
+
+A possible improvement of the current hit finder chain could require optimising the existing or choosing a new filter implementation. A filter strategy which improves the induction signals may be able to enhance the detection efficiency of TPs from the induction planes and ideally make it comparable to that of the collection plane.
+
+The goal is to implement a better finite-impulse response filter design and to evaluate its performance relative to the current filter. To do so, we need to take into account the limitations of the firmware: the FIR filter shall have maximum 32 coefficients (so-called taps) whose values are 12-bit unsigned integers. Although it is technically possible to include non-integer coefficients, it would be a technical challenge as we have 40 FIR instances per APA, as there are 4 FIR per optical link and 10 optical links per APA. With these restrictions, the task is to provide a set of 32 coefficients which yield an optimal filter performance for the induction wires.
+
+\section{Signal-to-noise ratio definition}
+\label{sec:A.1}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=1\linewidth]{Images/Matched_Filter/waveform_example_raw}
+	\caption{\textit{Left panel: Zoomed unfiltered waveform corresponding to channel $7840$ from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} (blue line). The green dashed lines mark the region $\pm3\sigma_{raw}$. The resulting noise waveform is also shown (red line). Top right panel: ADC distribution for channel $7840$, where the green shaded region represents $\pm \sigma_{raw}$. Bottom right panel: noise ADC distribution for channel $7840$, where the green shaded region represents $\pm \sigma_{noise}$.}}
+	\label{fig:adcs_nofir}
+\end{figure}
+
+I introduce the signal to noise ratio (S/N) as a measure of the FIR filter performance and demonstrate how to extract its value for a set of 
+ProtoDUNE-SP data. The S/N metrics allow us to compare different filter implementations and serve as a basis for more detailed studies presented later in this document. Specifically, I use the ADC capture \texttt{felix-2020-07-17-21:31:44} (data capture taken for firmware validation purposes). I defined S/N as the height of the signal peaks relative to the size of the noise peaks. To quantify this quantity channel by channel one first need to estimate the standard deviation of the ADC data for each channel, $\sigma_{ADC}$. Then, I define the corresponding noise waveform to be the ADC values in the range $\pm 3 \sigma_{ADC}$. From this new noise data one can estimate again the mean and standard deviation, $\mu_{noise}$ and $\sigma_{noise}$, so I can write the S/N for any given channel as:
+\begin{equation}
+	\mathrm{S/N} = \frac{\max{[ADC]} - \mu_{noise}}{\sigma_{noise}},
+\end{equation}
+where $\max{[ADC]}$ is simply the maximum ADC value found in the corresponding channel.
+
+One can apply this definition of the S/N with a waveform from one of the channels of the data capture\footnote{All the original work was done within the \texttt{dtp-simulation} package \cite{dtp-simulation}, which offers a variety of tools to read raw data and emulate the TPG block (pedestal subtraction, filtering and hit finder). However, the results shown in this report were re-worked later using the C++ based \texttt{dtpemulator} package \cite{dtpemulator}. Its main purpose is the emulation of the TPG block and, in the same way as its predecessor, it has been cross-checked against the current firmware implementation.}. Fig. \ref{fig:adcs_nofir} shows a zoomed region of the waveform corresponding to channel $7840$ (blue line), where one can clearly see three signal peaks and continuous additive noise (we actually see 6 peaks, 3 positive and 3 negative, but, because by design for induction channels the expected signal pulse shapes are bipolar, I treat them as a collection of 3 individual signal peaks). I estimated the standard deviation of this raw waveform to be $\sigma_{raw} = 7.84 \ \mathrm{ADC}$, so I am able to define the noise waveform (red line) as the ADC values in the range $\pm 23.52 \ \mathrm{ADC}$. This way one obtains $\mu_{noise} = 0$ and $\sigma_{noise} = 5.58 \ \mathrm{ADC}$, which gives $\mathrm{S/N} = 30.84$.
+
+We can repeat this calculation now for the corresponding filtered waveform (using the current firmware FIR filter). In Fig. \ref{fig:adcs_fir} I plotted the same time window for the filtered waveform from channel $7840$ (blue line). In this case, the standard deviation of the waveform is larger than before, giving $\sigma_{raw} = 10.99 \ \mathrm{ADC}$. The resulting noise waveform (red line) results from selection the ADC values in the range $\pm 32.91 \ \mathrm{ADC}$, giving now $\mu_{noise} = -0.47 \ \mathrm{ADC}$ and $\sigma_{noise} = 7.03 \ \mathrm{ADC}$. Finally, one obtains $\mathrm{S/N} = 24.68$. Notice that the value of S/N decreases after the filtering. Clearly, one can see that the noise baseline has increased by a factor of $1.35$ when we applied the FIR filter and at the same time the amplitude of the signal peaks has remained almost unchanged, leading to this poorer S/N value.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=1\linewidth]{Images/Matched_Filter/waveform_example_fir}
+	\caption{\textit{Left panel: Zoomed filtered waveform corresponding to channel $7840$ from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} (blue line). The filter used was the current implementation of the low-pass FIR filter in \texttt{dtp-firmware}. The green dashed lines mark the region $\pm3\sigma_{raw}$. The resulting noise waveform is also shown (red line). Top right panel: ADC distribution for channel $7840$ after filtering, where the green shaded region represents $\pm \sigma_{raw}$. Bottom right panel: noise ADC distribution for channel $7840$ after filtering, where the green shaded region represents $\pm \sigma_{noise}$}}
+	\label{fig:adcs_fir}
+\end{figure}
+
+\section{Low-pass FIR filter design}
+\label{sec:A.2}
+
+In general, when one uses a method to optimize the frequency response of a digital filter, such as the Parks-McClellan algorithm, one finds a set of $N$ real coefficients that give the best response for the specified pass-band and order of the filter \cite{McClellan2005}.
+
+In our case, as the sampling frequency is defined as $1 \ \mathrm{ticks^{-1}}$, the Nyquist frequency will simply be $1/2 \ \mathrm{ticks^{-1}}$. The current implementation of the filter seems to have as pass-band the range $[0,0.1] \ \mathrm{ticks^{-1}}$. This can be seen in Fig. \ref{fig:filter_comp}, where I show the power spectrum, in decibels, of such filter implementation (blue solid line). For instance, the Park-McClellan algorithm finds the optimal Chebyshev FIR filter taking as input the boundaries of the target pass-band and stop-band, which can be written in the form:
+\begin{equation}
+	\left\{ \begin{array}{c}
+		\left[0, f_{c}\right] \\
+		\left[ f_{c} + \delta f, f_{N}\right]
+	\end{array} \right. ,
+\end{equation}
+where $f_{c}$ is the cut-off frequency, $\delta f$ is the transition width and $f_{N}$ is the aforementioned Nyquist frequency. A similar behaviour to the one in the current filter can be obtained by setting $f_{c} = 0$ and $\delta f = 0.1 \ \mathrm{ticks}^{-1}$. The response of the resulting filter is also shown in Fig. \ref{fig:filter_comp} (blue solid line). Notice that the suppression of the stop-band is enhanced for this optimal filter. For comparison I included the power response of the filter obtained by taking the integer part of the coefficients resulting from the Parks-McClellan method (red dashed line). One can see that it 
+does not suppress that much the stop-band, in a similar way to the current implementation of the filter.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\linewidth]{Images/Matched_Filter/filter_comp}
+	\caption{\textit{Power spectrum in decibels for the current implementation of the low-pass FIR filter in \texttt{dtp-firmware} (blue line), compared to the response of an optimal filter obtained using the Parks-McClellan algorithm for the same pass-band (red line). Also for comparison I include the spectrum of the optimal filter when taking only the integer part of the coefficients (red dashed line).}}
+	\label{fig:filter_comp}
+\end{figure}
+
+At this point, I tried to improve the performance of the FIR filter using the Park-McClellan method, i.e. maximize the overall S/N, using the available data captures. I did so by varying the values of the two quantities that parametrize the pass-band and stop-band, the cut-off frequency $f_{c}$ and the transition width $\delta f$.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=1\linewidth]{Images/Matched_Filter/pm_fir_opt.png}
+	\caption{\textit{Relative change in the S/N for the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44}, using different values of the cutoff frequency $f_{c}$ and the transition width $\delta f$. The optimal Chebyshev filters were applied using just the integer part of the coefficients given by the Parks-McClellan algorithm.}}
+	\label{fig:fir_opt}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.85\linewidth]{Images/Matched_Filter/pm_fir_perf}
+	\caption{\textit{Distribution of the relative change of the S/N on the different wire planes from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} after the optimal Chebyshev filter was applied. The filter was computed with the Parks-McClellan algorithm using a cutoff of $f_{c} = 0.068 \ \mathrm{ticks}^{-1}$ and a transition width $\delta f = 0.010 \ \mathrm{ticks}^{-1}$.}}
+	\label{fig:fir_best}
+\end{figure}
+
+Fig. \ref{fig:fir_opt} shows the average relative change in the S/N (i.e. the ratio between the value of the S/N after and before the filtering) for capture \texttt{felix-2020-07-17-21:31:44}, when using filters designed with the Parks-McClellan algorithm for the specified values of the cut-off frequency $f_{c}$ and the transition width $\delta f$, restricted to integer values for the filter coefficients. One can clearly distinguish different regions where we get an improvement of up to a factor of $1.35$ for the U plane. For large values of $f_{c} + \delta f$ the ratio tends to $1$, as expected (in that limit the width of the stop-band goes to $0$, meaning that no frequencies are filtered out and thus the waveform remains the same).
+
+Using the configuration which gives the best mean performance for the three planes (see bottom right panel of Fig. \ref{fig:fir_opt}), i.e. $f_{c} = 0.068 \ \mathrm{ticks}^{-1}$ and $\delta f = 0.010 \ \mathrm{ticks}^{-1}$, we can see how such filter affects the different channels. Fig. \ref{fig:fir_best} shows the distribution of the S/N improvement values for all the channels in the raw ADC capture \texttt{felix-2020-07-17-21:31:44}, separated by wire plane, after the optimal Chebyshev filter was applied. One can see that there is a clear improvement for both U and V induction wire planes, obtaining a mean change of $1.25$ and $1.30$ for them respectively. However, in the case of the collection plane X the mean of this distribution is roughly $1$, meaning that a good fraction of channels in that plane get a slightly worse S/N after the filter is applied. In any case, this is not a big issue as the S/N for collection channels is usually much higher than the one for induction channels.
+
+The results I obtained optimising the low pass filter with the Parks-McClellan method are promising. Nonetheless, the improvement found is rather marginal so I wondered if there could be an alternative approach to the filtering problem which yields better outputs. At this point, I found a possible alternative in matched filters. By construction, this kind of filters offer the best improvement on the S/N.
+
+\section{Matched filters}
+\label{sec:2.4}
+
+In the context of signal processing, a matched filter is the optimal linear filter for maximising the signal-to-noise ratio (S/N) in the presence of additive noise, obtained by convolving a conjugated time-reversed known template with an unknown signal to detect the presence of the template in the signal \cite{Turin1960}.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=1\linewidth]{Images/Matched_Filter/waveform_example_mf}
+	\caption{\textit{Left panel: Zoomed match filtered waveform corresponding to channel $7840$ from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} (blue line). The filter used was directly extracted from the data, being the $32$ values around the first peak in the original waveform. The green dashed lines mark the region $\pm3\sigma_{raw}$. The resulting noise waveform is also shown (red line). Top right panel: ADC distribution for channel $7840$ after match filtering, where the green shaded region represents $\pm \sigma_{raw}$. Bottom right panel: noise ADC distribution for channel $7840$ after match filtering, where the green shaded region represents $\pm \sigma_{noise}$}}
+	\label{fig:adcs_mf}
+\end{figure}
+
+Given a known signal sequence $s(t)$ and another (a priori unknown) noise sequence $n(t)$, the input signal can be written as:
+\begin{equation}\label{2.4.1}
+	x(t) = s(t) + n(t).
+\end{equation}
+
+Now, considering a linear time-invariant filter, whose impulse-response function I will refer to as $h(t)$, one can write the output signal as:
+\begin{equation}\label{2.4.2}
+	\begin{split}
+		y(t) &= x(t)*h(t)\\
+		&= \left(s(t) + n(t)\right)*h(t)\\
+		&= y_{s}(t) + y_{n}(t),
+	\end{split}
+\end{equation}
+where $y_{s}(t)$ and $y_{n}(t)$ are simply the outputs of the filter due to the signal and the noise components respectively.
+
+The goal of the matched filter is to detect the presence of the signal $s(t)$ in the input sample $x(t)$ at a certain time $t_{0}$, which effectively means we need to maximise the S/N. This way, what one wants is to have a filter which gives a much bigger output when the known signal is present than when it is not. Putting it in other words, the instantaneous power of the signal output $y_{s}(t)$ should be much larger than the average power of the noise output $y_{n}(t)$ at some time $t_{0}$.
+
+For the case of the filtered signal, one can easily re-write it as an inverse Fourier transform:
+\begin{equation}\label{2.4.3}
+	y_{s}(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d}\omega \ H(\omega) S(\omega) \mathrm{e}^{i \omega t},
+\end{equation}
+where $H(\omega)$ and $S(\omega)$ are the Fourier transforms of the impulse-response function (i.e. the transfer function of the filter) and of the input signal, respectively.
+
+Now focusing on the noise, we can use the Wiener-Khinchin theorem \cite{Goodman1985} to write the mean power of the noise after filtering as:
+\begin{equation}\label{2.4.4}
+	E|y_{n}(t)|^{2} = \frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d}\omega \ |H(\omega)|^{2} S_{n}(\omega),
+\end{equation}
+where $S_{n}(\omega)$ is the power spectral density of the noise.
+
+Having these, one can write the instantaneous S/N at time $t_{0}$ as:
+\begin{equation}\label{2.4.5}
+	\begin{split}
+		\left(\frac{S}{N}\right)_{t_{0}} &= \frac{|y_{s}|^{2}}{E|y_{n}(t)|^{2}}\\
+		&= \frac{1}{2\pi} \frac{\left|\int_{-\infty}^{\infty} \mathrm{d}\omega \ H(\omega) S(\omega) \mathrm{e}^{i \omega t_{0}}\right|^{2}}{\int_{-\infty}^{\infty} \mathrm{d}\omega \left|H(\omega)\right|^{2} S_{n}(\omega)}.
+	\end{split}
+\end{equation}
+
+Once we have this expression, we need to find the upper limit of it to determine what would be the optimal choice for the transfer function. One can use the Cauchy-Schwarz inequality, which in the present case takes the form:
+\begin{equation}\label{2.4.6}
+	\left|\int_{-\infty}^{\infty} \mathrm{d}x \ f(x) g(x)\right|^{2} \leq \int_{-\infty}^{\infty} \mathrm{d}x \ \left|f(x)\right|^{2} + \int_{-\infty}^{\infty} \mathrm{d}x \ \left|g(x)\right|^{2},
+\end{equation}
+for any two analytical functions $f(x)$ and $g(x)$. One can prove that making the choice:
+\begin{equation}\label{2.4.7}
+	\begin{split}
+		&f(x) = H(\omega) \sqrt{S_{n}(\omega)}\mathrm{e}^{i \omega t_{0}},\\
+		&g(x) = \frac{S(\omega)}{\sqrt{S_{n}(\omega)}},
+	\end{split}
+\end{equation}
+leads to the following upper bound for the S/N:
+\begin{equation}\label{2.4.8}
+	\left(\frac{S}{N}\right)_{t_{0}} \leq \frac{1}{2\pi}\int_{-\infty}^{\infty} \mathrm{d}\omega \  \frac{\left|S(\omega)\right|^{2}}{S_{n}(\omega)}.
+\end{equation}
+
+From Eqs. (\ref{2.4.5}), (\ref{2.4.6}) and (\ref{2.4.7}) one can also derive the form of the transfer function such that the upper bound is exactly reached \cite{Dwork1950}:
+\begin{equation}\label{2.4.9}
+	H(\omega) \propto \frac{S^{*}(\omega) \mathrm{e}^{-i \omega t_{0}}}{S_{n}(\omega)}.
+\end{equation}
+
+From this last expression we can clearly see the way the matched filter acts. As the transfer function is proportional to the Fourier transform of the signal it will try to only pick the frequencies present in the signal \cite{Wainstein1962}.
+
+The matched filter transfer function can be greatly simplified if the input noise is Gaussian. In that case, the power spectral density of the noise is a constant, so it can be re-absorbed in the overall normalisation of the transfer function. Moreover, considering that the input signal is a real function, one can simply set $S^{*}(\omega) = S(-\omega)$, which gives:
+\begin{equation}\label{2.4.10}
+	H(\omega) \propto S(-\omega) \mathrm{e}^{-i \omega t_{0}}.
+\end{equation}
+
+For a discrete signal, one can think of the input and impulse-response sequences as vectors of $\mathbb{R}^{N}$. Then, the matched filter tries to maximise the inner product of the signal and the filter while minimising the output due to the noise by choosing a filter vector orthogonal to the later. In the case of additive noise, that leads to the impulse-response vector:
+\begin{equation}\label{2.4.11}
+	h = \frac{1}{\sqrt{s^{\dagger} R_{n}^{-1} s}} \ R_{n}^{-1} s,
+\end{equation}
+where $s$ is a reversed signal template sequence of length $N$ equal to the order of the filter and $R_{n}$ is the covariance matrix associated with the noise sequence $n$. For the Gaussian noise case, the covariance matrix is simply the unit matrix, so the above expression simplifies again to:
+\begin{equation}\label{2.4.12}
+	h = \frac{s}{|s|}.
+\end{equation}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=1\linewidth]{Images/Matched_Filter/mf_fir_opt.png}
+	\caption{\textit{Relative improvement in the S/N for the raw data capture \texttt{felix-2020-07-17-21:31:44}, using the matched filter following the parametrisation in Eq. (\ref{2.4.13}). The black crosses in both panels denote the location of the maximum ratio value.}}
+	\label{fig:mf_opt}
+\end{figure}
+
+For this first stage of the study, I use a definition of the S/N per channel given by:
+\begin{equation}
+	\mathrm{S/N} = \frac{\max{[ADC]} - \mu_{noise}}{\sigma_{noise}},
+\end{equation}
+where the subscript $noise$ refers to a subset of the data obtained by only taking into account waveform values within a $\pm 3 \sigma$ range around the mean of the data and $\max{[ADC]}$ is the maximum of the original waveform. This definition is further discussed in App. \ref{sec:A.1}, where I also show examples of its application to raw data and to a waveform filtered with the current low-pass FIR filter.
+
+To test whether this choice of filter is appropriate one needs to choose a signal template. As an example of how a matched filter would affect our signal, I simply took the filter coefficients to be the 32 ADC values around a signal peak present in the data. In Fig. \ref{fig:adcs_mf} (left panel) I plotted a zoomed region for channel $7840$ in the raw data capture \texttt{felix-2020-07-17-21:31:44}, after applying the matched filter described before (blue line). When compared to the raw and FIR filtered case (see App. \ref{sec:A.1}), after applying the match filter the standard deviation of the noise waveform (red line) decreases and at the same time the signal peaks are enhanced. This leads to an improvement of the S/N by a factor of $1.92$ when compared to the raw waveform.
+
+In order to obtain the matched filter that is more suitable for our data, I explored different configurations of signal templates. In order to perform this exploration, I parametrised the signal using the bipolar function:
+\begin{equation}\label{2.4.13}
+	f(x) = -A (x + \delta) \ \mathrm{e}^{-x^{2}/\sigma^{2}},
+\end{equation}
+where the parameter $\delta$ controls the asymmetry between the positive and negative peaks and $\sigma$ controls their width. The amplitude parameter $A$ is set such that it keeps the height of the biggest peak to be less than $200$ ADC in absolute value.
+
+As this parametrisation is only adequate for bipolar signals I will focus exclusively on the induction channels. Also, the optimal configurations I found for the U and V plane will be kept separate, i.e. I will have two sets of coefficients that will be applied to either the U and V planes of wires. I do so as I found this was the choice giving the best performance. Even so, as I will discuss, the differences are not very pronounced. In case it is not technically possible to separate channels in the firmware according to the wire plane they come from and use different sets of filter coefficients for them, we can just find a common unique set of coefficients. In such case, I do not expect our results to change dramatically.
+
+In Fig. \ref{fig:mf_opt} I present the results of our parameter scan, for channels in the induction planes U (left panel) and V (right panel). For each configuration of $\sigma$ and $\delta$ the resulting matched filter was applied to all channels in the corresponding plane within the data capture \texttt{felix-2020-07-17-21:31:44}, the S/N improvement was computed with respect to the raw waveforms and then the S/N mean value was kept as a score for such filter. One can see that the improvement obtained for the U plane is in general higher than the one for the V plane. In any case, I got substantially higher ratios than the ones obtained for the low-pass FIR filters. For the optimal configurations I attained improvements up to a factor of $1.85$ for the U plane and $1.65$ for the V plane.
+
+The sets of optimal matched filter coefficients were obtained for the parameters $\delta = 0.035$, $\sigma = 0.191$ for the U plane and $\delta = 0.018$, $\sigma = 0.191$ for the V plane. I show these two sets of coefficients in Fig. \ref{fig:mf_perf} (left panel). Also in Fig. \ref{fig:mf_perf} (right panel) I plot the distribution of the S/N improvement after the optimal match filters for the U and V were applied to the corresponding channels in the raw data capture \texttt{felix-2020-07-17-21:31:44}. As mentioned before, the mean improvement achieved for the U plane channels is slightly bigger than the one for the V channels. Note, however, that the spread of the distribution for the V plane is also smaller than the one for the U plane.
+
+I also performed a similar scan for the case of a low-pass FIR filter using the Parks-McClellan algorithm. In that case, the parameters to check were the cutoff frequency and the transition width of the filter. A summary of the results is given in App. \ref{sec:A.2}.
+
+Overall, one can see that the improvements on the S/N are much more significant in the case of the matched filter than it is for the low-pass FIR filters. The analysis of this and other raw data captures from ProtoDUNE-SP suggest that matched filters increase the S/
+N of induction channels by a factor of $1.5$ more than the optimal low-pass FIR filters.
+
+Although these results are by themselves great points in favour of the matched filter, more studies are needed to completely assess the robustness of this approach. I proceeded then to test the matched filter with simulated data samples.
+
+\begin{figure}[t]
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/optimal_coeffs}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/improvement_capture}
+	\end{subfigure}
+	\caption{\textit{Left panel: Optimal matched filter coefficients for the U (blue line) and V (red line) planes. The filters were computed with our parametrisation in Eq. (\ref{2.4.13}) for the parameter values $\delta = 0.035$, $\sigma = 0.191$ and $\delta = 0.018$, $\sigma = 0.191$ respectively. Right panel: Distribution of the relative change of the S/N on the two induction wire planes from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} after their respective optimal matched filters were applied.}}
+	\label{fig:mf_perf}
+\end{figure}
+
+\section{Using simulated samples}
+\label{sec:2.5}
+
+In order to further test the matched filter, the next step was to generate and process data samples using \textit{LArSoft} \cite{Church2013}. In this way, one can control the particle content of the samples, the orientation of the tracks and their energy, and therefore see how the matched filter behaves in various situations.
+
+To begin with, I prepared different monoenergetic and isotropic samples containing a single particle per event. Each sample contains a different particle species, namely electrons, muons, protons and neutral pions all with a kinetic energy of $E_{k} = 100 \ \mathrm{MeV}$. I chose these because of the fairly different topologies they generate in the liquid argon, ranging from shower-like to track-like. The procedure I followed to generate the samples and process them is discussed in detail in App. \ref{sec:A.4}.
+
+These were generated with the single particle gun and the Geant4 stage of the \textit{LArSoft} simulation \cite{Church2013} was performed with the standard configuration for the DUNE FD 10kt module. 
+
+\begin{figure}[t]
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/particle_length}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/gamma_length}
+	\end{subfigure}
+	\caption{\textit{Left panel: distributions of the particles track length in the liquid argon for the generated $E_{k} = 100 \ \mathrm{MeV}$ monoenergetic samples, electrons (blue), muons (red), protons (green) and neutral pions (purple). Right panel: distribution of the length of the longest photon in the neutral pion sample after the decay process $\pi^{0} \rightarrow \gamma\gamma$.}}
+	\label{fig:lengths}
+\end{figure}
+
+For simplicity, I restricted the particles to start drifting in a single TPC volume (in this case TPC 0), so I can focus exclusively on the signals coming from one APA. The chosen kinetic energy for all the particles in my first trial is $E_{k} = 100 \ \mathrm{MeV}$, so a necessary check is to see if all our tracks will be typically contained in one TPC volume. Fig. \ref{fig:lengths} (left panel) shows the distributions of the track lengths in the liquid argon of all generated particles with $E_{k} = 100 \ \mathrm{MeV}$. One can see that, in the case of the track-like particles (i.e. muons and protons), their length distributions are quite sharp and centered at relatively low distances ($30$ and $8 \ \mathrm{cm}$, respectively). For electrons, the distribution is quite broad but it does not extend past $\sim 30 \ \mathrm{cm}$. The case of neutral pions can be misleading, as they decay promptly the track length associated with the true Monte Carlo particle is always $< 1 \ \mathrm{cm}$. In Fig. \ref{fig:lengths} (right panel) I show the effective length distribution of the longest photon after the pion decays as $\pi^{0} \rightarrow \gamma \gamma$, highlighting the number of fully contained photons in the TPC volume per event (either zero, one or both). One can see that the vast majority of events has both photons contained and that just a negligible number of them has none of them contained in the TPC volume. In any case, for the sake of caution, I will only keep the pion events with both photons contained.
+
+Once I have prepared a sample at the Geant4 level, I need to process it trough the detector simulation. In order to make adequate estimations of the noise levels and run the filtering and hit finder as I did with the ProtoDUNE data, one needs to turn off the default zero-suppression of the waveforms produced by the simulation. At this first stage I am only concerned with the waveforms with the noise added, so I keep the noise addition option as true in the configuration. However, for studies related to the hit finder performance one will also need to store the noiseless waveforms in order to retrieve the truth information of the hits. I will discuss this approach next.
+
+After the detector simulation stage, one needs to extract the no zero-suppressed noisy waveforms, along with their offline channel numbers, and store them in a certain format to be analysed later. To reduce the amount of data that will go for processing, I used the information from the Geant4 step of the simulation to select only the active channels, i.e. the channels where some ionisation electrons arrive. Moreover, as said previously, I only extract the waveforms from APA $0$ and exclusively the ones coming from induction channels. The resulting ROOT file contains a tree with two branches, one containing the waveforms for each event and channel and the other with the corresponding offline channel numbers.
+
+Finally, to extract the truth values for the orientation of the tracks and the energies of the particles I used a modified analysis module. This gives a ROOT file with a single tree, containing several branches with different information such as the components of the initial momentum of the particles, initial and final $xyz$ location, track length, etc.
+
+For the analysis of the resulting waveforms and truth values I used a custom set of Python libraries (available at [???]). Among other functionalities, these enable the user to read the ROOT files, export the raw data as pandas objects, apply the filters and compute the S/N of both the raw and filtered signals. So far, the default configuration for the filtering uses the set of optimal matched filter coefficients that I found using the ProtoDUNE data samples.
+
+\begin{figure}[t]
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.8\linewidth]{Images/Matched_Filter/sim_rotation}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/3D_rotation}
+	\end{subfigure}
+	\caption{\textit{Left panel: schematic representation of the two new rotated reference frames used in this analysis (denoted as prime and double prime), viewed from the $yz$ plane. The magenta stack of lines represent the wires in the U plane, whereas the green lines correspond to the wires in the V plane. Right panel: 3D representation of the momentum of one of the generated monoenergetic muons (red arrow) in the original reference frame (black lines), along with the new reference frame used for the U plane waveforms (blue lines). In the $yz$ plane I added the projection of these three.}}
+	\label{fig:reference_frame}
+\end{figure}
+
+Additionally, for the analysis of the samples it was necessary to use two different reference frames, to study separately the signals coming from the U and V induction wire planes. As I am focussing on a single APA, the U and V wires have a different orientation in the $yz$ plane. In the case of U wires, these are tilted $35.7^{\circ}$ clockwise from the vertical ($y$ direction), whereas the V wires are at the same angle but in the counter clockwise direction. Because of this, the best option is to deal with two new coordinate systems rotated by $\pm 35.7^{\circ}$ along the $x$ axis, so the new $y'$ and $y''$ directions are aligned with the U and V induction wires. Fig. \ref{fig:reference_frame} (left panel) shows a schematic representation of the original reference frame together with the two rotated ones (denoted by primed and double primed). This way, one can easily understand how parallel was a track to the wires in the two induction planes. Fig. \ref{fig:reference_frame} (right panel) shows a 3D representation of the momentum of a track (red arrow) in the original reference frame (black lines), along with the new reference frame for U wires (blue lines). I added the projection in the $yz$ plane of this three, to show the usefulness of the new reference frame to tell whether a track is parallel or normal to the wires in the induction plane.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\linewidth]{Images/Matched_Filter/larsoft_sn_hists.pdf}
+	\caption{\textit{Distributions of the mean S/N improvement per event for the corresponding sample after applying the matched filters. Here I separated the change in the U plane (blue)) and the V plane (red) channels. From top left to the right: muon, electron, proton and neutral pion. All the events have a fixed kinetic energy of $E_{k} = 100 \ \mathrm{MeV}$.}}
+	\label{fig:mono_summary_hist}
+\end{figure}
+
+Fig. \ref{fig:mono_summary_hist} shows the distribution of the average S/N improvement per event when one applies the optimal matched filters. I produced separate distributions for the channels in the U (red) and V (blue) induction wire planes. Notice that the S/N distributions for the track-like particles, i.e. muons (top left panel) and protons (bottom left panel), have significantly larger mean values than the distributions of the shower like particles, i.e. electrons (top right panel) and neutral pions (bottom right panel). An important difference between these results and the ones seen before for ProtoDUNE data is that, overall, the improvements that I get for simulated data are bigger. This could be due either to the default noise model used in the \textit{LArSoft} simulation or to the simulated hits having higher energy than the ones in the recorded data. Nonetheless, the concluding message is that the previously optimised matched filters give an overall significant improvement of the S/N for the different samples.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.9\linewidth]{Images/Matched_Filter/larsoft_muon_angular.pdf}
+	\caption{Angular dependence of the mean S/N and the S/N improvement, for the different monoenergetic samples considered (from top to bottom: electrons, muons, protons and neutral pions). The two columns on the left represent the values for the U plane waveforms. The top subplots show the mean S/N for raw (green) and filtered (red) waveforms whereas the bottom subplots depict the averaged S/N improvement (black).}
+	\label{fig:angular_muon}
+\end{figure}
+
+About the convention I followed for the plots and results, in the case of the raw and filtered S/N of each event in the sample I simply took the average of the quantities over all the active channels in the event. That is, if a certain event has $N_{chan}$ active channels these two quantities are computed as:
+\begin{equation}
+\begin{split}
+\left(S/N_{fir}\right)_{event} &= \frac{\sum_{i=0}^{N_{chan}} \left(S/N_{fir}\right)_{i}}{N_{chan}},\\
+\left(S/N_{raw}\right)_{event} &= \frac{\sum_{i=0}^{N_{chan}} \left(S/N_{raw}\right)_{i}}{N_{chan}}.
+\end{split}
+\end{equation}
+However, for the ratio of the raw and filtered S/N (what I called the S/N improvement) per event I am not just taking the ratio of the previous two quantities but computing the average of the individual ratios per channel in the event:
+\begin{equation}
+\left(\frac{S/N_{fir}}{S/N_{raw}}\right)_{event} = \frac{\sum_{i=0}^{N_{chan}} \left(\frac{S/N_{fir}}{S/N_{raw}}\right)_{i}}{N_{chan}},
+\end{equation}
+and so:
+\begin{equation}
+\left(\frac{S/N_{fir}}{S/N_{raw}}\right)_{event}  \neq \frac{\left(S/N_{fir}\right)_{event}}{\left(S/N_{raw}\right)_{event}}.
+\end{equation}
+
+\subsection{Angular dependence}
+\label{subsec:2.5.1}
+
+Having these monoenergetic samples, one can also study the angular dependence of the performance of the matched filter. This is an important point, as it is a well established fact that for certain configurations (an extreme case configuration being signals normal to the wire plane and perpendicular to the induction wires at the same time) the S/N is much lower than average as the corresponding waveforms are severely distorted. In this sense, I am interested to see how the matched filter behaves for these cases and how the S/N improvement on those compare to the average.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.9\linewidth]{Images/Matched_Filter/larsoft_electron_angular.pdf}
+	\caption{Angular dependence of the mean S/N and the S/N improvement, for the different monoenergetic samples considered (from top to bottom: electrons, muons, protons and neutral pions). The two columns on the left represent the values for the U plane waveforms. The top subplots show the mean S/N for raw (green) and filtered (red) waveforms whereas the bottom subplots depict the averaged S/N improvement (black).}
+	\label{fig:angular_electron}
+\end{figure}
+
+Fig. \ref{fig:angular_muon} shows the angular dependence of the S/N for the monoenergetic $E_{k}=100 \ \mathrm{MeV}$ isotropic muons, for the different induction wire planes and projections. The angles for each event are given by the components of the initial value of the momentum of the particles, taking the angles of the projections on the $xz$ and $yz$ planes with respect to the $z$ axis (more accurately, one needs to compute these angles twice for each event, a pair for the $xy'z'$ coordinate system and the other for the $xy''z''$). The top row shows the dependence on the angles corresponding to the U plane, i.e. $\theta_{xz'}$ and $\theta_{y'z'}$, whereas the bottom row shows the angular dependence viewed from the V plane, $\theta_{xz''}$ and $\theta_{y''z''}$. In each plot, the top subplot represents the mean values of the S/N for the raw (blue) and matched filtered (red) signals, and the bottom subplot the averaged S/N improvement (black). The solid lines represent the mean value obtained for the corresponding angular value, whereas the semitransparent bands represent one standard deviation around the mean at each point.
+
+As expected, the S/N is in general higher when tracks are parallel to the APA (i.e. $\theta_{xz} \sim 0$) and lower when it is normal to the plane ($\theta_{xz} \sim \pm 90^{\circ}$). In the same way, tracks parallel to the wires ($\theta_{yz} \sim \pm 90^{\circ}$) tend to have higher S/N than those perpendicular to these ($\theta_{yz} \sim \pm 0$).
+
+Fig. \ref{fig:angular_electron} shows the corresponding angular dependence information for the $E_{k}=100 \ \mathrm{MeV}$ electrons sample. Notice that, in this case, the S/N behaviour discussed above does not hold. A possible explanation can be that, because most hits in these events are produced by the secondary particles generated in the EM shower, the signal peaks whose S/N ratios were computed do not correspond to the directional information of the primary electron.
+
+\begin{figure}[t]
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/evt_xz_0_yz_90_U}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/evt_xz_90_yz_0_U}
+	\end{subfigure}
+	\caption{\textit{Selected consecutive waveforms corresponding to two monoenergetic $E_{k} = 100 \ \mathrm{MeV}$ muon events, one is parallel to the APA and to the wires in the U plane (left panel) and the other is normal to the APA plane and perpendicular to the U plane wires (right panel). The solid lines represent the raw waveforms whereas the dashed lines correspond to the waveforms after the matched filter was applied. The waveforms on the left panel have been scaled by a factor of $0.15$ to have similar amplitude to the ones on the right panel.}}
+	\label{fig:example_orientation}
+\end{figure}
+
+\subsection{Distortion and peak asymmetry}
+\label{sec:A.5}
+
+As a little case of study, I selected two of the simulated $E_{k} = 100 \ \mathrm{MeV}$ monoenergetic muon events. With respect to the U induction plane, one is parallel to the APA (low $\theta_{xz'}$) and to the wires (high $\theta_{y'z'}$) and the other is normal to the APA plane (high $\theta_{xz'}$) and perpendicular to the wires (low $\theta_{y'z'}$). As expected from the results on the angular dependence discussed above, the former has a higher S/N (before and after the filtering) when compared to the latter. An interesting thing to notice about these two samples is that, even though one has a much bigger S/N than the other, it is the one with the smallest S/N the one that got the biggest averaged S/N improvement. In Table \ref{tab:case} I included all the relevant parameters of these two $E_{k} = 100 \ \mathrm{MeV}$ muon events I am considering, namely, the angles with respect to the $xy'z'$ reference frame, the values of the S/N, the S/N improvement and also the so-called peak asymmetry $\Delta_{peak}$ that I will discuss next.
+
+\begin{figure}[t]
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/deltaPeak_dist}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/deltaPeak_SN_ratio}
+	\end{subfigure}
+	\caption{\textit{Left panel: peak asymmetry distribution for the case of the monoenergetic $E_{k} = 100 \ \mathrm{MeV}$ muon sample. Each value corresponds to a single bipolar signal peak from a channel in any event. The blue distribution represents the peaks on U plane channels, whereas the red corresponds to signal peaks in V wires. Right panel: relation between the mean peak asymmetry per event with the S/N for U channel waveforms from the $E_{k} = 100 \ \mathrm{MeV}$ muon sample. The top subplot shows the decimal logarithm of the mean S/N for the raw (red) and the matched filtered (blue) waveforms. The bottom subplot contains the mean S/N improvement ratio after the matched filter was applied.}}
+	\label{fig:asymmetry}
+\end{figure}
+
+\begin{table}[h!]
+	\centering
+	\caption{\textit{Characteristic parameters of the two monoenergetic muon events selected, relative to the U plane: projected angles in the $xz'$ and $y'z'$ planes, S/N values for the raw and filtered waveforms, mean improvement of the S/N and peak asymmetry.}}
+	\begin{tabular}{l|llllll}
+		& $\theta_{xz'} \ (^{\circ})$ & $\theta_{y'z'} \ (^{\circ})$ & $\mathrm{S/N}_{\mathrm{raw}}$ & $\mathrm{S/N}_{\mathrm{MF}}$ & $\frac{\mathrm{S/N}_{\mathrm{MF}}}{\mathrm{S/N}_{\mathrm{raw}}}$ & $\Delta_{peak} \ (\mathrm{ADC})$ \\ \hline
+		High ("parallel") & -1.58                     & -77.76                     & 41.65       & 112.44      & 2.83                          & -35.73                                                          \\
+		Low ("normal")  & 76.92                     & -2.56                      & 8.07        & 25.46       & 3.12                          & -10.38                                                         
+	\end{tabular}
+	\label{tab:case}
+\end{table}
+
+One can try to understand better what is going on with these two events by looking at the raw and filtered data from some of their active channels. Fig. \ref{fig:example_orientation} shows a selection of consecutive raw and filtered U plane waveforms from the event with high S/N (left panel) and the one with low S/N (right panel). Notice that to show both collections of waveforms at a similar scale I had to apply a factor of $0.15$ to the waveforms with high S/N. Additionally, next to each waveform I included the values of the raw and matched filtered S/N for the corresponding channel. The first thing to notice in this plot is that the amplitude of the signal peaks from the normal track have a much smaller amplitude, and also appear quite distorted when compared to the others. On the other hand, although the matched filtered S/N is still smaller, the relative improvement is bigger than in the parallel case.
+
+A way I found to quantify the difference between the shapes within these two events is their different peak asymmetry. One can define the peak asymmetry as the (signed) difference between the positive and the negative peaks of the bipolar shape, i.e.:
+\begin{equation}
+\Delta_{peak} \equiv h_{+} - h_{-},
+\end{equation}
+where both heights $h_{+}$ and $h_{-}$ are positive defined. Fig. \ref{fig:asymmetry} (left panel) shows the distribution of this peak asymmetry for all the waveforms corresponding to channels in the U (blue) and V (red) planes for the monoenergetic muon sample. One can see that these distributions are clearly shifted to negative values (with mean values $\mu_{\Delta}^{\mathrm{U}} = -10.57 \ \mathrm{ADC}$ and $\mu_{\Delta}^{\mathrm{V}} = -5.72 \ \mathrm{ADC}$ respectively). It is interesting to notice that the peak asymmetry value of the sample with high S/N sits at the left tail of the distribution whereas the corresponding value of the sample with low S/N lies around the mean.
+
+Now, one can try to correlate the peak asymmetry with the S/N and the S/N change per event. Fig. \ref{fig:asymmetry} (right panel) shows the result of comparing (minus) the mean peak asymmetry per event to the averaged raw (red) and matched filtered (blue) S/N per event (top subplot). The horizontal lines sit at the mean value obtained in the fit and represent the width of the $-\Delta_{peak}$ bins used, while the vertical lines indicate one standard deviation around that mean value. Notice that, when taking decimal logarithm on both, there is an approximate linear relation between these quantities, except for peak asymmetry values bigger than $- 5 \ \mathrm{ADC}$ where the S/N remains constant.
+
+Also, in the bottom subplot of Fig. \ref{fig:asymmetry} (right panel) I show the relation between the peak asymmetry and the mean S/N improvement. In this case, one see that there is a maximum at $\Delta_{peak} \sim -10 \ \mathrm{ADC}$. As mentioned previously, this is also the value of the mean of the peak asymmetry distribution. In fact, it is expected that our filter favours the signal peaks with the most common values of the peak asymmetry, as this was one of the features I target in our filter coefficient optimisation through the parameter $\delta$.
+
+These results suggest that events with poorer values of the mean S/N, usually associated to non-favourable track orientations, tend to have smaller values of the mean peak asymmetry (in absolute value). Nonetheless, because our matched filters have been optimised to account for these asymmetries, the improvement on the S/N for these events is sizeable if not better than the one for events which already had a high S/N.
+
+\subsection{Hit sensitivity}
+\label{subsec:2.5.3}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{Images/Matched_Filter/electron_k100_full_run_1_evt_3}
+	\caption{\textit{Raw data display in the plane time (in firmware ticks) vs. offline channel number for an $E_{k} = 100 \ \mathrm{MeV}$ electron event. The produced true hits are superimposed (black boxes) as well as the hits comming from the standard hit finder chain (blue circles) and the hit finder using the matched filter (green triangles).}}
+	\label{fig:evthitcomp}
+\end{figure}
+
+One of the advantages of the matched filter, directly related to increasing the S/N, is the capability of picking hits that before fell below the threshold. For instance, Fig. \ref{fig:evthitcomp} shows the raw ADC data from an example event (electron, $E_{k} = 100 \ \mathrm{MeV}$) with the produced true hits superimposed (black boxes), together with the hits produced by the standard hit finder chain (blue circles), i.e. using the current FIR filter, and the hits obtained using the matched filters (green triangles). Both the standard and the matched filter hit finders were run with a threshold of $10 \ \mathrm{ADC}$. Notice that the standard hits match well the true ones at the initial part of the event (where we have a track-like object), but they miss most of the hits produced by the EM shower at later times. On the other hand, the hits produced with the matched filter have a better agreement with the true hits even for the more diffuse shower activity.
+
+Notwithstanding that now I get more hits with this combination of matched filter and low threshold as a results of the enhancement of the signal peaks relative to the noise level, it is also true that I pick some spurious hits not related to any real activity if one lowers the thresholds too much. Therefore, some optimisation of the threshold is needed. Basically one will need to make a trade-off between precision and sensitivity.
+
+Having this in mind, I tried to compare the produced hits one gets from the standard hit finder and the ones resulting from applying the matched filter with the true hits. By running the hit finders on our samples with different values of the threshold one can understand, for instance, how low one can set the threshold without getting mostly spurious hits and then evaluate the gains obtained from this.
+
+Because now I am also interested in seeing how the hit sensitivity changes with the energy, I prepared new isotropic samples with the same types of particles as before (muons, electrons, protons and neutral pions) but with a flat kinetic energy distribution ranging from $5$ to $100 \ \mathrm{MeV}$.
+
+In order to estimate the hit sensitivity, given a certain sample, one needs to recover the set of true hits to be able to compare these with the ones produced. To do so, a modification in the procedure I was using to extract the raw waveforms is needed. For this kind of study I run the detector simulation in two steps, first I produce the waveforms without noise and extract them in the same format I used for the raw data, then the noise is added and the noisy waveforms are then written to a file as well.
+
+To have a better comparison between the true hits and the ones produced from the raw waveforms after applying the two filters, I applied also the FIR filter and the matched filters to the noiseless waveforms and then I run the hit finder with a minimal threshold (in this case I used $1 \ \mathrm{ADC}$) on these noiseless filtered waveforms. In this way I generated two sets of true hits, I will refer to them as standard true hits (with the current/default FIR filter) and matched filter true hits respectively. This allows a more precise matching between the different groups of hits produced, as it will account for any delays and distortions introduced by the FIR and the matched filters.
+
+In the case of the raw waveforms (with noise), I run the hit finder on them, with different values of the threshold, after applying either the FIR or the matched filters. I will name them simply standard hits and matched filter hits respectively. Then, I match the generated hits to the true hits (the standard hits with the standard true hits and the matched filter hits with the matched filter true hits). The matching is performed by comparing the channel number and the timestamp of the hits. To count as a match, I require that all hits with the same channel number and timestamp have overlapping hit windows, i.e. the time windows between their hit end and hit start times need to overlap. If more than one hit in one of the groups have hit overlap with the same hit in the other group I only count the hit with closer hit peak time value.
+
+The generation of the samples, the procedure to produce the standard hits (with the default FIR filter) and matched filter hits and the matching of these with the true hits is described in detail in App. \ref{subsec:A.4.1}.
+
+To quantify the performance of the two hit finder approaches, I use a classical method from statistical classification known as confusion matrix \cite{Stehman1997}. This is basically a way of sorting the outputs of a binary classifier, considering the true values of the classification and the predicted values. It divides the outputs in four categories: true positive (TP, both true and predicted values are $1$), false negative (FN, true value is $1$ but predicted is $0$), false positive (FP, true value is $0$ but predicted is $1$) and true negative (TN, both true and predicted values are $0$)).
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.99\linewidth]{Images/Matched_Filter/hit_study_muon_scores_indct}
+	\caption{\textit{Dependence of the precision (blue), sensitivity (red) and $F_{1}$ (green) scores on the threshold values used in the hit finder, for the FIR (left panel) and matched filter (right panel) cases. The results were obtained after matching the hits to the true hits in the case of the isotropic muon sample with kinetic energy in the range $5$ to $100 \ \mathrm{MeV}$, taking only into account the induction plane channels. The points represent the mean value while the error bars indicate one standard deviation around that mean value.}}
+	\label{fig:threshold_opt}
+\end{figure}
+
+The contents of the confusion matrix allow us to compute other derived scores to judge the performance of our classifiers. In this study, I will make use of three of these metrics, namely the precision or positive predictive value:
+\begin{equation}
+	\mathrm{PPV} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FP}},
+\end{equation}
+the sensitivity or true positive rate:
+\begin{equation}
+	\mathrm{TPR} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FN}},
+\end{equation}
+and the $F_{1}$ score \cite{Taha2015}:
+\begin{equation}
+	F_{1} = \frac{\mathrm{2 TP}}{2\mathrm{TP} + \mathrm{FP} + \mathrm{FN}},
+\end{equation}
+which is the harmonic mean of the precision and the sensitivity.
+
+In our specific case I am not going to make use of the true negative value, as its definition in this context can be ambiguous because one does not have clear instances in the classification process. This way, I will only count the number of true positives as the total amount of hits I can match between true and raw populations, the number of false negatives will be the number of missing true hits and the false positive the number of hits which do not match any true hit.
+
+In Fig. \ref{fig:threshold_opt} I show the precision (blue), sensitivity (red) and $F_{1}$ (green) scores I obtained for different values of the threshold used in the hit finder for the case of the muon sample. Because the matched filters are only applied to induction channels, I only consider here hits coming from the U and V planes. The panel on the left corresponds to the scores I got when I ran the hit finder on the FIR filtered waveforms, whereas the right panel contains the scores for the matched filter case. The points are centered at the threshold value used and represent the mean value obtained for each score using all the generated events, while the error bars indicate one standard deviation around the mean value.
+
+One can see that the precision for the matched filter case is lower when the thresholds are very low, as the noise baseline is slightly amplified, but then rises to high values quicker than for the FIR case. The other difference one can spot is that the sensitivity in the FIR case starts dropping faster at around the same threshold values where the precision stabilizes around $1$, while in contrast for the matched filter this rapid decrease starts at higher threshold values. A similar scan for the same thresholds was performed for the electron sample in the same energy range, yielding similar results.
+
+\begin{figure}[t]
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/hit_study_muon_sensitivity_30}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/hit_study_electron_sensitivity_30}
+	\end{subfigure}
+	\caption{\textit{Dependence of the averaged hit sensitivity on the kinetic energy of the events for the matched filter (blue) and standard (red) hits, for the case of the muon (left panel) and electron (right panel) samples, separated between U (top plots) and V (bottom plots) induction wire planes. The top subplots contain the hit sensitivities for the two hit finder alternatives, while the bottom subplots show the ratio between the two. The horizontal lines sit at the mean value and represent the size of the energy bins, while the vertical error bars indicate one standard deviation around that mean value.}}
+	\label{fig:sensitivity_energy}
+\end{figure}
+
+In Fig. \ref{fig:sensitivity_energy} I show the averaged hit sensitivity versus the kinetic energy of the events, both for the matched filter hits (blue) and the standard hits (red). The left panel corresponds to the muon sample, whereas the one on the right corresponds to the electron sample, both with kinetic energies between $5$ and $100 \ \mathrm{MeV}$. In each panel the top plot corresponds to hits in the U plane, while the bottom plot contains the same information for the V plane. Each plot contains two subplots, the one on the top shows the hit sensitivity values for the matched filter and standard hits separate, while the bottom subplot depicts the ratio between the matched filter and standard sensitivities. The horizontal lines are placed at the mean value obtained in the fit and represent the width of the $E_{k}$ bins used, while the vertical error bars indicate one standard deviation around that mean value. In both cases the threshold used was $30 \ \mathrm{ADC}$, as I required the precision to be higher than $0.99$ for both matched filter and standard cases.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.99\linewidth]{Images/Matched_Filter/hit_study_electron_concurrence}
+	\caption{\textit{Distributions of the hit sensitivity in the U (top panels) and V (bottom panels) planes versus the hit sensitivity in the X plane, both for the standard hits (left panels) and the matched filter hits (right panels), in the case of the electron sample and a threshold of $30 \ \mathrm{ADC}$.}}
+	\label{fig:electron_concurrence}
+\end{figure}
+
+One can see that, in general, the improvements are better for the U than for the V plane. While for the U channels I achieved a mean improvement of $50\%$ and $80\%$ for muons and electrons respectively, the improvement in the V plane is stalled at $10\%$ and $25\%$. Nevertheless, if I look at the sensitivities for the matched filter hits in both planes one can see these have similar mean values for each energy bin, while on the contrary for the standard hits the sensitivity remains relatively high for the V plane. This way, it looks there was a less significant gain because the hit sensitivity was already high.
+
+Another interesting observation is the different behaviors for muons and electrons. While hit sensitivity for muons grows significantly with energy, in the case of electrons this slightly decreases the higher the kinetic energy of the event is. In any case, when it comes to the improvement on the sensitivities, this remains almost constant in all cases.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.99\linewidth]{Images/Matched_Filter/hit_study_electron_residuals}
+	\caption{\textit{Top panels: standard residual plots of the hit sensitivities between the X and U planes. Bottom panels: quantile-quantile plots of the hit sensitivity standard residuals between the X and U planes. In all cases, the left panel corresponds to the standard hits while the right panel represents the matched filter case, all from the electron sample with a $30 \ \mathrm{ADC}$ threshold.}}
+	\label{fig:electron_residuals}
+\end{figure}
+
+Furthermore, we can look at how the concurrence of hits between the different wire planes has changed. For any given event, I expect to have a similar number of hits in the three planes. As the ionisation electrons need to cross the U and V planes prior to reach the collection plane X they will induce current in those wire planes. A way to check the concurrence of hits across planes is looking at the relation between the hit sensitivities for each individual event. One cannot expect the sensitivities to be exactly equal across planes, but ideally they should be normally distributed around the diagonal.
+
+Fig. \ref{fig:electron_concurrence} shows the hit sensitivity in the U (top panels) and V (bottom panels) planes versus the hit sensitivity in the X plane, for the case of the standard hits (left panels) and the matched filter hits (right panels). All plots were generated for the electron sample and a threshold of $30 \ \mathrm{ADC}$. From these one can see a clear trend, when I use the standard hit finder chain the sensitivities in the induction planes are systematically lower than the hit sensitivity in the X plane, i.e. most of the points sit below the diagonal (red dashed line). In contrast, when the matched filters are applied, the majority of the events are distributed around the diagonal. This points out that the concurrence of hits across planes has improved.
+
+To exemplify the improvement I obtained, one can consider the residuals of the hit sensitivities for the X and U planes. Assuming the diagonal hypothesis, i.e. given a dataset of the form $(x, y)$ for any $x$ I take the predicted $y$ value to be equal to the value of $x$, I can compute the standard residuals for the hit sensitivities in U given the ones for X. In Fig. \ref{fig:electron_residuals} (top panels) I show these standard residuals against the corresponding values of the hit sensitivity in the U plane, for our electron sample with kinetic energy between $5$ and $100 \ \mathrm{MeV}$. If I compare the scatter points in the case of the standard hits (left panel) and the matched filter hits (right panel), I see that the residuals of the standard hit finder case follow a certain pattern and their mean deviates from $0$.
+
+To see clearly if the residuals are normally distributed, in Fig. \ref{fig:electron_residuals} (bottom panels) I plot the corresponding quantile-quantile plot for both the standard (left panel) and matched filter (right panel) standard residuals. One can clearly see that the points for the standard case follow a strongly non-linear pattern, suggesting that the residuals do not follow a normal distribution. In contrast, for the matched filter hits the points conform to a roughly linear path, implying that in this case the normality condition is fulfilled.
+
+All these results hint at the fact that the concurrence of hits across the wire planes can be strengthened by applying the matched filters.

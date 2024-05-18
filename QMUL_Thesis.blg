@@ -1,0 +1,94 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: QMUL_Thesis.aux
+Reallocating 'name_of_file' (item size: 1) to 36 items.
+A level-1 auxiliary file: InitialFinalMaterials/Statement.aux
+Reallocating 'name_of_file' (item size: 1) to 35 items.
+A level-1 auxiliary file: InitialFinalMaterials/Abstract.aux
+Reallocating 'name_of_file' (item size: 1) to 43 items.
+A level-1 auxiliary file: InitialFinalMaterials/Acknowledgements.aux
+Reallocating 'name_of_file' (item size: 1) to 26 items.
+A level-1 auxiliary file: Chapters/Introduction.aux
+Reallocating 'name_of_file' (item size: 1) to 23 items.
+A level-1 auxiliary file: Chapters/Neutrinos.aux
+Reallocating 'name_of_file' (item size: 1) to 18 items.
+A level-1 auxiliary file: Chapters/DUNE.aux
+Reallocating 'name_of_file' (item size: 1) to 20 items.
+A level-1 auxiliary file: Chapters/ND_GAr.aux
+Reallocating 'name_of_file' (item size: 1) to 27 items.
+A level-1 auxiliary file: Chapters/FWTP_Software.aux
+Reallocating 'name_of_file' (item size: 1) to 28 items.
+A level-1 auxiliary file: Chapters/Matched_Filter.aux
+Reallocating 'name_of_file' (item size: 1) to 25 items.
+A level-1 auxiliary file: Chapters/DM_Analysis.aux
+Reallocating 'name_of_file' (item size: 1) to 26 items.
+A level-1 auxiliary file: Chapters/GArSoft_Reco.aux
+Reallocating 'name_of_file' (item size: 1) to 24 items.
+A level-1 auxiliary file: Chapters/Conclusion.aux
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+A level-1 auxiliary file: Chapters/Appendix.aux
+Reallocating 'name_of_file' (item size: 1) to 39 items.
+Reallocating 'name_of_file' (item size: 1) to 5 items.
+The style file: jhep.bst
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Database file #1: InitialFinalMaterials/Bibliography.bib
+Warning--I didn't find a database entry for "OPERA2018"
+Warning--I didn't find a database entry for "SuperNEMO2010"
+Warning--I didn't find a database entry for "SNO2015"
+Warning--I didn't find a database entry for "NEXT2020"
+Warning--I didn't find a database entry for "ART"
+Warning--I didn't find a database entry for "Bethe1930"
+Warning--I didn't find a database entry for "Fermi1940"
+Warning--I didn't find a database entry for "Sternheimer1984"
+Warning--I didn't find a database entry for "Allison1980"
+Warning--I didn't find a database entry for "Blum2008"
+Warning--I didn't find a database entry for "ALICETPC2013"
+Warning--I didn't find a database entry for "Landau1944"
+Warning--I didn't find a database entry for "Ulmer2010"
+Warning--I didn't find a database entry for "Aprile2008"
+Warning--I didn't find a database entry for "Fruehwirth1988"
+Warning--I didn't find a database entry for "Astier2000"
+Warning--I didn't find a database entry for "T2KUK2013"
+Warning--I didn't find a database entry for "Gaiser1982"
+You've used 90 entries,
+            2430 wiz_defined-function locations,
+            1345 strings with 20997 characters,
+and the built_in function-call counts, 33082 in all, are:
+= -- 3653
+> -- 757
+< -- 0
++ -- 246
+- -- 156
+* -- 3098
+:= -- 4103
+add.period$ -- 90
+call.type$ -- 90
+change.case$ -- 87
+chr.to.int$ -- 0
+cite$ -- 90
+duplicate$ -- 2382
+empty$ -- 3052
+format.name$ -- 468
+if$ -- 8601
+int.to.chr$ -- 0
+int.to.str$ -- 90
+missing$ -- 332
+newline$ -- 274
+num.names$ -- 60
+pop$ -- 196
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 1333
+stack$ -- 0
+substring$ -- 1822
+swap$ -- 763
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 320
+width$ -- 92
+write$ -- 926
+(There were 18 warnings)
