@@ -260,3 +260,33 @@ The PRISM samples can also be used to form a flux at the ND location similar in 
 The role of SAND is to monitor the beam stability by measuring the on-axis neutrino energy spectra. As the PRISM program requires that ND-LAr and its downstream muon spectrometer spend about half of the time in off-axis positions, it is not possible to monitor the stability with the movable detectors. Moreover, for the success of PRISM it is essential to have a stable beam configuration, or, at least, a quick assessment and modeling of the distortions.
 
 The SAND detector is magnetised, and it counts with an inner low density tracker, a LAr target with optical readout and surrounding sampling calorimeter.
+
+\section{LBNF beamline}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.95\linewidth]{Images/DUNE/LBNF/beamline-sideview}
+	\caption[Schematic longitudinal section of the LBNF beamline at Fermilab.]{Schematic longitudinal section of the LBNF beamline at Fermilab (not to scale). Figure taken from Ref. \cite{DUNE2016CDR3}.}
+	\label{fig:lbnf_beamline}
+\end{figure}
+
+The Long-Baseline Neutrino Facility (LBNF) project is responsible for producing the neutrino beam for the DUNE detectors. A detailed discussion of the LBNF program can be found in the DUNE/LBNF CDR Volume III \cite{DUNE2016CDR3}.
+
+The LBNF beamline will provide a high-intensity neutrino beam within the adequate energy range in order to meet the long-baseline oscillation physics goals of DUNE. A schematic diagram of the longitudinal section of the LBNF beamline is shown in Fig. \ref{fig:lbnf_beamline}. First, a beam of $60-120~\mathrm{GeV}$ protons is extracted from the Fermilab Main Injector. This beam is aimed towards the target area, where it collides with a cylindrical graphite target to produce pions and kaons.
+
+The diffuse, secondary beam of particles is focused by a pair of magnetic horns. These select the positively charged particles when operated in Forward Horn Current (FHC) mode, or the negatively charged ones when the current is reversed, also known as Reverse Horn Current (RHC) mode. The focused secondary beam then enters a $194~\mathrm{m}$ decay pipe where the pions and kaons will predominantly produce $\mu^{+}\nu_{\mu}$ pairs when in FHC mode (or $\mu^{-}\bar{\nu}_{\mu}$ in RHC mode).
+
+At the end of the decay pipe a hadron absorber removes the undecayed hadrons and muons from the beam, which reduces the $\nu_{e}$ ($\bar{\nu}_{e}$) and $\bar{\nu}_{\mu}$ ($\nu_{\mu}$) contamination  coming from the $\mu^{+}$ ($\mu^{-}$) decays. The resulting neutrino flux at the FD is shown in Fig. \ref{fig:dune_fd_flux}, both for FHC (left) and RHC (right) modes. These predictions show the intrinsic $\overset{\brabarb}{\nu}_{e}$ contamination and wrong sign component from wrong sign and neutral meson decays, as well as muons decaying before reaching the absorber.
+
+\begin{figure}[h!]
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/DUNE/LBNF/dune_neutrino_fd_log}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/DUNE/LBNF/dune_antineutrino_fd_log}
+	\end{subfigure}
+	\caption[Predicted neutrino fluxes at the FD in FHC mode and RHC mode.]{Predicted neutrino fluxes at the FD in FHC mode (left panel) and RHC mode (right panel). Figures taken from Ref. \cite{DUNE2020TDR2}.}
+	\label{fig:dune_fd_flux}
+\end{figure}
