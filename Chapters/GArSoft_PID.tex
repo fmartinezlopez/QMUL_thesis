@@ -21,7 +21,7 @@ In order to study the effects of final state interactions (FSI) in CC interactio
 
 In order to correctly identify electrons, muons, pions, kaons and protons ND-GAr can use a combination of: $\mathrm{d}E/\mathrm{d}x$ measurements in the HPgTPC, $E_{ECAL}/p$ using the ECAL total energy and the momentum obtained from magnetic spectroscopy in the HPgTPC and penetration information through the ECAL and muon tagger.
 
-\section{\boldmath\texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} measurement in the TPC}
+\section[\texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} measurement in the TPC]{\boldmath\texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} measurement in the TPC}
 
 Among the parameters extracted from the track fitting, ionisation is particularly useful for particle identification, as it is a function of the particle velocity. Although for the case of relativistic particles this dependence is not very strong, measuring the track on a large number of points may allow us to estimate the amount of ionisation accuratel. This, paired with a measurement of the momentum, may allow us to identify the particle type.
 
@@ -223,7 +223,7 @@ One can also check what happens if instead of applying the logarithmic calibrati
 
 Once we have a collection of $\mathrm{d}E/\mathrm{d}x$ values for each reconstructed track, we can compute the corresponding most probable ionisation loss per unit length of the particle. This is the value predicted by the Bethe-Bloch or the PAI models, and together with a measurement of the momentum it allows for particle identification.
 
-However, estimating the most probable $\mathrm{d}E/\mathrm{d}x$ value for each track in the reconstruction is not a trivial task. As mentioned before, the $\mathrm{d}E/\mathrm{d}x$ distributions follow Landau-like distributions. Therefore, one should perform e.g. a LanGauss fit to correctly estimate the most probable values. Automating this kind of fits is often problematic, as they usually incur in convergence problems. Moreover, the reconstructed $\mathrm{d}E/\mathrm{d}x$ distributions we obtain tend to have relatively small statistics, which may also produce poor fits. In practice, doing these unsupervised fits may degrade our performance, and a more robust method is preferred.
+However, estimating the most probable $\mathrm{d}E/\mathrm{d}x$ value for each reconstructed track is not a trivial task. As mentioned before, the $\mathrm{d}E/\mathrm{d}x$ distributions follow Landau-like distributions. Therefore, one should perform e.g. a LanGauss fit to correctly estimate the most probable values. Automating this kind of fits is often problematic, as they usually incur in convergence problems. Moreover, the reconstructed $\mathrm{d}E/\mathrm{d}x$ distributions we obtain tend to have relatively small statistics, which may also produce poor fits. In practice, doing these unsupervised fits may degrade our performance, and a more robust method is preferred.
 
 A possibility could be taking the mean of the reconstructed $\mathrm{d}E/\mathrm{d}x$ distribution for each particle. The problem with this approach is that the high energy Landau tail, combined with our limited statistics, can induce large fluctuations in the computation of the mean. Imagine you have two protons with the same kinetic energy, but due to reconstruction problems in one case you did not get as many charge deposits reconstructed in its high ionisation loss region. If you do not remove the tails the computed $\mathrm{d}E/\mathrm{d}x$ means will be significantly different.
 
@@ -250,28 +250,37 @@ For each truncation factor, I look at the bias and the resolution I obtain. I de
 \end{equation}
 where $A_{core}$ and $A_{tail}$ are the amplitudes of the core and tail distributions respectively and $x$ is either the mean $\mu$ or the width $\sigma$ of said distributions.
 
-Fig. \ref{fig:energy_trucation_opt} shows the bias (left panel) and the resolution (right panel) I obtained for the stopping proton sample, using different values of the truncation. From these, it can be seen that a truncation factor of $50\%$ minimises the bias in the estimation, while $70\%$ gives the best resolution. That way, I settled on the intermediate value of $60\%$ truncation. and a $\left<\mathrm{d}E/\mathrm{d}x\right>$ resolution of $5.00\pm0.08~\%$ for protons.
+Fig. \ref{fig:energy_trucation_opt} shows the bias (left panel) and the resolution (right panel) I obtained for the stopping proton sample, using different values of the truncation. From these, it can be seen that a truncation factor of $50\%$ minimises the bias in the estimation, while $70\%$ gives the best resolution. That way, I settled on the intermediate value of $60\%$ truncation, which yields a $\left<\mathrm{d}E/\mathrm{d}x\right>$ resolution of $5.00\pm0.08~\%$ for stopping protons.
 
 \subsection[Mean \texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} parametrisation]{Mean \boldmath\texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} parametrisation}
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/dEdx_aleph_data_with_fit.pdf}
-	\caption{Truncated mean $\mathrm{d}E/\mathrm{d}x$ obtained for the FHC neutrino sample as a function of the $\beta\gamma$ product (upper panel). Also shown are the fitted most probable values for each $\beta\gamma$ bin (red points) and the best fit obtained using the ALEPH parametrisation (black line). The residuals resulting from the fit are shown in the lower panel.}
-	\label{fig:energy_adc_saturation}
+	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/dEdx_betagamma_examples.pdf}
+	\caption{Examples of the truncated mean $\mathrm{d}E/\mathrm{d}x$ LanGauss fits for various $\beta\gamma$ bins, from a simulated FHC neutrino sample.}
+	\label{fig:dEdx_betagamma_fits}
 \end{figure}
 
-In order to determine the value of the free parameters in our case, I used a sample of $10^{5}$ fully reconstructed FHC neutrino events in the HPgTPC. The original data does not contain an estimation of the  velocity of the tracks, instead the tracks have a value for the reconstructed momentum and the associated PDG code of the Geant4-level particle that created the track. So, we can select some of the particles in the data, in this case I selected electrons, muons, pions and protons, and compute $\beta$ and $\gamma$ from the reconstructed momentum and their mass. In terms of $\beta\gamma$ the mean $\mathrm{d}E/\mathrm{d}x$ does not depend on the particle species, so we can consider all the data as a whole.
+Now that we have a way to estimate the mean energy loss of a particle in the HPgTPC, we can determine the value of the free parameters in the ALEPH formula, Eq. (\ref{Eq:3.3}). For this, I used a sample of $10^{5}$ reconstructed FHC neutrino events inside ND-GAr. In this case I cannot use the stopping proton sample, as we need to cover the full kinematic range of interest for the neutrino interactions in our detector.
 
-Now we bin the data in $\beta\gamma$ and $\left<\mathrm{d}E/\mathrm{d}x\right>$. The $\left<\mathrm{d}E/\mathrm{d}x\right>$ is not very relevant, any sensible choice will do. For $\beta\gamma$ one needs to be careful about the lower end of the range, as for very low $\beta\gamma$ there is a sudden drop we should avoid for the fit.
-
-Once we have the binning we can fit a gaussian to the resulting $\left<\mathrm{d}E/\mathrm{d}x\right>$ histogram for each $\beta\gamma$ bin. We keep the mean of each gaussian and the center of the $\beta\gamma$ bins as the points we will fit to the ALEPH formula.
-
-For the fit, we express $\beta$ in terms of the $\beta\gamma$ product as:
+The original data does not contain an estimation of the velocity of the tracks, instead the tracks have a value for the reconstructed momentum and the associated PDG code of the Geant4-level particle that created the track. Therefore, one can select some of the particles in the data, in this case I selected electrons, muons, pions and protons, and compute $\beta$ and $\gamma$ using the reconstructed momentum and their mass. In terms of $\beta\gamma$ the mean $\mathrm{d}E/\mathrm{d}x$ does not depend on the particle species, so one can consider all the dataset as a whole. For this fit, I will express $\beta$ in terms of the $\beta\gamma$ product as:
 \begin{equation}
     \beta = \frac{\beta\gamma}{\sqrt{1+(\beta\gamma)^{2}}},
 \end{equation}
-which can be easily proven from the definition of $\gamma$, and put reasonable bounds for the $P_{i}$ parameters. Following this procedure these are the parameters I extract from the fit:
+which can be easily proven from the definition of $\gamma$.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/dEdx_aleph_data_with_fit.pdf}
+	\caption{Truncated mean $\mathrm{d}E/\mathrm{d}x$ obtained for the FHC neutrino sample as a function of the $\beta\gamma$ product (upper panel). Also shown are the fitted most probable values for each $\beta\gamma$ bin (red points) and the best fit obtained using the ALEPH parametrisation (black line). The residuals resulting from the fit are shown in the lower panel.}
+	\label{fig:dEdx_betagamma_ALEPH}
+\end{figure}
+
+Next, I bin the data in $\beta\gamma$. I chose a fine binning so as to capture the different features of the ionisation curve. Then, for each $\beta\gamma$ slice, I compute the median and the interquartile range (IQR) of the $\left<\mathrm{d}E/\mathrm{d}x\right>$ distribution. Using these, I make a histogram in the range $[\mathrm{median}-\mathrm{IQR},~ \mathrm{median}+5~\mathrm{IQR})$, which I fit to a LanGauss function in order to extract the MPV. Using this range accounts for the asymmetric nature of the distributions, while also helps avoiding a second, lower maximum present at low $\beta\gamma$, probably a result of reconstruction failures.
+
+A few examples of these fits are shown in Fig. \ref{fig:dEdx_betagamma_fits}. The chosen values of $\beta\gamma$ sit in very distinct points along the $\left<\mathrm{d}E/\mathrm{d}x\right>$ curve, going from the high ionisation region at low velocities (top left panel), to the minimum point (top right panel), the beginning of the relativistic rise (bottom left panel), and the plateau produced by the density effect (bottom right panel).
+
+I used the resulting most probable $\left<\mathrm{d}E/\mathrm{d}x\right>$ values and the centres of the $\beta\gamma$ bins as the points to fit to the ALEPH formula. The result is shown in Fig. \ref{fig:dEdx_betagamma_ALEPH} (top panel). The best fit parameters 
 \begin{equation}
     \begin{split}
         P_{1} &= 3.18 \pm 0.70, \\
@@ -281,6 +290,23 @@ which can be easily proven from the definition of $\gamma$, and put reasonable b
         P_{5} &= 1.73 \pm 0.32. \\
     \end{split}
 \end{equation}
+
+\begin{table}[t]
+	\caption{Best fit parameters obtained fitting a ND-GAr simulated FHC neutrino sample to the ALEPH mean $\mathrm{d}E/\mathrm{d}x$ parametrisation from Eq. (\ref{Eq:3.3}).}
+	\begin{center}
+		\begin{small}
+			\begin{tabular}{l|l|l}
+				Parameter & Best fit $\pm 1\sigma$ & $3\sigma$ range \\ \hline
+				$P_{1}$   &                        &                 \\
+				$P_{2}$   &                        &                 \\
+				$P_{3}$   &                        &                 \\
+				$P_{4}$   &                        &                 \\
+				$P_{5}$   &                        &                
+			\end{tabular}
+		\end{small}
+	\end{center}
+	\label{tab:aleph_fit}
+\end{table}
 
 \subsection{Proton identification}
 
