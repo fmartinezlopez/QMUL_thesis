@@ -280,16 +280,7 @@ Next, I bin the data in $\beta\gamma$. I chose a fine binning so as to capture t
 
 A few examples of these fits are shown in Fig. \ref{fig:dEdx_betagamma_fits}. The chosen values of $\beta\gamma$ sit in very distinct points along the $\left<\mathrm{d}E/\mathrm{d}x\right>$ curve, going from the high ionisation region at low velocities (top left panel), to the minimum point (top right panel), the beginning of the relativistic rise (bottom left panel), and the plateau produced by the density effect (bottom right panel).
 
-I used the resulting most probable $\left<\mathrm{d}E/\mathrm{d}x\right>$ values and the centres of the $\beta\gamma$ bins as the points to fit to the ALEPH formula. The result is shown in Fig. \ref{fig:dEdx_betagamma_ALEPH} (top panel). The best fit parameters 
-\begin{equation}
-    \begin{split}
-        P_{1} &= 3.18 \pm 0.70, \\
-        P_{2} &= 11.70 \pm 2.46, \\
-        P_{3} &= (1.51 \pm 1.82) \times 10^{-3}, \\
-        P_{4} &= 1.98 \pm 0.01, \\
-        P_{5} &= 1.73 \pm 0.32. \\
-    \end{split}
-\end{equation}
+I used the resulting most probable $\left<\mathrm{d}E/\mathrm{d}x\right>$ values and the centres of the $\beta\gamma$ bins as the points to fit to the ALEPH formula. The results are shown in Fig. \ref{fig:dEdx_betagamma_ALEPH} (top panel). The best fit parameters I found are summarised in Tab. \ref{tab:aleph_fit}. One can see that the obtained 
 
 \begin{table}[t]
 	\caption{Best fit parameters obtained fitting a ND-GAr simulated FHC neutrino sample to the ALEPH mean $\mathrm{d}E/\mathrm{d}x$ parametrisation from Eq. (\ref{Eq:3.3}).}
@@ -396,6 +387,59 @@ The second method depicted in Fig. \ref{fig:associations_drift} (right panel) tr
 Both options could offer a solution to the $t_{0}$ problem, and still need to be explored.
 
 \subsection{Feature selection and importance}
+
+I am using samples with 100k FHC neutrino interactions, no truth cuts whatsoever. From the Geant4 I am only keeping the true momentum and PDG. From the track reco I keep the momentum (end momentum, both forward and backward fits).
+
+For the ECAL, I compute a series of variables per each reco track. As there can be more than one ECAL cluster associated to each track what I do is collect all associated clusters and compute my variables from the complete collection of hits associated to each track. I can roughly divide the variables in three types: energy-related, geometry-related and statistical.
+
+\textbf{Energy-related ECAL}
+\begin{itemize}
+	\item ECAL total energy (ClusterTotalEnergy): sum of the energy of all the ECAL hits.
+	\item Hit mean energy (HitMeanEnergy): mean of the hits energy distribution.
+	\item Hit std energy (HitStdEnergy): standard deviation of the hits energy distribution.
+	\item Hit max energy (HitMaxEnergy): maximum of the hits energy distribution.
+\end{itemize}
+
+\textbf{Geometry-related ECAL}
+\begin{itemize}
+	\item Mean distance hit-to-cluster (DistHitClusterMean): mean of the distance distribution between the hits and the corresponding cluster's main axis.
+	\item RMS distance hit-to-cluster (DistHitClusterRMS): root mean square of the distance distribution between the hits and the corresponding cluster's main axis.
+	\item Maximum distance hit-to-centre (DistHitCenterMax): maximum of the distance distribution between the hits and the centre of the TPC.
+	\item Time-of-Flight velocity (TOFVelocity): slope obtained when fitting a straight line to the hit time versus hit distance to the centre (i.e. $d = v \times t$).
+\end{itemize}
+
+\textbf{Energy and Geometry ECAL}
+\begin{itemize}
+	\item Radius 90\% energy (Radius90E): distance in the hit-to-cluster distribution for which 90\% of the total energy is contained in the hits that are closer to the axis (i.e. radius that contains 90\% of the energy).
+\end{itemize}
+
+\textbf{Statistical ECAL}
+\begin{itemize}
+	\item Number of hits (NHits): total number of hits associated to the track.
+	\item Number of layers with hits (NLayers): not really a count of all layers with hits but the difference between the last and the first layer with hits.
+\end{itemize}
+
+For the MuID, now that the bug affecting the position of the reco hits has been solved (07/07/23) I also included some related quantities in the analysis ntuples. They also fall in the same classification I use for the ECAL variables and are also defined per reco track as there is also the possibility of having more than one MuID cluster for each track.
+
+\textbf{Energy-related MuID}
+\begin{itemize}
+	\item MuID total energy (ClusterMuIDTotalEnergy): sum of the energy of all the MuID hits.
+	\item Hit MuID mean energy (HitMuIDMeanEnergy): mean of the MuID hits energy distribution.
+	\item Hit MuID std energy (HitMuIDStdEnergy): standard deviation of the MuID hits energy distribution.
+	\item Hit MuID max energy (HitMuIDMaxEnergy): maximum of the MuID hits energy distribution.
+\end{itemize}
+
+\textbf{Geometry-related MuID}
+\begin{itemize}
+	\item Max distance MuID hits (DistHitMuIDMax): maximum distance between pairs of MuID hits (not sure this is a good variable, distribution looks nuts).
+	\item Maximum distance MuID hit-to-centre (DistHitCenterMuIDMax): maximum of the distance distribution between the MuID hits and the centre of the TPC.
+\end{itemize}
+
+\textbf{Statistical MuID}
+\begin{itemize}
+	\item Number of hits (NHitsMuID): total number of MuID hits associated to the track.
+	\item Number of layers with hits (NLayersMuID): not really a count of all layers with MuID hits but the difference between the last and the first layer with MuIDhits.
+\end{itemize}
 
 \subsection{Hyperparameter optimisation}
 
