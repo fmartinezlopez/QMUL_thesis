@@ -347,13 +347,13 @@ As a way of comparing the performance of this algorithm, a new, simpler associat
 \begin{figure}[t]
 	\begin{subfigure}{0.5\textwidth}
 		\centering
-		\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/BDT/helix_propagation_example.pdf}
+		\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/associations/helix_propagation_metrics_no_t0.pdf}
 	\end{subfigure}
 	\begin{subfigure}{0.5\textwidth}
 		\centering
-		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/BDT/helix_propagation_metrics_2.pdf}
+		\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/associations/helix_propagation_metrics_ecal.pdf}
 	\end{subfigure}
-	\caption{Left panel: example reconstructed track (red line) propagated up to an angle $\phi_{max} = \pi/2$ (dashed blue line). Also shown are the ECal clusters in the event (green squares). Right panel: performance metrics.}
+	\caption{Left panel: comparison between the precision (blue), sensitivity (yellow) and $F_{1}$ score (red) obtained for the default (horizontal lines) and new algorithms, both with the $\chi^{2}$-based direction estimator (squares) and cheating the directions (circles), for different values of the $chi^{2}$ cut. Right panel: comparison of the performance of the new algorithm when applying the cluster $t_{0}$ correction (squares) and when (circles).}
 	\label{fig:associations}
 \end{figure}
 
@@ -361,7 +361,9 @@ For each reconstructed track, the new algorithms applies the same procedure to t
 
 For each ECal cluster, I compute the radial distance to the centre of the TPC and find the $\phi$ value in the range $[\phi_{0}, \ \phi_{0}+\mathrm{sign}(R)\phi_{max})$ that makes the propagated helix intersect with the circle defined with such radius. The $(x,y,z)$ position of the helix for the $\phi$ value found (if any) is then computed. In case there are two intersections, I keep the one that minimises the distance between $(y, z)$ and $(y_{c}, z_{c})$.
 
+\begin{comment}
 Fig. \ref{fig:associations} (left panel) shows an example track (red line) being propagated up to $\phi_{0}+\mathrm{sign}(R)\pi/2$ (dashed blue line). The image also shows the ECal clusters present in the event (green squares). For each of them, the algorithm will try to find the intersections of the propagated helix and the circles defined with their corresponding radii.
+\end{comment}
 
 I then calculate $\chi^{2}$ value based on the Euclidean distance between the propagated point and the cluster:
 \begin{equation}
@@ -379,12 +381,12 @@ This default behaviour of the algorithm can be modified to associate more than o
 
 To evaluate the performance of the association method, I use a binary classification approach. In this case, I check the leading MC Track IDs associated to the reconstructed tracks and ECal clusters. I count an association as true positive (TP) if both Track IDs coincide. An association is considered false positive (FP) when the Track IDs are different. If a cluster has not been associated to any track but it shares the Track ID with a reconstructed track it is counted as a false negative (FN).
 
-Fig. \ref{fig:associations} (right panel) shows the precision (blue line), sensitivity (red line), accuracy (orange line) and $F_{1}$-score (green line) for different values of $\chi^{2}_{cut}$. For comparison, the same metrics computed for the default algorithm with the current configuration are also shown (dashed lines). Notice that we can achieve similar values of the precision with this new code while having a considerably higher sensitivity.
+For the testing, I used a sample of 10000 FHC neutrino events inside the HPgTPC. Fig. \ref{fig:associations} (left panel) shows the precision (blue line), sensitivity (yellow line), and $F_{1}$ score (red line) I obtained for different values of $\chi^{2}_{cut}$. For comparison, the same metrics computed for the default algorithm with the current configuration are also shown (dashed lines). In the case of the new algorithm, I used both the $\chi^{2}$-based method to estimate the track direction described earlier (square markers) and the cheated direction from the Geant-level information (circle markers). For either of these we achieve similar values of the precision compared to the old code, while having a considerably higher sensitivity. It can be seen that cheating the direction of the tracks only makes a difference at high $\chi^{2}_{cut}$, past the optimal value of the cut around the $F_{1}$ score maximum. Therefore, I set the $\chi^{2}$ method as the default.
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/BDT/drift_correction.pdf}
-	\caption{Schematics of possible options to deal with track-ECal associations in non-zero $t_{0}$ neutrino interaction events. The first option (left panel) tries to correct for the drift direction uncertainty in a cluster-by-cluster basis using the cluster time, $t_{cluster}$. The second option (right panel) is based on a track-by-track approach, propagating two additional helices for each track corrected by factors of $\pm t_{spill}/2$.}
+	\includegraphics[width=.55\linewidth]{Images/GArSoft_PID/associations/drift_correction.png}
+	\caption{Schematics of a possible option to deal with track-ECal associations in non-zero $t_{0}$ neutrino interaction events, trying to correct for the drift direction uncertainty in a cluster-by-cluster basis using the cluster time, $t_{cluster}$.}
 	\label{fig:associations_drift}
 \end{figure}
 
@@ -396,6 +398,7 @@ where $v_{drift}$ is the mean drift velocity in our medium and the initial time 
 
 The current default in GArSoft sets $t_{0} = 0$, but the functionality to randomly sample this within the spill time is in place. Therefore, we need to understand what is the impact of a non-zero $t_{0}$ on the associations algorithm and foresee possible ways of minimising a loss in performance.
 
+\begin{comment}
 Fig. \ref{fig:associations_drift} represents two different options to tackle the associations problem when having events with a non-zero initial time $t_{0}$. The circles represent the original points, whereas the squares indicate the corrected positions. The end points of the track and the propagated points up to the cluster radius are indicated using filled and unfilled markers respectively. The red square represents the position of the cluster.
 
 In the first option (left panel) I try to correct for the drift coordinate position using the time associated to the cluster. Assuming that the drift time is much larger than the propagation time, $t_{cluster}$ could be used as a good estimation of the $t_{0}$. An alternative can be using the earliest time associated to a hit in said cluster. Doing this for each cluster before computing the $\chi^{2}$ value could be used as an alternative to knowing the specific value of the $t_{0}$, as when the association is correct this will provide the right correction but its impact is small enough to not change the position significantly in the case the cluster does not correspond to a given track.
@@ -403,6 +406,13 @@ In the first option (left panel) I try to correct for the drift coordinate posit
 The second method depicted in Fig. \ref{fig:associations_drift} (right panel) tries to propagate three different helices for each reconstructed track and fit direction. One is the original, uncorrected helix and the other two are obtained by adding factors of $\pm t_{spill}/2$ when computing the drift coordinate position. In this case one would compute a set of $\chi^{2}$ values for each helix, keeping in the end the collection that manages to keep more values below $\chi^{2}_{cut}$. An alternative approach could be using a family of helices instead, using uniformly sampled time correction values in the $\pm t_{spill}/2$ range.
 
 Both options could offer a solution to the $t_{0}$ problem, and still need to be explored.
+\end{comment}
+
+Fig. \ref{fig:associations_drift} represents a possible option to tackle the association problem when having events with a non-zero initial time $t_{0}$. The black and white circles represent the original points, whereas the squares indicate the corrected positions. The end points of the track and the propagated points up to the cluster radius are indicated using filled and unfilled markers respectively. The red square represents the position of the cluster.
+
+Here I try to correct for the drift coordinate position using the time associated to the cluster. Assuming that the drift time is much larger than the propagation time, $t_{cluster}$ could be used as a good estimation of the $t_{0}$. An alternative can be using the earliest time associated to a hit in said cluster. Doing this for each cluster before computing the $\chi^{2}$ value could be used as an alternative to knowing the specific value of the $t_{0}$, as when the association is correct this will provide the right correction but its impact is small enough to not change the position significantly in the case the cluster does not correspond to a given track.
+
+I tested the effect of this correction again using a sample of 10000 FHC neutrino events. Fig. \ref{fig:associations} (right panel) shows the precision (blue line), sensitivity (yellow line), and $F_{1}$ score (red line) for the case the cluster $t_{0}$ correction is applied (square markers) and for the no correction case (circle markers), as a function of $\chi^{2}_cut$. In this case, the differences are particularly notorious at low values of the cut. It makes sense, as the $t_{0}$ effect becomes subdominant when the distance we consider grows large. Overall, the correction increases the sensitivity while keeping the precision almost unchanged. As a result, I apply the $t_{0}$ correction to the generated samples as the default.
 
 \subsection{Feature selection and importance}
 
@@ -410,12 +420,14 @@ I am using samples with 100k FHC neutrino interactions, no truth cuts whatsoever
 
 For the ECAL, I compute a series of variables per each reco track. As there can be more than one ECAL cluster associated to each track what I do is collect all associated clusters and compute my variables from the complete collection of hits associated to each track. I can roughly divide the variables in three types: energy-related, geometry-related and statistical.
 
-\textbf{Energy-related ECAL}
 \begin{itemize}
-	\item ECAL total energy (ClusterTotalEnergy): sum of the energy of all the ECAL hits.
+	\item \textbf{Energy-related ECAL}
+	\begin{itemize}
+		\item ECAL total energy (ClusterTotalEnergy): sum of the energy of all the ECAL hits.
 	\item Hit mean energy (HitMeanEnergy): mean of the hits energy distribution.
 	\item Hit std energy (HitStdEnergy): standard deviation of the hits energy distribution.
 	\item Hit max energy (HitMaxEnergy): maximum of the hits energy distribution.
+	\end{itemize}
 \end{itemize}
 
 \textbf{Geometry-related ECAL}
