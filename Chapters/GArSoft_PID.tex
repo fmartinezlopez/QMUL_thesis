@@ -271,17 +271,27 @@ which can be easily proven from the definition of $\gamma$.
 
 \begin{figure}[t]
 	\centering
+	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/mcmc_weighted_equal_frequency_bin_200.pdf}
+	\caption{Resulting one and two dimensional projections of the posterior probability distributions of the ALEPH $\left<\mathrm{d}E/\mathrm{d}x\right>$ parameters obtained by fitting the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ values from a FHC neutrino sample in ND-GAr. The vertical dashed lines in the 1D distributions represent the 16th, 50th and 84th percentiles.}
+	\label{fig:dEdx_ALEPH_fit}
+\end{figure}
+
+Next, I bin the data in $\beta\gamma$. I chose a fine binning so as to capture the different features of the ionisation curve. Instead of fixing the bin width, I select them so each one has approximately the same statistics. Then, for each $\beta\gamma$ slice, I compute the median and the interquartile range (IQR) of the $\left<\mathrm{d}E/\mathrm{d}x\right>$ distribution. Using these, I make a histogram in the range $[\mathrm{median}-\mathrm{IQR},~ \mathrm{median}+5~\mathrm{IQR})$, which I fit to a LanGauss function in order to extract the MPV. Using this range accounts for the asymmetric nature of the distributions, while also helps avoiding a second, lower maximum present at low $\beta\gamma$, probably a result of reconstruction failures.
+
+A few examples of these fits are shown in Fig. \ref{fig:dEdx_betagamma_fits}. The chosen values of $\beta\gamma$ sit in very distinct points along the $\left<\mathrm{d}E/\mathrm{d}x\right>$ curve, going from the high ionisation region at low velocities (top left panel), to the minimum point (top right panel), the beginning of the relativistic rise (bottom left panel), and the plateau produced by the density effect (bottom right panel).
+
+I used the resulting most probable $\left<\mathrm{d}E/\mathrm{d}x\right>$ values and the centres of the $\beta\gamma$ bins as the points to fit to the ALEPH formula. For this particular fit I used the least-squares method to get a first estimation of the ALEPH parameters. Applying some uniform priors, I then used these values as the starting point of a $100000$ steps MCMC. In Fig. \ref{fig:dEdx_ALEPH_fit} I show the posterior probability distributions I obtain for each parameter. The reported best fit points are based on the 16th, 50th, and 84th percentiles in the marginalised distributions.
+
+\begin{figure}[t]
+	\centering
 	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/dEdx_aleph_data_with_fit.pdf}
 	\caption{Truncated mean $\mathrm{d}E/\mathrm{d}x$ obtained for the FHC neutrino sample as a function of the $\beta\gamma$ product (upper panel). Also shown are the fitted most probable values for each $\beta\gamma$ bin (red points) and the best fit obtained using the ALEPH parametrisation (black line). The residuals resulting from the fit are shown in the lower panel.}
 	\label{fig:dEdx_betagamma_ALEPH}
 \end{figure}
 
-Next, I bin the data in $\beta\gamma$. I chose a fine binning so as to capture the different features of the ionisation curve. Then, for each $\beta\gamma$ slice, I compute the median and the interquartile range (IQR) of the $\left<\mathrm{d}E/\mathrm{d}x\right>$ distribution. Using these, I make a histogram in the range $[\mathrm{median}-\mathrm{IQR},~ \mathrm{median}+5~\mathrm{IQR})$, which I fit to a LanGauss function in order to extract the MPV. Using this range accounts for the asymmetric nature of the distributions, while also helps avoiding a second, lower maximum present at low $\beta\gamma$, probably a result of reconstruction failures.
+The resulting fit (black line), compared to the data points (red points) and the underlying distribution is shown in Fig. \ref{fig:dEdx_betagamma_ALEPH} (top panel). The overall fit is good, with a reduced chi-squared of $\chi^{2}/ndf=1.02$. However, there are some regions where the fit does not describe the data correctly, like the very low $\beta\gamma$ regime, where the fit severely underestimates for energy losses $\gtrsim 50 ~ \mathrm{keV}/\mathrm{cm}$, and the start of the relativistic raise, where we have a slight overestimation. This is a result of those points having a larger uncertainty when compared to the ones around the dip or the plateau areas. These differences can be better seen in the residual plot, Fig. \ref{fig:dEdx_betagamma_ALEPH} (bottom panel).
 
-A few examples of these fits are shown in Fig. \ref{fig:dEdx_betagamma_fits}. The chosen values of $\beta\gamma$ sit in very distinct points along the $\left<\mathrm{d}E/\mathrm{d}x\right>$ curve, going from the high ionisation region at low velocities (top left panel), to the minimum point (top right panel), the beginning of the relativistic rise (bottom left panel), and the plateau produced by the density effect (bottom right panel).
-
-I used the resulting most probable $\left<\mathrm{d}E/\mathrm{d}x\right>$ values and the centres of the $\beta\gamma$ bins as the points to fit to the ALEPH formula. The results are shown in Fig. \ref{fig:dEdx_betagamma_ALEPH} (top panel). The best fit parameters I found are summarised in Tab. \ref{tab:aleph_fit}. One can see that the obtained 
-
+\begin{comment}
 \begin{table}[t]
 	\caption{Best fit parameters obtained fitting a ND-GAr simulated FHC neutrino sample to the ALEPH mean $\mathrm{d}E/\mathrm{d}x$ parametrisation from Eq. (\ref{Eq:3.3}).}
 	\begin{center}
@@ -298,8 +308,16 @@ I used the resulting most probable $\left<\mathrm{d}E/\mathrm{d}x\right>$ values
 	\end{center}
 	\label{tab:aleph_fit}
 \end{table}
+\end{comment}
 
 \subsection{Proton identification}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/dEdx/proton_dEdx_momentum.pdf}
+	\caption{Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias (left panel) and resolution (right panel) obtained using the corrected data from the stopping proton sample, for different values of the truncation factor.}
+	\label{fig:proton_dEdx_momentum}
+\end{figure}
 
 \section{Muon and pion separation in the ECal and MuID}
 
@@ -312,7 +330,7 @@ I used the resulting most probable $\left<\mathrm{d}E/\mathrm{d}x\right>$ values
 
 \subsection{Track-ECal matching}
 
-One of the main players in the particle identification, in particular for muon and pion separation, is the way we associate clusters in the ECal to reconstructed tracks in the TPC. Missing some associations or making wrong ones can bias the ECal quantities that we can use for classifying particles. The current algorithm in GArSoft provides precise associations, i.e. most of the associations that it produces are correct, but it appears to miss an important number of associations (at least when using the default configuration).
+One of the main players in the muon and pion separation is the way we associate clusters in the ECal to reconstructed tracks in the TPC. Missing some associations or making wrong ones can bias the ECal quantities that we can use for classifying particles. The current algorithm in GArSoft provides precise associations, i.e. most of the associations that it produces are correct, but it appears to miss an important number of associations (at least when using the default configuration).
 
 The current TPC track-ECal cluster association algorithm is divided in four parts. It first checks whether the track end point fulfils certain conditions to be extrapolated. There are two cut values in this step, one for the drift direction and other radial.
 
@@ -370,7 +388,7 @@ Fig. \ref{fig:associations} (right panel) shows the precision (blue line), sensi
 	\label{fig:associations_drift}
 \end{figure}
 
-One of the possible weak points of this approach is that it relies on the position along the drift direction to make the decisions. Within the current ND-GAr design implemented in GArSoft, the timing information is provided by the ECal. That effectively means that prior to make the track-ECal associations the reconstructed $X$ positions of the track trajectories differ from the simulated ones by an amount:
+One of the possible weak points of this approach is that it relies on the position along the drift direction to make the decisions. Within the current ND-GAr design implemented in GArSoft, the timing information is provided by the ECal. That effectively means that prior to make the track-ECal associations the reconstructed $x$ positions of the track trajectories differ from the simulated ones by an amount:
 \begin{equation}
 	x_{reco}^{(n)} - x_{sim}^{(n)} = v_{drift} \ t_{0},
 \end{equation}
