@@ -278,15 +278,22 @@ which can be easily proven from the definition of $\gamma$.
 
 Next, I bin the data in $\beta\gamma$. I chose a fine binning so as to capture the different features of the ionisation curve. Instead of fixing the bin width, I select them so each one has approximately the same statistics. Then, for each $\beta\gamma$ slice, I compute the median and the interquartile range (IQR) of the $\left<\mathrm{d}E/\mathrm{d}x\right>$ distribution. Using these, I make a histogram in the range $[\mathrm{median}-\mathrm{IQR},~ \mathrm{median}+5~\mathrm{IQR})$, which I fit to a LanGauss function in order to extract the MPV. Using this range accounts for the asymmetric nature of the distributions, while also helps avoiding a second, lower maximum present at low $\beta\gamma$, probably a result of reconstruction failures.
 
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/dEdx_aleph_data_with_fit.pdf}
+	\caption{Truncated mean $\mathrm{d}E/\mathrm{d}x$ obtained for the FHC neutrino sample as a function of the $\beta\gamma$ product (upper panel). Also shown are the fitted most probable values for each $\beta\gamma$ bin (red points) and the best fit obtained using the ALEPH parametrisation (black line). The residuals resulting from the fit are shown in the lower panel.}
+	\label{fig:dEdx_betagamma_ALEPH}
+\end{figure}
+
 A few examples of these fits are shown in Fig. \ref{fig:dEdx_betagamma_fits}. The chosen values of $\beta\gamma$ sit in very distinct points along the $\left<\mathrm{d}E/\mathrm{d}x\right>$ curve, going from the high ionisation region at low velocities (top left panel), to the minimum point (top right panel), the beginning of the relativistic rise (bottom left panel), and the plateau produced by the density effect (bottom right panel).
 
 I used the resulting most probable $\left<\mathrm{d}E/\mathrm{d}x\right>$ values and the centres of the $\beta\gamma$ bins as the points to fit to the ALEPH formula. For this particular fit I used the least-squares method to get a first estimation of the ALEPH parameters. Applying some uniform priors, I then used these values as the starting point of a $100000$ steps MCMC. In Fig. \ref{fig:dEdx_ALEPH_fit} I show the posterior probability distributions I obtain for each parameter. The reported best fit points are based on the 16th, 50th, and 84th percentiles in the marginalised distributions.
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/dEdx_aleph_data_with_fit.pdf}
-	\caption{Truncated mean $\mathrm{d}E/\mathrm{d}x$ obtained for the FHC neutrino sample as a function of the $\beta\gamma$ product (upper panel). Also shown are the fitted most probable values for each $\beta\gamma$ bin (red points) and the best fit obtained using the ALEPH parametrisation (black line). The residuals resulting from the fit are shown in the lower panel.}
-	\label{fig:dEdx_betagamma_ALEPH}
+	\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/dEdx/dEdx_curves_with_fit.pdf}
+	\caption{Distribution of the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ versus reconstructed momentum for the FHC neutrino sample. The black lines indicate the predictions of the ALEPH parametrisation for electrons, muons, charged pions and protons.}
+	\label{fig:dEdx_vs_momentum}
 \end{figure}
 
 The resulting fit (black line), compared to the data points (red points) and the underlying distribution is shown in Fig. \ref{fig:dEdx_betagamma_ALEPH} (top panel). The overall fit is good, with a reduced chi-squared of $\chi^{2}/ndf=1.02$. However, there are some regions where the fit does not describe the data correctly, like the very low $\beta\gamma$ regime, where the fit severely underestimates for energy losses $\gtrsim 50 ~ \mathrm{keV}/\mathrm{cm}$, and the start of the relativistic raise, where we have a slight overestimation. This is a result of those points having a larger uncertainty when compared to the ones around the dip or the plateau areas. These differences can be better seen in the residual plot, Fig. \ref{fig:dEdx_betagamma_ALEPH} (bottom panel).
@@ -314,13 +321,6 @@ The resulting fit (black line), compared to the data points (red points) and the
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/dEdx/dEdx_curves_with_fit.pdf}
-	\caption{Distribution of the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ versus reconstructed momentum for the FHC neutrino sample. The black lines indicate the predictions of the ALEPH parametrisation for electrons, muons, charged pions and protons.}
-	\label{fig:dEdx_vs_momentum}
-\end{figure}
-
-\begin{figure}[t]
-	\centering
 	\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/dEdx/proton_dEdx_momentum.pdf}
 	\caption{Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias (left panel) and resolution (right panel) obtained for the true protons in a FHC neutrino sample.}
 	\label{fig:proton_dEdx_momentum}
@@ -328,7 +328,16 @@ The resulting fit (black line), compared to the data points (red points) and the
 
 \section{Muon and pion separation in the ECal and MuID}
 
-As it could be seen from Fig. \ref{fig:dEdx_vs_momentum}, it is not possible to separate muons and charged pions in the HPgTPC using $\mathrm{d}E/\mathrm{d}x$ for momenta $\gtrsim 300~\mathrm{MeV}$. In ND-GAr, approximately $72\%$ of the interactions in FHC mode will be $\nu_{\mu}$ CC, while around $47\%$ are $\bar{\nu}_{\mu}$ CC when operating in RHC mode. ECal and MuID can provide additional information, as pion interactions will be more hadron-like.
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.70\linewidth]{Images/GArSoft_PID/BDT/ndgar_fhc_numu_cc_mu_spectrum.pdf}
+	\caption{Momentum distribution for the primary muon in $\nu_{\mu}$ CC $N\pi^{\pm}$ interactions inside the fiducial volume of ND-GAr (blue line), compared to the post FSI charged pion spectrum (red line).}
+	\label{fig:primary_muon_spectrum}
+\end{figure}
+
+As it could be seen from Fig. \ref{fig:dEdx_vs_momentum}, it is not possible to separate muons and charged pions in the HPgTPC using $\mathrm{d}E/\mathrm{d}x$ for momenta $\gtrsim 300~\mathrm{MeV}/c$. In ND-GAr, approximately $70\%$ of the interactions in FHC mode will be $\nu_{\mu}$ CC (compared to the $47\%$ of $\bar{\nu}_{\mu}$ CC interactions when operating in RHC mode), while $24\%$ are neutral currents. Out of these, around $53\%$ and $47\%$ of them will produce at leat one charged pion in the final state, respectively. Fig. \ref{fig:primary_muon_spectrum} shows a comparison between the spectra of the primary muons and the charged pions for $\nu_{\mu}$ CC interactions in ND-GAr producing one or more charged pions. From this, one can see that (i) the majority of muons and charged pions are not going to be distinguishable with a $\left<\mathrm{d}E/\mathrm{d}x\right>$ measurement, and that (ii) particle identification in necessary both to classify correctly the $\nu_{\mu}$ CC events and identify the primary muon within them.
+
+ND-GAr counts with two other subdetectors which can provide additional information for this task, namely the ECal and MuID. Pion showers are dominated by inelastic nuclear interactions will be more hadron-like. The current ECal design, described in (ref section), consists of $42$ layers, of $5~\mathrm{mm}$ of Pb, $7~\mathrm{mm}$ of plastic scintillator and a $1~\mathrm{mm}$ PCB board. The total thickness of this calorimeter is $1.66$ nuclear interaction lengths or $1.39$ pion interaction lengths.
 
 Boosted Decision Trees (BDTs) trained on a collection of ECal features allow for a track- by-track classification. A BDT is a good option for this classification problem, as they are easy to interpret and can handle data without any pre-processing.
 
@@ -425,7 +434,7 @@ Fig. \ref{fig:associations_drift} represents a possible option to tackle the ass
 
 Here I try to correct for the drift coordinate position using the time associated to the cluster. Assuming that the drift time is much larger than the propagation time, $t_{cluster}$ could be used as a good estimation of the $t_{0}$. An alternative can be using the earliest time associated to a hit in said cluster. Doing this for each cluster before computing the $\chi^{2}$ value could be used as an alternative to knowing the specific value of the $t_{0}$, as when the association is correct this will provide the right correction but its impact is small enough to not change the position significantly in the case the cluster does not correspond to a given track.
 
-I tested the effect of this correction again using a sample of 10000 FHC neutrino events. Fig. \ref{fig:associations} (right panel) shows the precision (blue line), sensitivity (yellow line), and $F_{1}$ score (red line) for the case the cluster $t_{0}$ correction is applied (square markers) and for the no correction case (circle markers), as a function of $\chi^{2}_cut$. In this case, the differences are particularly notorious at low values of the cut. It makes sense, as the $t_{0}$ effect becomes subdominant when the distance we consider grows large. Overall, the correction increases the sensitivity while keeping the precision almost unchanged. As a result, I apply the $t_{0}$ correction to the generated samples as the default.
+I tested the effect of this correction again using a sample of 10000 FHC neutrino events. Fig. \ref{fig:associations} (right panel) shows the precision (blue line), sensitivity (yellow line), and $F_{1}$ score (red line) for the case the cluster $t_{0}$ correction is applied (square markers) and for the no correction case (circle markers), as a function of $\chi^{2}_{cut}$. In this case, the differences are particularly notorious at low values of the cut. It makes sense, as the $t_{0}$ effect becomes subdominant when the distance we consider grows large. Overall, the correction increases the sensitivity while keeping the precision almost unchanged. As a result, I apply the $t_{0}$ correction to the generated samples as the default.
 
 \subsection{Feature selection and importance}
 
