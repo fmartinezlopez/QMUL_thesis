@@ -428,47 +428,44 @@ For the ECAL, I compute a series of variables per each reco track. As there can 
 	\item Hit std energy (HitStdEnergy): standard deviation of the hits energy distribution.
 	\item Hit max energy (HitMaxEnergy): maximum of the hits energy distribution.
 	\end{itemize}
-\end{itemize}
-
-\textbf{Geometry-related ECAL}
-\begin{itemize}
-	\item Mean distance hit-to-cluster (DistHitClusterMean): mean of the distance distribution between the hits and the corresponding cluster's main axis.
-	\item RMS distance hit-to-cluster (DistHitClusterRMS): root mean square of the distance distribution between the hits and the corresponding cluster's main axis.
-	\item Maximum distance hit-to-centre (DistHitCenterMax): maximum of the distance distribution between the hits and the centre of the TPC.
-	\item Time-of-Flight velocity (TOFVelocity): slope obtained when fitting a straight line to the hit time versus hit distance to the centre (i.e. $d = v \times t$).
-\end{itemize}
-
-\textbf{Energy and Geometry ECAL}
-\begin{itemize}
-	\item Radius 90\% energy (Radius90E): distance in the hit-to-cluster distribution for which 90\% of the total energy is contained in the hits that are closer to the axis (i.e. radius that contains 90\% of the energy).
-\end{itemize}
-
-\textbf{Statistical ECAL}
-\begin{itemize}
-	\item Number of hits (NHits): total number of hits associated to the track.
-	\item Number of layers with hits (NLayers): not really a count of all layers with hits but the difference between the last and the first layer with hits.
+	\item \textbf{Geometry-related ECAL}
+	\begin{itemize}
+		\item Mean distance hit-to-cluster (DistHitClusterMean): mean of the distance distribution between the hits and the corresponding cluster's main axis.
+		\item RMS distance hit-to-cluster (DistHitClusterRMS): root mean square of the distance distribution between the hits and the corresponding cluster's main axis.
+		\item Maximum distance hit-to-centre (DistHitCenterMax): maximum of the distance distribution between the hits and the centre of the TPC.
+		\item Time-of-Flight velocity (TOFVelocity): slope obtained when fitting a straight line to the hit time versus hit distance to the centre (i.e. $d = v \times t$).
+	\end{itemize}
+	\item \textbf{Energy and geometry ECAL}
+	\begin{itemize}
+		\item Radius 90\% energy (Radius90E): distance in the hit-to-cluster distribution for which 90\% of the total energy is contained in the hits that are closer to the axis (i.e. radius that contains 90\% of the energy).
+	\end{itemize}
+	\item \textbf{Statistical ECAL}
+	\begin{itemize}
+		\item Number of hits (NHits): total number of hits associated to the track.
+		\item Number of layers with hits (NLayers): not really a count of all layers with hits but the difference between the last and the first layer with hits.
+	\end{itemize}
 \end{itemize}
 
 For the MuID, now that the bug affecting the position of the reco hits has been solved (07/07/23) I also included some related quantities in the analysis ntuples. They also fall in the same classification I use for the ECAL variables and are also defined per reco track as there is also the possibility of having more than one MuID cluster for each track.
 
-\textbf{Energy-related MuID}
 \begin{itemize}
-	\item MuID total energy (ClusterMuIDTotalEnergy): sum of the energy of all the MuID hits.
-	\item Hit MuID mean energy (HitMuIDMeanEnergy): mean of the MuID hits energy distribution.
-	\item Hit MuID std energy (HitMuIDStdEnergy): standard deviation of the MuID hits energy distribution.
-	\item Hit MuID max energy (HitMuIDMaxEnergy): maximum of the MuID hits energy distribution.
-\end{itemize}
-
-\textbf{Geometry-related MuID}
-\begin{itemize}
-	\item Max distance MuID hits (DistHitMuIDMax): maximum distance between pairs of MuID hits (not sure this is a good variable, distribution looks nuts).
-	\item Maximum distance MuID hit-to-centre (DistHitCenterMuIDMax): maximum of the distance distribution between the MuID hits and the centre of the TPC.
-\end{itemize}
-
-\textbf{Statistical MuID}
-\begin{itemize}
-	\item Number of hits (NHitsMuID): total number of MuID hits associated to the track.
-	\item Number of layers with hits (NLayersMuID): not really a count of all layers with MuID hits but the difference between the last and the first layer with MuIDhits.
+	\item \textbf{Energy-related MuID}
+	\begin{itemize}
+		\item MuID total energy (ClusterMuIDTotalEnergy): sum of the energy of all the MuID hits.
+		\item Hit MuID mean energy (HitMuIDMeanEnergy): mean of the MuID hits energy distribution.
+		\item Hit MuID std energy (HitMuIDStdEnergy): standard deviation of the MuID hits energy distribution.
+		\item Hit MuID max energy (HitMuIDMaxEnergy): maximum of the MuID hits energy distribution.
+	\end{itemize}
+	\item \textbf{Geometry-related MuID}
+	\begin{itemize}
+		\item Max distance MuID hits (DistHitMuIDMax): maximum distance between pairs of MuID hits (not sure this is a good variable, distribution looks nuts).
+		\item Maximum distance MuID hit-to-centre (DistHitCenterMuIDMax): maximum of the distance distribution between the MuID hits and the centre of the TPC.
+	\end{itemize}
+	\item \textbf{Statistical MuID}
+	\begin{itemize}
+		\item Number of hits (NHitsMuID): total number of MuID hits associated to the track.
+		\item Number of layers with hits (NLayersMuID): not really a count of all layers with MuID hits but the difference between the last and the first layer with MuIDhits.
+	\end{itemize}
 \end{itemize}
 
 \subsection{Hyperparameter optimisation}
