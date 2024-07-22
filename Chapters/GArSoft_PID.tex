@@ -310,16 +310,29 @@ The resulting fit (black line), compared to the data points (red points) and the
 \end{table}
 \end{comment}
 
-\subsection{Proton identification}
+\subsection{Particle identification}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/dEdx/dEdx_curves_with_fit.pdf}
+	\caption{Distribution of the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ versus reconstructed momentum for the FHC neutrino sample. The black lines indicate the predictions of the ALEPH parametrisation for electrons, muons, charged pions and protons.}
+	\label{fig:dEdx_vs_momentum}
+\end{figure}
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/dEdx/proton_dEdx_momentum.pdf}
-	\caption{Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias (left panel) and resolution (right panel) obtained using the corrected data from the stopping proton sample, for different values of the truncation factor.}
+	\caption{Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias (left panel) and resolution (right panel) obtained for the true protons in a FHC neutrino sample.}
 	\label{fig:proton_dEdx_momentum}
 \end{figure}
 
 \section{Muon and pion separation in the ECal and MuID}
+
+As it could be seen from Fig. \ref{fig:dEdx_vs_momentum}, it is not possible to separate muons and charged pions in the HPgTPC using $\mathrm{d}E/\mathrm{d}x$ for momenta $\gtrsim 300~\mathrm{MeV}$. In ND-GAr, approximately $72\%$ of the interactions in FHC mode will be $\nu_{\mu}$ CC, while around $47\%$ are $\bar{\nu}_{\mu}$ CC when operating in RHC mode. ECal and MuID can provide additional information, as pion interactions will be more hadron-like.
+
+Boosted Decision Trees (BDTs) trained on a collection of ECal features allow for a track- by-track classification. A BDT is a good option for this classification problem, as they are easy to interpret and can handle data without any pre-processing.
+
+This way, I identify three main . These are, the way we make the associations between tracks in the HPgTPC to the activities (what in GArSoft we call clusters) in the ECal and the MuID, what variables or features one can extract from the calorimeters that encapsulate the information we are interested about, and the classification problem 
 
 \begin{figure}[t]
 	\centering
@@ -481,6 +494,141 @@ For the MuID, now that the bug affecting the position of the reco hits has been 
 \subsection{Proton and pion separation}
 
 \section{Charged pion decay in flight}
+
+As discussed previously, in GArSoft the TPC tracks are formed after a pattern recognition algorithm and a Kalman filter are applied to the TPC clusters. These two steps can find discontinuities in the track candidates (e.g. due to a particle decay) when these so-called breakpoints are large enough. However, for some, more subtle, cases they may miss them and form a single reconstructed track. It has been noted in the literature that Kalman filters offer, as a by-product, additional information to form test statistics to identify these breakpoints \cite{Fruehwirth1988,Astier2000}.
+
+\begin{figure}[t]
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/pion_decay/pion_decay_status.pdf}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/pion_decay/pion_decay_evd.png}
+	\end{subfigure}
+	\caption{Left panel: number of non-decaying, decaying and decaying in the fiducial volume pions for a MC sample of $10^{5}$, $p=500 \ \mathrm{MeV}$ isotropic positively charged pions inside the TPC. Right panel: event display for a positive pion decaying inside the fiducial volume, with a single reconstructed track for the pion and muon system.}
+	\label{fig:pion_decays}
+\end{figure}
+
+Considering the mean life of the charged pion, $\tau = (2.6033\pm0.0005)\times10^{-8} \ \mathrm{s}$, one can estimate that about $12\%$ of the pions with momentum $p \sim \mathcal{O}(500 \ \mathrm{MeV})$ (roughly the peak of the pion momentum distribution in $\nu_{\mu}$ CC interactions off argon) decay inside the TPC. Fig. \ref{fig:pion_decays} (left panel) shows the amount of charged pions decaying in the full TPC and fiducial volumes from an isotropic, monoenergetic sample of $10^{5}$ negatively charged pions with $p=500 \ \mathrm{MeV}$. We see that about $10\%$ of those decayed, with more than half of them decaying inside the TPC fiducial volume.
+
+Fig. \ref{fig:pion_decays} (right panel) shows an example event display of a charged pion (magenta line) decays in flight inside the TPC, but because the angle of the muon (blue line) is small both were reconstructed as one single track (black line). In this case, the composite track reaches the ECal, where it undergoes a muon-like interaction, thus being classified as a muon.
+
+A way to understand what decaying pion tracks were totally or partially reconstructed together with the daughter muon is looking at the relative energy contributions to the reconstructed track. In order to select a sample of such events, I require that a minimum $50\%$ of the total energy comes from the pion and at least $20\%$ from the muon.
+
+To identify potential decays we can use the information we obtain from the Kalman filter at each step of the fitted track. The simplest test we can think about is computing the $\chi^{2}$ of the mismatch between all the parameters in the forward and the backward fits:
+\begin{equation}
+	\chi^{2 \ (FB)}_{k} = (\hat{\mathrm{x}}^{B}_{k}-\hat{\mathrm{x}}^{F}_{k})^{T}[V^{(\hat{\mathrm{x}}_{k},B)}+V^{(\hat{\mathrm{x}}_{k},F)}]^{-1}(\hat{\mathrm{x}}^{B}_{k}-\hat{\mathrm{x}}^{F}_{k}),
+\end{equation}
+where $\hat{\mathrm{x}}^{F}_{k}$, $\hat{\mathrm{x}}^{B}_{k}$ are the Kalman filter state vector estimates at step $k$ in the forward and backward fits and $V^{(\hat{\mathrm{x}}_{k},F)}$, $V^{(\hat{\mathrm{x}}_{k},B)}$ the covariance matrices of $\hat{\mathrm{x}}^{F}_{k}$ and $\hat{\mathrm{x}}^{B}_{k}$ respectively. Using the values of the $\chi^{2}$ at measurement $k$ for the forward and backward fits we can compute another $\chi^{2}$ value that characterises the overall track fit:
+\begin{equation}
+	\chi^{2}_{track} = \chi^{2 \ (F)}_{k} + \chi^{2 \ (B)}_{k} + \chi^{2 \ (FB)}_{k},
+\end{equation}
+which remains approximately constant for all $k$.
+
+An alternative approach proposed in the context of the NOMAD experiment was using a fit with a more elaborate breakpoint hypothesis, so we can perform a comparison of the $\chi^{2}$ with and without breakpoints. This can be achieved by using some alternative parametrisation with extra parameters, which allows some of the track parameters to be discontinuous at certain points. A decay changes the momentum magnitude and direction, so we can use the new state vector:
+\begin{equation}
+	\alpha=\begin{pmatrix}y,& z,& 1/R_{F},& 1/R_{B},& \phi_{F},& \phi_{B},& \mathrm{tan}\lambda_{F},& \mathrm{tan}\lambda_{B}\end{pmatrix}^{T}.
+\end{equation}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/pion_decay/pion_decay_variables_event_425.pdf}
+	\caption{Values of $\chi^{2 \ (FB)}_{k}$ (top left panel), $F_{k}$ (top right panel), $D^{1/R}_{k}$ (bottom left panel) and $D^{\phi}_{k}$ (bottom right panel) versus position along the drift direction for a reconstructed track in a positive pion decay event. The vertical red dashed line indicates the true location of the decay point.}
+	\label{fig:breakpoint_variables_example}
+\end{figure}
+
+As we already have the estimates from the standard Kalman filter and their covariance matrices at each point, we do not need to repeat the Kalman fit for the new parametrisation. Instead, I can compute the values of $\alpha$ at each point $k$ that minimise the $\chi^{2}$ resulting from comparing them to $\{\hat{\mathrm{x}}^{B}_{k}, \hat{\mathrm{x}}^{F}_{k}\}$. Introducing the two $5 \times 8$ matrices:
+\begin{equation}
+	H^{F}=\begin{pmatrix}1&0&0&0&0&0&0&0 \\ 0&1&0&0&0&0&0&0 \\ 0&0&1&0&0&0&0&0 \\ 0&0&0&0&1&0&0&0 \\ 0&0&0&0&0&0&1&0\end{pmatrix}, \
+	H^{B}=\begin{pmatrix}1&0&0&0&0&0&0&0 \\ 0&1&0&0&0&0&0&0 \\ 0&0&0&1&0&0&0&0 \\ 0&0&0&0&0&1&0&0 \\ 0&0&0&0&0&0&0&1\end{pmatrix},
+\end{equation}
+we can write this as:
+\begin{equation}
+	\begin{split}
+		\chi_{k}^{2 \ (FB)} (\alpha) &= (\hat{\mathrm{x}}_{k}^{F}-H^{F}\alpha)^{T}\left[V^{(\hat{\mathrm{x}}_{k},F)}\right]^{-1}(\hat{\mathrm{x}}_{k}^{F}-H^{F}\alpha)\\
+		&+(\hat{\mathrm{x}}_{k}^{B}-H^{B}\alpha)^{T}\left[V^{(\hat{\mathrm{x}}_{k},B)}\right]^{-1}(\hat{\mathrm{x}}_{k}^{B}-H^{B}\alpha).
+	\end{split}
+\end{equation}
+
+The minimum of $\chi_{k}^{2 \ (FB)} (\alpha)$ is found when the measured new state vector takes the value:
+\begin{equation}
+	\hat{\alpha}_{k} = V^{(\hat{\alpha}_{k})} H^{T} (V^{(\hat{\mathrm{x}}_{k})})^{-1} \hat{\mathrm{X}},
+\end{equation}
+where $\hat{\mathrm{X}} = \{\hat{\mathrm{x}}^{B}_{k}, \hat{\mathrm{x}}^{F}_{k}\}$, $V^{(\hat{\mathrm{x}}_{k})}$ is the block diagonal matrix formed by $V^{(\hat{\mathrm{x}}_{k},F)}$ and $V^{(\hat{\mathrm{x}}_{k},B)}$ and $V^{(\hat{\alpha}_{k})}$ is the covariance matrix of $\hat{\alpha}_{k}$, given by:
+\begin{equation}
+	V^{(\hat{\alpha}_{k})} = \left(H^{T} (V^{(\hat{\mathrm{x}}_{k})})^{-1} H\right)^{-1}.
+\end{equation}
+
+\begin{figure}[t]
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/pion_decay/pion_decay_resolution_chisqfb.pdf}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/pion_decay/pion_decay_resolution_fisher.pdf}
+	\end{subfigure}
+	\caption{Fractional residual distributions of the true and reconstructed decay position along the drift coordinate, using the position of the maximum of $\chi^{2 \ (FB)}_{k}$ (left panel) and $F_{k}$ (right panel) as estimates of the decay position. Also shown are double Gaussian fits to these points (red lines).}
+	\label{fig:pion_decay_resolution}
+\end{figure}
+
+From these new fit estimates we can compute the $F$ statistic, which tells us whether the model with breakpoint provides a statistically significant better fit:
+\begin{equation}
+	F_{k}=\left(\frac{\chi^{2}_{track,k}-\chi^{2}_{full,k}}{8-5}\right)/\left(\frac{\chi^{2}_{full,k}}{N-8}\right).
+\end{equation}
+
+One can also compute the signed difference of the duplicated variables divided by their standard deviation at each point. These represent how significant the discontinuity in each variable is. For any variable $\eta$ we can write it as:
+\begin{equation}
+	D^{\eta}_{k} = \frac{\hat{\eta}^{B}_{k}-\hat{\eta}^{F}_{k}}{\sqrt{\mathrm{Var}[\hat{\eta}^{F}_{k}]+\mathrm{Var}[\hat{\eta}^{B}_{k}]-2\mathrm{Cov}[\hat{\eta}^{F}_{k}, \hat{\eta}^{B}_{k}]}}.
+\end{equation}
+In our case, the relevant ones to look at are $D^{1/R}_{k}$ and $D^{\phi}_{k}$.
+
+Fig. \ref{fig:breakpoint_variables_example} shows the values of $\chi^{2 \ (FB)}_{k}$, $F_{k}$, $D^{1/R}_{k}$ and $D^{\phi}_{k}$ as functions of the position along the drift direction, for an example reconstructed track with $55.5\%$ of the energy coming from the charged pion and $45.5\%$ from the daughter muon. The true position of the decay is indicated (dashed red lines). Notice how $\chi^{2 \ (FB)}_{k}$ and $F_{k}$, $D^{1/R}_{k}$ reach their maxima near the decay point. In the former case this indicates a large forward-backward difference in the track fit. In the later it represents that the extended state vector improves the fit particularly around that point.
+
+I can estimate the decay position finding resolution by computing the difference between the $X$ position of the maxima of $\chi^{2 \ (FB)}_{k}$ and $F_{k}$ and the $X$ position of the true decay. Fig. \ref{fig:pion_decay_resolution} represent the  the fractional residual distributions for both cases, from the sample of tracks containing pion decays. Fitting a double Gaussian to the distributions (red lines) I find a resolution of $13.62\%$ and $7.45\%$ respectively.
+
+In principle, the $F$-statistic should follow a Fisher distribution with $(8-5)$ and $(N-8)$ degrees of freedom under the null hypothesis. In most of our cases $N\sim\mathcal{O}(100)$, so the probability density functions will look very similar. In this case, it is safe to take the limit $N\rightarrow\infty$ in the Fisher PDF:
+\begin{equation}
+	\begin{split}
+		\tilde{f}(x;a-b)&=\lim_{N \rightarrow \infty} f(x;a-b,N-a)\\
+		&= \frac{2^{-\frac{a-b}{2}}}{\Gamma\left(\frac{a-b}{2}\right)}\left(a-b\right)^{\frac{a-b}{2}}x^{\frac{a-b}{2}-1}\mathrm{e}^{-\frac{a-b}{2}x}.
+	\end{split}
+\end{equation}
+In our case $a-b = 8-5 = 3$, so we would obtain a p-value of $0.05$ at $x=2.60$.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/pion_decay/pion_decay_variables.pdf}
+	\caption{Distributions of the extreme values of $\chi^{2 \ (FB)}_{k}$ (top left panel), $F_{k}$ (top right panel), $D^{1/R}_{k}$ (bottom left panel) and $D^{\phi}_{k}$ (bottom right panel) for non-decaying reconstructed pion tracks (blue) and tracks which include the decay inside the fiducial volume (red).}
+	\label{fig:breakpoint_variables}
+\end{figure}
+
+Fig. \ref{fig:breakpoint_variables} contains the distributions of the maxima of $\chi^{2 \ (FB)}_{k}$, $F_{k}$ and $D^{\phi}_{k}$ and the minima of $D^{1/R}_{k}$ for a sample of non-decaying pion tracks (blue) and another sample of reconstructed tracks containing part of the pion and the daughter muon from a decay inside the fiducial volume (red). Notice that, even though the values of $F^{(max)}_{k}$ for the decay sample are typically larger than for the non-decaying one, just a small fraction of the events go beyond the aforementioned value of $F=2.60$. Therefore, from a practical point of view, it is not the most efficient variable to use for selecting the decay events.
+
+However, looking at the $D^{1/R \ (min)}_{k}$ distribution we can see there is a big difference between non-decaying and decaying events in this variable. One can use a combination of these four variables to distinguish between the pion decay events (signal) and the non-decaying pions (background).
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/pion_decay/pion_decay_summary_bdt.pdf}
+	\caption{Left panel: distributions of the predicted probabilities assigned by the BDT classifier to a test sample of decaying pion+muon tracks (blue) and non-decaying pion tracks (red). Left: signal efficiency versus background acceptance (ROC curve) obtained from the BDT for the test sample.}
+	\label{fig:breakpoint_bdt}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/pion_decay/pion_decay_angle_summary2.pdf}
+	\caption{Left panel: dependence of the decay position finding resolution on the true value of the decay angle for the $\chi_{k}^{2 \ (FB)}$ (red) and $F_{k}$ (blue) methods. Right panel: signal efficiency (blue line) and background rejection (red line) from the BDT classifier versus true decay angle.}
+	\label{fig:breakpoint_angle}
+\end{figure}
+
+An approach to this classification could be using a boosted decision tree (BDT). One of the advantages of BDTs is that they are easy to interpret and identify the relative importance of the different input variables. Training a BDT with $400$ estimators and a maximum depth of $4$ I can obtain an efficient classification without overtraining. Fig. \ref{fig:breakpoint_bdt} (left panel) shows the distribution of probabilities predicted by the BDT for a test sample. The signal efficiency as a function of background acceptance, the so-called ROC curve, is shown in Fig. \ref{fig:breakpoint_bdt} (right panel). With a relative importance of $0.83$, the most important variable turned out to be $D_{k}^{1/R \ (min)}$.
+
+One thing we can check is how the resolution to the decay and the signal efficiency in the classification changes with the true decay angle. Using an equal-frequency binning for the decay angles, we can repeat the previous steps for each bin.
+
+Fig. \ref{fig:breakpoint_angle} (left panel) shows the dependence on the decay angle of the decay finding resolution. We can see that for the $\chi_{k}^{2 \ (FB)}$ maximum location method the resolution consistently lies between $12$ to $16\%$. However, the $F^{(max)}_{k}$ approach gives a significantly better resolution for high angle values, reaching the $4-6\%$ range for decay angles $\geq 4^{\circ}$.
+
+For the classification dependence on the angle, I use the same classifier I trained before but evaluating the test sample for each individual angular bin. I compute the signal efficiency in each bin for a fixed value of the background rejection, in this case $90\%$. Similarly, for the background rejection estimation I use a fixed signal efficiency value of $90\%$. Fig. \ref{fig:breakpoint_angle} (right panel) represents the change in signal efficiency (blue) and background rejection (red) with the value of the true decay angles.
 
 \subsection{Track breakpoints}
 
