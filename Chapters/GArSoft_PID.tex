@@ -65,7 +65,7 @@ In order to estimate the ionisation loss in the ND-GAr TPC, I have used an MC sa
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/dEdx/geant_selection_dEdx.pdf}
-	\caption{Left panel: distribution of the fraction of Geant4-level energy deposits per track with residual range less than $20\%$ of the total track length, for the isotropic proton sample. Right panel: distribution of the ionisation per unit length of the energy deposits in the proton sample after removing the tracks with less than $30\%$ of their energy deposits in the last $20\%$ of the track.}
+	\caption[Distribution of the fraction of energy deposits with residual range less than $20\%$ of the total track length, and distribution of the ionisation per unit length after removing the tracks with less than $30\%$ of their energy deposits in the last $20\%$ of the track.]{Left panel: distribution of the fraction of Geant4-level energy deposits per track with residual range less than $20\%$ of the total track length, for the isotropic proton sample. Right panel: distribution of the ionisation per unit length of the energy deposits in the proton sample after removing the tracks with less than $30\%$ of their energy deposits in the last $20\%$ of the track.}
 	\label{fig:geant_edeps}
 \end{figure}
 
@@ -80,7 +80,7 @@ For studying the energy loss of the protons I select the reconstructed tracks th
 		\centering
 		\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/dEdx/dQdx_recluster_gain.pdf}
 	\end{subfigure}
-	\caption{Left panel: distribution of the reconstructed ionisation charge per unit length for our MC stopping proton sample. The different colors indicate how many consecutive $\mathrm{d}Q/\mathrm{d}x$ pairs were grouped together. Right panel: distribution of the median change in $\mathrm{d}Q/\mathrm{d}x$ per track after $N_{group}=4$ clusters were reclustered together.}
+	\caption[Distribution of the reconstructed ionisation charge per unit length for different reclustering values, and distribution of the median change in $\mathrm{d}Q/\mathrm{d}x$ per track for the $N_{group}=4$ reclustering.]{Left panel: distribution of the reconstructed ionisation charge per unit length for our MC stopping proton sample. The different colors indicate how many consecutive $\mathrm{d}Q/\mathrm{d}x$ pairs were grouped together. Right panel: distribution of the median change in $\mathrm{d}Q/\mathrm{d}x$ per track after $N_{group}=4$ clusters were reclustered together.}
 	\label{fig:reco_dQ_groups}
 \end{figure}
 
@@ -95,7 +95,7 @@ An extra factor I need to account for, when reclustering is applied, is how the 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/bragg_kleeman_geant_langau.pdf}
-	\caption{Distribution of the Geant4-simulated energy losses per unit length versus residual range for the stopping proton sample. The overlaid points represent the fitted most probable value of the $\mathrm{d}E/\mathrm{d}x$ distribution in each residual range bin, whereas the curve is their best fit to the Bragg-Kleeman formula from Eq. (\ref{Eq:3.4}).}
+	\caption[Distribution of the Geant4-simulated energy losses per unit length versus residual range for the stopping proton sample.]{Distribution of the Geant4-simulated energy losses per unit length versus residual range for the stopping proton sample. The overlaid points represent the fitted most probable value of the $\mathrm{d}E/\mathrm{d}x$ distribution in each residual range bin, whereas the curve is their best fit to the Bragg-Kleeman formula from Eq. (\ref{Eq:3.4}).}
 	\label{fig:bragg_kleeman}
 \end{figure}
 
@@ -108,7 +108,7 @@ which is quoted in the literature as the Bragg-Kleeman formula. In order to obta
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/dEdx_vs_dQdx_log_fit.pdf}
-	\caption{Fitted most probable $\mathrm{d}Q/\mathrm{d}x$ values for each $\mathrm{d}E/\mathrm{d}x$ bin (red points), obtained from the stopping proton sample. The overlaid curve (black line) represents the best fit to the logarithmic calibration function from Eq. (\ref{Eq:3.5}).}
+	\caption[Fitted most probable $\mathrm{d}Q/\mathrm{d}x$ values for each $\mathrm{d}E/\mathrm{d}x$ bin, together with best fit to the logarithmic calibration function.]{Fitted most probable $\mathrm{d}Q/\mathrm{d}x$ values for each $\mathrm{d}E/\mathrm{d}x$ bin (red points), obtained from the stopping proton sample. The overlaid curve (black line) represents the best fit to the logarithmic calibration function from Eq. (\ref{Eq:3.5}).}
 	\label{fig:energy_calibration}
 \end{figure}
 
@@ -170,12 +170,12 @@ The value for the gain I obtained from the fit is in reasonable agreement with o
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/dEdx_vs_dQdx_ADC_saturation_mpv.pdf}
-	\caption{Fitted most probable $\mathrm{d}Q/\mathrm{d}x$ values for each $\mathrm{d}E/\mathrm{d}x$ bin for three different ADC bit limits, 10 (blue points), 12 (default, yellow points) and 16-bit (red points).}
+	\caption[Fitted most probable $\mathrm{d}Q/\mathrm{d}x$ values for each $\mathrm{d}E/\mathrm{d}x$ bin for three different ADC bit limits.]{Fitted most probable $\mathrm{d}Q/\mathrm{d}x$ values for each $\mathrm{d}E/\mathrm{d}x$ bin for three different ADC bit limits, 10 (blue points), 12 (default, yellow points) and 16-bit (red points).}
 	\label{fig:energy_adc_saturation}
 \end{figure}
 
 \begin{table}[t]
-	\caption{Calibration parameters obtained from the fit of the ND-GAr simulated stopping proton sample to the calibration function from Eq. (\ref{Eq:3.5}). The fits were performed for the 10, 12, and 16-bit ADC limits.}
+	\caption[Calibration parameters obtained from the fit of the ND-GAr simulated stopping proton sample to the calibration function, for different ADC limits.]{Calibration parameters obtained from the fit of the ND-GAr simulated stopping proton sample to the calibration function from Eq. (\ref{Eq:3.5}). The fits were performed for the 10, 12, and 16-bit ADC limits.}
 	\begin{center}
 		\begin{small}
 			\begin{tabular}{lllll}
@@ -196,7 +196,7 @@ One interesting thing to check is what induces this non-linear relation between 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.80\linewidth]{Images/GArSoft_PID/dEdx/reco_dEdx_corrected_1d.pdf}
-	\caption{Top panel: area normalised $\mathrm{d}E/\mathrm{d}x$ distributions for the true (solid grey) and the reconstructed energy deposits in the stopping proton sample, both after applying the calibration (blue) and the calibration and the normalisation correction (yellow). Also shown is the distribution obtained by applying a correction factor to the $\mathrm{d}Q/\mathrm{d}x$ values but not the calibration (red). Bottom panel: fractional residuals for the uncorrected (blue), corrected (yellow) and uncalibrated (red) samples.}
+	\caption[Area normalised $\mathrm{d}E/\mathrm{d}x$ distributions for the true and the reconstructed energy deposits in the stopping proton sample, both after applying the calibration and the calibration and the normalisation correction.]{Top panel: area normalised $\mathrm{d}E/\mathrm{d}x$ distributions for the true (solid grey) and the reconstructed energy deposits in the stopping proton sample, both after applying the calibration (blue) and the calibration and the normalisation correction (yellow). Also shown is the distribution obtained by applying a correction factor to the $\mathrm{d}Q/\mathrm{d}x$ values but not the calibration (red). Bottom panel: fractional residuals for the uncorrected (blue), corrected (yellow) and uncalibrated (red) samples.}
 	\label{fig:energy_correction}
 \end{figure}
 
@@ -217,7 +217,7 @@ One can also check what happens if instead of applying the logarithmic calibrati
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/dEdx/reco_dEdx_truncation_comp.pdf}
-	\caption{Left panel: fractional residuals between the true and the corrected $\mathrm{d}E/\mathrm{d}x$ means (blue) and the $60\%$ truncated means (yellow), for each event in the stopping proton sample. Right panel: fractional residuals between the true and the uncorrected (blue), corrected (yellow) and uncalibrated (red) $\mathrm{d}E/\mathrm{d}x$ $60\%$ truncated means, for each event in the stopping proton sample.}
+	\caption[Fractional residuals between the true and the corrected $\mathrm{d}E/\mathrm{d}x$ means and the $60\%$ truncated means, and fractional residuals between the true and the uncorrected, corrected and uncalibrated $\mathrm{d}E/\mathrm{d}x$ $60\%$ truncated means.]{Left panel: fractional residuals between the true and the corrected $\mathrm{d}E/\mathrm{d}x$ means (blue) and the $60\%$ truncated means (yellow), for each event in the stopping proton sample. Right panel: fractional residuals between the true and the uncorrected (blue), corrected (yellow) and uncalibrated (red) $\mathrm{d}E/\mathrm{d}x$ $60\%$ truncated means, for each event in the stopping proton sample.}
 	\label{fig:energy_trucation_comp}
 \end{figure}
 
@@ -230,7 +230,7 @@ A possibility could be taking the mean of the reconstructed $\mathrm{d}E/\mathrm
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/dEdx/reco_dEdx_truncation_opt.pdf}
-	\caption{Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias (left panel) and resolution (right panel) obtained using the corrected data from the stopping proton sample, for different values of the truncation factor.}
+	\caption[Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias and resolution for the stopping proton sample at different values of the truncation factor.]{Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias (left panel) and resolution (right panel) obtained using the corrected data from the stopping proton sample, for different values of the truncation factor.}
 	\label{fig:energy_trucation_opt}
 \end{figure}
 
@@ -257,7 +257,7 @@ Fig. \ref{fig:energy_trucation_opt} shows the bias (left panel) and the resoluti
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/dEdx_betagamma_examples.pdf}
-	\caption{Examples of the truncated mean $\mathrm{d}E/\mathrm{d}x$ LanGauss fits for various $\beta\gamma$ bins, from a simulated FHC neutrino sample.}
+	\caption[Examples of the truncated mean $\mathrm{d}E/\mathrm{d}x$ LanGauss fits for various $\beta\gamma$ bins, from a simulated FHC neutrino sample.]{Examples of the truncated mean $\mathrm{d}E/\mathrm{d}x$ LanGauss fits for various $\beta\gamma$ bins, from a simulated FHC neutrino sample.}
 	\label{fig:dEdx_betagamma_fits}
 \end{figure}
 
@@ -272,7 +272,7 @@ which can be easily proven from the definition of $\gamma$.
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/mcmc_weighted_equal_frequency_bin_200.pdf}
-	\caption{Resulting one and two dimensional projections of the posterior probability distributions of the ALEPH $\left<\mathrm{d}E/\mathrm{d}x\right>$ parameters obtained by fitting the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ values from a FHC neutrino sample in ND-GAr. The vertical dashed lines in the 1D distributions represent the 16th, 50th and 84th percentiles.}
+	\caption[Resulting one and two dimensional projections of the posterior probability distributions of the ALEPH $\left<\mathrm{d}E/\mathrm{d}x\right>$ parameters obtained by fitting the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ values from a FHC neutrino sample.]{Resulting one and two dimensional projections of the posterior probability distributions of the ALEPH $\left<\mathrm{d}E/\mathrm{d}x\right>$ parameters obtained by fitting the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ values from a FHC neutrino sample in ND-GAr. The vertical dashed lines in the 1D distributions represent the 16th, 50th and 84th percentiles.}
 	\label{fig:dEdx_ALEPH_fit}
 \end{figure}
 
@@ -281,7 +281,7 @@ Next, I bin the data in $\beta\gamma$. I chose a fine binning so as to capture t
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/dEdx_aleph_data_with_fit.pdf}
-	\caption{Truncated mean $\mathrm{d}E/\mathrm{d}x$ obtained for the FHC neutrino sample as a function of the $\beta\gamma$ product (upper panel). Also shown are the fitted most probable values for each $\beta\gamma$ bin (red points) and the best fit obtained using the ALEPH parametrisation (black line). The residuals resulting from the fit are shown in the lower panel.}
+	\caption[Truncated mean $\mathrm{d}E/\mathrm{d}x$ obtained for the FHC neutrino sample as a function of the $\beta\gamma$ product, together with the fitted most probable values for each $\beta\gamma$ bin and the best fit obtained using the ALEPH parametrisation.]{Truncated mean $\mathrm{d}E/\mathrm{d}x$ obtained for the FHC neutrino sample as a function of the $\beta\gamma$ product (upper panel). Also shown are the fitted most probable values for each $\beta\gamma$ bin (red points) and the best fit obtained using the ALEPH parametrisation (black line). The residuals resulting from the fit are shown in the lower panel.}
 	\label{fig:dEdx_betagamma_ALEPH}
 \end{figure}
 
@@ -292,7 +292,7 @@ I used the resulting most probable $\left<\mathrm{d}E/\mathrm{d}x\right>$ values
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/dEdx/dEdx_curves_with_fit.pdf}
-	\caption{Distribution of the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ versus reconstructed momentum for the FHC neutrino sample. The black lines indicate the predictions of the ALEPH parametrisation for electrons, muons, charged pions and protons.}
+	\caption[Distribution of the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ versus reconstructed momentum for the FHC neutrino sample.]{Distribution of the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ versus reconstructed momentum for the FHC neutrino sample. The black lines indicate the predictions of the ALEPH parametrisation for electrons, muons, charged pions and protons.}
 	\label{fig:dEdx_vs_momentum}
 \end{figure}
 
@@ -322,7 +322,7 @@ The resulting fit (black line), compared to the data points (red points) and the
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/dEdx/proton_dEdx_momentum.pdf}
-	\caption{Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias (left panel) and resolution (right panel) obtained for the true protons in a FHC neutrino sample.}
+	\caption[Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias and resolution obtained for the true protons in a FHC neutrino sample.]{Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias (left panel) and resolution (right panel) obtained for the true protons in a FHC neutrino sample.}
 	\label{fig:proton_dEdx_momentum}
 \end{figure}
 
@@ -331,7 +331,7 @@ The resulting fit (black line), compared to the data points (red points) and the
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.70\linewidth]{Images/GArSoft_PID/BDT/ndgar_fhc_numu_cc_mu_spectrum.pdf}
-	\caption{Momentum distribution for the primary muon in $\nu_{\mu}$ CC $N\pi^{\pm}$ interactions inside the fiducial volume of ND-GAr (blue line), compared to the post FSI charged pion spectrum (red line).}
+	\caption[True momentum distribution for the primary muon in $\nu_{\mu}$ CC $N\pi^{\pm}$ interactions inside the fiducial volume of ND-GAr, compared to the post FSI charged pion spectrum.]{True momentum distribution for the primary muon in $\nu_{\mu}$ CC $N\pi^{\pm}$ interactions inside the fiducial volume of ND-GAr (blue line), compared to the post FSI charged pion spectrum (red line).}
 	\label{fig:primary_muon_spectrum}
 \end{figure}
 
@@ -351,7 +351,7 @@ This way, I identify three main action points that need to be addressed if one w
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/BDT/ecal_energy_distribution_example.pdf}
-	\caption{Distributions of energy deposits in the ECal for a muon (left) and a charged pion (right) with similar momenta. The energy is projected onto the plane perpendicular to the principal component of the hits, and the positions are relative to the center of the interaction.}
+	\caption[Distributions of energy deposits in the ECal for a muon and a charged pion with similar momenta.]{Distributions of energy deposits in the ECal for a muon (left panel) and a charged pion (right panel) with similar momenta. The energy is projected onto the plane perpendicular to the principal component of the hits, and the positions are relative to the center of the interaction.}
 	\label{fig:ecal_example}
 \end{figure}
 
@@ -442,6 +442,13 @@ Here I try to correct for the drift coordinate position using the time associate
 I tested the effect of this correction again using a sample of 10000 FHC neutrino events. Fig. \ref{fig:associations} (right panel) shows the precision (blue line), sensitivity (yellow line), and $F_{1}$ score (red line) for the case the cluster $t_{0}$ correction is applied (square markers) and for the no correction case (circle markers), as a function of $\chi^{2}_{cut}$. In this case, the differences are particularly notorious at low values of the cut. It makes sense, as the $t_{0}$ effect becomes subdominant when the distance we consider grows large. Overall, the correction increases the sensitivity while keeping the precision almost unchanged. As a result, I apply the $t_{0}$ correction to the generated samples as the default.
 
 \subsection{Feature selection and importance}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.80\linewidth]{Images/GArSoft_PID/BDT/fraction_vs_preco_no_duplicates.pdf}
+	\caption{Momentum distribution for the reconstructed muons (top) and charged pions (bottom panel) in a $\nu_{\mu}$ CC sample, together with the fraction of them reaching the ECal (red) and MuID (blue). Each entry corresponds to a reconstructed track, backtracked to a true muon or pion which has not produced any other reconstructed track.}
+	\label{fig:fraction_particles_ecal_muid}
+\end{figure}
 
 Boosted Decision Trees (BDTs) trained on a collection of ECal features allow for a track- by-track classification. A BDT is a good option for this classification problem, as they are easy to interpret and can handle data without any pre-processing.
 
