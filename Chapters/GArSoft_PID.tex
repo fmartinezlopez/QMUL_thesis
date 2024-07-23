@@ -44,11 +44,11 @@ Another standard method to compute the amount of ionisation a charged particle p
 
 In a particle physics experiment, the typical way of determining the energy loss per unit length as a function of the particle velocity is studying identified particles over a range of momenta. Once we have established this relation we can use it for other, unknown particles. In this sense, it makes sense to have a regular mathematical expression for this relation that one can use.
 
-It happens that neither the Bethe-Bloch theory nor the PAI model from Allison and Cobb offer a close mathematical form for the ionisation curve. This is the reason why a full parametrisation of the ionisation curves can be useful. A parametrisation originally proposed for the ALEPH TPC \cite{Blum2008} and later used by the ALICE TPC \cite{ALICETPC2013} group that manages to capture the features of the ionisation energy loss is:
+It happens that neither the Bethe-Bloch theory nor the PAI model from Allison and Cobb offer a close mathematical form for the ionisation curve. This is the reason why a full parametrisation of the ionisation curves can be useful. A parametrisation originally proposed for the \gls{aleph} TPC \cite{Blum2008} and later used by the ALICE TPC \cite{ALICETPC2013} group that manages to capture the features of the ionisation energy loss is:
 \begin{equation}\label{Eq:3.3}
     f(\beta\gamma) = \frac{P_{1}}{\beta^{P_{4}}}\left(P_{2}-\beta^{P_{4}}-\mathrm{log}\left[P_{3}+\frac{1}{(\beta\gamma)^{P_{5}}}\right]\right),
 \end{equation}
-where $P_{i}$ are five free parameters. Hereafter, we will refer to Eq. (\ref{Eq:3.3}) as the ALEPH $\mathrm{d}E/\mathrm{d}x$ parametrisation.
+where $P_{i}$ are five free parameters. Hereafter, we will refer to Eq. (\ref{Eq:3.3}) as the \gls{aleph} $\mathrm{d}E/\mathrm{d}x$ parametrisation.
 
 \subsection{Energy calibration}
 
@@ -212,7 +212,7 @@ The result of applying the scaling correction can be seen in Fig. \ref{fig:energ
 
 One can also check what happens if instead of applying the logarithmic calibration we simply scale the $\mathrm{d}Q/\mathrm{d}x$ distribution (post reclustering) to have the same most probable value as the true  $\mathrm{d}E/\mathrm{d}x$ distribution. In this case, following an analogous procedure to the one described earlier, I found the scaling factor $S_{uncalibrated}=0.414\pm0.002~\mathrm{MeV}/\mathrm{ADC}$\footnote{Notice that now the scaling factor is not dimensionless, as it acts more like a conversion factor here.}. The resulting distribution (red, labeled as uncalibrated) is also shown in in Fig. \ref{fig:energy_correction} (top panel). The behaviour of the new distribution is similar to the corrected case at low energy losses, around the peak of the true distribution, but it is worse at describing the high energy tail. This is expected, it is in the high ionisation regime where saturation effects apply and therefore calibration is needed.
 
-\subsection[Truncated \texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} mean]{Truncated \boldmath\texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} mean}
+\subsection[Truncated \texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} mean]{Truncated \boldmath\texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} mean} \label{subsec:mean_dEdx}
 
 \begin{figure}[t]
 	\centering
@@ -261,7 +261,7 @@ Fig. \ref{fig:energy_trucation_opt} shows the bias (left panel) and the resoluti
 	\label{fig:dEdx_betagamma_fits}
 \end{figure}
 
-Now that we have a way to estimate the mean energy loss of a particle in the HPgTPC, we can determine the value of the free parameters in the ALEPH formula, Eq. (\ref{Eq:3.3}). For this, I used a sample of $10^{5}$ reconstructed FHC neutrino events inside ND-GAr. In this case I cannot use the stopping proton sample, as we need to cover the full kinematic range of interest for the neutrino interactions in our detector.
+Now that we have a way to estimate the mean energy loss of a particle in the HPgTPC, we can determine the value of the free parameters in the \gls{aleph} formula, Eq. (\ref{Eq:3.3}). For this, I used a sample of $10^{5}$ reconstructed FHC neutrino events inside ND-GAr. In this case I cannot use the stopping proton sample, as we need to cover the full kinematic range of interest for the neutrino interactions in our detector.
 
 The original data does not contain an estimation of the velocity of the tracks, instead the tracks have a value for the reconstructed momentum and the associated PDG code of the Geant4-level particle that created the track. Therefore, one can select some of the particles in the data, in this case I selected electrons, muons, pions and protons, and compute $\beta$ and $\gamma$ using the reconstructed momentum and their mass. In terms of $\beta\gamma$ the mean $\mathrm{d}E/\mathrm{d}x$ does not depend on the particle species, so one can consider all the dataset as a whole. For this fit, I will express $\beta$ in terms of the $\beta\gamma$ product as:
 \begin{equation}
@@ -272,8 +272,8 @@ which can be easily proven from the definition of $\gamma$.
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/mcmc_weighted_equal_frequency_bin_200.pdf}
-	\caption[Resulting one and two dimensional projections of the posterior probability distributions of the ALEPH $\left<\mathrm{d}E/\mathrm{d}x\right>$ parameters obtained by fitting the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ values from a FHC neutrino sample.]{Resulting one and two dimensional projections of the posterior probability distributions of the ALEPH $\left<\mathrm{d}E/\mathrm{d}x\right>$ parameters obtained by fitting the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ values from a FHC neutrino sample in ND-GAr. The vertical dashed lines in the 1D distributions represent the 16th, 50th and 84th percentiles.}
-	\label{fig:dEdx_ALEPH_fit}
+	\caption[Resulting one and two dimensional projections of the posterior probability distributions of the \gls{aleph} $\left<\mathrm{d}E/\mathrm{d}x\right>$ parameters obtained by fitting the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ values from a FHC neutrino sample.]{Resulting one and two dimensional projections of the posterior probability distributions of the \gls{aleph} $\left<\mathrm{d}E/\mathrm{d}x\right>$ parameters obtained by fitting the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ values from a FHC neutrino sample in ND-GAr. The vertical dashed lines in the 1D distributions represent the 16th, 50th and 84th percentiles.}
+	\label{fig:dEdx_aleph_fit}
 \end{figure}
 
 Next, I bin the data in $\beta\gamma$. I chose a fine binning so as to capture the different features of the ionisation curve. Instead of fixing the bin width, I select them so each one has approximately the same statistics. Then, for each $\beta\gamma$ slice, I compute the median and the interquartile range (IQR) of the $\left<\mathrm{d}E/\mathrm{d}x\right>$ distribution. Using these, I make a histogram in the range $[\mathrm{median}-\mathrm{IQR},~ \mathrm{median}+5~\mathrm{IQR})$, which I fit to a LanGauss function in order to extract the MPV. Using this range accounts for the asymmetric nature of the distributions, while also helps avoiding a second, lower maximum present at low $\beta\gamma$, probably a result of reconstruction failures.
@@ -281,26 +281,26 @@ Next, I bin the data in $\beta\gamma$. I chose a fine binning so as to capture t
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/dEdx_aleph_data_with_fit.pdf}
-	\caption[Truncated mean $\mathrm{d}E/\mathrm{d}x$ obtained for the FHC neutrino sample as a function of the $\beta\gamma$ product, together with the fitted most probable values for each $\beta\gamma$ bin and the best fit obtained using the ALEPH parametrisation.]{Truncated mean $\mathrm{d}E/\mathrm{d}x$ obtained for the FHC neutrino sample as a function of the $\beta\gamma$ product (upper panel). Also shown are the fitted most probable values for each $\beta\gamma$ bin (red points) and the best fit obtained using the ALEPH parametrisation (black line). The residuals resulting from the fit are shown in the lower panel.}
-	\label{fig:dEdx_betagamma_ALEPH}
+	\caption[Truncated mean $\mathrm{d}E/\mathrm{d}x$ obtained for the FHC neutrino sample as a function of the $\beta\gamma$ product, together with the fitted most probable values for each $\beta\gamma$ bin and the best fit obtained using the \gls{aleph} parametrisation.]{Truncated mean $\mathrm{d}E/\mathrm{d}x$ obtained for the FHC neutrino sample as a function of the $\beta\gamma$ product (upper panel). Also shown are the fitted most probable values for each $\beta\gamma$ bin (red points) and the best fit obtained using the \gls{aleph} parametrisation (black line). The residuals resulting from the fit are shown in the lower panel.}
+	\label{fig:dEdx_betagamma_aleph}
 \end{figure}
 
 A few examples of these fits are shown in Fig. \ref{fig:dEdx_betagamma_fits}. The chosen values of $\beta\gamma$ sit in very distinct points along the $\left<\mathrm{d}E/\mathrm{d}x\right>$ curve, going from the high ionisation region at low velocities (top left panel), to the minimum point (top right panel), the beginning of the relativistic rise (bottom left panel), and the plateau produced by the density effect (bottom right panel).
 
-I used the resulting most probable $\left<\mathrm{d}E/\mathrm{d}x\right>$ values and the centres of the $\beta\gamma$ bins as the points to fit to the ALEPH formula. For this particular fit I used the least-squares method to get a first estimation of the ALEPH parameters. Applying some uniform priors, I then used these values as the starting point of a $100000$ steps MCMC. In Fig. \ref{fig:dEdx_ALEPH_fit} I show the posterior probability distributions I obtain for each parameter. The reported best fit points are based on the 16th, 50th, and 84th percentiles in the marginalised distributions.
+I used the resulting most probable $\left<\mathrm{d}E/\mathrm{d}x\right>$ values and the centres of the $\beta\gamma$ bins as the points to fit to the \gls{aleph} formula. For this particular fit I used the least-squares method to get a first estimation of the \gls{aleph} parameters. Applying some uniform priors, I then used these values as the starting point of a $100000$ steps MCMC. In Fig. \ref{fig:dEdx_aleph_fit} I show the posterior probability distributions I obtain for each parameter. The reported best fit points are based on the 16th, 50th, and 84th percentiles in the marginalised distributions.
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/dEdx/dEdx_curves_with_fit.pdf}
-	\caption[Distribution of the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ versus reconstructed momentum for the FHC neutrino sample.]{Distribution of the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ versus reconstructed momentum for the FHC neutrino sample. The black lines indicate the predictions of the ALEPH parametrisation for electrons, muons, charged pions and protons.}
+	\caption[Distribution of the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ versus reconstructed momentum for the FHC neutrino sample.]{Distribution of the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ versus reconstructed momentum for the FHC neutrino sample. The black lines indicate the predictions of the \gls{aleph} parametrisation for electrons, muons, charged pions and protons.}
 	\label{fig:dEdx_vs_momentum}
 \end{figure}
 
-The resulting fit (black line), compared to the data points (red points) and the underlying distribution is shown in Fig. \ref{fig:dEdx_betagamma_ALEPH} (top panel). The overall fit is good, with a reduced chi-squared of $\chi^{2}/ndf=1.02$. However, there are some regions where the fit does not describe the data correctly, like the very low $\beta\gamma$ regime, where the fit severely underestimates for energy losses $\gtrsim 50 ~ \mathrm{keV}/\mathrm{cm}$, and the start of the relativistic raise, where we have a slight overestimation. This is a result of those points having a larger uncertainty when compared to the ones around the dip or the plateau areas. These differences can be better seen in the residual plot, Fig. \ref{fig:dEdx_betagamma_ALEPH} (bottom panel).
+The resulting fit (black line), compared to the data points (red points) and the underlying distribution is shown in Fig. \ref{fig:dEdx_betagamma_aleph} (top panel). The overall fit is good, with a reduced chi-squared of $\chi^{2}/ndf=1.02$. However, there are some regions where the fit does not describe the data correctly, like the very low $\beta\gamma$ regime, where the fit severely underestimates for energy losses $\gtrsim 50 ~ \mathrm{keV}/\mathrm{cm}$, and the start of the relativistic raise, where we have a slight overestimation. This is a result of those points having a larger uncertainty when compared to the ones around the dip or the plateau areas. These differences can be better seen in the residual plot, Fig. \ref{fig:dEdx_betagamma_aleph} (bottom panel).
 
 \begin{comment}
 \begin{table}[t]
-	\caption{Best fit parameters obtained fitting a ND-GAr simulated FHC neutrino sample to the ALEPH mean $\mathrm{d}E/\mathrm{d}x$ parametrisation from Eq. (\ref{Eq:3.3}).}
+	\caption{Best fit parameters obtained fitting a ND-GAr simulated FHC neutrino sample to the \gls{aleph} mean $\mathrm{d}E/\mathrm{d}x$ parametrisation from Eq. (\ref{Eq:3.3}).}
 	\begin{center}
 		\begin{small}
 			\begin{tabular}{l|l|l}
@@ -439,18 +439,35 @@ Fig. \ref{fig:associations_drift} represents a possible option to tackle the ass
 
 Here I try to correct for the drift coordinate position using the time associated to the cluster. Assuming that the drift time is much larger than the propagation time, $t_{cluster}$ could be used as a good estimation of the $t_{0}$. An alternative can be using the earliest time associated to a hit in said cluster. Doing this for each cluster before computing the $\chi^{2}$ value could be used as an alternative to knowing the specific value of the $t_{0}$, as when the association is correct this will provide the right correction but its impact is small enough to not change the position significantly in the case the cluster does not correspond to a given track.
 
-I tested the effect of this correction again using a sample of 10000 FHC neutrino events. Fig. \ref{fig:associations} (right panel) shows the precision (blue line), sensitivity (yellow line), and $F_{1}$ score (red line) for the case the cluster $t_{0}$ correction is applied (square markers) and for the no correction case (circle markers), as a function of $\chi^{2}_{cut}$. In this case, the differences are particularly notorious at low values of the cut. It makes sense, as the $t_{0}$ effect becomes subdominant when the distance we consider grows large. Overall, the correction increases the sensitivity while keeping the precision almost unchanged. As a result, I apply the $t_{0}$ correction to the generated samples as the default.
-
-\subsection{Feature selection and importance}
-
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.80\linewidth]{Images/GArSoft_PID/BDT/fraction_vs_preco_no_duplicates.pdf}
-	\caption{Momentum distribution for the reconstructed muons (top) and charged pions (bottom panel) in a $\nu_{\mu}$ CC sample, together with the fraction of them reaching the ECal (red) and MuID (blue). Each entry corresponds to a reconstructed track, backtracked to a true muon or pion which has not produced any other reconstructed track.}
+	\caption{Momentum distribution for the reconstructed muons (top panel) and charged pions (bottom panel) in a FHC neutrino sample, together with the fraction of them reaching the ECal (red) and MuID (blue). Each entry corresponds to a reconstructed track, backtracked to a true muon or pion which has not produced any other reconstructed track.}
 	\label{fig:fraction_particles_ecal_muid}
 \end{figure}
 
+I tested the effect of this correction again using a sample of 10000 FHC neutrino events. Fig. \ref{fig:associations} (right panel) shows the precision (blue line), sensitivity (yellow line), and $F_{1}$ score (red line) for the case the cluster $t_{0}$ correction is applied (square markers) and for the no correction case (circle markers), as a function of $\chi^{2}_{cut}$. In this case, the differences are particularly notorious at low values of the cut. It makes sense, as the $t_{0}$ effect becomes subdominant when the distance we consider grows large. Overall, the correction increases the sensitivity while keeping the precision almost unchanged. As a result, I apply the $t_{0}$ correction to the generated samples as the default.
+
+\subsection{Classification strategy}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.80\linewidth]{Images/GArSoft_PID/BDT/dEdx_fit_only.pdf}
+	\caption{Predicted truncated mean $\mathrm{d}E/\mathrm{d}x$ versus momentum, for electrons, muons, charged pions and protons, obtained using the \gls{aleph} parametrisation.}
+	\label{fig:dEdx_vs_momentum_regions}
+\end{figure}
+
+The problem of the muon and charged pion separation has to be viewed in the broader context of the particle identification in our detector. Focusing on the beam neutrino interactions, it is clear that we are going to have muons and pions spanning a broad momentum range. Not only that, but we will also have other particles with similar characteristics that will make the classification even more challenging. Therefore, we are presented with a task that will depend heavily on the kinematic range we are looking at each time, as both the available information and the possible impurities of other particle species vary.
+
+For instance, distinguishing muons from pions could be difficult at low momenta, as a great number of them do not reach the ECal. Therefore, we could think of tailoring a version of the classification for that particular case, which could be complemented with a $\mathrm{d}E/\mathrm{d}x$ measurement. Likewise, for momenta $\gtrsim 1~\mathrm{GeV}$ muons and pions reach the calorimeters efficiently, but so do protons. Because of this, one can try to train another classifier for this energy range, and rely on other methods to remove as many of the protons as possible.
+
+Fig. \ref{fig:fraction_particles_ecal_muid} shows the momentum distribution of the reconstructed muons (top) and pions (bottom) in a FHC sample. It also contains the fraction of particles reaching the ECal (red) and MuID (blue), for the different momentum bins. In Fig. \ref{fig:dEdx_vs_momentum_regions} I show the mean $\mathrm{d}E/\mathrm{d}x$ of different particles as a function of the momentum, computed using the \gls{aleph} parametrisation with the best fit parameters found in Subsec. \ref{subsec:mean_dEdx}.
+
+To tackle this classification problem, I make use of Boosted Decision Trees (\gls{bdt}). A decision tree uses a flowchart-like structure to make decisions based on some input data.
+
 Boosted Decision Trees (BDTs) trained on a collection of ECal features allow for a track- by-track classification. A BDT is a good option for this classification problem, as they are easy to interpret and can handle data without any pre-processing.
+
+\subsection{Feature selection and importance}
 
 I am using samples with 100k FHC neutrino interactions, no truth cuts whatsoever. From the Geant4 I am only keeping the true momentum and PDG. From the track reco I keep the momentum (end momentum, both forward and backward fits).
 

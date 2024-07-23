@@ -35,6 +35,12 @@
 \doublespacing
 %\onehalfspacing
 
+%% List of abbreviations
+%%-----------------------------------------------------------------------------------
+\makeglossaries
+\glstoctrue
+\loadglsentries{InitialFinalMaterials/Acronyms.tex}
+
 %% to make a part of the text of your document singlespaced:
 %% \begin{singlespace}
 %% text
@@ -77,6 +83,8 @@ It is too hard a knot for me to untie!}
 \listoffigures
 \listoftables
 
+\glsaddall
+\printglossary[type=\glsdefaulttype, style=long, title=List of Abbreviations, toctitle=List of Abbreviations]
 
 
 %%------------------------------------------------------------------------------------
