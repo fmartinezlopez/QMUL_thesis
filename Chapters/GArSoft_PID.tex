@@ -453,7 +453,7 @@ I tested the effect of this correction again using a sample of 10000 FHC neutrin
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.80\linewidth]{Images/GArSoft_PID/BDT/dEdx_fit_only.pdf}
-	\caption{Predicted truncated mean $\mathrm{d}E/\mathrm{d}x$ versus momentum, for electrons, muons, charged pions and protons, obtained using the \gls{aleph} parametrisation.}
+	\caption{Predicted truncated mean $\mathrm{d}E/\mathrm{d}x$ versus momentum, for electrons, muons, charged pions and protons, obtained using the \gls{aleph} parametrisation. The vertical dashed lines represent the boundaries of the six regions used for the muon and pion classification training.}
 	\label{fig:dEdx_vs_momentum_regions}
 \end{figure}
 
@@ -463,15 +463,35 @@ For instance, distinguishing muons from pions could be difficult at low momenta,
 
 Fig. \ref{fig:fraction_particles_ecal_muid} shows the momentum distribution of the reconstructed muons (top) and pions (bottom) in a FHC sample. It also contains the fraction of particles reaching the ECal (red) and MuID (blue), for the different momentum bins. In Fig. \ref{fig:dEdx_vs_momentum_regions} I show the mean $\mathrm{d}E/\mathrm{d}x$ of different particles as a function of the momentum, computed using the \gls{aleph} parametrisation with the best fit parameters found in Subsec. \ref{subsec:mean_dEdx}.
 
-To tackle this classification problem, I make use of Boosted Decision Trees (\gls{bdt}). A decision tree uses a flowchart-like structure to make decisions based on some input data.
+Using these two sources as references, I decided to approach the classification by dividing the problem into six different momentum regions. A summary of these can be found in Tab. \ref{tab:bdt_regions}. The basic idea is to exploit all the information that is available in each region and . For the problem at hand, I prepared separated samples of isotropic single muons and pions, with momenta uniformly distributed along the corresponding momentum range. I did not generate samples for the first region, as it is assumed that the separation can be achieved using $\mathrm{d}E/\mathrm{d}x$ only. For the last region, I generated particles up to a momentum of $10~\mathrm{GeV}/c$, as that is well above the typical energies of muons and pions from FHC neutrino interactions in ND-GAr.
 
-Boosted Decision Trees (BDTs) trained on a collection of ECal features allow for a track- by-track classification. A BDT is a good option for this classification problem, as they are easy to interpret and can handle data without any pre-processing.
+\begin{table}[t]
+	\caption{Momentum ranges and description of the PID approach assumed for the muon and pion classification task.}
+	\begin{center}
+		\begin{small}
+			\begin{tabular}{p{2.7cm}|l}
+				Momentum range                                    & Description                                                                          \\[1mm] \hline \rule{0pt}{1.1\normalbaselineskip}
+				$< 0.1$ \hfill $\mathrm{GeV}/c$      & All tracks can be separated with $\mathrm{d}E/\mathrm{d}x$                           \\[2mm]
+				$[0.1,~0.3)$ \hfill $\mathrm{GeV}/c$ & Use ECal for reaching muons and pions, $\mathrm{d}E/\mathrm{d}x$ for the rest        \\[2mm]
+				$[0.3,~0.8)$ \hfill $\mathrm{GeV}/c$ & Use ECal for muons and pions, $\mathrm{d}E/\mathrm{d}x$ for protons                  \\[2mm]
+				$[0.8,~1.5)$ \hfill $\mathrm{GeV}/c$ & Use ECal and MuID for muons and pions,  $\mathrm{d}E/\mathrm{d}x$ for protons        \\[2mm]
+				$[1.5,~3.0)$ \hfill $\mathrm{GeV}/c$ & Use ECal and MuID for muons and pions, ToF for protons                               \\[2mm]
+				$\geq 3.0$ \hfill $\mathrm{GeV}/c$   & Use ECal and MuID for muons and pions, $\mathrm{d}E/\mathrm{d}x$ and ToF for protons
+			\end{tabular}
+		\end{small}
+	\end{center}
+	\label{tab:bdt_regions}
+\end{table}
+
+To tackle this classification problem, I make use of Boosted Decision Trees (\gls{bdt}). A decision tree uses a flowchart-like structure to make decisions based on some input data. It starts from a root node, which represents the complete dataset, and then it splits this based on the variable or feature which gives the best separation between classes, creating two new nodes. The process repeats for each node until it reaches a certain limit, like a maximum number of splits or some tolerance criteria. The last set of nodes are often called leave nodes, and represent the final prediction of the classifier.
+
+Boosting refers to a family of methods to combine the predictions from multiple classifiers, following a sequential approach where each new model learns from the errors of the previous one. The process starts with a simple decision tree, which is used to make predictions on the training data. Then, the data points which the first model got wrong are assigned higher weights, and another decision tree is trained on the data with adjusted weights. The predictions of the two trees are then combined, and the cycle repeats for a predefined number of iterations. Gradient boosting uses the direction of the steepest error descent to guide the learning process and improve the accuracy with each iteration.
 
 \subsection{Feature selection and importance}
 
 I am using samples with 100k FHC neutrino interactions, no truth cuts whatsoever. From the Geant4 I am only keeping the true momentum and PDG. From the track reco I keep the momentum (end momentum, both forward and backward fits).
 
-For the ECAL, I compute a series of variables per each reco track. As there can be more than one ECAL cluster associated to each track what I do is collect all associated clusters and compute my variables from the complete collection of hits associated to each track. I can roughly divide the variables in three types: energy-related, geometry-related and statistical.
+For the ECal, I compute a series of variables per each reconstructed track. As there can be more than one ECal cluster associated to each track, what I do is collect all associated clusters and compute these variables from the complete collection of hits associated to each track. I can roughly divide the variables in three types: energy-related, geometry-related and statistical.
 
 \begin{itemize}
 	\item \textbf{Energy-related ECAL}
