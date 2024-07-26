@@ -463,7 +463,7 @@ For instance, distinguishing muons from pions could be difficult at low momenta,
 
 Fig. \ref{fig:fraction_particles_ecal_muid} shows the momentum distribution of the reconstructed muons (top) and pions (bottom) in a FHC sample. It also contains the fraction of particles reaching the ECal (red) and MuID (blue), for the different momentum bins. In Fig. \ref{fig:dEdx_vs_momentum_regions} I show the mean $\mathrm{d}E/\mathrm{d}x$ of different particles as a function of the momentum, computed using the \gls{aleph} parametrisation with the best fit parameters found in Subsec. \ref{subsec:mean_dEdx}.
 
-Using these two sources as references, I decided to approach the classification by dividing the problem into six different momentum regions. A summary of these can be found in Tab. \ref{tab:bdt_regions}. The basic idea is to exploit all the information that is available in each region and . For the problem at hand, I prepared separated samples of isotropic single muons and pions, with momenta uniformly distributed along the corresponding momentum range. I did not generate samples for the first region, as it is assumed that the separation can be achieved using $\mathrm{d}E/\mathrm{d}x$ only. For the last region, I generated particles up to a momentum of $10~\mathrm{GeV}/c$, as that is well above the typical energies of muons and pions from FHC neutrino interactions in ND-GAr.
+Using these two figures as references, I decided to approach the classification by dividing the problem into six different momentum regions. A summary of these can be found in Tab. \ref{tab:bdt_regions}. The basic idea is to exploit all the information that is available in each region and . For the problem at hand, I prepared separated samples of isotropic single muons and pions, with momenta uniformly distributed along the corresponding momentum range. I did not generate samples for the first region, as it is assumed that the separation can be achieved using $\mathrm{d}E/\mathrm{d}x$ only. For the last region, I generated particles up to a momentum of $10~\mathrm{GeV}/c$, as that is well above the typical energies of muons and pions from FHC neutrino interactions in ND-GAr.
 
 \begin{table}[t]
 	\caption{Momentum ranges and description of the PID approach assumed for the muon and pion classification task.}
@@ -485,41 +485,51 @@ Using these two sources as references, I decided to approach the classification 
 
 To tackle this classification problem, I make use of Boosted Decision Trees (\gls{bdt}). A decision tree uses a flowchart-like structure to make decisions based on some input data. It starts from a root node, which represents the complete dataset, and then it splits this based on the variable or feature which gives the best separation between classes, creating two new nodes. The process repeats for each node until it reaches a certain limit, like a maximum number of splits or some tolerance criteria. The last set of nodes are often called leave nodes, and represent the final prediction of the classifier.
 
-Boosting refers to a family of methods to combine the predictions from multiple classifiers, following a sequential approach where each new model learns from the errors of the previous one. The process starts with a simple decision tree, which is used to make predictions on the training data. Then, the data points which the first model got wrong are assigned higher weights, and another decision tree is trained on the data with adjusted weights. The predictions of the two trees are then combined, and the cycle repeats for a predefined number of iterations. Gradient boosting uses the direction of the steepest error descent to guide the learning process and improve the accuracy with each iteration.
+Boosting refers to a family of methods to combine the predictions from multiple classifiers, following a sequential approach where each new model learns from the errors of the previous one. The process starts with a simple decision tree, which is used to make predictions on the training data. Then, the data points misclassified by the first model are assigned higher weights, and another decision tree is trained on the data with adjusted weights. The predictions of the two trees are then combined, and the cycle repeats for a predefined number of iterations. Gradient boosting uses the direction of the steepest error descent to guide the learning process and improve the accuracy with each iteration.
 
 \subsection{Feature selection and importance}
 
-I am using samples with 100k FHC neutrino interactions, no truth cuts whatsoever. From the Geant4 I am only keeping the true momentum and PDG. From the track reco I keep the momentum (end momentum, both forward and backward fits).
-
-For the ECal, I compute a series of variables per each reconstructed track. As there can be more than one ECal cluster associated to each track, what I do is collect all associated clusters and compute these variables from the complete collection of hits associated to each track. I can roughly divide the variables in three types: energy-related, geometry-related and statistical.
+Using the reconstructed tracks as a starting point, I compute a series of ECal and MuID variables for each of them. As there can be more than one cluster associated to a track, what I do is collect all associated clusters and compute these variables from the complete collection of associated hits. For the MuID, because it only features three layers and typically there will be less hits, I also allow single hits to be associated with tracks\footnote{At the reconstruction level what happens is that non-clustered hits are put into single hit clusters instead of being thrown away. This is necessary to keep the consistency of the track-cluster association code.}. I can roughly divide the variables in three types: energy-related, geometry-related and statistical. I briefly 
 
 \begin{itemize}
-	\item \textbf{Energy-related ECAL}
+	\item \textbf{Energy-related ECal}
 	\begin{itemize}
-		\item ECAL total energy (ClusterTotalEnergy): sum of the energy of all the ECAL hits.
-	\item Hit mean energy (HitMeanEnergy): mean of the hits energy distribution.
-	\item Hit std energy (HitStdEnergy): standard deviation of the hits energy distribution.
-	\item Hit max energy (HitMaxEnergy): maximum of the hits energy distribution.
+		\item ECal total energy (ClusterTotalEnergy): sum of the energy of all the ECal hits.
+	\item Mean hit energy (HitMeanEnergy): mean of the hit energy distribution.
+	\item Standard deviation hit energy (HitStdEnergy): standard deviation of the hit energy distribution.
+	\item Maximum hit energy (HitMaxEnergy): maximum of the hit energy distribution.
 	\end{itemize}
-	\item \textbf{Geometry-related ECAL}
+	\item \textbf{Geometry-related ECal}
 	\begin{itemize}
 		\item Mean distance hit-to-cluster (DistHitClusterMean): mean of the distance distribution between the hits and the corresponding cluster's main axis.
 		\item RMS distance hit-to-cluster (DistHitClusterRMS): root mean square of the distance distribution between the hits and the corresponding cluster's main axis.
 		\item Maximum distance hit-to-centre (DistHitCenterMax): maximum of the distance distribution between the hits and the centre of the TPC.
 		\item Time-of-Flight velocity (TOFVelocity): slope obtained when fitting a straight line to the hit time versus hit distance to the centre (i.e. $d = v \times t$).
 	\end{itemize}
-	\item \textbf{Energy and geometry ECAL}
+	\item \textbf{Energy and geometry ECal}
 	\begin{itemize}
 		\item Radius 90\% energy (Radius90E): distance in the hit-to-cluster distribution for which 90\% of the total energy is contained in the hits that are closer to the axis (i.e. radius that contains 90\% of the energy).
 	\end{itemize}
-	\item \textbf{Statistical ECAL}
+	\item \textbf{Statistical ECal}
 	\begin{itemize}
 		\item Number of hits (NHits): total number of hits associated to the track.
 		\item Number of layers with hits (NLayers): not really a count of all layers with hits but the difference between the last and the first layer with hits.
 	\end{itemize}
 \end{itemize}
 
-For the MuID, now that the bug affecting the position of the reco hits has been solved (07/07/23) I also included some related quantities in the analysis ntuples. They also fall in the same classification I use for the ECAL variables and are also defined per reco track as there is also the possibility of having more than one MuID cluster for each track.
+\begin{figure}[p!]
+	\centering
+	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/BDT/ecal_feature_distribution_all_example.pdf}
+	\caption[Example ECal feature distributions for muons and charged pions in the five different momentum ranges considered.]{Example ECal feature distributions for muons (blue) and charged pions (red) in the five different momentum ranges considered (from top to bottom, in ascending momentum order). From left to right: mean hit energy, mean distance hit-to-cluster, and number of layers with hits.}
+	\label{fig:ecal_feature_example}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/BDT/muid_feature_distribution_all_example.pdf}
+	\caption[Example MuID feature distributions for muons and charged pions in the three different momentum ranges considered.]{Example MuID feature distributions for muons (blue) and charged pions (red) in the three different momentum ranges considered (from top to bottom, in ascending momentum order). From left to right: standard deviation hit energy, maximum distance hit-to-hit, and number of hits.}
+	\label{fig:muid_feature_example}
+\end{figure}
 
 \begin{itemize}
 	\item \textbf{Energy-related MuID}
