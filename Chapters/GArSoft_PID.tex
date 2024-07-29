@@ -489,15 +489,15 @@ Boosting refers to a family of methods to combine the predictions from multiple 
 
 \subsection{Feature selection and importance}
 
-Using the reconstructed tracks as a starting point, I compute a series of ECal and MuID variables for each of them. As there can be more than one cluster associated to a track, what I do is collect all associated clusters and compute these variables from the complete collection of associated hits. For the MuID, because it only features three layers and typically there will be less hits, I also allow single hits to be associated with tracks\footnote{At the reconstruction level what happens is that non-clustered hits are put into single hit clusters instead of being thrown away. This is necessary to keep the consistency of the track-cluster association code.}. I can roughly divide the variables in three types: energy-related, geometry-related and statistical. I briefly 
+Using the reconstructed tracks as a starting point, I compute a number of ECal and MuID variables for each of them. As there can be more than one cluster associated to a track, what I do is collect all associated clusters and compute these variables from the complete collection of associated hits. For the MuID, because it only features three layers and typically there will be less hits, I also allow single hits to be associated with tracks\footnote{At the reconstruction level what happens is that non-clustered hits are put into single hit clusters, instead of being thrown away. This is necessary to keep the consistency of the track-cluster association code.}. I can roughly divide the variables in three types: energy-related, geometry-related and statistical. In the following, I briefly describe the variables related exclusively to the ECal:
 
 \begin{itemize}
 	\item \textbf{Energy-related ECal}
 	\begin{itemize}
 		\item ECal total energy (ClusterTotalEnergy): sum of the energy of all the ECal hits.
-	\item Mean hit energy (HitMeanEnergy): mean of the hit energy distribution.
-	\item Standard deviation hit energy (HitStdEnergy): standard deviation of the hit energy distribution.
-	\item Maximum hit energy (HitMaxEnergy): maximum of the hit energy distribution.
+		\item Mean ECal hit energy (HitMeanEnergy): mean of the hit energy distribution.
+		\item Standard deviation ECal hit energy (HitStdEnergy): standard deviation of the hit energy distribution.
+		\item Maximum ECal hit energy (HitMaxEnergy): maximum of the hit energy distribution.
 	\end{itemize}
 	\item \textbf{Geometry-related ECal}
 	\begin{itemize}
@@ -531,17 +531,20 @@ Using the reconstructed tracks as a starting point, I compute a series of ECal a
 	\label{fig:muid_feature_example}
 \end{figure}
 
+Fig. \ref{fig:ecal_feature_example} shows the distributions of three different ECal variables, separating true muons (blue) and charged pions (red), for the five momentum ranges considered. I chose to show one feature from each category, namely the mean energy per hit (left column), the mean distance between the hits and the centre of the cluster (middle column), and the number of ECal layers with hits (right column). These give an idea of the separating power of the different features, and how it changes considerably with the energy. In the number of layers with hits distributions, the peak at $6$ is due to the fact that the first six ECal layers sit inside the pressure vessel\footnote{Note to self: check this. I thought the ECal barrel had 8 layers of tiles, and that all of them were inside the pressure vessel.}. Therefore, some of the particles get stopped crossing it, never making it to the seventh layer.
+
+In the case of the MuID, because at low momenta a significant fraction of the particles do not make it past the ECal, I only consider the information coming from this detector for momenta $\geq 0.8~\mathrm{GeV}/c$, i.e. for the last three momentum regions. The variables I extract from it are the following:
 \begin{itemize}
 	\item \textbf{Energy-related MuID}
 	\begin{itemize}
 		\item MuID total energy (ClusterMuIDTotalEnergy): sum of the energy of all the MuID hits.
-		\item Hit MuID mean energy (HitMuIDMeanEnergy): mean of the MuID hits energy distribution.
-		\item Hit MuID std energy (HitMuIDStdEnergy): standard deviation of the MuID hits energy distribution.
-		\item Hit MuID max energy (HitMuIDMaxEnergy): maximum of the MuID hits energy distribution.
+		\item Mean MuID hit energy (HitMuIDMeanEnergy): mean of the MuID hit energy distribution.
+		\item Standard deviation MuID hit energy (HitMuIDStdEnergy): standard deviation of the MuID hit energy distribution.
+		\item Maximum MuID hit energy (HitMuIDMaxEnergy): maximum of the MuID hit energy distribution.
 	\end{itemize}
 	\item \textbf{Geometry-related MuID}
 	\begin{itemize}
-		\item Max distance MuID hits (DistHitMuIDMax): maximum distance between pairs of MuID hits (not sure this is a good variable, distribution looks nuts).
+		\item Maximum distance MuID hit-to-hit (DistHitMuIDMax): maximum distance between pairs of MuID hits (not sure this is a good variable, distribution looks nuts).
 		\item Maximum distance MuID hit-to-centre (DistHitCenterMuIDMax): maximum of the distance distribution between the MuID hits and the centre of the TPC.
 	\end{itemize}
 	\item \textbf{Statistical MuID}
@@ -551,7 +554,35 @@ Using the reconstructed tracks as a starting point, I compute a series of ECal a
 	\end{itemize}
 \end{itemize}
 
+Fig. \ref{fig:muid_feature_example} shows the distributions of three different MuID variables, separating true muons (blue) and charged pions (red), for the three momentum ranges which use the muon tagger information. In this case I decided to  standard deviation of the MuID hit energy distribution (left column), the maximum distance between the MuID hit pairs (middle column), and the number of MuID hits (right column). These variables are used together with the ECal features at high momenta, providing additional disambiguation power.
+
 \subsection{Hyperparameter optimisation}
+
+The overall parameters of this ensemble model can be divided into 3 categories:
+\begin{enumerate}
+	\item Tree-Specific Parameters: These affect each individual tree in the model.
+	\item Boosting Parameters: These affect the boosting operation in the model.
+	\item Miscellaneous Parameters: Other parameters for overall functioning.
+\end{enumerate}
+
+The parameters used for defining a tree are further explained below. Note that I'm using scikit-learn (python) specific terminologies here which might be different in other software packages like R. But the idea remains the same.
+
+\begin{itemize}
+	\item min_samples_split: Defines the minimum number of samples (or observations) which are required in a node to be considered for splitting. Used to control over-fitting. Higher values prevent a model from learning relations which might be highly specific to the particular sample selected for a tree. Too high values can lead to under-fitting hence, it should be tuned using CV.
+	\item min_samples_leaf: Defines the minimum samples (or observations) required in a terminal node or leaf. Used to control over-fitting similar to min_samples_split. Generally lower values should be chosen for imbalanced class problems because the regions in which the minority class will be in majority will be very small.
+	\item min_weight_fraction_leaf: Similar to min_samples_leaf but defined as a fraction of the total number of observations instead of an integer. Only one this or min_samples_leaf should be defined.
+	\item max_depth: The maximum depth of a tree. Used to control over-fitting as higher depth will allow model to learn relations very specific to a particular sample. Should be tuned using CV.
+	\item max_leaf_nodes: The maximum number of terminal nodes or leaves in a tree. Can be defined in place of max_depth. Since binary trees are created, a depth of $n$ would produce a maximum of $2^{n}$ leaves. If this is defined, GBM will ignore max_depth.
+	\item max_features: The number of features to consider while searching for a best split. These will be randomly selected. As a thumb-rule, square root of the total number of features works great but we should check upto $30-40\%$ of the total number of features. Higher values can lead to over-fitting but depends on case to case.
+\end{itemize}
+
+Lets consider another set of parameters for managing boosting:
+\begin{itemize}
+	\item learning_rate: This determines the impact of each tree on the final outcome (step 2.4). GBM works by starting with an initial estimate which is updated using the output of each tree. The learning parameter controls the magnitude of this change in the estimates. Lower values are generally preferred as they make the model robust to the specific characteristics of tree and thus allowing it to generalize well. Lower values would require higher number of trees to model all the relations and will be computationally expensive.
+	\item n_estimators: The number of sequential trees to be modeled (step 2). Though GBM is fairly robust at higher number of trees but it can still overfit at a point. Hence, this should be tuned using CV for a particular learning rate.
+	\item subsample: The fraction of observations to be selected for each tree. Selection is done by random sampling. Values slightly less than 1 make the model robust by reducing the variance.
+	Typical values $\sim0.8$ generally work fine but can be fine-tuned further.
+\end{itemize}
 
 \subsection{Probability calibration}
 
