@@ -556,6 +556,86 @@ In the case of the MuID, because at low momenta a significant fraction of the pa
 
 Fig. \ref{fig:muid_feature_example} shows the distributions of three different MuID variables, separating true muons (blue) and charged pions (red), for the three momentum ranges which use the muon tagger information. In this case I decided to  standard deviation of the MuID hit energy distribution (left column), the maximum distance between the MuID hit pairs (middle column), and the number of MuID hits (right column). These variables are used together with the ECal features at high momenta, providing additional disambiguation power.
 
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/BDT/summary_pca_p0_0.55_sigmap_0.25.pdf}
+	\caption{Left panel: cumulative explained variance for the first three principal components (top panel) and contribution of the different features to the principal axes in feature space (bottom panel). Right panel: Shapley (blue) and Gini (red) feature importances for the different input features. Both figures correspond to the samples in the momentum range $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$.}
+	\label{fig:bdt_pca_importance_ii}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/BDT/summary_pca_p0_1.15_sigmap_0.35.pdf}
+	\caption{Left panel: cumulative explained variance for the first three principal components (top panel) and contribution of the different features to the principal axes in feature space (bottom panel). Right panel: Shapley (blue) and Gini (red) feature importances for the different input features. Both figures correspond to the samples in the momentum range $0.8 \leq p < 1.5 ~ \mathrm{GeV}/c$.}
+	\label{fig:bdt_pca_importance_iii}
+\end{figure}
+
+\begin{comment}
+\begin{figure}[t]
+	\begin{subfigure}{0.32\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/BDT/importance/feature_importance_p0_1.15_sigmap_0.35_MuID.pdf}
+	\end{subfigure}
+	\begin{subfigure}{0.32\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/BDT/importance/feature_importance_p0_2.25_sigmap_0.75_MuID.pdf}
+	\end{subfigure}
+	\begin{subfigure}{0.32\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/BDT/importance/feature_importance_p0_6.50_sigmap_3.50_MuID.pdf}
+	\end{subfigure}
+	\caption{Left panel: number of non-decaying, decaying and decaying in the fiducial volume pions for a MC sample of $10^{5}$, $p=500 \ \mathrm{MeV}$ isotropic positively charged pions inside the TPC. Right panel: event display for a positive pion decaying inside the fiducial volume, with a single reconstructed track for the pion and muon system.}
+	\label{fig:pion_decays}
+\end{figure}
+\end{comment}
+
+Once our features have been defined, one can do some exploratory analysis to understand how well the variables describe the target class, and avoid the black-box approach by what features are most relevant for the learning process. This way, I performed a feature analysis for each of the momentum ranges I divided this classification problem into. It follows three steps: first a principal component analysis (PCA), followed by a feature importance study using Gini and Shapley values, and finally a feature permutation importance analysis.
+
+The PCA is useful to understand the variance of the feature space. It is an unsupervised machine learning technique that allows the user to perform a dimensionality reduction. It uses a singular value decomposition of the input features to project them into a lower dimensional space. The idea is to find the matrix $\mathbf{C}_{m}$, whose columns are the first $m$ orthonormal eigenvectors of the input covariance matrix. Consider the $n \times p$ real matrix of input data $\mathbf{X}$, where $n$ is the number of samples and $p$ the number of features. If $\mathbf{X}$ is centred, i.e. the means of its columns are equal to zero, we can write the covariance matrix of $\mathbf{X}$ as $\mathbf{C}=\mathbf{X}^{\intercal}\mathbf{X}/(n-1)$. This matrix can be diagonalised, yielding:
+\begin{equation}
+	\mathbf{C}=\mathbf{V}\mathbf{L}\mathbf{V}^{\intercal},
+\end{equation}
+where $\mathbf{V}$ is a matrix of eigenvectors and $\mathbf{L}$ a diagonal matrix with eigenvalues $\lambda_{i}$. Then, performing SVD on $\mathbf{X}$ gives us:
+\begin{equation}
+	\mathbf{X}=\mathbf{U}\mathbf{S}\mathbf{W}^{\intercal},
+\end{equation}
+where $\mathbf{U}$ is a unitary matrix, whose columns are called left singular vectors, $\mathbf{S}$ is a diagonal matrix of single values $s_{i}$, and $\mathbf{W}$ is another unitary matrix, its columns known as right singular vectors. This way, we can write:
+\begin{equation}
+	\mathbf{C}=\mathbf{W}\mathbf{S}\mathbf{U}^{\intercal}\mathbf{U}\mathbf{S}\mathbf{W}^{\intercal}/(n-1)=\mathbf{W}\frac{\mathbf{S}^{2}}{n-1}\mathbf{W}^{\intercal}.
+\end{equation}
+meaning that the right singular vectors are also the eigenvectors of the covariance matrix. The SVD can be computed numerically following an iterative approach.
+
+This way, taking an input data vector $X \in \mathbb{R}^{n}$, the resulting feature vector $Y \in \mathbb{R}^{m}$ is given by:
+\begin{equation}
+	Y = \mathbf{C}_{m}^{\intercal} X.
+\end{equation}
+The new features capture most of the variance of the original sample, while being lower dimensional, as $m<n$.
+
+Before applying the PCA reduction one needs to centre and scale the input data. Centring is necessary when using SVD to obtain the eigenvectors of the covariance matrix, as only in that case we can do the identification with the right singular vectors from the input data. Scaling is needed when variables are on different scales, as some can then dominate the PCA procedure.
+
+I used the PCA module of \texttt{scikit-learn}, together with the \texttt{RobustScaler}, which centres the data and scales it based on the interquartile range. In Fig. \ref{fig:bdt_pca_importance_ii} (left panel) and Fig. \ref{fig:bdt_pca_importance_iii} (left panel) I show the results I obtained from the PCA for the momentum ranges $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$ and $0.8 \leq p < 1.5 ~ \mathrm{GeV}/c$, respectively. Notice that in the second case the number of features increases considerably, as this is the first region which uses the MuID variables. I found that, in all the cases, adding a fourth PC does not add additional information. As it can be seen in the top panels of the figures, the cumulative explained variance is already over $80\%$ with three PCs.
+
+The bottom panels show the contribution of the variables to the principal axes. For the two first momentum regions, I observe a tendency of the energy-related and the geometry-related ECal variables to be clustered together. For the other ranges, when I include the MuID variables, there seems to be a division between ECal and MuID variables. For these, it seems like the number of ECal layers with hits also plays an important role.
+
+The next step in the analysis is to quantify the importance of the features based on two additional metrics, namely the Gini and the Shapley values. The Gini importance, often called mean decrease impurity, is based on how much a feature contributes to the purity improvement at the splits in each decision tree. The purity is measured in terms of the Gini impurity index, defined as:
+\begin{equation}
+	I_{G} = 1 - \sum_{i} f_{i},
+\end{equation}
+where $f_{i}$ is the fractional abundance of the $i$-th class. Then, for each split one can compute the weighted decrease in impurity as:
+\begin{equation}
+	\Delta_{G} = \frac{N_{t}}{N} \left(I_{G} - \frac{N_{t}^{R}}{N_{t}} I_{G}^{R} - \frac{N_{t}^{L}}{N_{t}} I_{G}^{L}\right),
+\end{equation}
+where $N$ represents the total number of samples, $N_{t}$ the number of samples at the current node, $N_{t}^{R}$ and $N_{t}^{L}$ the number of samples in the right and left children respectively, $I_{G}$ is the Gini impurity at the current node, and $I_{G}^{R}$ and $I_{G}^{L}$ the Gini impurities of the resulting right and left children.
+
+For each decision tree, one will have a normalised vector with the accumulated decrease in Gini impurity for each feature. In the case of a BDT, 
+
+The concept of Shapley values originated in the context of game theory, and it measures the marginal contribution of a feature in enhancing the accuracy of a classifier. Take $F$ to be the set of all features in a problem, and $S \subseteq F$ the subset of features. To compute the Shapley value of the $i$-th feature, one has to train a model with that feature present, $f_{S \cup \{i\}}$, and another model trained without it, $f_{S}$. This has to be repeated for all possible combinations of subsets $S \subset F \setminus \{i\}$, and evaluating the models predictions on the appropriate sets of data $x_{S}$. This way, the Shapley value results:
+\begin{equation}
+	\varphi_{i} = \sum_{S \subset F \setminus \{i\}} \frac{|S|!(|F|-|S|-1)!}{|F|!} \left[f_{S \cup \{i\}}(x_{S \cup \{i\}}) - f_{S}(x_{S})\right].
+\end{equation}
+
+In this case, I compute the Shapley importance using the implementation in the SHAP package.
+
 \subsection{Hyperparameter optimisation}
 
 The overall parameters of this ensemble model can be divided into 3 categories:
