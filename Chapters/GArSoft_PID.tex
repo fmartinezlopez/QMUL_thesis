@@ -627,7 +627,7 @@ where $f_{i}$ is the fractional abundance of the $i$-th class. Then, for each sp
 \end{equation}
 where $N$ represents the total number of samples, $N_{t}$ the number of samples at the current node, $N_{t}^{R}$ and $N_{t}^{L}$ the number of samples in the right and left children respectively, $I_{G}$ is the Gini impurity at the current node, and $I_{G}^{R}$ and $I_{G}^{L}$ the Gini impurities of the resulting right and left children.
 
-For each decision tree, one will have a normalised vector with the accumulated decrease in Gini impurity for each feature. In the case of a BDT, the feature importances are simply the mean for all the estimators in the ensemble.
+For each decision tree, one will have a normalised vector with the accumulated decrease in Gini impurity for each feature. In the case of a BDT, the feature importances are simply the mean for all the estimators in the ensemble\footnote{Note to self: this appears not to be the case. If you get the \texttt{feature_importance} for each tree in the BDT and take the average, the result is not the same to be one reported in the \texttt{feature_importance} attribute of the BDT.}.
 
 \begin{figure}[t]
 	\centering
@@ -662,32 +662,58 @@ Wit this, I conclude the study of the features. I have prepared the training and
 
 \subsection{Hyperparameter optimisation}
 
-The overall parameters of this ensemble model can be divided into 3 categories:
-\begin{enumerate}
-	\item Tree-Specific Parameters: These affect each individual tree in the model.
-	\item Boosting Parameters: These affect the boosting operation in the model.
-	\item Miscellaneous Parameters: Other parameters for overall functioning.
-\end{enumerate}
+Any BDT requires the user to specify a number of parameters that will dictate its behaviour. They can be divided into two categories: (i) tree-specific parameters, which affect each individual tree in the model, and (ii) boosting parameters, which control the boosting operation in the model. The value of these so-called hyperparameters affect the performance and predictive power of the models. Therefore, one needs to carefully select their optimal values in order to extract as much information as possible from the data.
 
-A decision tree requires of a number of parameters
-The parameters used for defining a tree are further explained below. Note that I'm using scikit-learn (python) specific terminologies here which might be different in other software packages like R. But the idea remains the same.
-
+From all the parameters used to define a tree in the \texttt{scikit-learn} implementation of the BDT classifier, I only consider a subset of them. This is due to the fact that some are mutually exclusive, but also because I noticed that others have little effect on the problem at hand. Therefore, the parameters I consider are the following:
 \begin{itemize}
-	\item min_samples_split: Defines the minimum number of samples (or observations) which are required in a node to be considered for splitting. Used to control over-fitting. Higher values prevent a model from learning relations which might be highly specific to the particular sample selected for a tree. Too high values can lead to under-fitting hence, it should be tuned using CV.
-	\item min_samples_leaf: Defines the minimum samples (or observations) required in a terminal node or leaf. Used to control over-fitting similar to min_samples_split. Generally lower values should be chosen for imbalanced class problems because the regions in which the minority class will be in majority will be very small.
-	\item min_weight_fraction_leaf: Similar to min_samples_leaf but defined as a fraction of the total number of observations instead of an integer. Only one this or min_samples_leaf should be defined.
-	\item max_depth: The maximum depth of a tree. Used to control over-fitting as higher depth will allow model to learn relations very specific to a particular sample. Should be tuned using CV.
-	\item max_leaf_nodes: The maximum number of terminal nodes or leaves in a tree. Can be defined in place of max_depth. Since binary trees are created, a depth of $n$ would produce a maximum of $2^{n}$ leaves. If this is defined, GBM will ignore max_depth.
-	\item max_features: The number of features to consider while searching for a best split. These will be randomly selected. As a thumb-rule, square root of the total number of features works great but we should check upto $30-40\%$ of the total number of features. Higher values can lead to over-fitting but depends on case to case.
+	\item \texttt{min_samples_split}: defines the minimum number of samples required in a node to be considered for splitting. Higher values prevent a model from learning relations which might be highly specific to the particular sample, but may led to under-fitting if the value is too low.
+	\item \texttt{min_samples_leaf}: defines the minimum samples required in a leaf node. For imbalanced problems it should take a low value, as there will not be many cases where the minority class dominates.
+	\item \texttt{max_depth}: maximum depth of a tree. Useful to prevent over-fitting, as higher depth will allow a model to learn relations specific to the training sample.
 \end{itemize}
-
-Lets consider another set of parameters for managing boosting:
+In the case of the boosting parameters, the ones I look at are:
 \begin{itemize}
-	\item learning_rate: This determines the impact of each tree on the final outcome (step 2.4). GBM works by starting with an initial estimate which is updated using the output of each tree. The learning parameter controls the magnitude of this change in the estimates. Lower values are generally preferred as they make the model robust to the specific characteristics of tree and thus allowing it to generalize well. Lower values would require higher number of trees to model all the relations and will be computationally expensive.
-	\item n_estimators: The number of sequential trees to be modeled (step 2). Though GBM is fairly robust at higher number of trees but it can still overfit at a point. Hence, this should be tuned using CV for a particular learning rate.
-	\item subsample: The fraction of observations to be selected for each tree. Selection is done by random sampling. Values slightly less than 1 make the model robust by reducing the variance.
+	\item \texttt{learning_rate}: determines the impact of each tree on the final outcome. Lower values are make the model robust to the specific characteristics of a tree and thus allow it to generalise well. However, that usually requires a higher number of trees to model all the relations in the data.
+	\item \texttt{n_estimators}: number of sequential trees to be trained. In general, BDTs are fairly robust at higher number of trees but it can still overfit at a point.
+	\item \texttt{subsample}: The fraction of observations to be selected for each tree. Selection is done by random sampling. Values slightly less than 1 make the model robust by reducing the variance.
 	Typical values $\sim0.8$ generally work fine but can be fine-tuned further.
 \end{itemize}
+
+In general, hyperparameters depend on each other. Thus, it is not possible to optimise them independently. In the literature, we find two main strategies to explore the hyperparameter space. We could use a grid search, in which one discretises a portion of the space of hyperparameters and evaluates the model at each point. Another approach is the randomised search, where a certain number of random configurations of hyperparameters are explored.
+
+\begin{figure}[t]
+	\begin{subfigure}{0.32\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/BDT/precision_vs_sensitivity_p0_0.20_sigmap_0.10.pdf}
+	\end{subfigure}
+	\begin{subfigure}{0.32\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/BDT/precision_vs_sensitivity_p0_1.15_sigmap_0.35.pdf}
+	\end{subfigure}
+	\begin{subfigure}{0.32\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/BDT/precision_vs_sensitivity_p0_6.50_sigmap_3.50.pdf}
+	\end{subfigure}
+	\caption[Values of the precision and sensitivity obtained for 10000 BDT hyperparameter configurations, for the momentum regions I, III and V.]{Values of the precision and sensitivity obtained for 10000 BDT hyperparameter configurations, for the momentum regions I, III and V. The red contours indicate the curves of equal $F_{1}$ score, while the green crosses are the selected configurations.}
+	\label{fig:hyper_precision_sensitivity}
+\end{figure}
+
+\begin{table}[t]
+	\caption{Optimal values of the hyperparameters used by the BDT, for each momentum range.}
+	\begin{center}
+		\begin{small}
+			\begin{tabular}{l|l|lllll}
+				\multirow{2}{*}{Hyperparameter} & \multirow{2}{*}{Range} & \multicolumn{5}{l}{Best value}                           \\[1mm] \cline{3-7} \rule{0pt}{1.1\normalbaselineskip}
+												&                        & I & II & III & IV & V \\[1mm] \hline \rule{0pt}{1.1\normalbaselineskip}
+				\texttt{min_samples_split}      & $[0.001, ~1]$          & 0.10     & 0.06      & 0.05       & 0.27      & 0.06     \\[2mm]
+				\texttt{min_samples_leaf}       & $[0.001, ~1]$          & 0.02     & 0.03      & 0.01       & 0.02      & 0.07     \\[2mm]
+				\texttt{max_depth}              & $\{2, ~3, ~..., ~8\}$  & 8        & 2         & 4          & 2         & 7      \\[2mm]
+				\texttt{learning_rate}          & $[0.05, ~1]$           & 0.10     & 0.23      & 0.07       & 0.13      & 0.09     \\[2mm]
+				\texttt{subsample}              & $[0.01, ~1]$           & 0.75     & 0.65      & 0.79       & 0.86      & 0.95    
+			\end{tabular}
+		\end{small}
+	\end{center}
+	\label{tab:bdt_hyperpars}
+\end{table}
 
 \subsection{Probability calibration}
 
