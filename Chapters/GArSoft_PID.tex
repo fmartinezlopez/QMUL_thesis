@@ -202,7 +202,7 @@ One interesting thing to check is what induces this non-linear relation between 
 
 By default, GArSot applies a 12-bit ADC limit, which can be changed in the simulation configuration. However, it can only be increased up to 16-bit, as we represent the ADC collection as a \texttt{std::vector<short>}. This way, I tried to change the saturation parameter to see how it affects the relation between reconstructed charge and energy. Figure \ref{fig:energy_adc_saturation} shows a comparison between the most probable $\mathrm{d}Q/\mathrm{d}x$ for 10, 12 and 16-bit ADC limits. As expected, the lower the limit is the sooner the charge saturates. For higher ADC limits the relation between energy and charge remains linear up to higher $\mathrm{d}E/\mathrm{d}x$ values, but even for the 16-bit limit the saturation is noticeable for values $\gtrsim 0.5 ~ \mathrm{MeV}/\mathrm{cm}$.
 
-In Tab. \ref{tab:calibration_fits} I also show the results of fitting the samples with 10 and 16-bits ADC limits to the calibration function from Eq. (\ref{Eq:3.5}), using the weights based on their relative error as described previously. One interesting feature to notice is how different the best fit points look for the 10-bit ADC saturation when compared to the other two, which are consistent with each other.
+Table \ref{tab:calibration_fits} shows the results of fitting the samples with 10 and 16-bits ADC limits to the calibration function from Eq. (\ref{Eq:3.5}), using the weights based on their relative error as described previously. One interesting feature to notice is how different the best fit points look for the 10-bit ADC saturation when compared to the other two, which are consistent with each other.
 
 At this point we can compare the $\mathrm{d}E/\mathrm{d}x$ distribution one gets from Geant4, i.e. the true energy loss distribution, and the distribution I found by applying the calibration function to our collection of reconstructed $\mathrm{d}Q/\mathrm{d}x$ values. Figure \ref{fig:energy_correction} (top panel) shows the true (solid grey) and reconstructed (blue, labeled as uncorrected) distributions together. The dashed vertical lines indicate the region of validity of the calibration fit, i.e. the left and right edges of the first and last $\mathrm{d}E/\mathrm{d}x$ bin respectively. Notice that these histograms are area-normalised, as the total number of true energy deposits is much higher than the number of reconstructed charge deposits. This is due to a combination of effects, like the finite spatial resolution of the detector, the hit clustering used in the track fitting and the reclustering we have applied here.
 
@@ -679,6 +679,8 @@ In the case of the boosting parameters, the ones I look at are:
 
 In general, hyperparameters depend on each other. Thus, it is not possible to optimise them independently. In the literature, we find two main strategies to explore the hyperparameter space. We could use a grid search, in which one discretises a portion of the space of hyperparameters and evaluates the model at each point. Another approach is the randomised search, where a certain number of random configurations of hyperparameters are explored.
 
+In this case, I used the random search to scan the hyperparameter space. Also, because it is not guaranteed that a set of hyperparameters can be efficiently applied across different datasets, I perform the optimisation for each of the momentum ranges considered. Table \ref{tab:bdt_hyperpars} shows the list of hyperparameters considered, and the range within which I let them vary. I decided to fix the number of estimators to $400$ in all cases, as its value is correlated with that of the learning rate.
+
 \begin{figure}[t]
 	\begin{subfigure}{0.32\textwidth}
 		\centering
@@ -692,9 +694,11 @@ In general, hyperparameters depend on each other. Thus, it is not possible to op
 		\centering
 		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/BDT/precision_vs_sensitivity_p0_6.50_sigmap_3.50.pdf}
 	\end{subfigure}
-	\caption[Values of the precision and sensitivity obtained for 10000 BDT hyperparameter configurations, for the momentum regions I, III and V.]{Values of the precision and sensitivity obtained for 10000 BDT hyperparameter configurations, for the momentum regions I, III and V. The red contours indicate the curves of equal $F_{1}$ score, while the green crosses are the selected configurations.}
+	\caption[Values of the precision and sensitivity obtained for 10000 BDT hyperparameter configurations, for the momentum regions I, III and V.]{Values of the precision and sensitivity obtained for 10000 BDT hyperparameter configurations, for the momentum regions I, III and V. The red contours indicate the curves of equal $F_{1}$-score, while the green crosses are the selected configurations.}
 	\label{fig:hyper_precision_sensitivity}
 \end{figure}
+
+The performance of the models was assessed using a stratified 3-fold cross-validation with replacement. Cross-validation involves dividing a dataset in a number of subsets, training the model using some of them, and testing it with the rest. In our case, I divide the data in 3 equal-sized subsets, maintaining the class proportions of the complete dataset. Then, for 3 iterations, I train the models using 2 of the subsets while I compute the precision and sensitivity scores with the other. This approach provides a more robust estimate of the performance on unseen data.
 
 \begin{table}[t]
 	\caption{Optimal values of the hyperparameters used by the BDT, for each momentum range.}
@@ -713,6 +717,10 @@ In general, hyperparameters depend on each other. Thus, it is not possible to op
 	\end{center}
 	\label{tab:bdt_hyperpars}
 \end{table}
+
+Figure \ref{fig:hyper_precision_sensitivity} shows the results of evaluating 10000 hyperparameter configurations in the precision versus sensitivity plane, for the momentum regions I, III and V (from left to right). The contours represent the curves of equal $F_{1}$-score, i.e. the harmonic mean of the precision and the sensitivity. In order to select the optimal configurations (indicated in the plots with a green cross), I chose the point with the highest $F_{1}$-score.
+
+The results for the different momentum ranges are summarised in Tab. \ref{tab:bdt_hyperpars}. One can see some consistency in hyperparameter choices, with models generally preferring small values for the tree-specific parameters, small learning rate, and relatively large subsample sizes.
 
 \subsection{Probability calibration}
 
