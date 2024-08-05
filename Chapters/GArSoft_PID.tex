@@ -760,20 +760,24 @@ A way to visualise how well the predictions of a classifier are calibrated is us
 
 In this case, I try to correct the raw response of the classifiers by applying a sigmoid function:
 \begin{equation}
-	f(x;~A,B) = \frac{1}{1+\mathrm{e}^{Ax+B}},
+	\sigma(x;~A,B) = \frac{1}{1+\mathrm{e}^{Ax+B}},
 \end{equation}
 where the parameters $A$ and $B$ are real numbers determined using the method of least squares.
-
-For each classifier, I perform a grid search to obtain the optimal values of $A$ and $B$. For any pair, I compute the predicted probabilities as $y_{pred} = f(y_{raw};~A,B)$, where $y_{raw}$ are the raw predictions of the classifier\footnote{In \texttt{scikit-learn} these correspond to the outputs of the \texttt{decision_function} method.}. Then, I calculate the corresponding reliability curve, and take the sum of the squared residuals between it and the response of the perfectly calibrated classifier.
-
-Figure \ref{fig:bdt_calibration_curves} shows the reliability diagrams for the original (blue) and calibrated (yellow) probability predictions of the classifier for the III momentum range, $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$. By original the $y_{pred} = f(y_{raw};~-2,0)$, which is the transformation 
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/BDT/ecal_bdt_output_example_calibration.pdf}
-	\caption{}
+	\caption{Uncalibrated (left panel) and calibrated (right panel) predicted probabilities assigned by the BDT classifiers for true muons (blue) and charged pions (red) in the momentum range $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$.}
 	\label{fig:bdt_calibration_output}
 \end{figure}
+
+For each classifier, I perform a grid search to obtain the optimal values of $A$ and $B$. For any pair, I compute the predicted probabilities as $y_{pred} = \sigma(y_{raw};~A,B)$, where $y_{raw}$ are the raw predictions of the classifier\footnote{In \texttt{scikit-learn} these correspond to the outputs of the \texttt{decision_function} method.}. Then, I calculate the corresponding reliability curve, and take the sum of the squared residuals between it and the response of the perfectly calibrated classifier.
+
+Figure \ref{fig:bdt_calibration_curves} shows the reliability diagrams for the original (blue) and calibrated (yellow) probability predictions of the classifier for the III momentum range, $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$. The original response of the classifier is given by $y_{pred} = \sigma(y_{raw};~-2,0)$, which is the transformation applied by \texttt{scikit-learn} to produce the probability estimate. Notice how the calibrated prediction matches the ideal response much better than the original, across all the probability range.
+
+One can also compare the responses of the uncalibrated and calibrated classifiers broken down by true particle type, as shown in Fig. \ref{fig:bdt_calibration_output}. It can be seen that the distributions for both muons (blue) and charged pions (red) smoothen after calibration, but still the separating power of the classifier remains unchanged.
+
+At this point, having the trained classifiers and the probability calibration parameters, I am able to assess the performance of the classification strategy in a physics-relevant case.
 
 \subsection{Performance}
 
