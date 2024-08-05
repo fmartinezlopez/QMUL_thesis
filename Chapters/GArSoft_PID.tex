@@ -463,7 +463,9 @@ For instance, distinguishing muons from pions could be difficult at low momenta,
 
 Figure \ref{fig:fraction_particles_ecal_muid} shows the momentum distribution of the reconstructed muons (top) and pions (bottom) in a FHC sample. It also contains the fraction of particles reaching the ECal (red) and MuID (blue), for the different momentum bins. In Fig. \ref{fig:dEdx_vs_momentum_regions} I show the mean $\mathrm{d}E/\mathrm{d}x$ of different particles as a function of the momentum, computed using the \gls{aleph} parametrisation with the best fit parameters found in Subsec. \ref{subsec:mean_dEdx}.
 
-Using these two figures as references, I decided to approach the classification by dividing the problem into six different momentum regions. A summary of these can be found in Tab. \ref{tab:bdt_regions}. The basic idea is to exploit all the information that is available in each region and . For the problem at hand, I prepared separated samples of isotropic single muons and pions, with momenta uniformly distributed along the corresponding momentum range. I did not generate samples for the first region, as it is assumed that the separation can be achieved using $\mathrm{d}E/\mathrm{d}x$ only. For the last region, I generated particles up to a momentum of $10~\mathrm{GeV}/c$, as that is well above the typical energies of muons and pions from FHC neutrino interactions in ND-GAr.
+Using these two figures as references, I decided to approach the classification by dividing the problem into six different momentum regions. A summary of these can be found in Tab. \ref{tab:bdt_regions}. The basic idea is to exploit all the information that is available in each region and . For the problem at hand, I prepared separated samples of isotropic single muons and pions, with momenta uniformly distributed along the corresponding momentum range. Each sample contains $50000$ events of the corresponding particle species. I did not generate samples for the first region, as it is assumed that the separation can be achieved using $\mathrm{d}E/\mathrm{d}x$ only. For the last region, I generated particles up to a momentum of $10~\mathrm{GeV}/c$, as that is well above the typical energies of muons and pions from FHC neutrino interactions in ND-GAr.
+
+Additionally, I prepared another sample of $100000$ FHC neutrino events. For each interaction, I select the reconstructed particles which were backtracked to true muons or charged pions. I use this dataset to perform validation checks, to see how the models trained with the single particle data generalise to a more realistic scenario.
 
 \begin{table}[t]
 	\caption{Momentum ranges and description of the PID approach assumed for the muon and pion classification task.}
@@ -698,16 +700,17 @@ In this case, I used the random search to scan the hyperparameter space. Also, b
 	\label{fig:hyper_precision_sensitivity}
 \end{figure}
 
-The performance of the models was assessed using a stratified 3-fold cross-validation with replacement. Cross-validation involves dividing a dataset in a number of subsets, training the model using some of them, and testing it with the rest. In our case, I divide the data in 3 equal-sized subsets, maintaining the class proportions of the complete dataset. Then, for 3 iterations, I train the models using 2 of the subsets while I compute the precision and sensitivity scores with the other. This approach provides a more robust estimate of the performance on unseen data.
+I evaluate 10000 different hyperparameter configurations for each momentum range. For the hyperparameter tunning, I used subsamples containing $10\%$ of the full datasets, keeping the original proportions between classes, in order to reduce the computational load. The performance of the models was assessed using a stratified 3-fold cross-validation with replacement. Cross-validation involves dividing the data in a number of subsets, training the model using some of them, and testing it with the rest. In our case, I divide the data in 3 equal-sized subsets, maintaining the class proportions of the original dataset. Then, for 3 consecutive iterations, I train the models using 2 of the subsets while I compute the precision and sensitivity scores with the other. This approach provides a more robust estimate of the performance on unseen data.
 
 \begin{table}[t]
 	\caption{Optimal values of the hyperparameters used by the BDT, for each momentum range.}
 	\begin{center}
 		\begin{small}
 			\begin{tabular}{l|l|lllll}
-				\multirow{2}{*}{Hyperparameter} & \multirow{2}{*}{Range} & \multicolumn{5}{l}{Best value}                           \\[1mm] \cline{3-7} \rule{0pt}{1.1\normalbaselineskip}
-												&                        & I & II & III & IV & V \\[1mm] \hline \rule{0pt}{1.1\normalbaselineskip}
-				\texttt{min_samples_split}      & $[0.001, ~1]$          & 0.10     & 0.06      & 0.05       & 0.27      & 0.06     \\[2mm]
+				\multirow{2}{*}{Hyperparameter} & \multirow{2}{*}{Range} & \multicolumn{5}{l}{Best value}                           \\[1mm] \cline{3-7}
+												&                        & \rule{0pt}{1.1\normalbaselineskip}I & II & III & IV & V \\[1mm]
+												\hline
+				\rule{0pt}{1.1\normalbaselineskip}\texttt{min_samples_split}      & $[0.001, ~1]$          & 0.10     & 0.06      & 0.05       & 0.27      & 0.06     \\[2mm]
 				\texttt{min_samples_leaf}       & $[0.001, ~1]$          & 0.02     & 0.03      & 0.01       & 0.02      & 0.07     \\[2mm]
 				\texttt{max_depth}              & $\{2, ~3, ~..., ~8\}$  & 8        & 2         & 4          & 2         & 7      \\[2mm]
 				\texttt{learning_rate}          & $[0.05, ~1]$           & 0.10     & 0.23      & 0.07       & 0.13      & 0.09     \\[2mm]
@@ -718,11 +721,59 @@ The performance of the models was assessed using a stratified 3-fold cross-valid
 	\label{tab:bdt_hyperpars}
 \end{table}
 
-Figure \ref{fig:hyper_precision_sensitivity} shows the results of evaluating 10000 hyperparameter configurations in the precision versus sensitivity plane, for the momentum regions I, III and V (from left to right). The contours represent the curves of equal $F_{1}$-score, i.e. the harmonic mean of the precision and the sensitivity. In order to select the optimal configurations (indicated in the plots with a green cross), I chose the point with the highest $F_{1}$-score.
+Figure \ref{fig:hyper_precision_sensitivity} shows the results in the precision versus sensitivity plane, for the momentum regions I, III and V (from left to right). The contours represent the curves of equal $F_{1}$-score, i.e. the harmonic mean of the precision and the sensitivity. In order to select the optimal configurations (indicated in the plots with a green cross), I chose the point with the highest $F_{1}$-score.
 
 The results for the different momentum ranges are summarised in Tab. \ref{tab:bdt_hyperpars}. One can see some consistency in hyperparameter choices, with models generally preferring small values for the tree-specific parameters, small learning rate, and relatively large subsample sizes.
 
+\begin{table}[t]
+	\caption{Performance metrics of the BDTs with optimal hyperparameters, for the different momentum ranges.}
+	\begin{center}
+		\begin{small}
+			\begin{tabular}{l|lllll}
+				\multirow{2}{*}{Metric} & \multicolumn{5}{l}{Value $\pm ~ 1\sigma$}                                                                \\[2mm] \cline{2-6}
+										& \rule{0pt}{1.1\normalbaselineskip}I                 & II                & III               & IV                & V                 \\[2mm] \hline
+										\rule{0pt}{1.1\normalbaselineskip}Accuracy                & $0.779 \pm 0.003$ & $0.812 \pm 0.003$ & $0.846 \pm 0.002$ & $0.861 \pm 0.003$ & $0.874 \pm 0.002$ \\[2mm]
+				Precision               & $0.769 \pm 0.003$ & $0.752 \pm 0.005$ & $0.788 \pm 0.002$ & $0.805 \pm 0.003$ & $0.815 \pm 0.003$ \\[2mm]
+				Sensitivity             & $0.745 \pm 0.009$ & $0.921 \pm 0.006$ & $0.965 \pm 0.002$ & $0.967 \pm 0.002$ & $0.976 \pm 0.001$ \\[2mm]
+				$F_{1}$-score           & $0.757 \pm 0.004$ & $0.828 \pm 0.003$ & $0.867 \pm 0.002$ & $0.879 \pm 0.002$ & $0.889 \pm 0.002$ \\[2mm]
+				ROC AUC                 & $0.868 \pm 0.003$ & $0.865 \pm 0.003$ & $0.899 \pm 0.002$ & $0.902 \pm 0.002$ & $0.911 \pm 0.001$
+			\end{tabular}
+		\end{small}
+	\end{center}
+	\label{tab:bdt_metrics}
+\end{table}
+
+Now that I have obtained the optimal values of the hyperparameters, I can train the different BDTs. In this case I use the complete datasets, keeping $20\%$ of the data for testing. Table \ref{tab:bdt_metrics} shows the values of the different performance metrics obtained using the selected hyperparameters and 5-fold cross-validation. The last row indicates the value of the area under the receiver operating characteristic (ROC) curve. This represents the sensitivity of a model as a function of the false positive rate. I have included it here as it is a classic model metric used in the machine learning community. Overall, there is a clear trend of models performing better at higher momentum.
+
 \subsection{Probability calibration}
+
+So far, the trained BDTs are able to provide predictions of the class labels. Ideally, one would like the output of a classifier to give a confidence level about the prediction. However, it is not straightforward to interpret the outputs of our BDTs in terms of probabilities.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.75\linewidth]{Images/GArSoft_PID/BDT/ecal_bdt_output_example_calibration_curves.pdf}
+	\caption{Reliability diagrams for the BDT classifier used in the momentum range $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$, both for the original (blue circles) and calibrated (yellow squares) responses. For reference, the response of a perfectly calibrated classifier is also shown (black dashed line).}
+	\label{fig:bdt_calibration_curves}
+\end{figure}
+
+A way to visualise how well the predictions of a classifier are calibrated is using reliability diagrams \cite{Wilks1995}. They represent the probability of the positive label versus the probability predicted by the classifier. These can be obtained by binning the predicted probabilities, and then compute the conditional probability $P(y_{true}=1|y_{i} \leq y_{pred} < y_{i+1})$ by checking the fraction of true positive instances in each bin. The reliability diagram of a perfectly calibrated classifier would be a diagonal line.
+
+In this case, I try to correct the raw response of the classifiers by applying a sigmoid function:
+\begin{equation}
+	f(x;~A,B) = \frac{1}{1+\mathrm{e}^{Ax+B}},
+\end{equation}
+where the parameters $A$ and $B$ are real numbers determined using the method of least squares.
+
+For each classifier, I perform a grid search to obtain the optimal values of $A$ and $B$. For any pair, I compute the predicted probabilities as $y_{pred} = f(y_{raw};~A,B)$, where $y_{raw}$ are the raw predictions of the classifier\footnote{In \texttt{scikit-learn} these correspond to the outputs of the \texttt{decision_function} method.}. Then, I calculate the corresponding reliability curve, and take the sum of the squared residuals between it and the response of the perfectly calibrated classifier.
+
+Figure \ref{fig:bdt_calibration_curves} shows the reliability diagrams for the original (blue) and calibrated (yellow) probability predictions of the classifier for the III momentum range, $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$. By original the $y_{pred} = f(y_{raw};~-2,0)$, which is the transformation 
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/BDT/ecal_bdt_output_example_calibration.pdf}
+	\caption{}
+	\label{fig:bdt_calibration_output}
+\end{figure}
 
 \subsection{Performance}
 
