@@ -783,9 +783,68 @@ At this point, having the trained classifiers and the probability calibration pa
 
 \section{ECal time-of-flight}
 
+Looking at Fig. \ref{fig:dEdx_vs_momentum_regions}, it is clear that for momentum values in the range $1.0-3.0 ~ \mathrm{GeV}/c$ it is not possible to separate pions and protons using a $\left<\mathrm{d}E/\mathrm{d}x\right>$ measurement in the HPgTPC. However, in the previous section I assumed that protons at those energies could be identified by other means, and therefore were not an issue for the muon and pion discrimination.
+
+Some detectors, like ALICE \cite{ALICE2011} or the ILD concept \cite{Einhaus2021}, complement the PID capabilities of their gaseous trackers with time-of-flight measurements. The use of fast timing silicon sensors, with hit time resolutions under $100~\mathrm{ps}$, would allow for the identification of charged hadrons via a ToF measurement up to $5.0 ~ \mathrm{GeV}/c$. In the case of ND-GAr, one could think of using the inner layers of the ECal, the ones consisting of high-granularity tiles, to obtain a ToF-based PID, with some inputs from the TPC.
+
+Measuring the momentum and the velocity of a charged particle allows for a determination of the mass through the relativistic momentum formula:
+\begin{equation}
+	m = \frac{p}{\beta} \sqrt{1-\beta^{2}}.
+\end{equation}
+In our case, the momentum is measured in the TPC, using the curvature and the dip angle of the helix inside the magnetic field. The velocity of the particle can be written as:
+\begin{equation}
+	\beta = \frac{\ell_{track}}{c \tau},
+\end{equation}
+where $\ell_{track}$ is the length of the track, and $\tau$ the arrival time to the ECal.
+
+In GArSoft, the track length is computed at the Kalman filter stage. It is simply the sum of the line segments along the track, either in the forward or backward fit. In this case, because we are only interested in the particles that make it to the ECal, I choose the fit direction based on the results of the track-cluster associations.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.75\linewidth]{Images/GArSoft_PID/tof/tof_diagram.png}
+	\caption{Schematic of the hit selection used for the ToF measurement. The grid represents the layers of the inner ECal, with coloured squares indicating the tiles with hits. Green squares indicate the selected hits.}
+	\label{fig:tof_diagram}
+\end{figure}
+
+Additionally, because the last $30~\mathrm{cm}$ of the TPC radius are uninstrumented\footnote{Note to self: check this number.}, I need to correct for the length of the tracks. Using the track fit parameters to propagate the helix to its entry point in the ECal, one can write the total track length as:
+\begin{equation}
+	\ell_{track} = \ell + \left| \frac{\phi_{\mathrm{EP}} - \phi}{R^{-1}} \right| \sqrt{1+\mathrm{tan}^{2}\lambda},
+\end{equation}
+where $\phi_{\mathrm{EP}}$ is the angle of rotation at the entry point to the calorimeter, and $\ell$, $\phi$, $R$ and $\lambda$ are the track length, angle of rotation, radius of curvature and dip angle at the last point in the fit, respectively.
+
+To test the idea of performing a ToF measurement with the inner ECal, I generated two data samples. Each consists of 10000 single particle events, either charged pions or protons. Their momenta are uniformly distributed in the range $0.5-5.0~\mathrm{GeV}/c$, and their directions are isotropic. I process each sample using different values of the time resolution, from $\Delta \tau = 0$, the perfect time resolution case for comparison, to the current nominal value of $\Delta \tau = 0.7~\mathrm{ns}$, and the worse scenario of $\Delta \tau = 1.0~\mathrm{ns}$.
+
 \subsection{Arrival time estimations}
 
+In the simulation, the limited time resolution of the ECal is taken into account by applying a Gaussian smearing to the true hit times. After the track-cluster, one ends up with a collection of ECal hits associated to each particle. From these, the arrival time of the particle to the ECal can be extracted.
+
+The simplest possibilities are to either take the time of the earliest hit or the hit closest to the entry point. Because these two coincide, in general, I focused only in the earliest hit time. However, this needs to be corrected, to account for the distance travelled from the entry point to the position of the hit:
+\begin{equation}\label{8.22}
+	\tau_{earliest} = \tau_{hit} - \frac{d_{\mathrm{EP}-hit}}{c},
+\end{equation}
+where $\tau_{hit}$ is the time of the earliest hit, and $d_{\mathrm{EP}-hit}$ is the distance between that hit and the entry point of the particle to the ECal. This is computed as the arc length between the entry point and the point of the extrapolated helix up to the layer of the hit. This way of correcting the time assumes $c$ for the propagation of the particle, which may lead to biased estimates.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/tof/beta_vs_momentum_comparison_delta_0.1.pdf}
+	\caption{Particle velocity versus momentum measured with different ECal arrival time estimations. From left to right: earliest hit time, average hit time, and fitted hit time. In all cases the time resolution is $\Delta \tau = 0.1 ~ \mathrm{ns}$.}
+	\label{fig:tof_beta_comp}
+\end{figure}
+
+I also tried to estimate the arrival times using information from the rest of the hits. In order to do this, as a simplifying assumption, I approximate the hadronic shower considering only its MIP component. For each layer, I keep only the hit in the tile closest to the point of the extrapolated track up to that layer. Figure \ref{fig:tof_diagram} shows an example of how this hit selection works. The dashed line represents the extrapolated track, while the coloured squares are the tiles containing hits. Green indicates the tiles closer to the track in each layer (in the sketch they correspond to the grid columns).
+
+Now, I can use these collections of hits to estimate the arrival times. A possibility is to take the average of the times of the selected hits, denoted $\tau_{average}$. For that to work, one needs to correct these times, in a similar way as in Eq. (\ref{8.22}), before taking the average. However, as before, this correction assumes that the particle travels at the speed of light inside the ECal. Another option is to perform a linear fit to the hit times and the distances to the entry point. In that case, the arrival time would be the fitted value of the intercept, $\tau_{fit}$. This method would not assume a speed of light propagation.
+
+Figure \ref{fig:tof_beta_comp} shows the velocity estimations as a function of the particle momentum, for the earliest hit time (left panel), average hit time (middle panel), and fitted hit time (right panel). The two bands correspond to the $\pi^{\pm}$ and the $p$ particles. $\Delta \tau = 0.1 ~ \mathrm{ns}$. Notice how, for the earliest hit time method, the velocities are significantly biased towards larger values. For the multi-hit methods, the $\tau_{fit}$ estimate appears to produce a larger variance than when using $\tau_{average}$ method.
+
 \subsection{Proton and pion separation}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/tof/reco_mass_comparison.pdf}
+	\caption{Mass spectra for $p$ (blue) and $\pi^{\pm}$ (yellow) particles, using different ECal time resolution values (from top to bottom, in ascending order), and arrival time estimates. From left to right: earliest hit time, average hit time, and fitted hit time. The dashed lines indicate the true masses of the particles.}
+	\label{fig:tof_mass_spectra}
+\end{figure}
 
 \section{Charged pion decay in flight}
 
