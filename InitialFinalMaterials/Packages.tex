@@ -148,3 +148,18 @@
 \renewcommand{\glsnamefont}[1]{\textbf{#1}}
 
 \usepackage{afterpage}
+
+%fancy epigraph
+%-----------------------------------------------------------------------------------
+
+\newcommand{\mytextformat}{\itshape\epigraphsize}
+\newenvironment{mytext}{\mytextformat}{}
+\newenvironment{mysource}{\scshape\hfill}{}
+\renewcommand{\textflush}{mytext} 
+\renewcommand{\sourceflush}{mysource}
+
+\renewcommand{\epigraphflush}{flushright}
+
+\let\originalepigraph\epigraph 
+\renewcommand\epigraph[2]%
+   {\setlength{\epigraphwidth}{\widthof{\mytextformat#1}}\originalepigraph{#1}{#2}}
