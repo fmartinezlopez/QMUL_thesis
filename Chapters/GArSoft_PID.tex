@@ -788,7 +788,7 @@ Looking at Fig. \ref{fig:dEdx_vs_momentum_regions}, it is clear that for momentu
 Some detectors, like ALICE \cite{ALICE2011} or the ILD concept \cite{Einhaus2021}, complement the PID capabilities of their gaseous trackers with time-of-flight measurements. The use of fast timing silicon sensors, with hit time resolutions under $100~\mathrm{ps}$, would allow for the identification of charged hadrons via a ToF measurement up to $5.0 ~ \mathrm{GeV}/c$. In the case of ND-GAr, one could think of using the inner layers of the ECal, the ones consisting of high-granularity tiles, to obtain a ToF-based PID, with some inputs from the TPC.
 
 Measuring the momentum and the velocity of a charged particle allows for a determination of the mass through the relativistic momentum formula:
-\begin{equation}
+\begin{equation}\label{8.19}
 	m = \frac{p}{\beta} \sqrt{1-\beta^{2}}.
 \end{equation}
 In our case, the momentum is measured in the TPC, using the curvature and the dip angle of the helix inside the magnetic field. The velocity of the particle can be written as:
@@ -816,7 +816,7 @@ To test the idea of performing a ToF measurement with the inner ECal, I generate
 
 \subsection{Arrival time estimations}
 
-In the simulation, the limited time resolution of the ECal is taken into account by applying a Gaussian smearing to the true hit times. After the track-cluster, one ends up with a collection of ECal hits associated to each particle. From these, the arrival time of the particle to the ECal can be extracted.
+In the simulation, the limited time resolution of the ECal is taken into account by applying a Gaussian smearing to the true hit times. Other effects, like the digitisation of the signals, are not taken into account and fall beyond the scope of this study. After the track-cluster, one ends up with a collection of ECal hits associated to each particle. From these, the arrival time of the particle to the ECal can be extracted.
 
 The simplest possibilities are to either take the time of the earliest hit or the hit closest to the entry point. Because these two coincide, in general, I focused only in the earliest hit time. However, this needs to be corrected, to account for the distance travelled from the entry point to the position of the hit:
 \begin{equation}\label{8.22}
@@ -835,9 +835,11 @@ I also tried to estimate the arrival times using information from the rest of th
 
 Now, I can use these collections of hits to estimate the arrival times. A possibility is to take the average of the times of the selected hits, denoted $\tau_{average}$. For that to work, one needs to correct these times, in a similar way as in Eq. (\ref{8.22}), before taking the average. However, as before, this correction assumes that the particle travels at the speed of light inside the ECal. Another option is to perform a linear fit to the hit times and the distances to the entry point. In that case, the arrival time would be the fitted value of the intercept, $\tau_{fit}$. This method would not assume a speed of light propagation.
 
-Figure \ref{fig:tof_beta_comp} shows the velocity estimations as a function of the particle momentum, for the earliest hit time (left panel), average hit time (middle panel), and fitted hit time (right panel). The two bands correspond to the $\pi^{\pm}$ and the $p$ particles. $\Delta \tau = 0.1 ~ \mathrm{ns}$. Notice how, for the earliest hit time method, the velocities are significantly biased towards larger values. For the multi-hit methods, the $\tau_{fit}$ estimate appears to produce a larger variance than when using $\tau_{average}$ method.
+Figure \ref{fig:tof_beta_comp} shows the velocity estimations as a function of the particle momentum, for the earliest hit time (left panel), average hit time (middle panel), and fitted hit time (right panel). The two bands correspond to the $\pi^{\pm}$ and the $p$ particles. $\Delta \tau = 0.1 ~ \mathrm{ns}$. Notice how, for the earliest hit time method, the velocities are significantly biased towards larger values. For the multi-hit methods, the $\tau_{fit}$ estimate appears to produce a larger variance than when using the $\tau_{average}$ method.
 
 \subsection{Proton and pion separation}
+
+Once we have the velocities of the particles, one can estimate their masses through Eq. (\ref{8.19}). The resulting mass spectra are shown in Fig. \ref{fig:tof_mass_spectra}. I computed the masses for the three arrival time estimates discussed above, and three different values of the time resolution: $\Delta \tau = 0.00$ (perfect time resolution), $\Delta \tau = 0.10 ~ \mathrm{ns}$, and $\Delta \tau = 0.70 ~ \mathrm{ns}$. Although in all cases we have the same number of events, it appears as if the entries in the histograms decrease as the time resolution increases. Sometimes, the particles get unphysical values of $\beta > 1$, and in turn they do not contribute to the mass spectra. This is more likely to happen for higher values of $\Delta \tau$.
 
 \begin{figure}[t]
 	\centering
@@ -845,6 +847,29 @@ Figure \ref{fig:tof_beta_comp} shows the velocity estimations as a function of t
 	\caption{Mass spectra for $p$ (blue) and $\pi^{\pm}$ (yellow) particles, using different ECal time resolution values (from top to bottom, in ascending order), and arrival time estimates. From left to right: earliest hit time, average hit time, and fitted hit time. The dashed lines indicate the true masses of the particles.}
 	\label{fig:tof_mass_spectra}
 \end{figure}
+
+As noted before, the average hit time method produces the most robust estimates when increasing $\Delta \tau$. Intuitively this makes sense, as by taking the mean one averages out the effect of the Gaussian smearing. Going forward, I will use this arrival time estimator, as it appears to be the best performing one.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.75\linewidth]{Images/GArSoft_PID/tof/proton_selection_beta_metrics.pdf}
+	\caption{Efficiency (top panel) and purity (bottom panel) for the proton selection as a function of the momentum, for $\Delta \tau = 0.10 ~ \mathrm{ns}$.}
+	\label{fig:tof_beta_selection}
+\end{figure}
+
+It is possible to use the velocity estimations to select a sample of protons. In this case, I do so by dividing the relevant momentum range in bins of $0.1~\mathrm{GeV}/c$. For each momentum bin, I compute the expected velocity for the protons via the inverse of Eq. (\ref{8.19}), and then take the fractional residuals of the measured velocities. Using that distribution, I choose the cut that maximises the $F_{1}$-score of the proton selection.
+
+The results can be seen in Fig. \ref{fig:tof_beta_selection}, for the case $\Delta \tau = 0.10 ~ \mathrm{ns}$. As expected from Fig. \ref{fig:tof_beta_comp}, the performance of the selection degrades rapidly with increasing momentum. However, the purity is still around $75\%$ at $3.0~\mathrm{GeV}/c$. This is likely to be sufficient, as we do not expect protons or charged pions with higher energies from the beam neutrino interactions.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/tof/numu_cc_proton_tof_summary.pdf}
+	\caption{Distributions of the velocities measured by ToF with the
+	inner ECal, for different momentum bins, in a FHC neutrino interaction sample. The Gaussian fits are performed around the maxima for each particle species.}
+	\label{fig:tof_beta_fhc}
+\end{figure}
+
+Figure \ref{fig:tof_beta_fhc}
 
 \section{Charged pion decay in flight}
 
@@ -859,11 +884,11 @@ As discussed previously, in GArSoft the TPC tracks are formed after a pattern re
 		\centering
 		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/pion_decay/pion_decay_evd.png}
 	\end{subfigure}
-	\caption{Left panel: number of non-decaying, decaying and decaying in the fiducial volume pions for a MC sample of $10^{5}$, $p=500 \ \mathrm{MeV}$ isotropic positively charged pions inside the TPC. Right panel: event display for a positive pion decaying inside the fiducial volume, with a single reconstructed track for the pion and muon system.}
+	\caption{Left panel: number of non-decaying, decaying and decaying in the fiducial volume pions for a MC sample of $100000$, $p=500 \ \mathrm{MeV}/c$ isotropic positively charged pions inside the TPC. Right panel: event display for a positive pion decaying inside the fiducial volume, with a single reconstructed track for the pion and muon system.}
 	\label{fig:pion_decays}
 \end{figure}
 
-Considering the mean life of the charged pion, $\tau = (2.6033\pm0.0005)\times10^{-8} \ \mathrm{s}$, one can estimate that about $12\%$ of the pions with momentum $p \sim \mathcal{O}(500 \ \mathrm{MeV})$ (roughly the peak of the pion momentum distribution in $\nu_{\mu}$ CC interactions off argon) decay inside the TPC. Figure \ref{fig:pion_decays} (left panel) shows the amount of charged pions decaying in the full TPC and fiducial volumes from an isotropic, monoenergetic sample of $10^{5}$ negatively charged pions with $p=500 \ \mathrm{MeV}$. We see that about $10\%$ of those decayed, with more than half of them decaying inside the TPC fiducial volume.
+Considering the mean life of the charged pion, $\tau = (2.6033\pm0.0005)\times10^{-8} \ \mathrm{s}$, one can estimate that about $12\%$ of the pions with momentum $p \sim \mathcal{O}(500 \ \mathrm{MeV}/c)$ (roughly the peak of the pion momentum distribution in $\nu_{\mu}$ CC interactions off argon) decay inside the TPC. Figure \ref{fig:pion_decays} (left panel) shows the amount of charged pions decaying in the full TPC and fiducial volumes from an isotropic, monoenergetic sample of $100000$ negatively charged pions with $p=500 \ \mathrm{MeV}/c$. We see that about $10\%$ of those decayed, with more than half of them decaying inside the TPC fiducial volume.
 
 Figure \ref{fig:pion_decays} (right panel) shows an example event display of a charged pion (magenta line) decays in flight inside the TPC, but because the angle of the muon (blue line) is small both were reconstructed as one single track (black line). In this case, the composite track reaches the ECal, where it undergoes a muon-like interaction, thus being classified as a muon.
 
