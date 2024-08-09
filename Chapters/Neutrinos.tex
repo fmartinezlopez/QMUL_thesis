@@ -8,15 +8,104 @@
 \end{comment}
 	
 %\noindent
-Ever since they were postulated in 1930 by Wolfgang Pauli to explain the continuous $\beta$ decay spectrum \cite{Pauli1930} and later found by Reines and Cowan at the Savannah River reactor in 1953 \cite{Reines1953}, neutrinos have had a special place among all other elementary particles. They provide a unique way to probe a wide range of quite different physics, from nuclear physics to cosmology, from astrophysics to colliders. Moreover, there is compelling evidence to believe that the study of neutrinos may be key to unveil different aspects of physics beyond the SM, difficult to test elsewhere.
+Ever since they were postulated in 1930 by Wolfgang Pauli to explain the continuous $\beta$ decay spectrum \cite{Pauli1930} and later found by F. Reines and C. Cowan at the Savannah River reactor in 1953 \cite{Reines1953}, neutrinos have had a special place among all other elementary particles. They provide a unique way to probe a wide range of quite different physics, from nuclear physics to cosmology, from astrophysics to colliders. Moreover, there is compelling evidence to believe that the study of neutrinos may be key to unveil different aspects of physics beyond the SM, difficult to test elsewhere.
 
 In this Chapter I will review the basics of neutrino physics, from its role within the SM to the main open questions related to the neutrino sector, paying special attention to the phenomenology of neutrino oscillations.
 
 \section{Neutrinos in the SM}
 
-By definition, in the SM there are no right-handed neutrino fields. A direct implication of this fact is that neutrinos are strictly massless within the SM. This follows from the experimental observation that all neutrinos produced via weak interactions are pure left-handed helicity states (and similarly antineutrinos are pure right-handed states). The hypothetical existence of right-handed neutrinos could be indirectly inferred from the observation of non-zero neutrino masses, nevertheless the existence neutrino masses is not a sufficient condition for the existence of such fields.
+The SM of fundamental interactions was initially proposed in 1967 by S. Glashow, S. Weinberg and A. Salam\cite{Glashow1961,Weinberg1967,Salam1968}. This theoretical framework describes the dynamics of leptons and quarks, by introducing and one scalar particle, the Higgs boson. It assumes that the local $\mathrm{SU}(3)\times\mathrm{SU}(2)_{\mathrm{L}}\times\mathrm{U}(1)_{\mathrm{Y}}$ gauge symmetry is an internal symmetry of the system, with $\mathrm{SU}(3)$ describing quantum chromodynamics, and $\mathrm{SU}(2)_{\mathrm{L}}\times\mathrm{U}(1)_{\mathrm{Y}}$ being the gauge groups of the electroweak sector. For a detailed overview of the SM of electroweak interactions, see Ref. \cite{Pich2012}.
 
-In the SM neutrinos appear in three flavours, namely $\nu_{e}$, $\nu_{\mu}$ and $\nu_{\tau}$. These are associated with the corresponding charged leptons $e$, $\mu$ and $\tau$, in such a way that the charged current part of the Lagrangian coupling them is diagonal. As in the electroweak theory neutrinos are coupled to the Z boson in a universal way, by measuring the so-called invisible decay width of the Z we have an estimate of the number of light (i.e. lighter than the Z boson) neutrino flavours. This number was measured by LEP in a combined analysis of $e^{+}e^{-} \rightarrow \mu^{+}\mu^{-}$ and $e^{+}e^{-} \rightarrow \mathrm{hadrons}$ to be $N_{\nu} = 2.9840 \pm 0.0082$ \cite{ALEPH2005}.
+In the SM neutrinos appear in three flavours, namely $\nu_{e}$, $\nu_{\mu}$, and $\nu_{\tau}$. These are associated with the corresponding charged leptons, $e$, $\mu$, and $\tau$. Neutrinos appear only as left-handed particles, grouped in doublets with the charged leptons, while the later exist in both chirality states:
+\begin{equation}
+	\begin{array}{cccccc}
+		\begin{pmatrix}\nu_{e}\\e^{-}_{L}\end{pmatrix},&\begin{pmatrix}\nu_{\mu}\\\mu^{-}_{L}\end{pmatrix},&\begin{pmatrix}\nu_{\tau}\\\tau^{-}_{L}\end{pmatrix},&e^{-}_{R},&\mu^{-}_{R},&\tau^{-}_{R}.
+	\end{array}
+\end{equation}
+Similarly, quarks also come in both chirality states, and are grouped as:
+\begin{equation}
+	\begin{array}{ccccccccc}
+		\begin{pmatrix}u_{L}\\d_{L}\end{pmatrix},&\begin{pmatrix}s_{L}\\c_{L}\end{pmatrix},&\begin{pmatrix}t_{L}\\b_{L}\end{pmatrix},&u_{R},&d_{R},&s_{R},&c_{R},&t_{R},&b_{R}.
+	\end{array}
+\end{equation}
+
+The fact that there are no right-handed neutrino fields implies that neutrinos are strictly massless within the SM. This restriction follows from the experimental observation that all neutrinos produced via weak interactions are pure left-handed helicity states (and similarly antineutrinos are pure right-handed states). The hypothetical existence of right-handed neutrinos could be indirectly inferred from the observation of non-zero neutrino masses, nevertheless the existence of neutrino masses is not a sufficient condition for the existence of such fields.
+
+Left and right-handed fermions transform differently under $\mathrm{SU}(2)_{\mathrm{L}}\times\mathrm{U}(1)_{\mathrm{Y}}$ rotations, as the right-handed particles are singlets under $\mathrm{SU}(2)_{\mathrm{L}}$. Applying a local transformation, they change as:
+\begin{equation}
+	\begin{split}
+		\psi_{L} &\longrightarrow \mathrm{e}^{-iY\beta(x)/2}~\mathrm{e}^{-iT_{a}\alpha_{a}(x)}~\psi_{L},\\
+		\psi_{R} &\longrightarrow \mathrm{e}^{-iY\beta(x)/2}~\psi_{R},
+	\end{split}
+\end{equation}
+where $Y/2$ and $T_{a}$ are the elements of the fundamental representation of $\mathrm{SU}(2)_{\mathrm{L}}$ and $\mathrm{U}(1)_{\mathrm{Y}}$, respectively, and $\beta(x)$ and $\alpha_{a}(x)$ are the parameters of the rotation.
+
+The values of the quantum numbers $Y/2$ and $T_{3}$, the third component of the weak isospin, have to be assigned to the different particles. The values of $T_{3}$ follow from the commutation relations of the generators of $\mathrm{SU}(2)$. After the spontaneous symmetry breaking $\mathrm{SU}(2)_{\mathrm{L}}\times\mathrm{U}(1)_{\mathrm{Y}} \rightarrow \mathrm{U}(1)_{\mathrm{EM}}$, one finds the relation which determines the electric charge:
+\begin{equation}
+	Q = T_{3} + \frac{Y}{2},
+\end{equation}
+Setting the electric charge to $-1$ for electrons, we can find the values of the hypercharge for the rest of the fermions. The resulting values for the first generation of leptons and quarks are shown in Tab. \ref{tab:sm_charge}.
+
+\begin{table}[t]
+	\centering
+	\caption{Values of $T_{3}$ and $Y/2$ assigned to the first generation of fermions.}
+		\begin{tabular}{l|ccccccc}
+			& $e_{L}$ & $\nu_{e}$ & $e_{R}$ & $u_{L}$ & $d_{L}$ & $u_{R}$ & $d_{R}$ \\[2mm] \hline
+			\rule{0pt}{1.1\normalbaselineskip}$T_{3}$ & $-1/2$  & $1/2$     & $0$     & $1/2$   & $-1/2$  & $0$     & $0$     \\[2mm]
+			$Y/2$   & $-1/2$  & $-1/2$    & $-1$    & $1/6$   & $1/6$   & $2/3$   & $-1/3$ 
+		\end{tabular}
+	\label{tab:sm_charge}
+\end{table}
+
+It is clear that the free Lagrangian of the theory is not be invariant under the gauge transformations, as the kinetic terms contain derivatives. Therefore, to make it invariant, one needs to introduce a set of gauge bosons. They appear covariant derivative The transformations of these spin-1 fields are completely fixed 
+\begin{equation}
+	\begin{split}
+		D_{\mu} \psi_{L} &= \left(\partial_{\mu} + ig'\frac{Y}{2}B_{\mu}+igT_{a}W^{a}_{\mu}\right)\psi_{L},\\
+		D_{\mu} \psi_{R} &= \left(\partial_{\mu} + ig'\frac{Y}{2}B_{\mu}\right)\psi_{R},
+	\end{split}
+\end{equation}
+These fields transform in the adjoint representation of the gauge group, 
+
+the Higgs doublet is coupled to the gauge bosons through the covariant derivative, and to the fermions through the so-called Yukawa couplings.
+\begin{equation}
+	\begin{split}
+		A_{\mu} &= \mathrm{sin}~\theta_{W} W^{3}_{\mu} + \mathrm{cos}~\theta_{W} B_{\mu},\\
+		Z_{\mu} &= \mathrm{cos}~\theta_{W} W^{3}_{\mu} - \mathrm{sin}~\theta_{W} B_{\mu},\\
+		W^{\pm}_{\mu} &= \frac{1}{\sqrt{2}}\left(W^{1}_{\mu} \mp i W^{2}_{\mu}\right).
+	\end{split}
+\end{equation}
+
+the interacting part of the electroweak Lagrangian can be re-written as the sum of three contributions: the electromagnetic (EM), charged-current (CC) and neutral-current (NC) components:
+\begin{equation}
+	\begin{split}
+		\mathcal{L}_{\mathrm{EW}} &= \mathcal{L}_{\mathrm{EM}}+\mathcal{L}_{\mathrm{CC}}+\mathcal{L}_{\mathrm{NC}}\\
+		&= -e A_{\mu} J^{\mu}_{\mathrm{EM}} - \frac{g}{2\sqrt{2}} \left(W^{+}J^{\mu}_{\mathrm{CC}} + \mathrm{h.c.}\right) - \frac{g}{2 \mathrm{cos}\theta_{W}} Z_{\mu} J^{\mu}_{\mathrm{NC}},
+	\end{split}
+\end{equation}
+with the currents defined as:
+\begin{equation}\label{2.8}
+	\begin{split}
+		J^{\mu}_{\mathrm{EM}} &= \sum_{f} Q_{f} \bar{f}\gamma^{\mu}f,\\
+		J^{\mu}_{\mathrm{CC}} &= \sum_{\ell}\bar{\nu}_{\ell}\gamma^{\mu}(1-\gamma_{5})\ell + \sum_{f}\bar{u}_{f}\gamma^{\mu}(1-\gamma_{5})d_{f},\\
+		J^{\mu}_{\mathrm{NC}} &= \sum_{f} \bar{f}\gamma^{\mu}(v_{f} - a_{f}\gamma_{5})f.\\
+	\end{split}
+\end{equation}
+For the NC case, the are given in Tab. \ref{tab:sm_nc_couplings}.
+
+\begin{table}[t]
+	\centering
+	\caption{Neutral current couplings.}
+			\begin{tabular}{l|cccc}
+					& $u$                                       & $d$                                        & $\nu_{e}$ & $e$                              \\[2mm] \hline
+			\rule{0pt}{1.1\normalbaselineskip}$2v_{f}$ & $1-\frac{8}{3}\mathrm{sin}^{2}\theta_{W}$ & $-1+\frac{4}{3}\mathrm{sin}^{2}\theta_{W}$ & $1$       & $-1+4\mathrm{sin}^{2}\theta_{W}$ \\[2mm]
+			$2a_{f}$ & $1$                                       & $-1$                                       & $1$       & $-1$                            
+		\end{tabular}
+	\label{tab:sm_nc_couplings}
+\end{table}
+
+As seen in Eq. (\ref{2.8}), in the electroweak theory neutrinos are coupled to the $Z$ boson in a universal way. Therefore, by measuring the so-called invisible decay width of the $Z$ boson we have an estimate of the number of light (i.e. lighter than the $Z$ boson) neutrino flavours. This number was measured by LEP in a combined analysis of $e^{+}e^{-} \rightarrow \mu^{+}\mu^{-}$ and $e^{+}e^{-} \rightarrow \mathrm{hadrons}$ to be $N_{\nu} = 2.9840 \pm 0.0082$ \cite{ALEPH2005}.
+
+\section{Historical remarks}
 
 \section{Neutrino oscillations}
 
@@ -121,3 +210,5 @@ Both of these questions, because of their nature, could be understood thanks to 
 Notwithstanding, there are other mysteries that can not be unveiled just by conducting oscillation experiments, as certain quantities do not influence these phenomena. Among these there is the question of the absolute values of the neutrino masses. Depending on the value of the lightest of the neutrino masses we can have different mass spectra, from hierarchical $m_{1} \ll m_{2}<m_{3}$ (NO) or $m_{3} \ll m_{1}<m_{2}$ (IO) to quasi-degenerate $m_{1} \simeq m_{2} \simeq m_{3}$.
 
 Other open question concerns the nature itself of the neutrinos. If neutrinos are Dirac particles then their mass term can be generated through the usual Higgs mechanism by adding right-handed neutrino fields. However, if they are Majorana particles and therefore their own antiparticles, there is no need to add extra fields to have the mass term in the Lagrangian. Experiments like SuperNEMO \cite{SuperNEMO2010}, SNO+ \cite{SNO2015} and NEXT \cite{NEXT2020}, which search for neutrino-less double beta decay, will be able to determine whether neutrinos are Dirac or Majorana.
+
+\section{Neutrino interactions}
