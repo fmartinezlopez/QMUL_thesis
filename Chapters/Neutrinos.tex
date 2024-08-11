@@ -115,13 +115,56 @@ As seen in Eq. (\ref{2.8}), in the electroweak theory neutrinos are coupled to t
 
 The existence of neutrino oscillations imply . However, as we have seen before, within the SM neutrinos are massless, as they do not have a mass term in the Lagrangian. If one wants to give neutrinos a mass, the particle content of the SM needs to be expanded.
 
-introducing an arbitrary number of sterile neutrinos, $N_{i}$, $i=1,\dots,m$.
-\begin{equation}
-	-\mathcal{L}_{M_{\nu}} = M^{ij}_{D} \bar{N}_{i} \nu_{Lj} + \frac{1}{2} M^{ij}_{N} \bar{N}_{i} N^{c}_{j} + \mathrm{h.c.},
+A way of generating massive neutrinos while maintaining gauge invariance is by introducing an arbitrary number of sterile neutrinos $N_{i}$, $i=1,\dots,m$. These allow for two different types of neutrino mass terms:
+\begin{equation}\label{2.10}
+	-\mathcal{L}_{M_{\nu}} = \sum_{i=1}^{m} \sum_{j=1}^{3} M^{ij}_{D} \bar{N}_{i} \nu_{Lj} + \frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} M^{ij}_{N} \bar{N}_{i} N^{c}_{j} + \mathrm{h.c.},
 \end{equation}
-where $M_{D}$ is a complex $m \times 3$ matrix and $M_{N}$ a complex, symmetric $m \times m$ matrix. The first term, often referred to as the Dirac mass term, arises from the corresponding Yukawa interaction after the spontaneous electroweak symmetry breaking, the other fermions. The second term, Majorana mass term, is allowed in the Lagrangian,singlet of the gauge group. However, it violates lepton number conservation by two units.
+where $M_{D}$ is a complex $m \times 3$ matrix and $M_{N}$ a complex, symmetric $m \times m$ matrix. The first term, often referred to as the Dirac mass term, arises from the corresponding Yukawa interaction after the spontaneous electroweak symmetry breaking, similar to the other fermions. The second term, called the Majorana mass term, is allowed in the Lagrangian, as it is a singlet of the gauge group. However, it violates lepton number conservation by two units.
+
+If one imposes lepton number symmetry conservation, the Majorana term must banish, $M_{N}=0$. In this case, if $m=3$ we can identify the sterile neutrinos as the right-handed component of the neutrino field. The Dirac mass matrix can be diagonalised using two unitary matrices, $V^{\nu}_{R}$ and $V^{\nu}_{L}$, as:
 \begin{equation}
-	-\mathcal{L}_{M_{\nu}} = \frac{1}{2} \begin{pmatrix}\bar{\nu}^{c}_{L}&\bar{N}\end{pmatrix} \begin{pmatrix}0 & M_{D}^{T}\\M_{D} & M_{N}\end{pmatrix}\begin{pmatrix}\nu_{L}\\N^{c}\end{pmatrix} + \mathrm{h.c.} = \bar{\nu}^{c} M_{\nu} \nu + \mathrm{h.c.},
+	M_{D} = V^{\nu}_{R}~\mathrm{diag}(m_{1}, m_{2}, m_{3})~V^{\nu \dagger}_{L},
+\end{equation}
+where $m_{i}$, $i=1,2,3$ are the masses of the three neutrino mass eigenstates.
+
+The neutrino mass term can be written in term of the resulting eigenstates as:
+\begin{equation}
+	-\mathcal{L}_{M_{\nu}} = \sum_{i=1}^{3} m_{i}~\bar{\nu}_{Di} \nu_{Di},
+\end{equation}
+with:
+\begin{equation}
+	\nu_{Di} = \left(V^{\nu \dagger}_{L}~\nu_{L}\right)_{i} + \left(V^{\nu \dagger}_{R}~N\right)_{i}.
+\end{equation}
+
+In this scenario, both the low energy particle budget and the symmetries of the SM have to be modified. Moreover, the masses of the neutrinos are generated exclusively through the Higgs mechanism, which does not explain why they are much smaller than those of the charged leptons.
+
+Going back to the general case, we can re-write Eq. (\ref{2.10}) in matrix form as:
+\begin{equation}
+	-\mathcal{L}_{M_{\nu}} = \frac{1}{2} \begin{pmatrix}\bar{\nu}^{c}_{L},&\bar{N}\end{pmatrix} \begin{pmatrix}0 & M_{D}^{T}\\M_{D} & M_{N}\end{pmatrix}\begin{pmatrix}\nu_{L}\\N^{c}\end{pmatrix} + \mathrm{h.c.} = \bar{\nu}^{c} M_{\nu} \nu + \mathrm{h.c.},
+\end{equation}
+with $\nu=\begin{pmatrix}\nu_{L}, & N^{c}\end{pmatrix}^{T}$ being a $(3+m)$-dimensional vector grouping the active and the sterile neutrinos. The matrix $M_{\nu}$, which is a complex $(3+m)\times(3+m)$ symmetric matrix, can be diagonalised by means of a unitary matrix $V^{\nu}$, yielding:
+\begin{equation}
+	M_{\nu} = V^{\nu}~\mathrm{diag}(m_{1}, m_{2}, \dots, m_{3+m})~V^{\nu \dagger}.
+\end{equation}
+
+Using this eigendecomposition, the neutrino mass term can be expressed as:
+\begin{equation}
+	\begin{split}
+		-\mathcal{L}_{M_{\nu}} &= \frac{1}{2} \sum_{i=1}^{3+m} m_{i} \left[\left(\vphantom{V^{\nu \dagger}}\bar{\nu}^{c}~V^{\nu}\right)_{i} \left(V^{\nu \dagger}~\nu\right)_{i} + \left(\vphantom{V^{\nu \dagger}}\bar{\nu}~V^{\nu}\right)_{i} \left(V^{\nu \dagger}~\nu^{c}\right)_{i}\right]\\
+		&= \frac{1}{2} \sum_{i=1}^{3+m} m_{i}~\bar{\nu}_{M i} \nu_{M i},
+	\end{split}
+\end{equation}
+where the states $\nu_{M i}$, commonly referred to as Majorana neutrinos, are defined as:
+\begin{equation}
+	\nu_{M i} = \left(V^{\nu\dagger}~\nu\right)_{i} + \left(V^{\nu\dagger}~\nu\right)^{c}_{i},
+\end{equation}
+in such a way that the Majorana condition, $\nu^{c}_{M} = \nu_{M}$, holds true.
+
+As a consequence of the Majorana condition, the neutrino and the antineutrino states can be described in terms of a single field. As opposed to the charged leptons, which need to be represented by a four-component or Dirac spinor, the Majorana neutrino is described by a two-component or Weyl spinor.
+
+If the eigenvalues of the Majorana mass matrix, $M_{N}$, are much larger than the electroweak symmetry breaking scale, the diagonalisation of $M_{\nu}$ leads to $3$ light and $m$ heavy neutrino states:
+\begin{equation}
+	-\mathcal{L}_{M_{\nu}} = \frac{1}{2} \bar{\nu}_{l} M_{l} \nu_{l} + \frac{1}{2} \bar{\nu}_{h} M_{h} \nu_{h},
 \end{equation}
 
 \section{Neutrino oscillations}
