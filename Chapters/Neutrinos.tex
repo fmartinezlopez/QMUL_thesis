@@ -10,11 +10,9 @@ Ever since they were postulated in 1930 by Wolfgang Pauli to explain the continu
 
 In this Chapter, I will review the basics of neutrino physics, from its role within the SM to the main open questions related to the neutrino sector, paying special attention to the phenomenology of neutrino oscillations.
 
-\section{Historical remarks}
-
 \section{Neutrinos in the SM}
 
-The SM of fundamental interactions was initially proposed in 1967 by S. Glashow, S. Weinberg and A. Salam\cite{Glashow1961,Weinberg1967,Salam1968}. This theoretical framework describes the dynamics of leptons and quarks, by introducing and one scalar particle, the Higgs boson. It assumes that the local $\mathrm{SU}(3)\times\mathrm{SU}(2)_{\mathrm{L}}\times\mathrm{U}(1)_{\mathrm{Y}}$ gauge symmetry is an internal symmetry of the system, with $\mathrm{SU}(3)$ describing quantum chromodynamics, and $\mathrm{SU}(2)_{\mathrm{L}}\times\mathrm{U}(1)_{\mathrm{Y}}$ being the gauge groups of the electroweak sector. For a detailed overview of the SM of electroweak interactions, see Ref. \cite{Pich2012}.
+The SM of fundamental interactions was initially proposed in 1967 by S. Glashow, S. Weinberg and A. Salam\cite{Glashow1961,Weinberg1967,Salam1968}. This theoretical framework describes the dynamics of leptons and quarks, by introducing a collection of mediating gauge vector bosons and one scalar particle, known as the Higgs boson. It assumes that the local $\mathrm{SU}(3)\times\mathrm{SU}(2)_{\mathrm{L}}\times\mathrm{U}(1)_{\mathrm{Y}}$ gauge symmetry is an internal symmetry of the system, with $\mathrm{SU}(3)$ describing quantum chromodynamics, and $\mathrm{SU}(2)_{\mathrm{L}}\times\mathrm{U}(1)_{\mathrm{Y}}$ being the gauge groups of the electroweak sector. For a detailed overview of the SM of electroweak interactions, see Ref. \cite{Pich2012}.
 
 In the SM, neutrinos appear in three flavours, namely $\nu_{e}$, $\nu_{\mu}$, and $\nu_{\tau}$. These are associated with the corresponding charged leptons, $e$, $\mu$, and $\tau$. Neutrinos exist only as left-handed particles, grouped in doublets with the charged leptons, while the later come in both chirality states:
 \begin{equation}
@@ -111,6 +109,45 @@ where $f$ denotes any SM fermion, $\ell$ and $\nu_{\ell}$ a charged lepton and a
 
 As seen in Eq. (\ref{2.8}), in the electroweak theory neutrinos are coupled to the $Z$ boson in a universal way. Therefore, by measuring the so-called invisible decay width of the $Z$ boson we have an estimate of the number of light (i.e. lighter than the $Z$ boson) neutrino flavours. This number was measured by LEP in a combined analysis of $e^{+}e^{-} \rightarrow \mu^{+}\mu^{-}$ and $e^{+}e^{-} \rightarrow \mathrm{hadrons}$ to be $N_{\nu} = 2.9840 \pm 0.0082$ \cite{ALEPH2005}.
 
+\section{Trouble in the neutrino sector}
+
+\subsection{The solar neutrino problem}
+
+Neutrinos are produced everywhere in vast amounts. One of the most prominent sources of neutrinos in our vicinity is our Sun. The Sun is powered mainly by two nuclear fusion reactions, the $\mathrm{p}-\mathrm{p}$ chain and the CNO cycle. In both cases, the overall reaction is:
+\begin{equation}
+	4~\prescript{1}{}{\mathrm{H}}^{+}+2~e^{-} \longrightarrow \prescript{4}{}{\mathrm{H}}^{2+} + 2~\nu_{e} + 26.73~\mathrm{MeV},
+\end{equation}
+where part of the released energy is lost to the neutrinos. The electron neutrinos produced are often labelled after the processes that generate them. Figure \ref{fig:solar_nu_flux} shows the solar neutrino flux as a function of the neutrino energy, broken down by the production process.
+
+In the late 1960s, the Brookhaven Solar Neutrino Experiment, led by R. Davis, started data taking with the goal of measuring the solar neutrino flux \cite{Davis1968}. The experiment used a tank containing $380~\mathrm{m}^{3}$ of tetrachloroethene ($\mathrm{C}_{2}\mathrm{Cl}_{4}$), a liquid commonly used in dry-cleaning, located $1.5~\mathrm{km}$ underground in the Homestake mine, in Lead, South Dakota. The incoming neutrinos would get captured following the reaction:
+\begin{equation}
+	\nu_{e} + \prescript{37}{}{\mathrm{Cl}} \longrightarrow \prescript{37}{}{\mathrm{Ar}} + e^{-},
+\end{equation}
+therefore allowing to measure the neutrino flux by counting the $\prescript{37}{}{\mathrm{Ar}}$ atoms. The threshold for this reaction is $0.814~\mathrm{MeV}$, just below the $0.862~\mathrm{MeV}$ line from the $\prescript{7}{}{\mathrm{Be}}$ ground state transition.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.75\linewidth]{Images/Nu/solar_neutrino_flux.pdf}
+	\caption[Solar neutrino fluxes for the solar model BS05(OP).]{Solar neutrino fluxes for the solar model BS05(OP). The detection thresholds for Gallium, Chlorine and water-based experiments are also shown. Figure adapted from Ref. \cite{Bahcall2004}.}
+	\label{fig:solar_nu_flux}
+\end{figure}
+
+The results of the experiment were compared to the theoretical predictions made by J. Bahcall \cite{Bahcall1968}. During its operation from 1968 to 2002, the experiment observed a solar $\nu_{e}$ flux that was approximately a third of the total prediction \cite{Cleveland1998}.
+
+In the early 1990s, the SAGE \cite{SAGE2009} and GALLEX \cite{GALLEX2010} experiments started operations. The detection principle used for both experiments was similar to that of the Homestake experiment, but using $\prescript{71}{}{\mathrm{Ga}}$ instead of $\mathrm{C}_{2}\mathrm{Cl}_{4}$. With a detection threshold of $0.233~\mathrm{MeV}$, the Gallium-based experiments were able to observe the $pp$ neutrino flux. Both experiments measured a solar electron neutrino flux that was a factor of two lower than the predictions, demonstrating that this deficit was energy-dependent.
+
+In the early 2000s, the SNO experiment put an end to the solar neutrino puzzle \cite{Ahmad2001,Ahmad2002}. Thanks to its directionality capabilities, being a Cherenkov light detector, as well as to its heavy water target, SNO measured the total solar neutrino flux through the NC process:
+\begin{equation}
+	\nu_{\alpha} + d \longrightarrow n + p + \nu_{\alpha},
+\end{equation}
+where $\alpha = e, \mu, \tau$. This measurement agreed with the solar model predictions. Then, measuring the CC reaction:
+\begin{equation}
+	\nu_{e} + d \longrightarrow p + p + e^{-},
+\end{equation}
+they were able to establish that the $\nu_{\mu}$ and $\nu_{\tau}$ solar fluxes are in fact non-zero, revealing that electron neutrinos were transitioning into different flavours.
+
+\subsection{The atmospheric neutrino problem}
+
 \section{Massive neutrinos}
 
 The existence of neutrino oscillations imply . However, as we have seen before, within the SM neutrinos are massless, as they do not have a mass term in the Lagrangian. If one wants to give neutrinos a mass, the particle content of the SM needs to be expanded.
@@ -119,7 +156,7 @@ A way of generating massive neutrinos while maintaining gauge invariance is by i
 \begin{equation}\label{2.10}
 	-\mathcal{L}_{M_{\nu}} = \sum_{i=1}^{m} \sum_{j=1}^{3} M^{ij}_{D} \bar{N}_{i} \nu_{Lj} + \frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} M^{ij}_{N} \bar{N}_{i} N^{c}_{j} + \mathrm{h.c.},
 \end{equation}
-where $M_{D}$ is a complex $m \times 3$ matrix and $M_{N}$ a complex, symmetric $m \times m$ matrix. The first term, often referred to as the Dirac mass term, arises from the corresponding Yukawa interaction after the spontaneous electroweak symmetry breaking, similar to the other fermions. The second term, called the Majorana mass term, is allowed in the Lagrangian, as it is a singlet of the gauge group. However, it violates lepton number conservation by two units.
+where $M_{D}$ is a complex $m \times 3$ matrix and $M_{N}$ a complex and symmetric $m \times m$ matrix. The first term, often referred to as the Dirac mass term, arises from the corresponding Yukawa interaction after the spontaneous electroweak symmetry breaking, similar to the other fermions. The second term, called the Majorana mass term, is allowed in the Lagrangian, as it is a singlet of the gauge group. However, it violates lepton number conservation by two units.
 
 If one imposes lepton number symmetry conservation, the Majorana term must banish, $M_{N}=0$. In this case, if $m=3$ we can identify the sterile neutrinos as the right-handed component of the neutrino field. The Dirac mass matrix can be diagonalised using two unitary matrices, $V^{\nu}_{R}$ and $V^{\nu}_{L}$, as:
 \begin{equation}
@@ -144,15 +181,20 @@ Going back to the general case, we can re-write Eq. (\ref{2.10}) in matrix form 
 \end{equation}
 with $\nu=\begin{pmatrix}\nu_{L}, & N^{c}\end{pmatrix}^{T}$ being a $(3+m)$-dimensional vector grouping the active and the sterile neutrinos. The matrix $M_{\nu}$, which is a complex $(3+m)\times(3+m)$ symmetric matrix, can be diagonalised by means of a unitary matrix $V^{\nu}$, yielding:
 \begin{equation}
-	M_{\nu} = V^{\nu}~\mathrm{diag}(m_{1}, m_{2}, \dots, m_{3+m})~V^{\nu \dagger}.
+	M_{\nu} = V^{\nu}~\mathrm{diag}(m_{1}, m_{2}, \dots, m_{3+m})~V^{\nu T}.
 \end{equation}
 
 Using this eigendecomposition, the neutrino mass term can be expressed as:
+\begin{comment}
 \begin{equation}
 	\begin{split}
 		-\mathcal{L}_{M_{\nu}} &= \frac{1}{2} \sum_{i=1}^{3+m} m_{i} \left[\left(\vphantom{V^{\nu \dagger}}\bar{\nu}^{c}~V^{\nu}\right)_{i} \left(V^{\nu \dagger}~\nu\right)_{i} + \left(\vphantom{V^{\nu \dagger}}\bar{\nu}~V^{\nu}\right)_{i} \left(V^{\nu \dagger}~\nu^{c}\right)_{i}\right]\\
 		&= \frac{1}{2} \sum_{i=1}^{3+m} m_{i}~\bar{\nu}_{M i} \nu_{M i},
 	\end{split}
+\end{equation}
+\end{comment}
+\begin{equation}
+	-\mathcal{L}_{M_{\nu}} = \frac{1}{2} \sum_{i=1}^{3+m} m_{i}~\bar{\nu}_{M i} \nu_{M i},
 \end{equation}
 where the states $\nu_{M i}$, commonly referred to as Majorana neutrinos, are defined as:
 \begin{equation}
@@ -166,8 +208,18 @@ If the eigenvalues of the Majorana mass matrix, $M_{N}$, are much larger than th
 \begin{equation}
 	-\mathcal{L}_{M_{\nu}} = \frac{1}{2} \bar{\nu}_{l} M_{l} \nu_{l} + \frac{1}{2} \bar{\nu}_{h} M_{h} \nu_{h},
 \end{equation}
+where the two mass matrices are given by:
+\begin{equation}
+	\begin{split}
+		M_{l} &\simeq -V_{l}^{T} M_{D}^{T} M_{N}^{-1} M_{D} V_{l},\\
+		M_{h} &\simeq V_{h}^{T} M_{N} V_{h},
+	\end{split}
+\end{equation}
+with $V_{l}$ and $V_{h}$ two unitary matrices.
 
-\section{Neutrino oscillations}
+This scenario represents the so-called see-saw mechanism.
+
+\section{Neutrino oscillation formalism}
 
 The evidence for neutrino oscillation \cite{SuperKamiokande1998}, and therefore the existence of non-zero neutrino masses, constitutes one of the groundbreaking discoveries of modern Physics and has acted as driving force for Beyond the Standard Model (BSM) Physics. The minimal extension of the Standard Model (SM) we can do to address these phenomena is introducing distinct masses for at least two of the neutrinos. This way, we are left with three neutrino mass eigenstates $\nu_{1}$, $\nu_{2}$ and $\nu_{3}$, with masses $m_{1}$, $m_{2}$ and $m_{3}$ respectively, which in general will not coincide with the flavour eigenstates $\nu_{e}$, $\nu_{\mu}$ and $\nu_{\tau}$.
 
@@ -272,3 +324,31 @@ Notwithstanding, there are other mysteries that can not be unveiled just by cond
 Other open question concerns the nature itself of the neutrinos. If neutrinos are Dirac particles then their mass term can be generated through the usual Higgs mechanism by adding right-handed neutrino fields. However, if they are Majorana particles and therefore their own antiparticles, there is no need to add extra fields to have the mass term in the Lagrangian. Experiments like SuperNEMO \cite{SuperNEMO2010}, SNO+ \cite{SNO2015} and NEXT \cite{NEXT2020}, which search for neutrino-less double beta decay, will be able to determine whether neutrinos are Dirac or Majorana.
 
 \section{Neutrino interactions}
+
+\begin{figure}[t]
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.90\linewidth]{Images/Nu/feynman_ccqel.pdf}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.90\linewidth]{Images//Nu/feynman_ccmec.pdf}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.90\linewidth]{Images//Nu/feynman_ccres.pdf}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.90\linewidth]{Images//Nu/feynman_ccdis.pdf}
+	\end{subfigure}
+	\caption{}
+	\label{fig:neutrino_cc_interactions}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.55\linewidth]{Images/Nu/lars_fsi.png}
+	\caption[Schematic representation of a $\nu_{\mu}$ CCQE interaction with a neutron inside a nucleus.]{Schematic representation of a $\nu_{\mu}$ CCQE interaction with a neutron inside a nucleus. The reaction produces a muon and a proton, which travel through the nuclear medium. The outgoing proton undergoes various kinds of hadronic FSIs on its way out. Figure taken from Ref. \cite{Bathe-Peters2022}.}
+	\label{fig:fsi_diagram}
+\end{figure}
