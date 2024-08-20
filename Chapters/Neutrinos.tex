@@ -94,7 +94,7 @@ At this point, the interacting part of the electroweak Lagrangian can be re-writ
 \begin{equation}
 	\begin{split}
 		\mathcal{L}^{int}_{\mathrm{EW}} &= \mathcal{L}_{\mathrm{EM}}+\mathcal{L}_{\mathrm{CC}}+\mathcal{L}_{\mathrm{NC}}\\
-		&= -e A_{\mu} J^{\mu}_{\mathrm{EM}} - \frac{g}{2\sqrt{2}} \left(W^{+}J^{\mu}_{\mathrm{CC}} + \mathrm{h.c.}\right) - \frac{g}{2 \mathrm{cos}\theta_{W}} Z_{\mu} J^{\mu}_{\mathrm{NC}},
+		&= -e A_{\mu} J^{\mu}_{\mathrm{EM}} - \frac{g}{2\sqrt{2}} \left(W^{+}_{\mu}J^{\mu}_{\mathrm{CC}} + \mathrm{h.c.}\right) - \frac{g}{2 \mathrm{cos}\theta_{W}} Z_{\mu} J^{\mu}_{\mathrm{NC}},
 	\end{split}
 \end{equation}
 with the currents defined as:
@@ -243,19 +243,46 @@ where the two mass matrices are given by:
 \end{equation}
 with $V_{l}$ and $V_{h}$ two unitary matrices.
 
-This scenario represents the so-called see-saw mechanism.
+This scenario represents the so-called see-saw mechanism \cite{Minkowski1977,Gell-Mann1979,Yanagida1979,Mohapatra1979,Schechter1980}. The name comes from the fact that the masses of the heavy states are proportional to $M_{N}$, whereas for the light states they are proportional to $M_{N}^{-1}$. While both the heavy and the light neutrinos are Majorana particles, it can be shown that the heavy states are mainly right-handed, whereas the light ones are mostly left-handed.
 
 \section{Neutrino oscillation formalism}
 
-The way to relate these two sets of neutrino eigenstates is via a $3 \times 3$ unitary matrix, called the Pontecorvo-Maki-Nakagawa-Sakata (PMNS) matrix \cite{Pontecorvo1957, Maki1962}, as:
+\begin{figure}[t]
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.90\linewidth]{Images/Nu/feynman_kaon_1.pdf}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.90\linewidth]{Images//Nu/feynman_kaon_2.pdf}
+	\end{subfigure}
+	\caption{$K^{0} \leftrightharpoons \bar{K}^{0}$ mixing through $W^{\pm}$ exchange.}
+	\label{fig:kaon_oscillations}
+\end{figure}
+
+Neutrino oscillations were first proposed in 1958 by B. Pontecorvo \cite{Pontecorvo1957a}, inspired by the neutral kaon oscillation phenomenon \cite{Gell-Mann1955}. Neutral kaons, $K^{0}$ and $\bar{K}^{0}$, have opposite strangeness ($\pm 1$) and are produced in strong processes. It was observed that, when having a beam initially pure of neutral kaons of one type, these would transition into their antiparticles while propagating. Because the weak interaction does not conserve strangeness, neutral kaons can change their identity via the processes shown in Fig. \ref{fig:kaon_oscillations}.
+
+The mixing considered initially by Pontecorvo was between the neutrino and the antineutrino states, as only one neutrino flavour was known at the time. After the discovery of the muon neutrino, the mixing between flavours was also explored \cite{Pontecorvo1967}.
+
+In the general case, we have $3$ active and $m$ sterile neutrinos, resulting in $3+m$ neutrino mass eigenstates. Working in the mass basis, the leptonic charged-current Lagrangian can be written as:
+\begin{equation}
+	-\mathcal{L}_{CC}^{lep} = \frac{g}{\sqrt{2}} \begin{pmatrix}\bar{e}_{L},~ \bar{\mu}_{L},~ \bar{\tau}_{L}\end{pmatrix} \gamma^{\mu} U \begin{pmatrix}\nu_{1}\\\nu_{2}\\\vdots\\\nu_{3+m}\end{pmatrix} W_{\mu}^{+} + \mathrm{h.c.},
+\end{equation}
+where $U$ is a $3\times(3+m)$ matrix which obeys $UU^{\dagger} = I_{3 \times 3}$, but in general will not be unitary, $U^{\dagger}U\neq I_{(3+m) \times (3+m)}$.
+
+The leptonic mixing matrix, $U$, establishes how the neutrino mass states couple to the charged leptons. In general, a complex $n \times n$ matrix can be fully specified by $2n^{2}$ real parameters. If the matrix is unitary, then the number of independent parameters reduces to $n^{2}$, as one has to impose $n$ normalisation and $n(n-1)$ orthogonality constraints. In our case, we can further reduce the number of parameters by performing a phase redefinition of the charged lepton fields, without affecting the physics. This is not true for the neutrinos. As they may be their own antiparticles, one is not allowed to remove any physically relevant phases. If we consider $n$ generations of leptons, the total number of parameters in the mixing matrix is $n^{2}-n$. Out of these, half of them are mixing angles, while the other half are complex phase factors.
+
+Considering the extended SM without any additional sterile neutrino states, the  resulting $3 \times 3$ mixing matrix is unitary. This matrix, often called the Pontecorvo-Maki-Nakagawa-Sakata (PMNS) matrix \cite{Pontecorvo1957, Maki1962}, relates the set of active neutrinos and the three mass eigenstates as:
 \begin{equation}\label{2.1}
 \ket{\nu_{\alpha}} = \sum_{i=1}^{3} U^{*}_{\alpha i} \ket{\nu_{i}},
 \end{equation}
-where the Greek index $\alpha$ denotes the flavour $\{e,\mu,\tau\}$ and the Latin index $i$ the associated masses $\{1,2,3\}$. This leptonic mixing matrix may be parametrized in terms of 6 parameters, 3 of which are mixing angles $\theta_{12}$, $\theta_{13}$ and $\theta_{23}$, one CP-violating phase $\delta_{CP}$ and 2 Majorana phases $\alpha$ and $\beta$:
+where the Greek index $\alpha$ denotes the flavour $\{e,\mu,\tau\}$ and the Latin index $i$ the mass state $\{1,2,3\}$. This leptonic mixing matrix may be parametrized in terms of 6 parameters, 3 of which are mixing angles $\theta_{12}$, $\theta_{13}$ and $\theta_{23}$, one CP-violating phase $\delta_{CP}$ and 2 Majorana phases $\alpha$ and $\beta$:
 \begin{equation}\label{2.2}
-U = \left(\begin{array}{ccc}1&0&0\\0&c_{23}&s_{23}\\0&-s_{23}&c_{23}\end{array}\right) \left(\begin{array}{ccc}c_{13}&0&s_{13} \mathrm{e}^{-i\delta_{CP}}\\0&1&0\\-s_{13} \mathrm{e}^{-i\delta_{CP}}&0&c_{13}\end{array}\right) \left(\begin{array}{ccc}c_{12}&s_{12}&0\\-s_{12}&c_{12}&0\\0&0&1\end{array}\right) \left(\begin{array}{ccc}1&0&0\\0&\mathrm{e}^{i\alpha}&0\\0&0&\mathrm{e}^{i\beta}\end{array}\right),
+	U = \begin{pmatrix}1&0&0\\0&c_{23}&s_{23}\\0&-s_{23}&c_{23}\end{pmatrix} \begin{pmatrix}c_{13}&0&s_{13} \mathrm{e}^{-i\delta_{CP}}\\0&1&0\\-s_{13} \mathrm{e}^{-i\delta_{CP}}&0&c_{13}\end{pmatrix} \begin{pmatrix}c_{12}&s_{12}&0\\-s_{12}&c_{12}&0\\0&0&1\end{pmatrix} \begin{pmatrix}1&0&0\\0&\mathrm{e}^{i\alpha}&0\\0&0&\mathrm{e}^{i\beta}\end{pmatrix},
 \end{equation}
-where $c_{ij} \equiv \cos \theta_{ij}$ and $s_{ij} \equiv \sin \theta_{ij}$. This matrix is analogous to the Cabibbo-Kobayashi-Maskawa (CKM) matrix in the quark sector. If neutrinos are Dirac fermions, we can drop the Majorana phases in the PMNS matrix. But, in any case, these phases play no role on the neutrino oscillations.
+where $c_{ij} \equiv \cos \theta_{ij}$ and $s_{ij} \equiv \sin \theta_{ij}$. This matrix is analogous to the Cabibbo-Kobayashi-Maskawa (CKM) matrix in the quark sector. If neutrinos are Dirac fermions, we can drop the Majorana phases in the PMNS matrix, as in this case we can perform the phase redefinitions. However, these phases play no role on the neutrino oscillation phenomenology.
+
+In the case that additional sterile neutrinos states are present, the full leptonic mixing matrix would not be unitary in general. For instance, in the see-saw scenario, the $3 \times 3$ submatrix for the three light Majorana neutrinos is not unitary. However, the deviations from unitarity are of the order $\mathcal{O}(M_{D}/M_{N})$, and therefore expected to be negligible.
 
 \subsection{Oscillations in vacuum}
 
