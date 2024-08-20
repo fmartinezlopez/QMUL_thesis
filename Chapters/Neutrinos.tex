@@ -4,7 +4,7 @@
 \begin{chapquote}{Terry Pratchett, \textit{Sourcery}}
 	Little particles of inspiration sleet through the universe all the time traveling through the densest matter in the same way that a neutrino passes through a candyfloss haystack, and most of them miss.
 \end{chapquote}
-	
+
 %\noindent
 Ever since they were postulated in 1930 by Wolfgang Pauli to explain the continuous $\beta$ decay spectrum \cite{Pauli1930} and later found by F. Reines and C. Cowan at the Savannah River reactor in 1953 \cite{Reines1953}, neutrinos have had a special place among all other elementary particles. They provide a unique way to probe a wide range of quite different physics, from nuclear physics to cosmology, from astrophysics to colliders. Moreover, there is compelling evidence to believe that the study of neutrinos may be key to unveil different aspects of physics beyond the SM, difficult to test elsewhere.
 
@@ -123,7 +123,7 @@ In the late 1960s, the Brookhaven Solar Neutrino Experiment, led by R. Davis, st
 \begin{equation}
 	\nu_{e} + \prescript{37}{}{\mathrm{Cl}} \longrightarrow \prescript{37}{}{\mathrm{Ar}} + e^{-},
 \end{equation}
-therefore allowing to measure the neutrino flux by counting the $\prescript{37}{}{\mathrm{Ar}}$ atoms. The threshold for this reaction is $0.814~\mathrm{MeV}$, just below the $0.862~\mathrm{MeV}$ line from the $\prescript{7}{}{\mathrm{Be}}$ ground state transition.
+therefore allowing to measure the neutrino flux by counting the $\prescript{37}{}{\mathrm{Ar}}$ isotopes. The threshold for this reaction is $0.814~\mathrm{MeV}$, just below the $0.862~\mathrm{MeV}$ line from the $\prescript{7}{}{\mathrm{Be}}$ ground state transition.
 
 \begin{figure}[t]
 	\centering
@@ -148,9 +148,35 @@ they were able to establish that the $\nu_{\mu}$ and $\nu_{\tau}$ solar fluxes a
 
 \subsection{The atmospheric neutrino problem}
 
+When cosmic-rays interact with the atoms in the upper atmosphere, a plethora of hadrons, mainly $\pi$ and $K$ mesons, are produced. In particular, for the charged pions, we have the following decay chain dominates:
+\begin{equation}
+	\begin{split}
+		&\pi^{+} \longrightarrow \mu^{+} + \nu_{\mu},\\
+		&\mu^{+} \longrightarrow e^{+} + \bar{\nu}_{\mu} + \nu_{e},
+	\end{split}
+\end{equation}
+and similar for the antiparticles. For neutrino energies $< 1~\mathrm{GeV}$, the ratio:
+\begin{equation}
+	\frac{N(\nu_{\mu}+\bar{\nu}_{\mu})}{N(\nu_{e}+\bar{\nu}_{e})},
+\end{equation}
+of produced neutrinos and antineutrinos is, in good approximation, equal to two \cite{Gaisser2002}.
+
+During the 1980s, several proton decay experiments, like Kamiokande \cite{Hirata1988}, IMB \cite{Casper1991}, MACRO \cite{Ambrosio1998}, and Soudan-2 \cite{Allison1997}, measured the flux of atmospheric neutrinos. This was an important part of their research programme, as the atmospheric neutrinos constitute their main background. All these experiments reported an atmospheric neutrino ratio lower than the predictions.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.90\linewidth]{Images/Nu/superk_oscillations.png}
+	\caption[Zenith angle distributions for the selected $\nu_{e}$ and $\nu_{\mu}$ events in the SK detector.]{Zenith angle distributions for the selected $\nu_{e}$ (top row) and $\nu_{\mu}$ (bottom row) events in the SK detector. The hatched region corresponds to the expectation in the case of no oscillations, whereas the solid line indicates the best-fit in the case of $\nu_{\mu} \rightarrow \nu_{\tau}$ oscillations. Figure taken from Ref. \cite{SuperKamiokande1998}.}
+	\label{fig:atmospheric_nu_osc}
+\end{figure}
+
+A few years before the SNO discovery, in 1998, Super-Kamiokande (SK) collaboration measured the atmospheric $\nu_{e}$ and $\nu_{\mu}$ spectra as a function of the zenith angle \cite{SuperKamiokande1998}. Upward-going particles have negative zenith angle, $\mathrm{cos}~\Theta < 0$, indicating that they entered from the bottom of the detector. These upward-going neutrinos had to travel through the Earth in order to reach the detector, allowing SK to probe a broad range of baselines. Figure \ref{fig:atmospheric_nu_osc} shows the reported distributions (black dots), compared to the no oscillations prediction (hatched region). This measurement confirmed that muon neutrinos transition to other flavours, and that this phenomenon depends both on the energy and the path length of the neutrino.
+
+The SK and SNO findings provided definitive evidence for the existence of neutrino oscillations, and therefore non-zero neutrino masses. This constitutes one of the groundbreaking discoveries of modern physics and has acted as driving force for beyond the Standard Model (BSM) physics. The minimal extension of the SM we can do to address these phenomena is introducing different masses for at least two of the neutrinos. This way, we are left with three neutrino mass eigenstates $\nu_{1}$, $\nu_{2}$, and $\nu_{3}$, with masses $m_{1}$, $m_{2}$, and $m_{3}$ respectively, which in general will not coincide with the flavour eigenstates, $\nu_{e}$, $\nu_{\mu}$, and $\nu_{\tau}$.
+
 \section{Massive neutrinos}
 
-The existence of neutrino oscillations imply . However, as we have seen before, within the SM neutrinos are massless, as they do not have a mass term in the Lagrangian. If one wants to give neutrinos a mass, the particle content of the SM needs to be expanded.
+The existence of neutrino oscillations imply that neutrinos are massive particles. However, as we have seen before, within the SM neutrinos are massless, as they do not have a mass term in the Lagrangian. If one wants to give neutrinos a mass, the particle content of the SM needs to be expanded.
 
 A way of generating massive neutrinos while maintaining gauge invariance is by introducing an arbitrary number of sterile neutrinos $N_{i}$, $i=1,\dots,m$. These allow for two different types of neutrino mass terms:
 \begin{equation}\label{2.10}
@@ -220,8 +246,6 @@ with $V_{l}$ and $V_{h}$ two unitary matrices.
 This scenario represents the so-called see-saw mechanism.
 
 \section{Neutrino oscillation formalism}
-
-The evidence for neutrino oscillation \cite{SuperKamiokande1998}, and therefore the existence of non-zero neutrino masses, constitutes one of the groundbreaking discoveries of modern Physics and has acted as driving force for Beyond the Standard Model (BSM) Physics. The minimal extension of the Standard Model (SM) we can do to address these phenomena is introducing distinct masses for at least two of the neutrinos. This way, we are left with three neutrino mass eigenstates $\nu_{1}$, $\nu_{2}$ and $\nu_{3}$, with masses $m_{1}$, $m_{2}$ and $m_{3}$ respectively, which in general will not coincide with the flavour eigenstates $\nu_{e}$, $\nu_{\mu}$ and $\nu_{\tau}$.
 
 The way to relate these two sets of neutrino eigenstates is via a $3 \times 3$ unitary matrix, called the Pontecorvo-Maki-Nakagawa-Sakata (PMNS) matrix \cite{Pontecorvo1957, Maki1962}, as:
 \begin{equation}\label{2.1}
