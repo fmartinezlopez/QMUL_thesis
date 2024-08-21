@@ -266,7 +266,7 @@ The mixing considered initially by Pontecorvo was between the neutrino and the a
 
 In the general case, we have $3$ active and $m$ sterile neutrinos, resulting in $3+m$ neutrino mass eigenstates. Working in the mass basis, the leptonic charged-current Lagrangian can be written as:
 \begin{equation}
-	-\mathcal{L}_{CC}^{lep} = \frac{g}{\sqrt{2}} \begin{pmatrix}\bar{e}_{L},~ \bar{\mu}_{L},~ \bar{\tau}_{L}\end{pmatrix} \gamma^{\mu} U \begin{pmatrix}\nu_{1}\\\nu_{2}\\\vdots\\\nu_{3+m}\end{pmatrix} W_{\mu}^{+} + \mathrm{h.c.},
+	-\mathcal{L}_{\mathrm{CC}}^{lep} = \frac{g}{\sqrt{2}} \begin{pmatrix}\bar{e}_{L},~ \bar{\mu}_{L},~ \bar{\tau}_{L}\end{pmatrix} \gamma^{\mu} U \begin{pmatrix}\nu_{1}\\\nu_{2}\\\vdots\\\nu_{3+m}\end{pmatrix} W_{\mu}^{+} + \mathrm{h.c.},
 \end{equation}
 where $U$ is a $3\times(3+m)$ matrix which obeys $UU^{\dagger} = I_{3 \times 3}$, but in general will not be unitary, $U^{\dagger}U\neq I_{(3+m) \times (3+m)}$.
 
@@ -278,7 +278,7 @@ Considering the extended SM without any additional sterile neutrino states, the 
 \end{equation}
 where the Greek index $\alpha$ denotes the flavour $\{e,\mu,\tau\}$ and the Latin index $i$ the mass state $\{1,2,3\}$. This leptonic mixing matrix may be parametrized in terms of 6 parameters, 3 of which are mixing angles $\theta_{12}$, $\theta_{13}$ and $\theta_{23}$, one CP-violating phase $\delta_{CP}$ and 2 Majorana phases $\alpha$ and $\beta$:
 \begin{equation}\label{2.2}
-	U = \begin{pmatrix}1&0&0\\0&c_{23}&s_{23}\\0&-s_{23}&c_{23}\end{pmatrix} \begin{pmatrix}c_{13}&0&s_{13} \mathrm{e}^{-i\delta_{CP}}\\0&1&0\\-s_{13} \mathrm{e}^{-i\delta_{CP}}&0&c_{13}\end{pmatrix} \begin{pmatrix}c_{12}&s_{12}&0\\-s_{12}&c_{12}&0\\0&0&1\end{pmatrix} \begin{pmatrix}1&0&0\\0&\mathrm{e}^{i\alpha}&0\\0&0&\mathrm{e}^{i\beta}\end{pmatrix},
+	U = \begin{pmatrix}1&0&0\\0&c_{23}&s_{23}\\0&-s_{23}&c_{23}\end{pmatrix} \begin{pmatrix}c_{13}&0&s_{13} \mathrm{e}^{-i\delta_{CP}}\\0&1&0\\-s_{13} \mathrm{e}^{i\delta_{CP}}&0&c_{13}\end{pmatrix} \begin{pmatrix}c_{12}&s_{12}&0\\-s_{12}&c_{12}&0\\0&0&1\end{pmatrix} \begin{pmatrix}1&0&0\\0&\mathrm{e}^{i\alpha}&0\\0&0&\mathrm{e}^{i\beta}\end{pmatrix},
 \end{equation}
 where $c_{ij} \equiv \cos \theta_{ij}$ and $s_{ij} \equiv \sin \theta_{ij}$. This matrix is analogous to the Cabibbo-Kobayashi-Maskawa (CKM) matrix in the quark sector. If neutrinos are Dirac fermions, we can drop the Majorana phases in the PMNS matrix, as in this case we can perform the phase redefinitions. However, these phases play no role on the neutrino oscillation phenomenology.
 
@@ -287,37 +287,43 @@ In the case that additional sterile neutrinos states are present, the full lepto
 \subsection{Oscillations in vacuum}
 
 Consider the case where a neutrino of flavour $\alpha$ is produced at $t=0$, and then it propagates through vacuum. Such a state will evolve in time according to the relation:
-\begin{equation}\label{2.3}
-\ket{\nu_{\alpha}(t)} = \sum_{i=1}^{3} U^{*}_{\alpha i} \mathrm{e}^{-iE_{i}t} \ket{\nu_{i}(t=0)},
+\begin{equation}
+\ket{\nu_{\alpha}(\vec{x}, t)} = \sum_{i=1}^{3} U^{*}_{\alpha i} \mathrm{e}^{-i(E_{i}t-\vec{p}_{i}\cdot\vec{x})} \ket{\nu_{i}(\vec{x}=\vec{0},t=0)},
 \end{equation}
-as the mass eigenstates are also eigenstates of the free Hamiltonian. Now, if we express the mass eigenstates as a superposition of flavour eigenstates, the last expression can be rewritten as:
+in the plane wave approximation, as the mass eigenstates are also eigenstates of the free Hamiltonian.
+\begin{comment}
+Now, if we express the mass eigenstates as a superposition of flavour eigenstates, the last expression can be rewritten as:
 \begin{equation}\label{2.4}
-\ket{\nu_{\alpha}(t)} = \sum_{i=1}^{3} U_{\beta i} \mathrm{e}^{-iE_{i}t} U^{*}_{\alpha i} \ket{\nu_{\beta}}.
+\ket{\nu_{\alpha}(t)} = \sum_{\beta} \sum_{i=1}^{3} U_{\beta i} \mathrm{e}^{-iE_{i}t} U^{*}_{\alpha i} \ket{\nu_{\beta}}.
 \end{equation}
+\end{comment}
 
 This way, the probability for the neutrino to transition from flavour $\alpha$ to flavour $\beta$ will be given by:
-\begin{equation}\label{2.5}
-P(\nu_{\alpha} \rightarrow \nu_{\beta}) = \left|\braket{\nu_{\beta}}{\nu_{\alpha}(t)}\right|^{2}=\left|\sum_{i=1}^{3} U_{\beta i} \mathrm{e}^{-iE_{i}t} U^{*}_{\alpha i}\right|^{2}.
-\end{equation}
-
-A usual approximation to take at this point is to consider ultra-relativistic neutrinos, i.e. $E \approx \left|\vec{p}\right|$, so we can write the dispersion relations as:
-\begin{equation}\label{2.6}
-E_{i} = \sqrt{p^{2} + m_{i}^{2}} \approx E + \frac{m_{i}^{2}}{2 E},
-\end{equation}
-so we can write the oscillation probability as:
-\begin{equation}\label{2.7}
+\begin{equation}
 \begin{split}
-P(\nu_{\alpha} \rightarrow \nu_{\beta}) &= \sum_{i,j} U^{*}_{\alpha i} U_{\beta i} U_{\alpha j} U^{*}_{\beta j} \mathrm{e}^{-i\frac{\Delta m^{2}_{ij}}{2E}t}\\
-&=\delta_{\alpha\beta} - 4 \sum_{i<j} \mathfrak{Re}\left[U^{*}_{\alpha i} U_{\beta i} U_{\alpha j} U^{*}_{\beta j}\right] \sin^{2}\left(\frac{\Delta m^{2}_{ij}}{4E}t\right)\\
-&\phantom{=}+ 2  \sum_{i<j} \mathfrak{Im}\left[U^{*}_{\alpha i} U_{\beta i} U_{\alpha j} U^{*}_{\beta j}\right] \sin\left(\frac{\Delta m^{2}_{ij}}{2E}t\right),
+	P(\nu_{\alpha} \rightarrow \nu_{\beta}) = \left|\braket{\nu_{\beta}}{\nu_{\alpha}(\vec{x}, t)}\right|^{2} &= \left|\sum_{i=1}^{3} \sum_{j=1}^{3} U^{*}_{\alpha i} U_{\beta j} \mathrm{e}^{-i(E_{i}t-\vec{p}_{i}\cdot\vec{x})} \braket{\nu_{j}}{\nu_{i}}\right|^{2}\\
+	&= \left|\sum_{i=1}^{3} U^{*}_{\alpha i} U_{\beta i} \mathrm{e}^{-i(E_{i}t-\vec{p}_{i}\cdot\vec{x})}\right|^{2},
 \end{split}
 \end{equation}
-where $\Delta m^{2}_{ij}$ is the difference of the squared masses of the $j$th and $i$th neutrino mass eigenvalues. At this point, it is usual to write the phase responsible for the oscillations as (under the approximate assumption $t \approx L$):
+where we have used the orthogonality relation $\braket{\nu_{i}}{\nu_{j}} = \delta_{ij}$. A usual approximation to take at this point is to consider ultra-relativistic neutrinos, i.e. $p_{i} \simeq E$, so we can write the dispersion relations as:
+\begin{equation}
+E_{i} = \sqrt{p_{i}^{2} + m_{i}^{2}} \approx E + \frac{m_{i}^{2}}{2 E}.
+\end{equation}
+
+In the end, assuming $t \approx L$ where $L$ is the distance between the production and the detection points, the probability for the $\nu_{\alpha} \rightarrow \nu_{\beta}$ transition becomes:
+\begin{equation}
+\begin{split}
+P(\nu_{\alpha} \rightarrow \nu_{\beta}) &= \sum_{i,j} U^{*}_{\alpha i} U_{\beta i} U_{\alpha j} U^{*}_{\beta j} \mathrm{e}^{-i\frac{\Delta m^{2}_{ij}}{2E}L}\\
+&=\delta_{\alpha\beta} - 4 \sum_{i<j} \mathfrak{Re}\left[U^{*}_{\alpha i} U_{\beta i} U_{\alpha j} U^{*}_{\beta j}\right] \sin^{2}\left(\frac{\Delta m^{2}_{ij}}{4E}L\right)\\
+&\phantom{=}+ 2  \sum_{i<j} \mathfrak{Im}\left[U^{*}_{\alpha i} U_{\beta i} U_{\alpha j} U^{*}_{\beta j}\right] \sin\left(\frac{\Delta m^{2}_{ij}}{2E}L\right),
+\end{split}
+\end{equation}
+where $\Delta m^{2}_{ij}$ is the difference of the squared masses of the $j$th and $i$th neutrino mass eigenvalues. At this point, it is usual to write the phase responsible for the oscillations as:
 \begin{equation}\label{2.8}
 \Delta_{ij} \equiv \frac{\Delta m^{2}_{ij}}{4E}L \simeq 1.27 \frac{\Delta m^{2}_{ij}}{(\mathrm{eV}^{2})} \frac{L}{(\mathrm{km})} \frac{(\mathrm{GeV})}{E}.
 \end{equation}
 
-Notice that, in the case of antineutrinos the only difference would be the sign of the last term in the oscillation probability. This way, one can write the CP asymmetry as:
+Notice that, in the case of antineutrinos, the only difference would be the sign of the last term in the oscillation probability. As the process $\bar{\nu}_{\alpha} \rightarrow \bar{\nu}_{\beta}$ is the CP-mirror image of $\nu_{\alpha} \rightarrow \nu_{\beta}$, the differences between their oscillation probabilities would be a measure of CP symmetry violation:
 \begin{equation}\label{2.9}
 \begin{split}
 A^{\alpha\beta}_{CP}&=P(\nu_{\alpha} \rightarrow \nu_{\beta})-P(\bar{\nu}_{\alpha} \rightarrow \bar{\nu}_{\beta})\\
@@ -325,11 +331,87 @@ A^{\alpha\beta}_{CP}&=P(\nu_{\alpha} \rightarrow \nu_{\beta})-P(\bar{\nu}_{\alph
 \end{split}
 \end{equation}
 
+Assuming that CPT invariance holds, then the following relation must be true:
+\begin{equation}
+	P(\nu_{\alpha} \rightarrow \nu_{\beta}) = P(\bar{\nu}_{\beta} \rightarrow \bar{\nu}_{\alpha}),
+\end{equation}
+as these two process are related by the CPT symmetry. From the definition of probability, we also must have:
+\begin{equation}
+	\sum_{\beta} P(\nu_{\alpha} \rightarrow \nu_{\beta}) = \sum_{\beta} P(\bar{\nu}_{\alpha} \rightarrow \bar{\nu}_{\beta}) = 1,
+\end{equation}
+where the sum includes all flavours, including $\alpha$. From these two constraints, one can probe that:
+\begin{equation}
+	A^{\alpha\beta}_{CP} = - A^{\beta\alpha}_{CP},
+\end{equation}
+and in particular:
+\begin{equation}
+	A^{\alpha\alpha}_{CP} = 0.
+\end{equation}
+
+A direct consequence of this last relation is that there are no observable CP-violating effects in the so-called disappearance experiments. One needs to perform appearance experiments, where the flavour detected is different from the original flavour, in order to measure the CP asymmetry. Neutrino experiments often report the amount of CP-violation through the Jarlskog invariant. In terms of the parametrisation typically used to write the PMNS matrix, it is given by:
+\begin{equation}
+	J = \frac{1}{8} \mathrm{cos}~\theta_{13}~\mathrm{sin}~2\theta_{12}~\mathrm{sin}~2\theta_{13}~\mathrm{sin}~2\theta_{23}~\mathrm{sin}~\delta_{CP}.
+\end{equation}
+The Jarlskog invariant can be used to compare the amount of CP-violation in the lepton and the quark sectors, where $J=3.12^{+0.13}_{-0.12} \times 10^{-5}$ in the latter \cite{ParticleDataGroup2024}.
+
 \subsection{Oscillations in matter}
 
 When neutrinos propagate through matter, their oscillation can be affected in mainly two ways. First, neutrinos can inelastically scatter with nuclei, thus destroying the coherent propagation of their quantum state. Nevertheless, in most cases this effect is negligible (even in very dense mediums like the core of the Sun). Second, neutrinos can also experience coherent or forward scatterings, that can affect their oscillation but not lose the coherent propagation of the state.
 
 The first proposed model to account for neutrino oscillations in matter was proposed by Mikhaev, Smirnov and Wolfenstein (MSW) \cite{Wolfenstein1977}. It relies on the fact that, as the only charged lepton present in ordinary matter is the electron, electron neutrinos can undergo both charged and neutral-current interactions with matter whereas for muon and tau neutrinos just neutral currents are possible.
+
+An illustrative way to introduce the MSW mechanism is by considering the two flavours case. It can be shown that the evolution of the two flavour eigenstates in vacuum is given by the following time-dependent Schrödinger equation:
+\begin{equation}
+	i \frac{\mathrm{d}}{\mathrm{d}t} \begin{pmatrix}\nu_{e}\\\nu_{\mu}\end{pmatrix} = H_{V} \begin{pmatrix}\nu_{e}\\\nu_{\mu}\end{pmatrix},
+\end{equation}
+with a vacuum Hamiltonian given by:
+\begin{comment}
+\begin{equation}
+	H_{V} = \frac{m_{1}^{2}+m_{2}^{2}}{4E} \begin{pmatrix}1&0\\0&1\end{pmatrix}+\frac{\Delta m^{2}}{4E} \begin{pmatrix}-\mathrm{cos}~2\theta&\mathrm{sin}~2\theta\\\mathrm{sin}~2\theta&\mathrm{cos}~2\theta\end{pmatrix},
+\end{equation}
+\end{comment}
+\begin{equation}
+	H_{V} = \frac{\Delta m^{2}}{4E} \begin{pmatrix}-\mathrm{cos}~2\theta&\mathrm{sin}~2\theta\\\mathrm{sin}~2\theta&\mathrm{cos}~2\theta\end{pmatrix},
+\end{equation}
+where $\Delta m^{2}$ is the mass splitting between the two neutrino states and $\theta$ the only mixing angle. For simplicity, I omit the terms of the Hamiltonian that are proportional to the identity, as they do not affect the oscillation phenomenology.
+
+The NC contribution to the matter potential is identical for all the flavours, and has the form:
+\begin{equation}
+	V_{\mathrm{NC}} = -\frac{G_{F}}{\sqrt{2}} N_{n}(x),
+\end{equation}
+where $G_{F}$ is the Fermi constant and $N_{n}(x)$ the local neutron density. Because it is common to all flavours, I do not take it into account in the effective Hamiltonian, as it would appear as a term proportional to the identity. The CC component only affects the electron neutrino (and antineutrino). It can be written as:
+\begin{equation}
+	V_{\mathrm{CC}} = \pm \sqrt{2} G_{F} N_{e}(x),
+\end{equation}
+with $N_{e}(x)$ being the local electron density in the material. In the end, the effective Hamiltonian which describes the propagation of the flavour eigenstates in matter only contains an extra $\nu_{e}-\nu_{e}$ element:
+\begin{equation}
+	H_{M} = H_{V} + \begin{pmatrix}V_{\mathrm{CC}}&0\\0&0\end{pmatrix}.
+\end{equation}
+
+The solution to the Schrödinger equation greatly simplifies if one considers the case of a constant matter density. In that case, the effective Hamiltonian can be diagonalised, obtaining the effective neutrino mass eigenstates in matter. It can be re-written in the same form as the vacuum Hamiltonian:
+\begin{equation}
+	H_{M} = \frac{\Delta m_{m}^{2}}{4E} \begin{pmatrix}-\mathrm{cos}~2\theta_{m}&\mathrm{sin}~2\theta_{m}\\\mathrm{sin}~2\theta_{m}&\mathrm{cos}~2\theta_{m}\end{pmatrix},
+\end{equation}
+where the effective mass splitting and the effective mixing angle are given by:
+\begin{equation}
+	\begin{split}
+		\Delta m_{m}^{2} = \lambda \Delta m_{m}^{2},\\
+		\mathrm{sin}~2\theta_{m} = \frac{\mathrm{sin}~2\theta_{m}}{\lambda}
+	\end{split}
+\end{equation}
+with:
+\begin{equation}
+	\begin{split}
+		\lambda &= \sqrt{(\mathrm{cos}~2\theta - A)^{2} + \mathrm{sin}^{2}~2\theta},\\
+		A &= \pm \frac{2\sqrt{2}G_{F}N_{e}E}{\Delta m^{2}}.
+	\end{split}
+\end{equation}
+
+In terms of the effective matter oscillation parameters, the transition probability $\nu_{e} \rightarrow \nu_{\mu}$ (in the two flavour approximation) reads:
+\begin{equation}
+	P(\nu_{e} \rightarrow \nu_{\mu}) = \mathrm{sin}^{2}~2\theta_{m} ~ \mathrm{sin}^{2}\left(\frac{\Delta m_{m}^{2}}{2E}L\right)
+\end{equation}
+From this last equation one can see that, when $\mathrm{cos}~2\theta = A > 0$ the oscillations are greatly enhanced. This effect is known as the MSW resonance. For the neutrinos, this resonant condition is only satisfied if $\Delta m^{2}>0$ (the opposite is true for antineutrinos). This is can be exploited by long baseline experiments, which can gain sensitivity to the neutrino mass hierarchy through matter effects.
 
 \subsection{Current status of neutrino oscillations}
 
