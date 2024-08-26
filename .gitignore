@@ -302,3 +302,6 @@ TSWLatexianTemp*
 #*Notes.bib
 
 .DS_Store
+
+# Igonore directory with corrections
+./corrections/*
