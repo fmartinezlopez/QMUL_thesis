@@ -84,15 +84,15 @@
 %\fancyfoot{}                            		    	 % Delete current footer settings
 
 \renewcommand{\chaptermark}[1]{        
-  \markboth{\chaptername\ \thechapter.\ #1}{}} % Lower Case Chapter marker style
+  \markboth{\textbf{\chaptername\ \thechapter}.\ #1}{}} % Lower Case Chapter marker style
 \renewcommand{\sectionmark}[1]{       
-  \markright{\thesection.\ #1}}				 % Lower case Section marker style
+  \markright{\textbf{\thesection.}\ #1}}				 % Lower case Section marker style
 %\fancyhead[LE]{\bfseries\thepage}		 % Page number (boldface) in  Left on Even pages (if document is twoside)
 %\fancyhead[RO]{\bfseries\thepage}        %  and Right on Odd pages
 \fancyhead[LO]{}        %  and Right on Odd pages
-\fancyhead[RO]{\bfseries\rightmark}      % Section in the Left on Odd pages
+\fancyhead[RO]{\textsc{\rightmark}}      % Section in the Left on Odd pages
 \fancyhead[RE]{}     % Chapter in the Right on Even pages (if document is twoside)
-\fancyhead[LE]{\bfseries\leftmark}     % Chapter in the Right on Even pages (if document is twoside)
+\fancyhead[LE]{\textsc{\leftmark}}     % Chapter in the Right on Even pages (if document is twoside)
 
 \let\headruleORIG\headrule
 \renewcommand{\headrule}{\color{black} \headruleORIG}
@@ -164,3 +164,12 @@
 \let\originalepigraph\epigraph 
 \renewcommand\epigraph[2]%
    {\setlength{\epigraphwidth}{\widthof{\mytextformat#1}}\originalepigraph{#1}{#2}}
+
+%-----------------------------------------------------------------------------------
+\usepackage{titlesec}
+
+\titleformat{\chapter}[display]
+  {\normalfont\Large\raggedleft}
+  {\hfill \resizebox{!}{1.5cm}{\thechapter} \rlap{\rule{2.5cm}{1.5cm}}}
+  {10pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{30pt}{20pt}
