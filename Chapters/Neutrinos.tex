@@ -247,6 +247,18 @@ This scenario represents the so-called see-saw mechanism \cite{Minkowski1977,Gel
 
 \section{Neutrino oscillation formalism}
 
+Neutrino oscillations were first proposed in 1958 by B. Pontecorvo \cite{Pontecorvo1957a}, inspired by the neutral kaon oscillation phenomenon \cite{Gell-Mann1955}. Neutral kaons, $K^{0}$ and $\bar{K}^{0}$, have opposite strangeness ($\pm 1$) and are produced in strong processes. It was observed that, when having a beam initially pure of neutral kaons of one type, these would transition into their antiparticles while propagating. Because the weak interaction does not conserve strangeness, neutral kaons can change their identity via the processes shown in Fig. \ref{fig:kaon_oscillations}.
+
+The mixing considered initially by Pontecorvo was between the neutrino and the antineutrino states, as only one neutrino flavour was known at the time. After the discovery of the muon neutrino, the mixing between flavours was also explored \cite{Pontecorvo1967}.
+
+In the general case, we have $3$ active and $m$ sterile neutrinos, resulting in $3+m$ neutrino mass eigenstates. Working in the mass basis, the leptonic charged-current Lagrangian can be written as:
+\begin{equation}
+	-\mathcal{L}_{\mathrm{CC}}^{lep} = \frac{g}{\sqrt{2}} \begin{pmatrix}\bar{e}_{L},~ \bar{\mu}_{L},~ \bar{\tau}_{L}\end{pmatrix} \gamma^{\mu} U \begin{pmatrix}\nu_{1}\\\nu_{2}\\\vdots\\\nu_{3+m}\end{pmatrix} W_{\mu}^{+} + \mathrm{h.c.},
+\end{equation}
+where $U$ is a $3\times(3+m)$ matrix which obeys $UU^{\dagger} = I_{3 \times 3}$, but in general will not be unitary, $U^{\dagger}U\neq I_{(3+m) \times (3+m)}$.
+
+The leptonic mixing matrix, $U$, establishes how the neutrino mass states couple to the charged leptons. In general, a complex $n \times n$ matrix can be fully specified by $2n^{2}$ real parameters. If the matrix is unitary, then the number of independent parameters reduces to $n^{2}$, as one has to impose $n$ normalisation and $n(n-1)$ orthogonality constraints. In our case, we can further reduce the number of parameters by performing a phase redefinition of the charged lepton fields, without affecting the physics. This is not true for the neutrinos. As they may be their own antiparticles, one is not allowed to remove any physically relevant phases. If we consider $n$ generations of leptons, the total number of parameters in the mixing matrix is $n^{2}-n$. Out of these, half of them are mixing angles, while the other half are complex phase factors.
+
 \begin{figure}[t]
 	\begin{subfigure}{0.5\textwidth}
 		\centering
@@ -259,18 +271,6 @@ This scenario represents the so-called see-saw mechanism \cite{Minkowski1977,Gel
 	\caption{$K^{0} \leftrightharpoons \bar{K}^{0}$ mixing through $W^{\pm}$ exchange.}
 	\label{fig:kaon_oscillations}
 \end{figure}
-
-Neutrino oscillations were first proposed in 1958 by B. Pontecorvo \cite{Pontecorvo1957a}, inspired by the neutral kaon oscillation phenomenon \cite{Gell-Mann1955}. Neutral kaons, $K^{0}$ and $\bar{K}^{0}$, have opposite strangeness ($\pm 1$) and are produced in strong processes. It was observed that, when having a beam initially pure of neutral kaons of one type, these would transition into their antiparticles while propagating. Because the weak interaction does not conserve strangeness, neutral kaons can change their identity via the processes shown in Fig. \ref{fig:kaon_oscillations}.
-
-The mixing considered initially by Pontecorvo was between the neutrino and the antineutrino states, as only one neutrino flavour was known at the time. After the discovery of the muon neutrino, the mixing between flavours was also explored \cite{Pontecorvo1967}.
-
-In the general case, we have $3$ active and $m$ sterile neutrinos, resulting in $3+m$ neutrino mass eigenstates. Working in the mass basis, the leptonic charged-current Lagrangian can be written as:
-\begin{equation}
-	-\mathcal{L}_{\mathrm{CC}}^{lep} = \frac{g}{\sqrt{2}} \begin{pmatrix}\bar{e}_{L},~ \bar{\mu}_{L},~ \bar{\tau}_{L}\end{pmatrix} \gamma^{\mu} U \begin{pmatrix}\nu_{1}\\\nu_{2}\\\vdots\\\nu_{3+m}\end{pmatrix} W_{\mu}^{+} + \mathrm{h.c.},
-\end{equation}
-where $U$ is a $3\times(3+m)$ matrix which obeys $UU^{\dagger} = I_{3 \times 3}$, but in general will not be unitary, $U^{\dagger}U\neq I_{(3+m) \times (3+m)}$.
-
-The leptonic mixing matrix, $U$, establishes how the neutrino mass states couple to the charged leptons. In general, a complex $n \times n$ matrix can be fully specified by $2n^{2}$ real parameters. If the matrix is unitary, then the number of independent parameters reduces to $n^{2}$, as one has to impose $n$ normalisation and $n(n-1)$ orthogonality constraints. In our case, we can further reduce the number of parameters by performing a phase redefinition of the charged lepton fields, without affecting the physics. This is not true for the neutrinos. As they may be their own antiparticles, one is not allowed to remove any physically relevant phases. If we consider $n$ generations of leptons, the total number of parameters in the mixing matrix is $n^{2}-n$. Out of these, half of them are mixing angles, while the other half are complex phase factors.
 
 Considering the extended SM without any additional sterile neutrino states, the  resulting $3 \times 3$ mixing matrix is unitary. This matrix, often called the Pontecorvo-Maki-Nakagawa-Sakata (PMNS) matrix \cite{Pontecorvo1957, Maki1962}, relates the set of active neutrinos and the three mass eigenstates as:
 \begin{equation}\label{2.1}
@@ -458,26 +458,38 @@ Other open question concerns the nature itself of the neutrinos. If neutrinos ar
 
 \section{Neutrino interactions}
 
+% Introduction
+The study of neutrino-nucleus interactions is of great importance for long baseline neutrino oscillation experiments. The interaction model provides a mapping between the energy of the incoming neutrino and the final state particles after the interaction. Because in this kind of experiments neutrinos are obtained as secondary decay products of mesons, typically charged pions and kaons, their energies are not known a priori. Not only that, but the kinematics of the interacting nucleon are also unknown. Therefore, we rely on the neutrino interaction models to provide this relation between the observables in the detector and the true kinematics of the neutrino. Interaction modelling is expected to be the one of the leading sources of systematic uncertainties in the next generation of long baseline experiments \cite{Coloma2013,Coloma2013a,Mosel2016}.
+
 \begin{figure}[t]
 	\begin{subfigure}{0.5\textwidth}
 		\centering
 		\includegraphics[width=.90\linewidth]{Images/Nu/feynman_ccqel.pdf}
+		\caption{Quasi-elastic.}
 	\end{subfigure}
 	\begin{subfigure}{0.5\textwidth}
 		\centering
 		\includegraphics[width=.90\linewidth]{Images//Nu/feynman_ccmec.pdf}
+		\caption{Coherent.}
 	\end{subfigure}
 	\begin{subfigure}{0.5\textwidth}
 		\centering
 		\includegraphics[width=.90\linewidth]{Images//Nu/feynman_ccres.pdf}
+		\caption{Resonant.}
 	\end{subfigure}
 	\begin{subfigure}{0.5\textwidth}
 		\centering
 		\includegraphics[width=.90\linewidth]{Images//Nu/feynman_ccdis.pdf}
+		\caption{Deep inelastic.}
 	\end{subfigure}
-	\caption{}
+	\caption{Feynman diagrams of the four most relevant CC interactions to long baseline neutrino oscillation experiments.}
 	\label{fig:neutrino_cc_interactions}
 \end{figure}
+
+% Neutrino-nucleon interactions
+In the case of neutrino interactions with nuclei at the energies relevant for long baseline oscillation experiments, cross section for the neutrino-nucleon interaction. Figure \ref{fig:neutrino_cc_interactions} shows examples of the four most common neutrino CC interactions.
+
+At low energies, below $1~\mathrm{GeV}$, quasi-elastic (QE) interactions dominate. In a CCQE interaction a neutrino (antineutrino) interacts with a neutron (proton), converting it into a proton (neutron) which is then ejected from the nucleus together with the resulting charged lepton. At energies above $1~\mathrm{GeV}$ the neutrino is able to excite the nucleon into a baryonic resonance, which promptly decays into a nucleon and a pion. These are the so-called resonant (RES) interactions. Neutrinos also interact with entire nucleus coherently, in the process known as coherent (COH) interaction. This kind of reactions also produce a single pion in the final state. At high neutrino energies, above $5~\mathrm{GeV}$, deep inelastic scattering (DIS) takes place. In these processes, the neutrino interacts with a single quark within the nucleon, breaking the nucleon and producing a hadronic shower.
 
 \begin{figure}[t]
 	\centering
@@ -485,3 +497,8 @@ Other open question concerns the nature itself of the neutrinos. If neutrinos ar
 	\caption[Schematic representation of a $\nu_{\mu}$ CCQE interaction with a neutron inside a nucleus.]{Schematic representation of a $\nu_{\mu}$ CCQE interaction with a neutron inside a nucleus. The reaction produces a muon and a proton, which travel through the nuclear medium. The outgoing proton undergoes various kinds of hadronic FSIs on its way out. Figure taken from Ref. \cite{Bathe-Peters2022}.}
 	\label{fig:fsi_diagram}
 \end{figure}
+
+% Nuclear effects and FSI
+Nuclear effects alter the neutrino cross section, as well as the final states particles. There are several models available to describe the initial state of the nucleus, like the relativistic Fermi gas model, spectral functions or the random phase approximation. Figure \ref{fig:fsi_diagram} illustrates the effects of FSI on the observable particle content in the detector after a $\nu_{\mu}$ CCQE interaction.
+
+% Experimental status
