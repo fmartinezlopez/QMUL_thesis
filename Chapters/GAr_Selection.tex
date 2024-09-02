@@ -7,4 +7,26 @@
 
 \subsection[\texorpdfstring{$\nu_{\mu}$}{numu} CC selection]{\boldmath\texorpdfstring{$\nu_{\mu}$}{numu} CC selection}
 
+\begin{enumerate}
+    \item Event contains reconstructed particles.
+    \item Select particles with reconstructed negative charge, $q_{\mathrm{reco}} = -1$.
+    \item Select particles passing the muon score cut, $\mu_{\mathrm{score}} \geq \mu_{\mathrm{score}}^{\mathrm{cut}}$.
+    \item Keep reconstructed particle with the highest momentum, $\mathrm{max}\left[p_{\mathrm{reco}}\right]$.
+    \item Alternatively, Keep reconstructed particle with the highest muon score, $\mathrm{max}\left[\mu_{\mathrm{score}}\right]$.
+    \item Check that the particle starting point satisfies:
+    \begin{equation}
+        \vec{x}_{\mathrm{start}} \in \left\{\vec{x} \in \mathbb{R}^{3} | |x_{0}| \leq L_{\mathrm{FDV}} ~ \& \sqrt{x_{1}^{2}+x_{2}^{2}} \leq R_{\mathrm{FDV}}\right\}
+    \end{equation}
+    in the reference frame of the HPgTPC.
+\end{enumerate}
+
+For convenience, I define:
+\begin{equation}
+    \begin{split}
+        \Delta R_{\mathrm{FDV}} &= R_{\mathrm{HPgTPC}} - R_{\mathrm{FDV}}, \\
+        \Delta L_{\mathrm{FDV}} &= L_{\mathrm{HPgTPC}} - L_{\mathrm{FDV}},
+    \end{split}
+\end{equation}
+where $R_{\mathrm{HPgTPC}}$ and $L_{\mathrm{HPgTPC}}$ refers to the radius and the half-length of the HPgTPC, respectively.
+
 \subsection{Charged pion multiplicity}
