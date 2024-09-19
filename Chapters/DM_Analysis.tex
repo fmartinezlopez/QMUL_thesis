@@ -1,14 +1,11 @@
 \chapter{DM searches with neutrinos from the Sun}
 \label{chapter:dm_analysis}
 
-\section{Motivation}
-\label{sec:1}
-
 %Solar DM capture
 The idea of detecting neutrino signals coming from the Sun's core to probe DM is not new. The main focus of these searches has usually been high-energy neutrinos originated from DM annihilations into heavy particles \cite{Silk1985, Srednicki1986, Hagelin1986, Gaisser1986}, although recent studies have proposed to look at the low-energy neutrino flux arising from the decay of light mesons at rest in the Sun \cite{Bernal2012, Rott2012, Rott2015, DUNE2021} previously thought undetectable.
 
 %
-In this chapter I try to demonstrate the capability of DUNE to constrain different DM scenarios. I used the neutrino fluxes arising from DM annihilations in the core of the Sun to compute the projected limits that DUNE would be able to set on the annihilation rates in the Sun and the DM scattering cross sections.
+In this Chapter I try to demonstrate the capability of DUNE to constrain different DM scenarios. I used the neutrino fluxes arising from DM annihilations in the core of the Sun to compute the projected limits that DUNE would be able to set on the annihilation rates in the Sun and the DM scattering cross sections.
 
 \section{Gravitational capture of DM by the Sun}
 \label{sec:B.1}
@@ -616,3 +613,69 @@ Now, estimating the number of background events using Eq. (\ref{6.12}) one can g
 In Fig. \ref{fig:eft_bounds} (right panel) I show the same upper limits but for the DM-electron scattering cross section. From this view one can see that DUNE would be able to offer complementary information to the low energy DM-electron interaction searches performed by direct detection experiments, in a slightly higher mass range.
 
 With the present example, although it focuses on a very specific realisation of the DM interactions, I show the potential of DUNE to constrain exotic DM scenarios. Thanks to its low backgrounds and superb angular resolution DUNE will be able to help with the systematic searches for dark sectors physics.
+
+\section{Systematic uncertainties}
+
+The estimation of the DM cross sections using neutrinos from WIMP annihilations inside the Sun is affected by systematic uncertainties from different sources. Surely, the atmospheric background estimation is also affected by systematic uncertainties. There are uncertainties common to both types of events, as well as others specific to each. In this section, I try to provide a comprehensive summary of the main sources of uncertainty for this analysis, which should be taken into account in any future extensions of the same.
+
+\begin{table}[t]
+	\caption[Systematic uncertainties for the solar WIMP signal events.]{Systematic uncertainties for the solar WIMP signal events. Table adapted from Ref. \cite{Principato2021}.}
+	\begin{center}
+		\begin{small}
+			\begin{tabular}{c|c}
+				Systematic                         & Value \\[2mm] \hline
+				\rule{0pt}{1.1\normalbaselineskip}Form factor                      & Does not apply to SD \cite{Wikstroem2009} \\[2mm]
+				Solar model                      & $3\%$ \cite{Wikstroem2009} \\[2mm]
+				Local DM density                 & Not relevant for relative interpretations \cite{Wikstroem2009,Super-Kamiokande2015} \\[2mm]
+				Dynamics of solar system         & Negligible \cite{Rott2011} \\[2mm]
+				Velocity distributions           & $20\%$ at $20~\mathrm{GeV}$ \cite{Wikstroem2009,Super-Kamiokande2015} \\[2mm] \hline
+				\rule{0pt}{1.1\normalbaselineskip}Oscillation parameters           & $8\%$ for $\tau^{+}\tau^{-}$, $5\%$ for $b\bar{b}$ \cite{Boliev2013} \\[2mm]
+				Neutrino interactions in the Sun & $10\%$ \\[2mm]
+				Matter effects in the Earth      & $10\%$ 
+			\end{tabular}
+		\end{small}
+	\end{center}
+	\label{tab:solar_dm_signal_uncertainties}
+\end{table}
+
+\subsection{Systematic uncertainties in the solar WIMP signal}
+
+The systematic uncertainties affecting the solar WIMP neutrino signal can be divided in two categories. On the one hand, we have those affecting the solar WIMP annihilation rate. On the other hand, there are the ones which modify the neutrino flux resulting from the annihilations reaching our detector.
+
+\begin{itemize}
+	\item \textbf{Uncertainties on the annihilation rate}. These include the astrophysical effects that affect the normalisation of the solar DM neutrino flux. The main contributions are the solar model choice, the form factor uncertainties (only for SI searches), the gravitational effect of other planets, the local DM density (not relevant for relative comparisons, as it affects direct detection experiments in the same way), and the DM halo and dispersion velocities.
+	\item \textbf{Uncertainties on the neutrino flux}. These are related to the oscillation effects, as well as the absorption and regeneration of neutrinos in the Sun. Matter effects inside the Earth also affect the neutrino flux the measured at the detectors.
+\end{itemize}
+
+Table \ref{tab:solar_dm_signal_uncertainties} summarises the contributions of the different sources of uncertainty for the signal events. These are the signal systematic uncertainties that have been taken into account in previous solar DM searches with neutrinos \cite{Boliev2013,Super-Kamiokande2015,Principato2021}.
+
+\begin{table}[t]
+	\caption[Systematic uncertainties for the solar WIMP atmospheric background events.]{Systematic uncertainties for the solar WIMP atmospheric background events. Table adapted from Ref. \cite{Super-Kamiokande2017}.}
+	\begin{center}
+		\begin{small}
+			\begin{tabular}{c|c}
+				Systematic                                            & Value \\[2mm] \hline
+				\rule{0pt}{1.1\normalbaselineskip}Flux normalisation                                    & $25-7\%$ for $0.1 < E_{\nu} \leq 1~\mathrm{GeV}$ (linear in $\mathrm{log} ~ E_{\nu}$)\\[1mm] & $7\%$ up to $10~\mathrm{GeV}$ \\[2mm]
+				$(\nu_{\mu}+\bar{\nu}_{\mu})/(\nu_{e}+\bar{\nu}_{e})$ & $2\%$ for $E_{\nu} \leq 1~\mathrm{GeV}$ \\[1mm] & $3\%$ for $1 < E_{\nu} \leq 10~\mathrm{GeV}$ \\[2mm]
+				$\bar{\nu}_{\mu}/\nu_{\mu}$                           & $2\%$ for $E_{\nu} \leq 1~\mathrm{GeV}$ \\[1mm] & $6\%$ for $1 < E_{\nu} \leq 10~\mathrm{GeV}$ \\[2mm]
+				$\mathrm{K}/\pi$ ratio                                & $5\%$ $E_{\nu} \leq 100~\mathrm{GeV}$
+			\end{tabular}
+		\end{small}
+	\end{center}
+	\label{tab:solar_dm_background_uncertainties}
+\end{table}
+
+\subsection{Systematic uncertainties in the atmospheric background}
+
+For the atmospheric background events, one needs to take into account the systematic uncertainties affecting the atmospheric $\nu_{\mu}$ flux. These have been extensively studied in the context of atmospheric neutrino oscillation measurements. Among these, the energy-dependent flux normalisation uncertainty is the in the low energy regime. Other important contributions to the uncertainty come from the ratios between the muon to electron neutrino and the muon to anti-muon neutrino components of the flux. Additional uncertainty is introduced by the errors in the pion and kaon production rates calculated for the hadronic interactions of cosmic rays in the atmosphere \cite{Honda2006}.
+
+Table \ref{tab:solar_dm_background_uncertainties} shows a summary of the leading contributions to the uncertainty on the atmospheric muon neutrino flux, in the energy range relevant for this analysis.
+
+\subsection{Common systematic uncertainties}
+
+Finally, there are sources of uncertainty common to both signal and backgrounds. These have two different origins:
+
+\begin{itemize}
+	\item \textbf{Uncertainties on the neutrino cross section}. These are introduced by the modelling of the neutrino-nucleus interactions. In the context of the solar WIMP analysis, these have been estimated to be $10\%$ for DM masses around $10~\mathrm{GeV}$ \cite{Boliev2013}.
+	\item \textbf{Uncertainties related to the detector}. They affect the measurement of the neutrino interaction and the final state particles produced. The main detector uncertainties relevant to this analysis are those of the energy and angular resolutions of the DUNE FD. Other effects, like the timing and triggering efficiencies, will also contribute to the uncertainties. The particular values these will take for this analysis need to be worked out in the context of DUNE.
+\end{itemize}
