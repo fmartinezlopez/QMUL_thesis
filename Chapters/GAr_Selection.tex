@@ -133,11 +133,16 @@ Figure \ref{fig:numuCC_metrics_opt} shows the change in efficiency (blue) and pu
 
 A similar depiction of the significance can be found in Fig. \ref{fig:numuCC_significance_opt}. In this case, one can see that the $S/\sqrt{S+B}$ decreases as the cuts grow tighter. However, there are hints of local maxima at intermediate values.
 
-Selecting the cut configuration with the highest significance, $147 \pm 11$ for the parameter values explored here, results in an efficiency and purity of $0.754 \pm 0.006$ and $0.833 \pm 0.007$, respectively. Figure \ref{fig:numuCC_metric_heat} shows the 2D distributions resulting when combining pairs of efficiency, purity and significance, obtained for the cut configurations explored. Looking at it, it is clear that a selection with highest efficiency and purity can be achieved, maintaining a similar significance level.
+Selecting the cut configuration with the highest significance, $147 \pm 11$ for the parameter values explored here, results in an efficiency and purity of $0.754 \pm 0.006$ and $0.833 \pm 0.007$, respectively. Figure \ref{fig:numuCC_metric_heat} shows the 2D distributions resulting when combining pairs of efficiency, purity and significance, obtained for the cut configurations explored. The significance is normalised to the highest value obtained in the parameter scan. Looking at this, it is clear that a selection with highest efficiency and purity can be achieved, maintaining a similar significance level.
 
-Therefore, to get a more refined selection, I first select the configurations with a purity and an efficiency higher than $0.85$ and $0.80$, respectively. After that, I select the tuple of cuts yielding the highest significance. The resulting value for the muon score cut is $\mu_{\mathrm{score}}^{\mathrm{cut}} = 0.10$, and the FV is given by $\Delta L_{\mathrm{FV}} = 30.0~\mathrm{cm}$ and $\Delta R_{\mathrm{FV}} = 50.0~\mathrm{cm}$. With these, one obtains a total efficiency of $0.800 \pm 0.007$ and purity of $0.851 \pm 0.008$, with a significance of $138 \pm 11$. I use this optimised selection cuts hereafter, unless specified otherwise.
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.90\linewidth]{Images/GAr_selection/numu_cc_selection_steps.pdf}
+	\caption[Cumulative efficiency and purity for the $\nu_{\mu}$ CC selection.]{Cumulative efficiency (blue) and purity (red) of the $\nu_{\mu}$ CC selection. The secondary axis indicates the number of events in the sample after each cut (black crosses).}
+	\label{fig:numuCC_selection_steps}
+\end{figure}
 
-\begin{table}[t]
+\begin{table}[h!]
 	\caption[Step-by-step $\nu_{\mu}$ CC selection cuts and cumulative passing rates.]{Step-by-step $\nu_{\mu}$ CC selection cuts and cumulative passing rates. Relative passing rates are indicated in parentheses.}
 	\begin{center}
 		\begin{small}
@@ -154,28 +159,42 @@ Therefore, to get a more refined selection, I first select the configurations wi
 	\label{tab:numuCC_selection}
 \end{table}
 
-A summary of the selection can be found in Tab. \ref{tab:numuCC_selection}. It shows the number of events in the selected sample after each selection cut, as well as the absolute and relative passing rates. Figure \ref{fig:numuCC_selection_steps} shows the overall efficiencies (blue) and purities (red) after each cut in the event selection is applied. As expected, the efficiency drops while the purity increases with the successive cuts. Notice how 
+Therefore, to get a more refined selection, I first select the configurations with a purity and an efficiency higher than $0.85$ and $0.80$, respectively. After that, I select the tuple of cuts yielding the highest significance. The resulting value for the muon score cut is $\mu_{\mathrm{score}}^{\mathrm{cut}} = 0.10$, and the FV is given by $\Delta L_{\mathrm{FV}} = 30.0~\mathrm{cm}$ and $\Delta R_{\mathrm{FV}} = 50.0~\mathrm{cm}$. With these, one obtains a total efficiency of $0.800 \pm 0.007$ and purity of $0.851 \pm 0.008$, with a significance of $138 \pm 11$. Hereafter, I use this optimised selection cuts, unless specified otherwise.
+
+A summary of the selection can be found in Tab. \ref{tab:numuCC_selection}. It shows the number of events in the selected sample after each selection cut, as well as the absolute and relative passing rates. Figure \ref{fig:numuCC_selection_steps} shows the overall efficiencies (blue) and purities (red) after each cut in the event selection is applied. As expected, the efficiency drops while the purity increases with the successive cuts.
+
+Notice how, out of the cuts prior to the FV constraint, the sign selection produces the highest increase in purity. This is one of the advantages of having a magnetised TPC, and can also be used for a $\bar{\nu}_{\mu}$ CC selection when running in RHC mode.
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=.90\linewidth]{Images/GAr_selection/numu_cc_selection_steps.pdf}
-	\caption[Cumulative efficiency and purity for the $\nu_{\mu}$ CC selection.]{Cumulative efficiency (blue) and purity (red) of the $\nu_{\mu}$ CC selection. The secondary axis indicates the number of events in the sample after each cut (black crosses).}
-	\label{fig:numuCC_selection_steps}
+	\includegraphics[width=.80\linewidth]{Images/GAr_selection/numuCC_selection_true_energy.pdf}
+	\caption[True neutrino energy spectra for the $\nu_{\mu}$ CC selection.]{True neutrino energy spectra for the $\nu_{\mu}$ CC selection. The selected events correspond to the coloured stacked histogram, broken down by signal and background subcategories. The statistical uncertainty is drawn in hatched gray. The true distribution is also shown with the black data points. The bottom panel shows the ratio between the number of true and selected $\nu_{\mu}$ CC events per bin.}
+	\label{fig:numuCC_selection_true_enu}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.99\linewidth]{Images/GAr_selection/numuCC_selection_true_energy_performance.pdf}
+	\caption[True neutrino energy spectra for the $\nu_{\mu}$ CC selection.]{Left panel: efficiency (top panel) and purity (bottom panel) for the $\nu_{\mu}$ CC selection as a function of the true neutrino energy. Right panel: significance for the $\nu_{\mu}$ CC selection as a function of the true neutrino energy}
+	\label{fig:numuCC_selection_true_enu_performance}
 \end{figure}
 
 \subsection{Selection performance}
 
-Using the stored spectra discussed above, the true neutrino energy distribution for the selected events can be recovered doing $\mathrm{TP}+\mathrm{FP}$. Similarly, the combination $\mathrm{TP}+\mathrm{FN}$ gives the true spectrum. Figure \ref{fig:numuCC_selection_true_enu} (top panel) shows the true (black dots) and selected (blue line) $E_{\nu}$ distributions for the optimised $\nu_{\mu}$ CC selection. These allow to compute the efficiency and purity of the selection as a function of the true neutrino energy, as shown in Fig. \ref{fig:numuCC_selection_true_enu} (bottom panel).
+Using the stored spectra discussed above, the true neutrino energy distribution for the selected events can be recovered doing $\mathrm{TP}+\mathrm{FP}$. Similarly, the combination $\mathrm{TP}+\mathrm{FN}$ gives the true spectrum. Figure \ref{fig:numuCC_selection_true_enu} shows the true (black data points) and selected (coloured stacked histogram) $E_{\nu}$ distributions for the optimised $\nu_{\mu}$ CC selection. The colours in the selected spectrum indicate the different signal categories and backgrounds, with the overall statistical uncertainty represented by the gray hatched mess. The ratio between the true and selected events is also shown. One can see that it sits around $1$ for most of the energy range. However, for energies $\leq 1~\mathrm{GeV}$ there is a significant deficit of selected events.
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=.80\linewidth]{Images/GAr_selection/nu_energy_with_metrics.pdf}
-	\caption[True neutrino energy spectra for the $\nu_{\mu}$ CC selection.]{Top panel: true neutrino energy spectra for the $\nu_{\mu}$ CC selection. The true distribution is also shown (black data points). Bottom panel: efficiency (blue) and purity (yellow) of the $\nu_{\mu}$ CC selection as a function of the true neutrino energy.}
-	\label{fig:numuCC_selection_true_enu}
+	\includegraphics[width=.80\linewidth]{Images/GAr_selection/numuCC_selection_true_energy_sign_comp.pdf}
+	\caption{True neutrino energy spectra for the $\nu_{\mu}$ CC selection with (blue) and without (red) sign selection. The selected events are broken down by true positives (signal) and false positives (background). The true distribution is also shown (black data points). The bottom panel shows the ratios between the number of false positives and total selected events per bin.}
+	\label{fig:numuCC_sign_selection}
 \end{figure}
 
-A variation of the $\nu_{\mu}$ CC selection one can try is to apply it without the reconstructed charge cut. Figure \ref{fig:numuCC_sign_selection} shows the $E_{\nu}$ distributions corresponding to the selection with (left panel) and without (right panel) the sign selection. In the former case, the out of FV contamination amounts to $9.06\%$ of the total, while the NC contamination results $4.77\%$ and the wrong-sign contamination $0.57\%$. For the later, these backgrounds account for the $10.01\%$, $10.82\%$, and $2.18\%$ of the selected events, respectively. As expected, removing the positive particles does not change the FV-related effects noticeably. However, the sign selection proves its worth in the rejection of $\bar{\nu}_{\mu}$ CC events, which drop almost by one order of magnitude. Additionally, the charge selection cuts the NC events in half, as it reduces the chances of misidentifying a positively charged hadron for a muon.
+These spectra also allow to compute the efficiency and purity of the selection as a function of the true neutrino energy, as shown in Fig. \ref{fig:numuCC_selection_true_enu_performance} (left panel). As it could be expected from the previous ratio plot, the efficiency is low at low neutrino energies. Nonetheless, it raises quickly with the energy, until it stabilises around a value of $0.80$. Looking at the purity, one may notice that, although it starts at around $0.90$, there is a significant decrease towards the high end of the spectrum. Figure \ref{fig:numuCC_selection_true_enu_performance} (right panel) also shows the significance as a function of the energy. In this case, the highest $S/\sqrt{S+B}$ is achieved around the energies where the spectrum peaks.
 
+A variation of the $\nu_{\mu}$ CC selection one can try is to apply it without the reconstructed charge cut. Figure \ref{fig:numuCC_sign_selection} (top panel) shows the $E_{\nu}$ distributions corresponding to the selection with (blue stacked histogram) and without (red stacked histogram) the sign selection. In the former case, the out of FV contamination amounts to $9.06\%$ of the total, while the NC contamination results $4.77\%$ and the wrong-sign contamination $0.57\%$. For the later, these backgrounds account for the $10.01\%$, $10.82\%$, and $2.18\%$ of the selected events, respectively. As expected, removing the positive particles does not change the FV-related effects noticeably. However, the sign selection proves its worth in the rejection of $\bar{\nu}_{\mu}$ CC events, which drop almost by one order of magnitude. Additionally, the charge selection cuts the NC events in half, as it reduces the chances of misidentifying a positively charged hadron for a muon.
+
+\begin{comment}
 \begin{figure}[t]
 	\begin{subfigure}{0.5\textwidth}
 		\centering
@@ -188,6 +207,27 @@ A variation of the $\nu_{\mu}$ CC selection one can try is to apply it without t
 	\caption[True neutrino energy spectra for the $\nu_{\mu}$ CC selection with and without sign selection.]{True neutrino energy spectra for the $\nu_{\mu}$ CC selection with (left panel) and without (right panel) sign selection. The selected events are broken down by signal or background category. The true distribution is also shown (black data points).}
 	\label{fig:numuCC_sign_selection}
 \end{figure}
+\end{comment}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.99\linewidth]{Images/GAr_selection/numuCC_muon_kinematic_comp.pdf}
+    \caption{Distributions for the reconstructed versus truth generated primary muon momentum (top left panel), longitudinal momentum (top right panel), transverse momentum (bottom left panel), and beam angle (bottom right panel). The reconstructed values correspond to the selected primary muon candidate, whereas the truth values come from the true primary muon in the event.}
+    \label{fig:numuCC_muon_kinematic_comp}
+\end{figure}
+
+\subsection{Primary muon kinematics}
+
+Figure \ref{fig:numuCC_muon_kinematic_comp} shows a comparison between some of the reconstructed and truth primary muon kinematic variables. Notice that, for the reconstructed values, the . That means that, in some cases, we are comparing the kinematic, i.e. the account for both reconstruction and selection deficiencies.
+
+study the performance of the $\nu_{\mu}$ CC selection as a function of the kinematic variables of the primary muon.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.99\linewidth]{Images/GAr_selection/numuCC_selection_true_kinematics_performance.pdf}
+	\caption[Efficiency and purity of the $\nu_{\mu}$ CC selection as a function of the primary muon true momentum and beam angle.]{Efficiency (blue) and purity (red) of the $\nu_{\mu}$ CC selection as a function of the primary muon true momentum (left panel) and beam angle (right panel).}
+	\label{fig:numuCC_muon_kinematics}
+\end{figure}
 
 \begin{figure}[t]
     \centering
@@ -196,15 +236,12 @@ A variation of the $\nu_{\mu}$ CC selection one can try is to apply it without t
     \label{fig:numuCC_true_vertex}
 \end{figure}
 
-\subsection{Primary muon kinematics}
-
-\begin{figure}[t]
-	\centering
-	\includegraphics[width=.99\linewidth]{Images/GAr_selection/numuCC_muon_kinematic.pdf}
-	\caption[Primary muon true momentum and angle distributions for the true and the selected $\nu_{\mu}$ CC events.]{Left panel: primary muon true momentum distribution for the true and the selected $\nu_{\mu}$ CC events (top panel), and efficiency and purity as a function of the true momentum (bottom panel). Right panel: primary muon true angular distribution for the true and the selected $\nu_{\mu}$ CC events (top panel), and efficiency and purity as a function of the true angle (bottom panel).}
-	\label{fig:numuCC_muon_kinematics}
-\end{figure}
-
 \section{Charged pion identification}
 
 \subsection[\texorpdfstring{$\nu_{\mu}$}{numu} CC \texorpdfstring{$1\pi^{\pm}$}{1pi} selection]{\boldmath\texorpdfstring{$\nu_{\mu}$}{numu} CC \boldmath\texorpdfstring{$1\pi^{\pm}$}{1pi} selection}
+
+
+\section{Neutral pion identification}
+
+
+\section{Detector systematic uncertainties}
