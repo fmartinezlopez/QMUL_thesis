@@ -206,6 +206,15 @@ These spectra also allow to compute the efficiency and purity of the selection a
 
 A variation of the $\nu_{\mu}$ CC selection one can try is to apply it without the reconstructed charge cut. Figure \ref{fig:numuCC_sign_selection} (top panel) shows the $E_{\nu}$ distributions corresponding to the selection with (blue stacked histogram) and without (red stacked histogram) the sign selection. In the former case, the out of FV contamination amounts to $9.06\%$ of the total, while the NC contamination results $4.77\%$ and the wrong-sign contamination $0.57\%$. For the later, these backgrounds account for the $10.01\%$, $10.82\%$, and $2.18\%$ of the selected events, respectively. As expected, removing the positive particles does not change the FV-related effects noticeably. However, the sign selection proves its worth in the rejection of $\bar{\nu}_{\mu}$ CC events, which drop almost by one order of magnitude. Additionally, the charge selection cuts the NC events in half, as it reduces the chances of misidentifying a positively charged hadron for a muon.
 
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.99\linewidth]{Images/GAr_selection/numuCC_selection_true_vertex_performance.pdf}
+	\caption{Efficiency 2D distributions for the $\nu_{\mu}$ CC selection given the true position of the interaction vertex.}
+	\label{fig:numuCC_vertex_efficiency}
+\end{figure}
+
+As an additional check, I explored how the performance of the $\nu_{\mu}$ CC selection depends on the position of the neutrino interaction within the HPgTPC. Maps of the selection efficiency for the $X,Z$ (top left panel), $X,Y$ (bottom left panel), and $Z,Y$ (right panel) true vertex position pairs are given in Fig. \ref{fig:numuCC_vertex_efficiency}. It can be seen that the efficiency remains stable along the drift direction, only slightly degrading close to the edges of the FV. Regarding the radial direction, it is clear that an important number of events with high $Z^{\mathrm{truth}}_{\mathrm{vtx}}$ are not being selected. Intuitively, the muons arising from these interactions will leave short tracks. As their directions are typically aligned with the beam direction, they enter the ECal shortly after production. This is likely to affect the tracking, and therefore their identification. As a result, the regions with the lowest efficiency are the downstream corners of the HPgTPC, i.e. the areas with high $|X^{\mathrm{truth}}_{\mathrm{vtx}}|$ and $Z^{\mathrm{truth}}_{\mathrm{vtx}}$.
+
 \begin{comment}
 \begin{figure}[t]
 	\begin{subfigure}{0.5\textwidth}
@@ -230,9 +239,13 @@ A variation of the $\nu_{\mu}$ CC selection one can try is to apply it without t
 
 \subsection{Primary muon kinematics}
 
-Figure \ref{fig:numuCC_muon_kinematic_comp} shows a comparison between some of the reconstructed and truth primary muon kinematic variables. Notice that, for the reconstructed values, the . That means that, in some cases, we are comparing the kinematic, i.e. the account for both reconstruction and selection deficiencies.
+This $\nu_{\mu}$ CC selection relies on the identification of the a primary muon, meaning that for each selected event a particle is picked out as the muon candidate. It is because of this that one can study the kinematics of these selected primary muons.
 
-study the performance of the $\nu_{\mu}$ CC selection as a function of the kinematic variables of the primary muon.
+Figure \ref{fig:numuCC_muon_kinematic_comp} shows a comparison between some of the reconstructed and truth primary muon kinematic variables. From top to bottom, left to right, we have muon momentum, longitudinal momentum, transverse momentum and beam angle. The histograms are column-normalised, and so the diagonal entries give an idea of the resolution for the different variables. The match between truth and reconstructed values can only be done for the selected true $\nu_{\mu}$ CC events, as the others do not have a primary muon. However, for this comparison I do not require the events to start inside the FV.
+
+Notice that, for the reconstructed values, the variables do not necessarily come from a reconstructed particle that matches the true primary muon. In other words, sometimes, even though the event was correctly identified, the primary muon may have been confused with another particle. That means that in these distributions we have both reconstruction and selection deficiencies.
+
+study the performance of the $\nu_{\mu}$ CC selection as a function of the kinematic variables of the primary muon. As before, these are only possible to compute for true $\nu_{\mu}$ CC events.
 
 \begin{figure}[t]
 	\centering
@@ -241,12 +254,16 @@ study the performance of the $\nu_{\mu}$ CC selection as a function of the kinem
 	\label{fig:numuCC_muon_kinematics}
 \end{figure}
 
+$1.62 \pm 0.08 \%$, $1.23 \pm 0.05 \%$, and $0.32 \pm 0.05 \%$ for the $X$, $Y$, and $Z$ position, respectively.
+
+\begin{comment}
 \begin{figure}[t]
     \centering
     \includegraphics[width=.99\linewidth]{Images/GAr_selection/numuCC_true_vertex_position_fiducial.pdf}
     \caption[Distributions of the true $\nu_{\mu}$ CC vertex positions for the full HPgTPC and the FV.]{Distributions of the true $\nu_{\mu}$ CC vertex positions for the full HPgTPC volume (blue) and the optimised FV (yellow), given by $\Delta L_{\mathrm{FV}} = 30.0 ~ \mathrm{cm}$ and $\Delta R_{\mathrm{FV}} = 50.0 ~ \mathrm{cm}$.}
     \label{fig:numuCC_true_vertex}
 \end{figure}
+\end{comment}
 
 \section{Charged pion identification}
 
