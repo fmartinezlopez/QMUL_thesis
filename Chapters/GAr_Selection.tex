@@ -3,6 +3,18 @@
 
 \section{Data sample}
 
+{\color{red}
+In this section I need to make sure to mention:
+\begin{itemize}
+    \item I need to comment on the versions of the software that were used for the production of the different samples (if we end up having more than one). The version of \texttt{GENIE} used was 
+    \item We use GArG4 instead of \texttt{edep-sim} for the particle propagation. Because both \texttt{Geant4} wrappers use different configurations for the simulation, the results obtained are different. The default \texttt{edep-sim} configuration used by the DUNE ND is appropriate for ND-LAr, where thresholds for particle production are higher. In the case of ND-GAr, these parameters need to be adjusted accordingly. For the time being, in these first productions of analysis files, we will use our standalone \texttt{Geant4} implementation. For future iterations these differences will need to be revisited and understood, so we can use the same simulation workflow as the rest of the ND.
+    \item I need to comment on the sample size. The first sample produced was simply $10^{5}$ events inside the HPgTPC volume. There is also the question of the other sample we may want to produce for the $\geq 3\pi^{\pm}$ selection (ask Naseem).
+    \item So far we have only simulated single interaction events. Ideally, we should move to simulate full spills. Of course, we need to understand how many interactions we expect in ND-GAr per spill. Also, there is the question of having neutrino interactions happening in the other detector volumes (ECal, magnet, \dots).
+    \item At some point, we should generate a sample of rock muons making it to ND-GAr.
+    \item I think I should comment on the run plan (at least the part that concerns ND-GAr), and what it means in terms of generating a full production sample. It will be good to have an understanding of the POT we need on-axis and at each off-axis positions (for both FHR and RHC).
+\end{itemize}
+}
+
 \begin{table}[t]
 	\caption{Event rates in ND-GAr.}
 	\begin{center}
@@ -244,4 +256,10 @@ study the performance of the $\nu_{\mu}$ CC selection as a function of the kinem
 \section{Neutral pion identification}
 
 
-\section{Detector systematic uncertainties}
+\section{Systematic uncertainties}
+
+\subsection{Flux uncertainties}
+
+\subsection{Cross section uncertainties}
+
+\subsection{Detector uncertainties}
