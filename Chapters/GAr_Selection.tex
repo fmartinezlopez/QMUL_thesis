@@ -243,10 +243,6 @@ This $\nu_{\mu}$ CC selection relies on the identification of the a primary muon
 
 Figure \ref{fig:numuCC_muon_kinematic_comp} shows a comparison between some of the reconstructed and truth primary muon kinematic variables. From top to bottom, left to right, we have muon momentum, longitudinal momentum, transverse momentum and beam angle. The histograms are column-normalised, and so the diagonal entries give an idea of the resolution for the different variables. The match between truth and reconstructed values can only be done for the selected true $\nu_{\mu}$ CC events, as the others do not have a primary muon. However, for this comparison I do not require the events to start inside the FV.
 
-Notice that, for the reconstructed values, the variables do not necessarily come from a reconstructed particle that matches the true primary muon. In other words, sometimes, even though the event was correctly identified, the primary muon may have been confused with another particle. That means that in these distributions we have both reconstruction and selection deficiencies.
-
-study the performance of the $\nu_{\mu}$ CC selection as a function of the kinematic variables of the primary muon. As before, these are only possible to compute for true $\nu_{\mu}$ CC events.
-
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.99\linewidth]{Images/GAr_selection/numuCC_selection_true_kinematics_performance.pdf}
@@ -254,7 +250,18 @@ study the performance of the $\nu_{\mu}$ CC selection as a function of the kinem
 	\label{fig:numuCC_muon_kinematics}
 \end{figure}
 
-$1.62 \pm 0.08 \%$, $1.23 \pm 0.05 \%$, and $0.32 \pm 0.05 \%$ for the $X$, $Y$, and $Z$ position, respectively.
+Notice that, for the reconstructed values, the variables do not necessarily come from a reconstructed particle that matches the true primary muon. In other words, sometimes, even though the event was correctly identified, the primary muon may have been confused with another particle. That means that in these distributions include both reconstruction and selection deficiencies.
+
+\begin{figure}[p!]
+    \centering
+    \includegraphics[width=.80\linewidth]{Images/GAr_selection/numuCC_muon_vtx_residuals.pdf}
+    \caption[Fractional residual distributions for the position of the primary vertex in the $\nu_{\mu}$ CC selection.]{Fractional residual distributions for the position of the primary vertex in the $\nu_{\mu}$ CC selection. The best fits to a double Gaussian function are also shown (red lines).}
+    \label{fig:numuCC_vertex_residuals}
+\end{figure}
+
+I also studied the performance of the $\nu_{\mu}$ CC selection as a function of the kinematic variables of the primary muon. As before, these metrics are only possible to compute for true $\nu_{\mu}$ CC events. The efficiency (top panels) and purity (bottom panels) as a function of the truth muon momentum (left) and beam angle (right) are shown in Fig. \ref{fig:numuCC_muon_kinematics}. One can see that there are some similarities in the behaviour of both metrics between the true neutrino energy and the muon momentum cases. This is to be expected, as these two variables are highly correlated. For the efficiency, there is a rapid increase at low momentum values until it peaks at around $1~\mathrm{GeV}/c$, after which it starts decreasing slowly. The purity remains relatively constant, with a slight drop towards high $p_{\mu}^{\mathrm{truth}}$ values. In the case of the muon angle, the decrease in efficiency at high $\theta_{\mu}^{\mathrm{truth}}$ is more noticeable. However, note that the number of events with backward-going muons is much smaller than those aimed towards the forward direction, as can be seen from the size of the vertical error bars. There is also a decline in the purity with the beam angle, but this effect is much smaller.
+
+A byproduct of selecting the primary lepton in the interaction is the position of the reconstructed neutrino vertex candidate. Checking how the position of the selected reconstructed primary vertex and the true vertex position compare is needed to understand the validity of our method. Figure \ref{fig:numuCC_vertex_residuals} shows the distributions of fractional residuals between the truth and reconstructed vertex positions in the $X$ (top panel), $Y$ (middle panel), and $Z$ (bottom panel) directions. Performing a double Gaussian fit to the distributions (red lines), I estimate the reconstructed vertex resolution achieved with this method to be $1.62 \pm 0.08 \%$, $1.23 \pm 0.05 \%$, and $0.32 \pm 0.05 \%$ for the $X$, $Y$, and $Z$ directions, respectively. As expected, the resolution along the drift direction. However, the significant difference in resolution between the two transverse directions is worth noting. Not only the resolution is better for the $Z$ direction, but the layout of the residual distribution is highly asymmetrical. This may be related to the variability in the selection efficiency along that direction.
 
 \begin{comment}
 \begin{figure}[t]
@@ -266,6 +273,8 @@ $1.62 \pm 0.08 \%$, $1.23 \pm 0.05 \%$, and $0.32 \pm 0.05 \%$ for the $X$, $Y$,
 \end{comment}
 
 \section{Charged pion identification}
+
+Now that I have checked the robustness of the proposed $\nu_{\mu}$ CC selection, it can be used as a starting point for other, more convoluted, selections. One of the priorities of ND-GAr, as mentioned previously, is the identification of pions. In a 
 
 \subsection[\texorpdfstring{$\nu_{\mu}$}{numu} CC \texorpdfstring{$1\pi^{\pm}$}{1pi} selection]{\boldmath\texorpdfstring{$\nu_{\mu}$}{numu} CC \boldmath\texorpdfstring{$1\pi^{\pm}$}{1pi} selection}
 
