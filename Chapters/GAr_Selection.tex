@@ -123,14 +123,14 @@ The significance measures the relative size of the true signal within the select
 \begin{figure}[t]
     \centering
     \includegraphics[width=.99\linewidth]{Images/GAr_selection/efficiency_and_purity_error_boxes.pdf}
-    \caption[Efficiency and purity for the $\nu_{\mu}$ CC selection as a function of the muon score cut, FV half-length cut, and radial cut.]{Efficiency (blue) and purity (red) for the $\nu_{\mu}$ CC selection as a function of the muon score cut (left panel), FV half-length cut (middle panel), and radial cut (right panel). The height of the boxes represents the IQR of the conditional distributions, whereas the horizontal line corresponds to the mean.}
+    \caption[Efficiency and purity for the $\nu_{\mu}$ CC selection as a function of the different cuts.]{Efficiency (blue) and purity (red) for the $\nu_{\mu}$ CC selection as a function of the muon score cut (left panel), FV half-length cut (middle panel), and radial cut (right panel). The height of the boxes represents the IQR of the conditional distributions, whereas the horizontal line corresponds to the median.}
     \label{fig:numuCC_metrics_opt}
 \end{figure}
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=.99\linewidth]{Images/GAr_selection/significance_error_boxes.pdf}
-    \caption[Significance for the $\nu_{\mu}$ CC selection as a function of the muon score cut, FV half-length cut, and radial cut.]{Significance for the $\nu_{\mu}$ CC selection as a function of the muon score cut (left panel), FV half-length cut (middle panel), and radial cut (right panel). The height of the boxes represents the IQR of the conditional distributions, whereas the horizontal line corresponds to the mean.}
+    \caption[Significance for the $\nu_{\mu}$ CC selection as a function of the different cuts.]{Significance for the $\nu_{\mu}$ CC selection as a function of the muon score cut (left panel), FV half-length cut (middle panel), and radial cut (right panel). The height of the boxes represents the IQR of the conditional distributions, whereas the horizontal line corresponds to the median.}
     \label{fig:numuCC_significance_opt}
 \end{figure}
 
@@ -276,6 +276,44 @@ A byproduct of selecting the primary lepton in the interaction is the position o
 
 Now that I have checked the robustness of the proposed $\nu_{\mu}$ CC selection, it can be used as a starting point for other, more convoluted, selections. One of the priorities of ND-GAr, as mentioned previously, is the identification of pions. In a 
 
+The $\nu_{\mu}$ CC selection provides a starting point for the pion identification. The first thing one can do is rule out the primary muon candidate. Then, the rest of the reconstructed particles
+
+proton scores can be used to the protons from the sample of charged pions. providing cuts for these a separation can be achieved
+
+the $\mathrm{d}E/\mathrm{d}x$ of the track associated to the reconstructed particle. To select the charged pions, we can require that the is compatible with the expectation for a true $\pi^{\pm}$, 
+\begin{eqnarray}
+    \left<\frac{\mathrm{d}E}{\mathrm{d}x}\right>_{\pi^{\pm}} \left(1 - \Delta_{\mathrm{d}E/\mathrm{d}x}^{\pi^{\pm}}\right) \leq \left<\frac{\mathrm{d}E}{\mathrm{d}x}\right>_{meas.} < \left<\frac{\mathrm{d}E}{\mathrm{d}x}\right>_{\pi^{\pm}} \left(1 + \Delta_{\mathrm{d}E/\mathrm{d}x}^{\pi^{\pm}}\right).
+\end{eqnarray}
+To obtain the expected mean $\mathrm{d}E/\mathrm{d}x$ of a charged pion of a given momentum, I use the ALEPH parametrisation with the parameter values obtained previously.
+
+interested in primary muons, these are associated to the primary vertex of the interaction. use position of the muon candidate to restrict the starting point of pions to a certain volume around it
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.90\linewidth]{Images/GAr_selection/pion_selection_0_pions_metrics.pdf}
+    \caption[Significance for the $\nu_{\mu}$ CC $0\pi^{\pm}$ selection as a function of the different cuts.]{Efficiency (blue) and purity (red for the $\nu_{\mu}$ CC $0\pi^{\pm}$ selection as a function of the proton $\mathrm{d}E/\mathrm{d}x$ score cut (top left panel), proton ToF score cut (top right panel), pion $\mathrm{d}E/\mathrm{d}x$ cut (bottom left panel), and distance to muon cut (bottom right panel). The height of the boxes represents the IQR of the conditional distributions, whereas the line corresponds to the median.)}
+    \label{fig:pion_selection_0_pions_metrics}
+\end{figure}
+
+I propose the following procedure identifying charged pions in the sample
+\begin{enumerate}
+    \item Apply $\nu_{\mu}$ CC selection.
+    \item Disregard particle selected as primary muon.
+    \item Remove particles with momentum below threshold.
+    \item Select particles with proton dE/dx score above threshold.
+    \item Select particles with proton ToF score above threshold
+    \item Select particles with mean dE/dx around the expectation for a pion.
+    \item Measure distance between the beginning of the track and the primary muon.
+\end{enumerate}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.90\linewidth]{Images/GAr_selection/pion_selection_1_pions_metrics.pdf}
+    \caption[Significance for the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection as a function of the different cuts.]{Efficiency (blue) and purity (red for the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection as a function of the proton $\mathrm{d}E/\mathrm{d}x$ score cut (top left panel), proton ToF score cut (top right panel), pion $\mathrm{d}E/\mathrm{d}x$ cut (bottom left panel), and distance to muon cut (bottom right panel). The height of the boxes represents the IQR of the conditional distributions, whereas the line corresponds to the median.)}
+    \label{fig:pion_selection_1_pions_metrics}
+\end{figure}
+
+
 \subsection[\texorpdfstring{$\nu_{\mu}$}{numu} CC \texorpdfstring{$1\pi^{\pm}$}{1pi} selection]{\boldmath\texorpdfstring{$\nu_{\mu}$}{numu} CC \boldmath\texorpdfstring{$1\pi^{\pm}$}{1pi} selection}
 
 
@@ -285,6 +323,15 @@ Now that I have checked the robustness of the proposed $\nu_{\mu}$ CC selection,
 \section{Systematic uncertainties}
 
 \subsection{Flux uncertainties}
+
+% Introduction
+The neutrino flux prediction is affected by systematic uncertainties arising from two sources: the uncertainties in the production of hadrons in the target and the uncertainties in the design parameters of the beamline itself. These fluxes and their uncertainties are generated with the G4LBNF simulation \cite{DUNE2020TDR2}, a Geant4 implementation of the LBNF beamline, and the Package to Predict the FluX (PPFX) framework, originally developed for MINERvA \cite{Golan2016}.
+
+% Hadron-production uncertainties
+The hadron production uncertainties are associated to the kinematic distributions of the hadrons produced when the protons interact with the carbon target, as well as the possible interactions of the hadrons with the beamline materials. The PPFX package estimates these uncertainties by performing a number of random throws of the production model parameters \cite{Bashyal2017}. This way, different predictions of the LBNF flux are generated, which can be compared to the nominal prediction to build a matrix of the covariances between neutrino energies, flavours and running modes (either FHC or RHC). The resulting hadron production uncertainties are described by the eigenvectors associated to the largest eigenvalues in this matrix, obtained performing a PCA analysis.
+
+% Beamline instrumentation uncertainties
+The other set of uncertainties affecting the neutrino flux prediction come from the limited precision with which we know the parameters of the different components in the beamline. These include the specifications of the target, the dimensions of the decay pipe, and the current and alignment of the magnetic horns. The effects on the flux predictions of these uncertainties are estimated using the G4LBNF simulation. For each of the parameters, the simulation runs with said parameter shifted by $\pm 1\sigma$ from the nominal value, and the resulting flux prediction is compared to the nominal one.
 
 \subsection{Cross section uncertainties}
 
