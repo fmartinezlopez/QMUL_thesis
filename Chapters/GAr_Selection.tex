@@ -274,43 +274,64 @@ A byproduct of selecting the primary lepton in the interaction is the position o
 
 \section{Charged pion identification}
 
-Now that I have checked the robustness of the proposed $\nu_{\mu}$ CC selection, it can be used as a starting point for other, more convoluted, selections. One of the priorities of ND-GAr, as mentioned previously, is the identification of pions. In a 
-
-The $\nu_{\mu}$ CC selection provides a starting point for the pion identification. The first thing one can do is rule out the primary muon candidate. Then, the rest of the reconstructed particles
-
-proton scores can be used to the protons from the sample of charged pions. providing cuts for these a separation can be achieved
-
-the $\mathrm{d}E/\mathrm{d}x$ of the track associated to the reconstructed particle. To select the charged pions, we can require that the is compatible with the expectation for a true $\pi^{\pm}$, 
-\begin{eqnarray}
-    \left<\frac{\mathrm{d}E}{\mathrm{d}x}\right>_{\pi^{\pm}} \left(1 - \Delta_{\mathrm{d}E/\mathrm{d}x}^{\pi^{\pm}}\right) \leq \left<\frac{\mathrm{d}E}{\mathrm{d}x}\right>_{meas.} < \left<\frac{\mathrm{d}E}{\mathrm{d}x}\right>_{\pi^{\pm}} \left(1 + \Delta_{\mathrm{d}E/\mathrm{d}x}^{\pi^{\pm}}\right).
-\end{eqnarray}
-To obtain the expected mean $\mathrm{d}E/\mathrm{d}x$ of a charged pion of a given momentum, I use the ALEPH parametrisation with the parameter values obtained previously.
-
-interested in primary muons, these are associated to the primary vertex of the interaction. use position of the muon candidate to restrict the starting point of pions to a certain volume around it
+Now that I have checked the robustness of the proposed $\nu_{\mu}$ CC selection, it can be used as a starting point for other, more convoluted, selections. One of the priorities of ND-GAr, as mentioned previously, is the identification of pions. With its lower tracking thresholds, ND-GAr is expected to do better regarding $\pi^{\pm}$ identification than the traditional LArTPCs, like ND-LAr. Moreover, it can make use of the different detector subcomponents to tag the charged pions.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=.90\linewidth]{Images/GAr_selection/pion_selection_0_pions_metrics.pdf}
-    \caption[Significance for the $\nu_{\mu}$ CC $0\pi^{\pm}$ selection as a function of the different cuts.]{Efficiency (blue) and purity (red for the $\nu_{\mu}$ CC $0\pi^{\pm}$ selection as a function of the proton $\mathrm{d}E/\mathrm{d}x$ score cut (top left panel), proton ToF score cut (top right panel), pion $\mathrm{d}E/\mathrm{d}x$ cut (bottom left panel), and distance to muon cut (bottom right panel). The height of the boxes represents the IQR of the conditional distributions, whereas the line corresponds to the median.)}
+    \includegraphics[width=.75\linewidth]{Images/GAr_selection/pion_selection_confusion_matrix.pdf}
+    \caption[Distribution of events given their true and reconstructed $\pi^{\pm}$ multiplicity, for a given selection.]{Distribution of events given their true and reconstructed $\pi^{\pm}$ multiplicity, for the selection given by $p^{\mathrm{cut}}_{\mathrm{d}E/\mathrm{d}x} = p^{\mathrm{cut}}_{\mathrm{ToF}} = 0.50$, $\Delta^{\pi^{\pm}}_{\mathrm{d}E/\mathrm{d}x} = 0.20$, and $d^{\mathrm{cut}}_{\mu} = 50.0~\mathrm{cm}$.}
+    \label{fig:pion_multiplicity_example}
+\end{figure}
+
+The $\nu_{\mu}$ CC selection provides a starting point for the pion identification. The first thing one can do is rule out the selected primary muon candidate. Then, by looking at the properties of the rest of the reconstructed particles, one can start the counting of the charged pions.
+
+The two proton scores, the one based on the $\mathrm{d}E/\mathrm{d}x$ in the HPgTPC and the one obtained from the ToF measurement in the ECal, can be used to separate the protons from the sample of charged pions. By providing appropriate cuts for these, a good separation can be achieved.
+
+Another source of information available is the $\mathrm{d}E/\mathrm{d}x$ of the track associated to the reconstructed particle. To select the charged pions, we can require that the measured mean $\mathrm{d}E/\mathrm{d}x$ is compatible with the expectation for a true $\pi^{\pm}$, in other words:
+\begin{eqnarray}
+    \left<\frac{\mathrm{d}E}{\mathrm{d}x}\right>_{\pi^{\pm}} \left(1 - \Delta_{\mathrm{d}E/\mathrm{d}x}^{\pi^{\pm}}\right) \leq \left<\frac{\mathrm{d}E}{\mathrm{d}x}\right>_{\mathrm{meas.}} < \left<\frac{\mathrm{d}E}{\mathrm{d}x}\right>_{\pi^{\pm}} \left(1 + \Delta_{\mathrm{d}E/\mathrm{d}x}^{\pi^{\pm}}\right),
+\end{eqnarray}
+where the parameter $\Delta_{\mathrm{d}E/\mathrm{d}x}^{\pi^{\pm}}$ measures the fractional variation one allows around the theoretical expectation. To obtain the expected mean $\mathrm{d}E/\mathrm{d}x$ of a charged pion with a given momentum, I use the ALEPH parametrisation with the parameter values obtained previously.
+
+Also, as we are only interested in the primary pions, and because these are by definition close to the interaction vertex, one can apply an additional distance cut. Using the start position of the muon candidate, we can restrict the starting point of pions to a certain volume around the vertex.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.85\linewidth]{Images/GAr_selection/pion_selection_0_pions_metrics.pdf}
+    \caption[Efficiency and purity for the $\nu_{\mu}$ CC $0\pi^{\pm}$ selection as a function of the different cuts.]{Efficiency (blue) and purity (red) for the $\nu_{\mu}$ CC $0\pi^{\pm}$ selection as a function of the proton $\mathrm{d}E/\mathrm{d}x$ score cut (top left panel), proton ToF score cut (top right panel), pion $\mathrm{d}E/\mathrm{d}x$ cut (bottom left panel), and distance to muon cut (bottom right panel). The height of the boxes represents the IQR of the conditional distributions, whereas the line corresponds to the median.}
     \label{fig:pion_selection_0_pions_metrics}
 \end{figure}
 
-I propose the following procedure identifying charged pions in the sample
+Combining all these ideas, I propose the following procedure to identify the charged pions in an event:
 \begin{enumerate}
     \item Apply $\nu_{\mu}$ CC selection.
     \item Disregard particle selected as primary muon.
     \item Remove particles with momentum below threshold.
-    \item Select particles with proton dE/dx score above threshold.
-    \item Select particles with proton ToF score above threshold
-    \item Select particles with mean dE/dx around the expectation for a pion.
-    \item Measure distance between the beginning of the track and the primary muon.
+    \item Select particles with proton $\mathrm{d}E/\mathrm{d}x$ score below threshold.
+    \item Select particles with proton ToF score below threshold.
+    \item Select particles with mean $\mathrm{d}E/\mathrm{d}x$ around the expected value for a pion.
+    \item Remove particles with a distance between the start of the track and the primary vertex greater than the cut.
 \end{enumerate}
+The remaining particles after all these cuts are taken to be charged pion candidates.
+
+This counting method depends on four cuts, denoted by $p^{\mathrm{cut}}_{\mathrm{d}E/\mathrm{d}x}$, $p^{\mathrm{cut}}_{\mathrm{ToF}}$, $\Delta^{\pi^{\pm}}_{\mathrm{d}E/\mathrm{d}x}$, and $d^{\mathrm{cut}}_{\mu}$ in order of appearance. The momentum threshold is necessary to compare with the true multiplicity. For values of the kinetic energy lower than $10-20~\mathrm{MeV}$, we do not expect to be able to tag individual pions. Such low energy particles just leave small traces in the TPC which, together with the busy environment of the neutrino interaction vertex, leaves one with no other option but to only account for their energy calorimetrically. As such, the true pion counting also features this momentum threshold.
+
+I performed an optimisation of the charged pion counting by scanning the space of possible cut configurations. For the two proton scores, I let them vary between $0.10$ to $0.90$, in increments of $0.10$. Similarly, the parameter $\Delta^{\pi^{\pm}}_{\mathrm{d}E/\mathrm{d}x}$ takes values in the range $0.05-0.25$, with a step size of $0.05$. Finally, the distance cut changes in $10~\mathrm{cm}$ steps, from $10$ to $120~\mathrm{cm}$.
+
+For each combination of selection cuts, I compare the true charged pion multiplicity given by GENIE with the number of charged pion candidates I count with this method, hereafter referred to as the reconstructed $\pi^{\pm}$ multiplicity. The result of this comparison is a matrix, with columns and rows indicating true and reconstructed charged pion multiplicity, respectively. An example of one of these matrices, obtained for a certain configuration of cuts, can be seen in Fig. \ref{fig:pion_multiplicity_example}. From these multiplicity matrices one can extract performance metrics, like efficiency, purity, and significance.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=.90\linewidth]{Images/GAr_selection/pion_selection_1_pions_metrics.pdf}
-    \caption[Significance for the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection as a function of the different cuts.]{Efficiency (blue) and purity (red for the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection as a function of the proton $\mathrm{d}E/\mathrm{d}x$ score cut (top left panel), proton ToF score cut (top right panel), pion $\mathrm{d}E/\mathrm{d}x$ cut (bottom left panel), and distance to muon cut (bottom right panel). The height of the boxes represents the IQR of the conditional distributions, whereas the line corresponds to the median.)}
+    \includegraphics[width=.85\linewidth]{Images/GAr_selection/pion_selection_1_pions_metrics.pdf}
+    \caption[Efficiency and purity for the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection as a function of the different cuts.]{Efficiency (blue) and purity (red) for the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection as a function of the proton $\mathrm{d}E/\mathrm{d}x$ score cut (top left panel), proton ToF score cut (top right panel), pion $\mathrm{d}E/\mathrm{d}x$ cut (bottom left panel), and distance to muon cut (bottom right panel). The height of the boxes represents the IQR of the conditional distributions, whereas the line corresponds to the median.}
     \label{fig:pion_selection_1_pions_metrics}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.99\linewidth]{Images/GAr_selection/pion_selection_metrics_matrix_max_significance.pdf}
+    \caption[Row and column normalised distributions of events given their true and reconstructed $\pi^{\pm}$ multiplicity, for the selection that maximises the significance of the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection.]{Distribution of events given their true and reconstructed $\pi^{\pm}$ multiplicity, both column-wise (left panel) and row-wise (right panel) normalised, for the selection that maximises the significance of the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection. The column normalisation yields the efficiency in the diagonal entries, whereas the row normalisation reveals the purity.}
+    \label{fig:pion_selection_metrics}
 \end{figure}
 
 
