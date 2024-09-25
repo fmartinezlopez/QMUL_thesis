@@ -38,6 +38,7 @@
 %% List of abbreviations
 %%-----------------------------------------------------------------------------------
 \makeglossaries
+\renewcommand*{\glspostdescription}{}
 \glstoctrue
 \loadglsentries{InitialFinalMaterials/Acronyms.tex}
 
@@ -85,13 +86,15 @@
 
 %  Table of contents           
 %----------------------------------------------------------
+\nolinenumbers
 \tableofcontents
+\addcontentsline{toc}{chapter}{Contents}
 \listoffigures
 \listoftables
 
 \glsaddall
-\printglossary[type=\glsdefaulttype, style=long, title=List of Abbreviations, toctitle=List of Abbreviations]
-
+\printglossary[type=\glsdefaulttype, style=mcolindex, title=List of Abbreviations, toctitle=List of Abbreviations]
+\linenumbers
 
 %%------------------------------------------------------------------------------------
 %% Beginning of Mainmatter
