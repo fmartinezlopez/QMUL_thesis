@@ -295,13 +295,6 @@ where the parameter $\Delta_{\mathrm{d}E/\mathrm{d}x}^{\pi^{\pm}}$ measures the 
 
 Also, as we are only interested in the primary pions, and because these are by definition close to the interaction vertex, one can apply an additional distance cut. Using the start position of the muon candidate, we can restrict the starting point of pions to a certain volume around the vertex.
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=.85\linewidth]{Images/GAr_selection/pion_selection_0_pions_metrics.pdf}
-    \caption[Efficiency and purity for the $\nu_{\mu}$ CC $0\pi^{\pm}$ selection as a function of the different cuts.]{Efficiency (blue) and purity (red) for the $\nu_{\mu}$ CC $0\pi^{\pm}$ selection as a function of the proton $\mathrm{d}E/\mathrm{d}x$ score cut (top left panel), proton ToF score cut (top right panel), pion $\mathrm{d}E/\mathrm{d}x$ cut (bottom left panel), and distance to muon cut (bottom right panel). The height of the boxes represents the IQR of the conditional distributions, whereas the line corresponds to the median.}
-    \label{fig:pion_selection_0_pions_metrics}
-\end{figure}
-
 Combining all these ideas, I propose the following procedure to identify the charged pions in an event:
 \begin{enumerate}
     \item Apply $\nu_{\mu}$ CC selection.
@@ -313,6 +306,13 @@ Combining all these ideas, I propose the following procedure to identify the cha
     \item Remove particles with a distance between the start of the track and the primary vertex greater than the cut.
 \end{enumerate}
 The remaining particles after all these cuts are taken to be charged pion candidates.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.85\linewidth]{Images/GAr_selection/pion_selection_0_pions_metrics.pdf}
+    \caption[Efficiency and purity for the $\nu_{\mu}$ CC $0\pi^{\pm}$ selection as a function of the different cuts.]{Efficiency (blue) and purity (red) for the $\nu_{\mu}$ CC $0\pi^{\pm}$ selection as a function of the proton $\mathrm{d}E/\mathrm{d}x$ score cut (top left panel), proton ToF score cut (top right panel), pion $\mathrm{d}E/\mathrm{d}x$ cut (bottom left panel), and distance to muon cut (bottom right panel). The height of the boxes represents the IQR of the conditional distributions, whereas the line corresponds to the median.}
+    \label{fig:pion_selection_0_pions_metrics}
+\end{figure}
 
 This counting method depends on four cuts, denoted by $p^{\mathrm{cut}}_{\mathrm{d}E/\mathrm{d}x}$, $p^{\mathrm{cut}}_{\mathrm{ToF}}$, $\Delta^{\pi^{\pm}}_{\mathrm{d}E/\mathrm{d}x}$, and $d^{\mathrm{cut}}_{\mu}$ in order of appearance. The momentum threshold is necessary to compare with the true multiplicity. For values of the kinetic energy lower than $10-20~\mathrm{MeV}$, we do not expect to be able to tag individual pions. Such low energy particles just leave small traces in the TPC which, together with the busy environment of the neutrino interaction vertex, leaves one with no other option but to only account for their energy calorimetrically. As such, the true pion counting also features this momentum threshold.
 
@@ -327,6 +327,23 @@ For each combination of selection cuts, I compare the true charged pion multipli
     \label{fig:pion_selection_1_pions_metrics}
 \end{figure}
 
+Given a multiplicity matrix $\mathbf{M}$, the efficiency for the $i$-th multiplicity value can be computed as:
+\begin{equation}\label{eq:efficiency_matrix}
+    \left.\mathrm{Efficiency}\right|_{i} = \frac{M_{ii}}{\sum_{j} M_{ij}},
+\end{equation}
+or in other words, dividing the corresponding diagonal entry by the sum of all the entries in the same column. On the other hand, the purity is given by:
+\begin{equation}\label{eq:purity_matrix}
+    \left.\mathrm{Purity}\right|_{i} = \frac{M_{ii}}{\sum_{j} M_{ji}},
+\end{equation}
+which is just the ratio between the diagonal entry and the sum of the entries in the corresponding row. Similarly, the significance is obtained by taking the square root of the denominator in the previous expression:
+\begin{equation}\label{eq:significance_matrix}
+    \left.\mathrm{Significance}\right|_{i} = \left.\frac{S}{\sqrt{S+B}}\right|_{i} = \frac{M_{ii}}{\sqrt{\sum_{j} M_{ji}}}.
+\end{equation}
+
+Figures \ref{fig:pion_selection_0_pions_metrics} and \ref{fig:pion_selection_1_pions_metrics} show the efficiency (blue) and the purity (red) for the $\nu_{\mu}$ CC $0\pi^{\pm}$ and $1\pi^{\pm}$ selections, respectively, as a function of the different cut values. In the figures, each box represents the IQR of the conditional distribution for the fixed value of the corresponding cut, and the horizontal lines correspond to the medians. The first thing one notices is that the efficiency is always higher than the purity in the $0\pi^{\pm}$ selection, while the opposite is true for the $1\pi^{\pm}$ selection. Also, it is clear that the range within these metrics fluctuate in the $0\pi^{\pm}$ selection is significantly higher than it is for the $1\pi^{\pm}$ case. This shows that it is easier to assess that no charged pions are present in the event than actually tagging them.
+
+For the $\nu_{\mu}$ CC $0\pi^{\pm}$ selection, the performance metrics follow the expected tendency. As the purity grows with a cut value, the efficiency decreases. Interestingly, this is not the case fot the $1\pi^{\pm}$ selection, where both efficiency and purity follow roughly the same trends along the different cuts. This makes sense when one comprehends that this is not a traditional cut-based selection, but more of a counting exercise. Some restrictive cut configurations will not tag any particles as pions. On the contrary, loose cuts will render every particle as a $\pi^{\pm}$. Therefore, when looking at a specific multiplicity, the relation between the cut value and the performance metrics is not obvious. Thus, sometimes efficiency and purity can both increase, as the cuts refine the definition of a reconstructed pion.
+
 \begin{figure}[t]
     \centering
     \includegraphics[width=.99\linewidth]{Images/GAr_selection/pion_selection_metrics_matrix_max_significance.pdf}
@@ -334,12 +351,29 @@ For each combination of selection cuts, I compare the true charged pion multipli
     \label{fig:pion_selection_metrics}
 \end{figure}
 
+To have a working point for our studies, I chose the cut configuration that yields the maximum significance for the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection. Of course, other cuts would be more appropriate in certain scenarios. However, this provides us with a starting point to understand the performance of the selection. A significance of $66\pm7$ for the $1\pi^{\pm}$ selection is achieved for the cut values $p^{\mathrm{cut}}_{\mathrm{d}E/\mathrm{d}x} = 0.30$, $p^{\mathrm{cut}}_{\mathrm{ToF}} = 0.70$, $\Delta^{\pi^{\pm}}_{\mathrm{d}E/\mathrm{d}x} = 0.10$, and $d^{\mathrm{cut}}_{\mu} = 110.0~\mathrm{cm}$.
+
+Figure \ref{fig:pion_selection_metrics} shows the multiplicity matrices resulting from this optimised $\nu_{\mu}$ CC $1\pi^{\pm}$ selection. Although both matrices are produced with the same selection cuts, one is column normalised (left panel), whereas the other is row normalised (right panel). It follows from the definitions in Eqs. (\ref{eq:efficiency_matrix}) and ((\ref{eq:purity_matrix})) that the diagonal entries of these matrices correspond to the efficiencies and the purities, respectively, for each of the possible charged pion multiplicity selections.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.70\linewidth]{Images/GAr_selection/pion_selection_all_in_one_purity_vs_efficiency.pdf}
+    \caption[Purity versus efficiency achieved for the different cut configurations explored separated by the various $\nu_{\mu}$ CC $N\pi^{\pm}$ selections.]{Purity versus efficiency achieved for the different cut configurations explored separated by the various $\nu_{\mu}$ CC $N\pi^{\pm}$ selections. The outlined points indicate the state for each possible multiplicity when using the configuration that maximises the significance of the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection. The contours indicate the surfaces of equal $F_{1}$-score.}
+    \label{fig:pion_purity_vs_efficiency}
+\end{figure}
+
+An additional check to make is understand how this configuration performs when applied to the other selections, like $\nu_{\mu}$ CC $0\pi^{\pm}$, and how it compares to the other possible configurations. A comparison between the different pion multiplicity selections, indicated with colours, in the purity versus efficiency space is shown in Fig. \ref{fig:pion_purity_vs_efficiency}. For each of the possible multiplicity choices, the performance obtained for the $1\pi^{\pm}$ optimised selection is indicated by an outlined point. From this, one can see that the selected configuration performs reasonably well, within the limits of what can be achieved in each case, across the different multiplicities.
 
 \subsection[\texorpdfstring{$\nu_{\mu}$}{numu} CC \texorpdfstring{$1\pi^{\pm}$}{1pi} selection]{\boldmath\texorpdfstring{$\nu_{\mu}$}{numu} CC \boldmath\texorpdfstring{$1\pi^{\pm}$}{1pi} selection}
 
-
 \section{Neutral pion identification}
 
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.80\linewidth]{Images/GAr_selection/numuCC_1pizero_selection_biased.pdf}
+    \caption[Invariant mass distribution obtained for the unassociated ECal cluster pair in the event with the value closest to the true $\pi^{0}$ mass.]{Invariant mass distribution obtained for the unassociated ECal cluster pair in the event with the value closest to the true $\pi^{0}$ mass. The best fits for signal plus background (solid blue line) and background only (dashed red line) are also shown.}
+    \label{fig:pion_selection_metrics}
+\end{figure}
 
 \section{Systematic uncertainties}
 
