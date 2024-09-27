@@ -233,7 +233,7 @@ As an additional check, I explored how the performance of the $\nu_{\mu}$ CC sel
 \begin{figure}[t]
     \centering
     \includegraphics[width=.99\linewidth]{Images/GAr_selection/numuCC_muon_kinematic_comp.pdf}
-    \caption{Distributions for the reconstructed versus truth generated primary muon momentum (top left panel), longitudinal momentum (top right panel), transverse momentum (bottom left panel), and beam angle (bottom right panel). The reconstructed values correspond to the selected primary muon candidate, whereas the truth values come from the true primary muon in the event.}
+    \caption[Distributions for the reconstructed versus truth primary muon momentum, longitudinal momentum, transverse momentum, and angle.]{Distributions for the reconstructed versus truth generated primary muon momentum (top left panel), longitudinal momentum (top right panel), transverse momentum (bottom left panel), and beam angle (bottom right panel). The reconstructed values correspond to the selected primary muon candidate, whereas the truth values come from the true primary muon in the event.}
     \label{fig:numuCC_muon_kinematic_comp}
 \end{figure}
 
@@ -381,18 +381,50 @@ Within these boundaries, the resonant events produce either $1$ or $2$ charged p
 
 \subsection[\texorpdfstring{$\nu_{\mu}$}{numu} CC \texorpdfstring{$1\pi^{\pm}$}{1pi} selection]{\boldmath\texorpdfstring{$\nu_{\mu}$}{numu} CC \boldmath\texorpdfstring{$1\pi^{\pm}$}{1pi} selection}
 
-By focusing on the $1\pi^{\pm}$ selection, one can study the kinematics of the selected pion. This allows to understand how well the. the selection only the number of charged pions is the same 
-
-approximately $25\%$ of the misidentified muons have $-0.95$. Therefore, putting an additional angular cut the purity of the charged pion selection from $0.74 \pm 0.01$ to $0.77 \pm 0.01$.
+By focusing on the $1\pi^{\pm}$ selection, one can study the kinematics of the selected pion. This allows one to understand how well the charged pions are tagged. This is difficult to do only using the multiplicity matrices, as with them one can only check that the number of charged pions is the same as in the truth. Sometime, even if the estimated pion multiplicity is correct, the identified particles may not be true pions.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=.99\linewidth]{Images/GAr_selection/pion_selection_1pion_kinematics.pdf}
-    \caption[Efficiency of the $\nu_{\mu}$ CC $N\pi^{\pm}$ selections as a function of the hadronic invariant mass.]{Distributions for the pion candidate in the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection, broken down by true ID of the particle. From left to right, top to bottom, kinetic energy given the pion hypothesis, angle between muon and pion candidates, muon score, and ratio between ECal energy and momentum.}
+    \caption[Reconstructed kinematic distributions for the pion candidate in the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection.]{Reconstructed kinematic distributions for the pion candidate in the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection, broken down by true ID of the particle. From left to right, top to bottom, we have the kinetic energy given the pion hypothesis, the ratio between the energy deposited in the ECal and the momentum, the pion angle, and the angle between the muon and pion candidates.}
     \label{fig:1pion_kinematics}
 \end{figure}
 
+Figure \ref{fig:1pion_kinematics} displays the distributions of various reconstructed kinematic variables for the selected pion candidate. The different colours indicate the ID of the true particle associated to the reconstructed pion.
+
+First, we have the kinetic energy distribution. For this set of reconstructed particles, because they have been tagged as charged pions, the kinetic energy is computed using their momentum assuming the pion hypothesis. One can see that most of the contaminants sit in low energy range, up to around $0.2~\mathrm{GeV}$.
+
+The next distribution presents the ratio between the energy deposited in the ECal associated to the particle over the momentum measured in the HPgTPC. This variable is restricted to particles with at least one associated hit in the ECal. It is interesting to see two peak structure in the true pion distribution. The first one presumably corresponds to the pions punching-through the ECal, while the latter is probably due to the ones stopping in it. On the other hand, the misidentified particles, other than the electrons, tend to lower ratios. This is expected for protons, as this could not be higher than $0.5$ for momenta $\leq 1~\mathrm{GeV}/c$ even if they stopped, but for the muons it may point to a misreconstruction.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.99\linewidth]{Images/GAr_selection/pion_selection_1pion_kinematic_comp.pdf}
+    \caption[Distributions for the reconstructed versus truth pion kinetic energy and angle between the pion and muon in the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection.]{Distributions for the reconstructed versus truth generated pion kinetic energy (left panel) and cosine of the angle between the pion and muon (right panel). The reconstructed values correspond to the selected primary muon and pion candidates in the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection, whereas the truth values come from the true primary muon and pion in the events.}
+    \label{fig:1pion_kinematic_comp}
+\end{figure}
+
+The following distribution shows the angle of the pion candidates with respect to the beam direction. Although most of them are aimed in the forward direction, it can be noted that an important number of the misidentified muons seem to be backward-going. This is likely a reconstruction artifact, produced by broken tracks that got assigned the wrong propagation direction. Also, there is a sizeable number of true electrons with directions perpendicular to the beam, probably delta electrons from the primary muon.
+
+Finally, I included the reconstructed pion-muon angular distribution. Even though it shares some similarities with the previous distribution, as the primary muon typically goes forward, the pion distribution is not as prominently forward-going in this case. Also, it may be noted that approximately $25\%$ of the muons misidentified as pions have $\mathrm{cos}~\theta_{\pi - \mu} \leq -0.95$. Therefore, putting an additional angular cut improves the purity of the charged pion selection from $0.74 \pm 0.01$ to $0.77 \pm 0.01$, while not loosing a substantial amount of true pions.
+
+A comparison between the true and the reconstructed values of the pion kinetic energy (left panel) and pion-muon angle (right panel) is shown in Fig. \ref{fig:1pion_kinematic_comp}. The distributions are column normalised, which allows to see the fraction of events in the correct bins. For this, I selected the events where only one reconstructed pion and one true pion were identified, as that is the only case were a pairing of the variables is possible. It showcases the excellent agreement between the reconstruction and the truth information.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.99\linewidth]{Images/GAr_selection/pion_selection_1pion_kin_efficiency.pdf}
+    \caption[Efficiency of the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection as a function of the true pion kinetic energy and pion-muon angle.]{Efficiency of the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection as a function of the true pion kinetic energy (left panel) and pion-muon angle (right panel).}
+    \label{fig:1pion_kin_efficiency}
+\end{figure}
+
+One can also study the performance of the pion selection as a function of the truth pion kinematics. Fig. \ref{fig:1pion_kin_efficiency} shows the selection efficiency versus the true kinetic energy (left panel) and the angle between the true primary pion and muon (right panel). The efficiency is computed from the events with a single true and reconstructed pion, comparing their number to the total of events with one true pion. efficiency, it plateaus after . In terms of the pion-muon angle, the efficiency looks relatively flat, only dropping slightly towards the back-to-back case.
+
 \section{Neutral pion identification}
+
+The $\nu_{\mu}$ CC selection can also be used as a stepping stone for the identification of neutral pions. Although these particles do not leave any traces in the HPgTPC, using a combination of the different detectors within ND-GAr. Being able to tag the neutral pions is a valuable asset for the estimation of the reconstructed neutrino energy, as both their kinetic and mass components can then be added in the calculation.
+
+In the case that both photons from the $\pi^{0}$ decay do not undergo pair production of a $e^{+}e^{-}$ pair, they will reach the ECal where they will produce an electromagnetic shower. This activity inside the ECal will not be associated to any charged particle track inside the HPgTPC, unless there is a reconstruction failure. Thus, having a neutrino interaction vertex candidate from the $\nu_{\mu}$ CC selection, one can reconstruct the mass of the $\pi^{0}$ using the energy and position of the photons. I already used this same technique in section (???) for a single $\pi^{0}$ sample. However, here I apply it to neutrino interaction events, and the vertex position is not cheated but selected from the reconstruction products.
+
+The idea is to look for all the ECal clusters that were not associated to tracks in each event. Then, if two or more were identified, compute the invariant mass for all possible combinations. At this point, I keep the pair whose invariant mass was closer to $m_{\pi^{0}}$, remove them from the collection, and iterate until no more pairs can be formed.
 
 double-sided Crystal Ball function:
 \begin{equation}
