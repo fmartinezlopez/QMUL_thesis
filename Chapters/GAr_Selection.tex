@@ -416,7 +416,7 @@ A comparison between the true and the reconstructed values of the pion kinetic e
     \label{fig:1pion_kin_efficiency}
 \end{figure}
 
-One can also study the performance of the pion selection as a function of the truth pion kinematics. Fig. \ref{fig:1pion_kin_efficiency} shows the selection efficiency versus the true kinetic energy (left panel) and the angle between the true primary pion and muon (right panel). The efficiency is computed from the events with a single true and reconstructed pion, comparing their number to the total of events with one true pion. efficiency, it plateaus after . In terms of the pion-muon angle, the efficiency looks relatively flat, only dropping slightly towards the back-to-back case.
+One can also study the performance of the pion selection as a function of the truth pion kinematics. Fig. \ref{fig:1pion_kin_efficiency} shows the selection efficiency versus the true kinetic energy (left panel) and the angle between the true primary pion and muon (right panel). The efficiency is computed from the events with a single true and reconstructed pion, comparing their number to the total of events with one true pion. Notice how the efficiency, although it starts with relatively low values, plateaus around $0.70$ quickly after $0.20~\mathrm{GeV}$. In terms of the pion-muon angle, the efficiency looks relatively flat, only dropping slightly towards the back-to-back case.
 
 \section{Neutral pion identification}
 
@@ -476,13 +476,37 @@ where $S_{n}$ is the average single-nucleon separation energy, $E_{\ell}$ the en
 
 This represents the ideal scenario, where all the kinetic energy of the nucleons is visible in the detector and one can identify all mesons produced in the interaction. In a real experiment, some of these energy components will not be , and this needs to be accounted for in any estimation of the reconstructed energy.
 
-For instance, in ND-GAr neutrons are complicated to account for, as they do not produce tracks in the TPC. They may be identified either from scatterings off Ar nuclei in the HPgTPC, or performing a ToF measurement in the ECal. However, the maturity of these methods in the current reconstruction, and their development is beyond the scope of this study. So, in the following, I will completely ignore the contribution of neutrons.
+For instance, in ND-GAr neutrons are complicated to account for, as they do not produce tracks in the TPC. They may be identified either from scatterings off Ar nuclei in the HPgTPC, or performing a ToF measurement in the ECal. However, these methods are not fully mature in the current reconstruction, and their development is beyond the scope of this study. So, in the following, I will completely ignore the contribution of neutrons.
 
+Also, with a real detector we can not expect to tag all the charged pions irrespective of their energy. This is why one has to introduce detection thresholds in the energy estimation. Thus, in the reconstructed energy calculation I will add only the kinetic energy for the charged pions below the threshold, and the total energy for the  pions above the threshold.
+
+Likewise, the identification of all neutral pions in the sample is challenging. As discussed in the previous section, with our ECal we are able to identify the photons from the $\pi^{0}$ decays, but that selection still needs to be completed with other methods. Therefore, for this first study I do not take into account the energy contribution of the neutral pions.
+
+With all this in mind, using the truth information from the events I compute the reconstructed neutrino energy as:
 \begin{equation}
     E^{\mathrm{truth}}_{\mathrm{rec}} = S_{n} + E_{\ell} + \sum_{i=0}^{N_{p}} E_{k,p_{i}} + \sum_{j=0}^{M_{\pi^{\pm}}^{<}} E_{k,\pi^{\pm}_{j}} + \sum_{k=0}^{M_{\pi^{\pm}}^{\geq}} E_{\pi^{\pm}_{k}},
 \end{equation}
+where $N_{p}$ is the number of protons, and $M_{\pi^{\pm}}^{<}$ and $M_{\pi^{\pm}}^{\geq}$ the number of charged pions below and above the threshold, respectively. As before, I assume a kinetic energy threshold of $20~\mathrm{MeV}$ for the charged pions.
 
-At the reconstruction level, I use the energy of the primary muon candidate, computed from its momentum, as the starting point for the neutrino energy calculation. Then, I add the total energy contributions from the identified charged pions, again using their momenta.
+At the reconstruction level, I use the energy of the primary muon candidate, computed from its momentum, as the starting point for the neutrino energy calculation. Then, I add the total energy contributions from the identified charged pions, again using their momenta. After that, I try to identify the protons by looking at the two proton scores. If any of them are above threshold (here the thresholds used are the same as for the pion identification), the kinetic energy of the particle is added to the total. Finally, I check if any of the remaining particles are fully contained within the FV. I add their kinetic contributions using the total energy they deposited in the HPgTPC.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.99\linewidth]{Images/GAr_selection/numuCC_selection_reco_energy_comparison.pdf}
+    \caption[Reconstructed neutrino energy spectra for the $\nu_{\mu}$ CC selection obtained using the truth and reconstructed information]{Reconstructed neutrino energy spectra for the $\nu_{\mu}$ CC selection obtained using the truth (left panel) and reconstructed (right panel) information. The selected events are broken down by signal and background subcategories. The statistical uncertainty is drawn in hatched gray.}
+    \label{fig:numuCC_reconstructed_energy}
+\end{figure}
+
+Figure \ref{fig:numuCC_reconstructed_energy} shows the resulting distributions of reconstructed neutrino energy obtained from the truth (left panel) and reconstructed (right panel) particle collections. The overall shape of the distributions is similar, with the reconstructed one having a slightly larger high energy tail. Note also that the background events from outside the FV tend to have a smaller energy in the reconstructed case. This is likely due to a misreconstruction of the primary muon, which clearly does not affect the other computation.
+
+I also compared the reconstructed energies to the true energy of the neutrino. Figure \ref{fig:numuCC_reconstructed_fresiduals} displays the ratio of the energy residuals to the true energy for the truth (left panel) and reconstructed (right panel) cases. As expected, using the true particles one never overestimates the neutrino energy. Also, using the reconstructed objects one is more prone to underestimate the neutrino energy, due to deficiencies in the reconstruction.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.99\linewidth]{Images/GAr_selection/numuCC_selection_truth_reco_energy_fresiduals_comparison.pdf}
+    \caption[Neutrino energy residuals distributions for the $\nu_{\mu}$ CC selection obtained using the truth and reconstructed information]{Neutrino energy residuals distributions for the $\nu_{\mu}$ CC selection obtained using the truth (left panel) and reconstructed (right panel) information. The selected events are broken down by signal and background subcategories. The statistical uncertainty is drawn in hatched gray.}
+    \label{fig:numuCC_reconstructed_fresiduals}
+\end{figure}
 
 \section{Systematic uncertainties}
 
