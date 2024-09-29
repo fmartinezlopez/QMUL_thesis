@@ -422,11 +422,13 @@ One can also study the performance of the pion selection as a function of the tr
 
 The $\nu_{\mu}$ CC selection can also be used as a stepping stone for the identification of neutral pions. Although these particles do not leave any traces in the HPgTPC, using a combination of the different detectors within ND-GAr. Being able to tag the neutral pions is a valuable asset for the estimation of the reconstructed neutrino energy, as both their kinetic and mass components can then be added in the calculation.
 
-In the case that both photons from the $\pi^{0}$ decay do not undergo pair production of a $e^{+}e^{-}$ pair, they will reach the ECal where they will produce an electromagnetic shower. This activity inside the ECal will not be associated to any charged particle track inside the HPgTPC, unless there is a reconstruction failure. Thus, having a neutrino interaction vertex candidate from the $\nu_{\mu}$ CC selection, one can reconstruct the mass of the $\pi^{0}$ using the energy and position of the photons. I already used this same technique in section (???) for a single $\pi^{0}$ sample. However, here I apply it to neutrino interaction events, and the vertex position is not cheated but selected from the reconstruction products.
+In the case that both photons from the $\pi^{0}$ decay do not undergo pair production of a $e^{+}e^{-}$ pair, they will reach the ECal where they will produce an electromagnetic shower. This activity inside the ECal will not be associated to any charged particle track inside the HPgTPC, unless there is a reconstruction failure. Thus, having a neutrino interaction vertex candidate from the $\nu_{\mu}$ CC selection, one can reconstruct the mass of the $\pi^{0}$ using the energy and position of the photons. I already used this same technique in section \ref{section:neutral} for a single $\pi^{0}$ sample. However, here I apply it to neutrino interaction events, and the vertex position is not cheated but selected from the reconstruction products.
 
-The idea is to look for all the ECal clusters that were not associated to tracks in each event. Then, if two or more were identified, compute the invariant mass for all possible combinations. At this point, I keep the pair whose invariant mass was closer to $m_{\pi^{0}}$, remove them from the collection, and iterate until no more pairs can be formed.
+The idea is to look for all the ECal clusters that were not associated to tracks in each event. Then, if two or more were identified, compute the invariant mass for all possible combinations. At this point, I select the pair whose invariant mass is closest to $m_{\pi^{0}}$, remove the pairs containing any of the two selected clusters from the collection, and iterate until no more pairs can be formed.
 
-double-sided Crystal Ball function:
+I repeat this procedure for the events with $0$, $1$, $2$ and $3$ or more true neutral pions. For each of them, I extract the invariant mass of the first three cluster pair candidates (in order of proximity to $m_{\pi^{0}}$), in case they can be formed. If the number of the cluster pair is lower than the true neutral pion multiplicity of the event, that entry will be counted as signal. The additional candidates for an event of a given multiplicity are considered background. The resulting distribution is shown in Fig. \ref{fig:pizero_invariant_mass} (black data points).
+
+I fit the signal distribution to a double-sided Crystal Ball function:
 \begin{equation}
     f_{s} (x; ~\alpha_{L,R}, n_{L,R}, \mu, \sigma, N) = N \left\{
     \begin{array}{ll}
@@ -443,18 +445,44 @@ where $A_{L,R}$ and $B_{L,R}$ are given by:
     B_{L,R} &= \frac{n_{L,R}}{|\alpha_{L,R}|}-|\alpha_{L,R}|.
 \end{split}
 \end{equation}
-
-the background is characterised by an exponential function of the form:
-\begin{equation}
-    f_{b} (x; ~x_{0}, \tau) = x_{0} \mathrm{e}^{-x/\tau}.
-\end{equation}
+The tails of this distribution accommodate the asymmetric shape of the misreconstruction effects. The values obtained for the best fit parameters are indicated in Fig. \ref{fig:pizero_invariant_mass} (blue box).
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=.80\linewidth]{Images/GAr_selection/numuCC_1pizero_selection_biased.pdf}
+    \includegraphics[width=.80\linewidth]{Images/GAr_selection/numuCC_1pizero_selection.pdf}
     \caption[Invariant mass distribution obtained for the unassociated ECal cluster pair in the event with the value closest to the true $\pi^{0}$ mass.]{Invariant mass distribution obtained for the unassociated ECal cluster pair in the event with the value closest to the true $\pi^{0}$ mass. The best fits for signal plus background (solid blue line) and background only (dashed red line) are also shown.}
-    \label{fig:pizero_invariant_mass_biased}
+    \label{fig:pizero_invariant_mass}
 \end{figure}
+
+The background is characterised by an exponential function of the form:
+\begin{equation}
+    f_{b} (x; ~x_{0}, \tau) = x_{0} \mathrm{e}^{-x/\tau}.
+\end{equation}
+Similarly, the best fit values can be seen in Fig. \ref{fig:pizero_invariant_mass} (red box).
+
+Figure \ref{fig:pizero_invariant_mass} also shows the results of the fits for the signal plus background (blue line) and the background only (dashed red line) cases. Using these, I estimate the tagging efficiency of this method to be $0.90 \pm 0.01$ with a purity of $0.85 \pm 0.01$, when selecting the candidates with an invariant mass in the range $54.0-288.0~\mathrm{GeV}/c^{2}$.
+
+This is a robust method to identify the photon pair from the $\pi^{0}$ decay. However, this approach is not enough to efficiently identify all the events containing neutral pions in the sample. A quick calculation reveals that only $20\%$ of the $\nu_{\mu}$ CC $1\pi^{0}$ events can be correctly identified with it.
+
+This approach can be complemented with the identification of the secondary vertices from the $e^{+}e^{-}$ conversions. This will make it possible to cover the cases when either one or both photons convert in the HPgTPC. In those cases, one can try pairing the $e^{+}e^{-}$ with unassociated activities in the ECal, or matching pairs of secondary vertices. However, this will require further work on the reconstruction, and thus falls out of the scope of this analysis.
+
+\section{Neutrino energy reconstruction}
+
+In a neutrino-nucleus CC interaction, where alongside the charged lepton $N$ nucleons where knocked out and $M$ mesons produced, the reconstructed neutrino energy can be computed as:
+\begin{equation}
+    E_{\mathrm{rec}} = S_{n} + E_{\ell} + \sum_{i=0}^{N} E_{k,n_{i}} + \sum_{j=0}^{M} E_{m_{j}},
+\end{equation}
+where $S_{n}$ is the average single-nucleon separation energy, $E_{\ell}$ the energy of the primary lepton, $E_{k,n_{i}}$ is the kinetic energy of the $i$-th knocked-out nucleon and $E_{m_{j}}$ the total energy of the $j$-th produced meson.
+
+This represents the ideal scenario, where all the kinetic energy of the nucleons is visible in the detector and one can identify all mesons produced in the interaction. In a real experiment, some of these energy components will not be , and this needs to be accounted for in any estimation of the reconstructed energy.
+
+For instance, in ND-GAr neutrons are complicated to account for, as they do not produce tracks in the TPC. They may be identified either from scatterings off Ar nuclei in the HPgTPC, or performing a ToF measurement in the ECal. However, the maturity of these methods in the current reconstruction, and their development is beyond the scope of this study. So, in the following, I will completely ignore the contribution of neutrons.
+
+\begin{equation}
+    E^{\mathrm{truth}}_{\mathrm{rec}} = S_{n} + E_{\ell} + \sum_{i=0}^{N_{p}} E_{k,p_{i}} + \sum_{j=0}^{M_{\pi^{\pm}}^{<}} E_{k,\pi^{\pm}_{j}} + \sum_{k=0}^{M_{\pi^{\pm}}^{\geq}} E_{\pi^{\pm}_{k}},
+\end{equation}
+
+At the reconstruction level, I use the energy of the primary muon candidate, computed from its momentum, as the starting point for the neutrino energy calculation. Then, I add the total energy contributions from the identified charged pions, again using their momenta.
 
 \section{Systematic uncertainties}
 

@@ -21,7 +21,7 @@ In order to study the effects of final state interactions (FSI) in CC interactio
 
 In order to correctly identify electrons, muons, pions, kaons and protons ND-GAr can use a combination of: $\mathrm{d}E/\mathrm{d}x$ measurements in the HPgTPC, $E_{ECAL}/p$ using the ECAL total energy and the momentum obtained from magnetic spectroscopy in the HPgTPC and penetration information through the ECAL and muon tagger.
 
-\section{GArSoft}
+\section{GArSoft}\label{section:garsoft}
 
 GArSoft is a software package developed for the simulation and reconstruction of events in ND-GAr. It is inspired by the LArSoft toolkit used for the simulation of LArTPC experiments, like the DUNE FD modules. It is based on \texttt{art}, the framework for event processing in particle physics experiments \cite{ART}. Other of its main dependencies are \texttt{ROOT}, \texttt{NuTools}, \texttt{GENIE} and \texttt{Geant4}. It allows the user to run all the steps of a generation-simulation-reconstruction workflow using FHiCL configuration files.
 
@@ -69,7 +69,7 @@ For the ECal and muon tagger, the \texttt{SiPMHitFinder} module runs twice with 
 
 The last step in the reconstruction is associating the reconstructed tracks in the HPgTPC to the clusters formed in the ECal and muon system. The \texttt{TPCECALAssociation} module checks first the position of the track end points, considering only the points that are at least $215~\mathrm{cm}$ away from the cathode or have a radial distance to the center greater than $230~\mathrm{cm}$. The candidates are propagated up to the radial position, in the case of clusters in the barrel, or the drift coordinate position, for the end cap cluster, of the different clusters in the collection using the track parameters computed at the end point. The end point is associated to the cluster if certain proximity criteria are met. This module creates associations between the tracks, the end points and the clusters. The criteria for the associations are slightly different for the ECal and the muon tagger.
 
-\section[\texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} measurement in the TPC]{\boldmath\texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} measurement in the TPC}
+\section[\texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} measurement in the TPC]{\boldmath\texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} measurement in the TPC}\label{section:dEdx}
 
 Among the parameters extracted from the track fitting, ionisation is particularly useful for particle identification, as it is a function of the particle velocity. Although for the case of relativistic particles this dependence is not very strong, measuring the track on a large number of points may allow us to estimate the amount of ionisation accuratel. This, paired with a measurement of the momentum, may allow us to identify the particle type.
 
@@ -374,7 +374,7 @@ The resulting fit (black line), compared to the data points (red points) and the
 	\label{fig:proton_dEdx_momentum}
 \end{figure}
 
-\section{Muon and pion separation in the ECal and MuID}
+\section{Muon and pion separation in the ECal and MuID}\label{section:muon_bdt}
 
 \begin{figure}[t]
 	\centering
@@ -829,7 +829,7 @@ At this point, having the trained classifiers and the probability calibration pa
 
 \subsection{Performance}
 
-\section{ECal time-of-flight}
+\section{ECal time-of-flight}\label{section:tof}
 
 Looking at Fig. \ref{fig:dEdx_vs_momentum_regions}, it is clear that for momentum values in the range $1.0-3.0 ~ \mathrm{GeV}/c$ it is not possible to separate pions and protons using a $\left<\mathrm{d}E/\mathrm{d}x\right>$ measurement in the HPgTPC. However, in the previous section I assumed that protons at those energies could be identified by other means, and therefore were not an issue for the muon and pion discrimination.
 
@@ -919,7 +919,7 @@ The results can be seen in Fig. \ref{fig:tof_beta_selection}, for the case $\Del
 
 Figure \ref{fig:tof_beta_fhc}
 
-\section{Charged pion decay in flight}
+\section{Charged pion decay in flight}\label{section:pi_decay}
 
 As discussed previously, in GArSoft the TPC tracks are formed after a pattern recognition algorithm and a Kalman filter are applied to the TPC clusters. These two steps can find discontinuities in the track candidates (e.g. due to a particle decay) when these so-called breakpoints are large enough. However, for some, more subtle, cases they may miss them and form a single reconstructed track. It has been noted in the literature that Kalman filters offer, as a by-product, additional information to form test statistics to identify these breakpoints \cite{Fruehwirth1988, Astier2000}.
 
@@ -1058,7 +1058,7 @@ Figure \ref{fig:breakpoint_angle} (left panel) shows the dependence on the decay
 
 For the classification dependence on the angle, I use the same classifier I trained before but evaluating the test sample for each individual angular bin. I compute the signal efficiency in each bin for a fixed value of the background rejection, in this case $90\%$. Similarly, for the background rejection estimation I use a fixed signal efficiency value of $90\%$. Figure \ref{fig:breakpoint_angle} (right panel) represents the change in signal efficiency (blue) and background rejection (red) with the value of the true decay angles.
 
-\section{Neutral particle identification}
+\section{Neutral particle identification}\label{section:neutral}
 
 \subsection{ECal clustering}
 
@@ -1149,7 +1149,7 @@ Figure \ref{fig:clustering_pizero} (right panel) shows the invariant mass distri
 \end{equation}
 Comparing the fitted mean and standard deviation values for the Gaussian cores, we see that the distribution for the new algorithm is a $67\%$ narrower and also peaks much closer to the true $m_{\pi^{0}}$ value, going from $101.3 \pm 0.4 \ \mathrm{MeV}$ to $130.8 \pm 0.6 \ \mathrm{MeV}$.
 
-\section{Integration in GArSoft}
+\section{Integration in GArSoft}\label{section:integration}
 
 All the additions and improvements to the reconstruction discussed in this Chapter had to be integrated in the GArSoft framework. This is necessary both to allow a more streamlined path for development, as this makes testing and adding features straightforward, as well as make the changes usable in future productions of simulated data. In this section, I outline the current status of the integration in GArSoft of the reconstruction work presented above.
 
