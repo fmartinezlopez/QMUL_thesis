@@ -1,7 +1,11 @@
-\chapter{Particle ID in ND-GAr}
+\chapter{Particle identification in ND-GAr}
 \label{chapter:garsoft_pid}
 
-% more on ND-GAr and the ND, and why we want to do this!
+\begin{chapquote}{Charlotte Brontë, \textit{Jane Eyre}}
+	I am no bird; and no net ensnares me; I am a free human being with an independent will.
+\end{chapquote}
+
+\begin{comment}
 ND-GAr is a magnetised, high-pressure gaseous argon TPC (HPgTPC), surrounded by an electromagnetic calorimeter (ECal) and a muon detector (commonly refer to as $\mu$ID). A detailed discussion on the requirements, design, performance and physics of ND-GAr can be found in the DUNE ND CDR \cite{DUNE2021NDCDR} and the ND-GAr whitepaper (cite).
 
 In DUNE Phase II ND-GAr will fulfill the role of TMS, measuring the momentum and sign of the charged particles exiting ND-LAr. Additionally, it will be able to measure neutrino interactions inside the HPgTPC, achieving lower energy thresholds than those of the ND and FD LArTPCs. By doing so ND-GAr will allow to constrain the relevant systematic uncertainties for the LBL analysis even further.
@@ -20,6 +24,12 @@ This way, the design of ND-GAr will be physics driven.
 In order to study the effects of final state interactions (FSI) in CC interactions, ND-GAr should be able to measure the spectrum of protons and charged pions at low energies. ND-GAr also needs to be able to measure the pion multiplicity, specially for energies above $100~\mathrm{MeV}$ as at these energies the pions shower in the LAr, to inform the pion mass correction in the ND and FD LArTPCs.
 
 In order to correctly identify electrons, muons, pions, kaons and protons ND-GAr can use a combination of: $\mathrm{d}E/\mathrm{d}x$ measurements in the HPgTPC, $E_{ECAL}/p$ using the ECAL total energy and the momentum obtained from magnetic spectroscopy in the HPgTPC and penetration information through the ECAL and muon tagger.
+\end{comment}
+
+% more on ND-GAr and the ND, and why we want to do this!
+In DUNE Phase II, ND-GAr will fulfill the role of TMS measuring the momentum and sign of the charged particles exiting ND-LAr. Additionally, it will measure neutrino interactions inside the HPgTPC. This way, ND-GAr will allow to constrain certain cross section systematic uncertainties and study the effect of FSI in CC interactions. To do so, it needs to measure the spectrum of protons and charged pions at low energies, as well as measure the pion multiplicity. This puts strong requirements to the the particle identification (PID) capabilities of the detector, as well as stimulates the relevant developments in the reconstruction.
+
+The goal of the present Chapter is to review the status and design of the GArSoft package, the simulation and reconstruction software of ND-GAr, and present the different additions and upgrades that I have added to the reconstruction with the PID in mind.
 
 \section{GArSoft}\label{section:garsoft}
 

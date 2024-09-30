@@ -4,30 +4,35 @@
 	It is a capital mistake to theorize before one has data. Insensibly one begins to twist facts to suit theories, instead of theories to suit facts.
 \end{chapquote}
 
+The DAQ system is responsible of what data will be collected in the DUNE FD. Therefore, it has the capability of either expanding or limiting our physics reach, depending of its specifications. This is important for the low energy physics program, as more it requires more sensitive and reliable methods to pick the relevant signals.
+
+In this Chapter, I present of a possible method to improve the sensitivity of the DUNE FD by enhancing the production of hits in the online processing. This is possible thanks to a more efficient filter strategy, the matched filter, which benefits the induction channels of the detector.
+
 \section{Motivation}
 \label{sec:2.1}
 
-The filter implemented in the firmware of the upstream DUNE FD DAQ is a $32nd$-order low-pass finite impulse-response (FIR) filter. The output of such filter for a discrete system can be written as:
+The lowest-level objects that are formed within the DUNE FD DAQ system are the so-called trigger primitives (TPs). This represent the hits on a channel, and are used as input to the rest of the DAQ trigger chain. The TPs are formed in the hit finder chain. A schematic representation of it is shown in Fig. \ref{fig:tpg_chain}. This chain takes the raw ADC data from the detector, removes the constant pedestal of the signal using a dynamical median estimation method, applies a filter to the signal, and tries to find peaks over a certain threshold. This peaks form the TPs, which contain information such as the start and end time over the threshold, the maximum ADC value and the corresponding ADC integral. Currently, there are two implementations of the hit finder chain, one firmware-based and other software-based.
+
+The filter implemented in the firmware of the upstream DUNE FD DAQ is a $32$nd-order low-pass finite impulse-response (FIR) filter. The output of such filter for a discrete system can be written as:
 \begin{equation}\label{2.1.1}
 	y[i] = \sum_{j=0}^{N} h[i] x[i-j],
 \end{equation}
-where $N$ is the order of the filter, $y$ is the output sequence, $x$ is the input sequence and $h$ is the set of coefficients of the filter. The current implementation within \texttt{dtp-firmware} \cite{dtp-firmware} uses a set of 16 non-zero integer coefficients.
+where $N$ is the order of the filter, $y$ is the output sequence, $x$ is the input sequence and $h$ is the set of coefficients of the filter. The current implementation within \texttt{dtp-firmware} \cite{dtp-firmware} uses a set of 16 non-zero integer coefficients. For the software case, only a 5th-order filter is used, as the filtering turns out to be a very CPU expensive task.
 
-Filtering is a vital step in the hit finder chain. It helps to suppress the noise and enhance the signal peaks with respect to the noiseless baseline. A good filtering strategy allows us to use lower thresholds when forming the trigger primitives (TPs) and thus increasing the sensitivity of our detector to low energy physics events. In such events, the hits produced by the ionisation electrons tend to have lower amplitudes than those of interest to the baseline 
-physics programme of the DUNE experiment.
+Filtering is a vital step in the hit finder chain. It helps to suppress the noise and enhance the signal peaks with respect to the noiseless baseline. A good filtering strategy allows us to use lower thresholds when forming the trigger primitives (TPs) and thus increasing the sensitivity of our detector to low energy physics events. In such events, the hits produced by the ionisation electrons tend to have lower amplitudes than those of interest to the LBL physics programme of the DUNE experiment.
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=1\linewidth]{Images/Matched_Filter/APA_wires}
-	\caption{\textit{Schematic representation of an APA. The black lines represent the APA steel frame. The green and magenta lines correspond to the direction of the U and V induction wires respectively. The blue lines indicate the direction of the X collection wires and the wire shielding G.}}
-	\label{fig:apa}
+	\includegraphics[width=0.99\linewidth]{Images/Matched_Filter/trigger_primitive_chain.pdf}
+	\caption{Schematic representation of the Trigger Primitive Generation chain in the DUNE FD.}
+	\label{fig:tpg_chain}
 \end{figure}
 
-This is particularly important for the induction planes. In general, signal peaks in the induction wires have smaller amplitude than the ones in the induction plane. This, together with the fact that the pulse shapes are bipolar, reduces our capacity to detect the hits on these channels. The inefficiency of detecting TPs in the induction planes (denoted as U and V planes) lead trigger algorithms to focus mainly on the TPs from the collection plane (so-called X plane). As a result, the possibility of making trigger decisions based on the coincidence of TPs across the three wire planes remains nowadays unexploited in DUNE. Fig. \ref{fig:apa} shows a schematic view of an anode plane assembly (APA), with the different wire plane orientations highlighted.
+This is particularly important for the induction planes. In general, signal peaks in the induction wires have smaller amplitude than the ones in the induction plane. This, together with the fact that the pulse shapes are bipolar, reduces our capacity to detect the hits on these channels. The inefficiency of detecting TPs in the induction planes (denoted as U and V planes) lead trigger algorithms to focus mainly on the TPs from the collection plane (so-called X plane). As a result, the possibility of making trigger decisions based on the coincidence of TPs across the three wire planes remains nowadays unexploited in DUNE. This will be beneficial for low energy events, as it adds redundancy to the algorithms, as well as for other physics that requires online directionality information, like the supernova pointing.
 
-A possible improvement of the current hit finder chain could require optimising the existing or choosing a new filter implementation. A filter strategy which improves the induction signals may be able to enhance the detection efficiency of TPs from the induction planes and ideally make it comparable to that of the collection plane.
+A possible improvement of the current hit finder chain could require optimising the existing or choosing a new filter implementation. A filter strategy which improves the induction signals may be able to enhance the detection efficiency of TPs from the induction planes and ideally make it comparable to that of the collection plane.  
 
-The goal is to implement a better finite-impulse response filter design and to evaluate its performance relative to the current filter. To do so, we need to take into account the limitations of the firmware: the FIR filter shall have maximum 32 coefficients (so-called taps) whose values are 12-bit unsigned integers. Although it is technically possible to include non-integer coefficients, it would be a technical challenge as we have 40 FIR instances per APA, as there are 4 FIR per optical link and 10 optical links per APA. With these restrictions, the task is to provide a set of 32 coefficients which yield an optimal filter performance for the induction wires.
+The goal is to implement a better finite-impulse response filter design and to evaluate its performance relative to the current filter. To do so, we need to take into account the limitations of the firmware: the FIR filter shall have maximum 32 coefficients (so-called taps) whose values are 12-bit unsigned integers. Although it is technically possible to include non-integer coefficients, it would be a technical challenge as we have 40 FIR instances per APA, as there are 4 FIR per optical link and 10 optical links per APA. With these restrictions, the task is to provide a set of 32 coefficients which yield an optimal filter performance for the induction wires. A solution compatible with the software hit finder implementation is not considered, due to its current limitations concerning the filtering stage.
 
 \section{Signal-to-noise ratio definition}
 \label{sec:A.1}
