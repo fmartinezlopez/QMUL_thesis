@@ -199,13 +199,7 @@ where $s$ is a reversed signal template sequence of length $N$ equal to the orde
 	\label{fig:mf_opt}
 \end{figure}
 
-For this first stage of the study, I use a definition of the S/N per channel given by:
-\begin{equation}
-	\mathrm{S/N} = \frac{\max{[ADC]} - \mu_{noise}}{\sigma_{noise}},
-\end{equation}
-where the subscript $noise$ refers to a subset of the data obtained by only taking into account waveform values within a $\pm 3 \sigma$ range around the mean of the data and $\max{[ADC]}$ is the maximum of the original waveform. This definition is further discussed in App. \ref{sec:A.1}, where I also show examples of its application to raw data and to a waveform filtered with the current low-pass FIR filter.
-
-To test whether this choice of filter is appropriate one needs to choose a signal template. As an example of how a matched filter would affect our signal, I simply took the filter coefficients to be the 32 ADC values around a signal peak present in the data. In Fig. \ref{fig:adcs_mf} (left panel) I plotted a zoomed region for channel $7840$ in the raw data capture \texttt{felix-2020-07-17-21:31:44}, after applying the matched filter described before (blue line). When compared to the raw and FIR filtered case (see App. \ref{sec:A.1}), after applying the match filter the standard deviation of the noise waveform (red line) decreases and at the same time the signal peaks are enhanced. This leads to an improvement of the S/N by a factor of $1.92$ when compared to the raw waveform.
+To test whether this choice of filter is appropriate one needs to choose a signal template. As an example of how a matched filter would affect our signal, I simply took the filter coefficients to be the 32 ADC values around a signal peak present in the data. In Fig. \ref{fig:adcs_mf} (left panel) I plotted a zoomed region for channel $7840$ in the raw data capture \texttt{felix-2020-07-17-21:31:44}, after applying the matched filter described before (blue line). When compared to the raw and FIR filtered case (see Figs. \ref{fig:adcs_nofir} and \ref{fig:adcs_fir}), after applying the match filter the standard deviation of the noise waveform (red line) decreases and at the same time the signal peaks are enhanced. This leads to an improvement of the S/N by a factor of $1.92$ when compared to the raw waveform.
 
 In order to obtain the matched filter that is more suitable for our data, I explored different configurations of signal templates. In order to perform this exploration, I parametrised the signal using the bipolar function:
 \begin{equation}\label{2.4.13}
@@ -218,8 +212,6 @@ As this parametrisation is only adequate for bipolar signals I will focus exclus
 In Fig. \ref{fig:mf_opt} I present the results of our parameter scan, for channels in the induction planes U (left panel) and V (right panel). For each configuration of $\sigma$ and $\delta$ the resulting matched filter was applied to all channels in the corresponding plane within the data capture \texttt{felix-2020-07-17-21:31:44}, the S/N improvement was computed with respect to the raw waveforms and then the S/N mean value was kept as a score for such filter. One can see that the improvement obtained for the U plane is in general higher than the one for the V plane. In any case, I got substantially higher ratios than the ones obtained for the low-pass FIR filters. For the optimal configurations I attained improvements up to a factor of $1.85$ for the U plane and $1.65$ for the V plane.
 
 The sets of optimal matched filter coefficients were obtained for the parameters $\delta = 0.035$, $\sigma = 0.191$ for the U plane and $\delta = 0.018$, $\sigma = 0.191$ for the V plane. I show these two sets of coefficients in Fig. \ref{fig:mf_perf} (left panel). Also in Fig. \ref{fig:mf_perf} (right panel) I plot the distribution of the S/N improvement after the optimal match filters for the U and V were applied to the corresponding channels in the raw data capture \texttt{felix-2020-07-17-21:31:44}. As mentioned before, the mean improvement achieved for the U plane channels is slightly bigger than the one for the V channels. Note, however, that the spread of the distribution for the V plane is also smaller than the one for the U plane.
-
-I also performed a similar scan for the case of a low-pass FIR filter using the Parks-McClellan algorithm. In that case, the parameters to check were the cutoff frequency and the transition width of the filter. A summary of the results is given in App. \ref{sec:A.2}.
 
 Overall, one can see that the improvements on the S/N are much more significant in the case of the matched filter than it is for the low-pass FIR filters. The analysis of this and other raw data captures from ProtoDUNE-SP suggest that matched filters increase the S/
 N of induction channels by a factor of $1.5$ more than the optimal low-pass FIR filters.
@@ -239,12 +231,12 @@ Although these results are by themselves great points in favour of the matched f
 	\label{fig:mf_perf}
 \end{figure}
 
-\section{Using simulated samples}
+\section{Monte Carlo studies}
 \label{sec:2.5}
 
 In order to further test the matched filter, the next step was to generate and process data samples using \textit{LArSoft} \cite{Church2013}. In this way, one can control the particle content of the samples, the orientation of the tracks and their energy, and therefore see how the matched filter behaves in various situations.
 
-To begin with, I prepared different monoenergetic and isotropic samples containing a single particle per event. Each sample contains a different particle species, namely electrons, muons, protons and neutral pions all with a kinetic energy of $E_{k} = 100 \ \mathrm{MeV}$. I chose these because of the fairly different topologies they generate in the liquid argon, ranging from shower-like to track-like. The procedure I followed to generate the samples and process them is discussed in detail in App. \ref{sec:A.4}.
+To begin with, I prepared different monoenergetic and isotropic samples containing a single particle per event. Each sample contains a different particle species, namely electrons, muons, protons and neutral pions all with a kinetic energy of $E_{k} = 100 \ \mathrm{MeV}$. I chose these because of the fairly different topologies they generate in the liquid argon, ranging from shower-like to track-like.
 
 These were generated with the single particle gun and the Geant4 stage of the \textit{LArSoft} simulation \cite{Church2013} was performed with the standard configuration for the DUNE FD 10kt module. 
 
@@ -404,7 +396,7 @@ These results suggest that events with poorer values of the mean S/N, usually as
 
 One of the advantages of the matched filter, directly related to increasing the S/N, is the capability of picking hits that before fell below the threshold. For instance, Fig. \ref{fig:evthitcomp} shows the raw ADC data from an example event (electron, $E_{k} = 100 \ \mathrm{MeV}$) with the produced true hits superimposed (black boxes), together with the hits produced by the standard hit finder chain (blue circles), i.e. using the current FIR filter, and the hits obtained using the matched filters (green triangles). Both the standard and the matched filter hit finders were run with a threshold of $10 \ \mathrm{ADC}$. Notice that the standard hits match well the true ones at the initial part of the event (where we have a track-like object), but they miss most of the hits produced by the EM shower at later times. On the other hand, the hits produced with the matched filter have a better agreement with the true hits even for the more diffuse shower activity.
 
-Notwithstanding that now I get more hits with this combination of matched filter and low threshold as a results of the enhancement of the signal peaks relative to the noise level, it is also true that I pick some spurious hits not related to any real activity if one lowers the thresholds too much. Therefore, some optimisation of the threshold is needed. Basically one will need to make a trade-off between precision and sensitivity.
+Even though now I get more hits with this combination of matched filter and low threshold as a results of the enhancement of the signal peaks relative to the noise level, it is also true that I pick some spurious hits not related to any real activity if one lowers the thresholds too much. Therefore, some optimisation of the threshold is needed. Basically one will need to make a trade-off between precision and sensitivity.
 
 Having this in mind, I tried to compare the produced hits one gets from the standard hit finder and the ones resulting from applying the matched filter with the true hits. By running the hit finders on our samples with different values of the threshold one can understand, for instance, how low one can set the threshold without getting mostly spurious hits and then evaluate the gains obtained from this.
 
@@ -415,8 +407,6 @@ In order to estimate the hit sensitivity, given a certain sample, one needs to r
 To have a better comparison between the true hits and the ones produced from the raw waveforms after applying the two filters, I applied also the FIR filter and the matched filters to the noiseless waveforms and then I run the hit finder with a minimal threshold (in this case I used $1 \ \mathrm{ADC}$) on these noiseless filtered waveforms. In this way I generated two sets of true hits, I will refer to them as standard true hits (with the current/default FIR filter) and matched filter true hits respectively. This allows a more precise matching between the different groups of hits produced, as it will account for any delays and distortions introduced by the FIR and the matched filters.
 
 In the case of the raw waveforms (with noise), I run the hit finder on them, with different values of the threshold, after applying either the FIR or the matched filters. I will name them simply standard hits and matched filter hits respectively. Then, I match the generated hits to the true hits (the standard hits with the standard true hits and the matched filter hits with the matched filter true hits). The matching is performed by comparing the channel number and the timestamp of the hits. To count as a match, I require that all hits with the same channel number and timestamp have overlapping hit windows, i.e. the time windows between their hit end and hit start times need to overlap. If more than one hit in one of the groups have hit overlap with the same hit in the other group I only count the hit with closer hit peak time value.
-
-The generation of the samples, the procedure to produce the standard hits (with the default FIR filter) and matched filter hits and the matching of these with the true hits is described in detail in App. \ref{subsec:A.4.1}.
 
 To quantify the performance of the two hit finder approaches, I use a classical method from statistical classification known as confusion matrix \cite{Stehman1997}. This is basically a way of sorting the outputs of a binary classifier, considering the true values of the classification and the predicted values. It divides the outputs in four categories: true positive (TP, both true and predicted values are $1$), false negative (FN, true value is $1$ but predicted is $0$), false positive (FP, true value is $0$ but predicted is $1$) and true negative (TN, both true and predicted values are $0$)).
 
@@ -489,3 +479,36 @@ To exemplify the improvement I obtained, one can consider the residuals of the h
 To see clearly if the residuals are normally distributed, in Fig. \ref{fig:electron_residuals} (bottom panels) I plot the corresponding quantile-quantile plot for both the standard (left panel) and matched filter (right panel) standard residuals. One can clearly see that the points for the standard case follow a strongly non-linear pattern, suggesting that the residuals do not follow a normal distribution. In contrast, for the matched filter hits the points conform to a roughly linear path, implying that in this case the normality condition is fulfilled.
 
 All these results hint at the fact that the concurrence of hits across the wire planes can be strengthened by applying the matched filters.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale = 0.2]{Images/Matched_Filter/VD_Coldbox_Diagram.png}
+    \caption{Schematic diagram of the vertical drift ColdBox setup at CERN.}
+    \label{fig:vdcoldbox}
+\end{figure}
+
+\section{VD ColdBox data taking}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale = 0.5]{Images/Matched_Filter/TRDisplay_np02_coldbox_run020676_0001.pdf}
+    \caption[Event display of the data taken with the matched filter and HMA trigger at the VD ColdBox.]{Event display of the data taken with the matched filter and HMA trigger at the VD ColdBox. The display shows the data from 3 ADC links for the full trigger window, with the black squares representing the produced TPs. The bottom panel represents the TP counts as a function of time in the trigger window.}
+    \label{fig:example_hma_evd}
+\end{figure}
+
+Between February and April 2023 the vertical drift (VD) ColdBox setup at CERN, shown in Fig. \ref{fig:vdcoldbox}, was recommissioned for cold electronics testing with CRP5. That provided another opportunity for testing the firmware trigger primitive generation in a real LArTPC. However, during the two run periods new software-related complications that were not observed in previous running conditions arose.
+
+These prevented us from taking data with the whole system. As a palliative measure, new configurations were made that allowed to run with TP generation enabled just in a subset of the ADC links. With these workarounds, we managed to run with up to three out of twelve ADC links and the horizontal muon trigger algorithm (HMA).
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale = 0.5]{Images/Matched_Filter/np02_coldbox_tp_comp.pdf}
+    \caption[Comparison between firmware-produced and simulated TP quantities for a matched filter run at the VD ColdBox.]{Comparison between firmware-produced and simulated TP quantities for a matched filter run at the VD ColdBox.}
+    \label{fig:vdcoldbox_tp_comp}
+\end{figure}
+
+Additionally, an alternative firmware version was prepared featuring the matched filter coefficients optimised for the induction plane hit finding. The version of the filter we used for the data taking is slightly different from the one of the previous studies, as in this case we needed to apply the same filter coefficients to all channels irrespective of the readout plane they come from. With this, we also managed to run with three ADC links and the HMA trigger. Fig. \ref{fig:example_hma_evd} shows an example event display from the longest run we recorded with the matched filter firmware.
+
+We used the recorded data, together with our standalone TPG simulation tool, to perform comparisons between the firmware and simulated TPs. One such comparison for a matched filter run can be seen in Fig. \ref{fig:vdcoldbox_tp_comp}. The agreement achieved is within the expectation, from what we have seen in previous samples.
+
+All the studies presented demonstrate the robustness of the matched filter approach to form TP. I have used both ProtoDUNE-SP data and MC samples to assess its impact on the S/N and TP production of the induction channels. Additionally, I have shown that it is possible to run with it in a real detector environment, after the tests at the VD ColdBox setup.
