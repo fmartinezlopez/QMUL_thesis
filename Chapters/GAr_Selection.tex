@@ -3,20 +3,16 @@
 
 \section{Data sample}
 
-{\color{red}
-In this section I need to make sure to mention:
-\begin{itemize}
-    \item I need to comment on the versions of the software that were used for the production of the different samples (if we end up having more than one). The version of \texttt{GENIE} used was 
-    \item We use GArG4 instead of \texttt{edep-sim} for the particle propagation. Because both \texttt{Geant4} wrappers use different configurations for the simulation, the results obtained are different. The default \texttt{edep-sim} configuration used by the DUNE ND is appropriate for ND-LAr, where thresholds for particle production are higher. In the case of ND-GAr, these parameters need to be adjusted accordingly. For the time being, in these first productions of analysis files, we will use our standalone \texttt{Geant4} implementation. For future iterations these differences will need to be revisited and understood, so we can use the same simulation workflow as the rest of the ND.
-    \item I need to comment on the sample size. The first sample produced was simply $10^{5}$ events inside the HPgTPC volume. There is also the question of the other sample we may want to produce for the $\geq 3\pi^{\pm}$ selection (ask Naseem).
-    \item So far we have only simulated single interaction events. Ideally, we should move to simulate full spills. Of course, we need to understand how many interactions we expect in ND-GAr per spill. Also, there is the question of having neutrino interactions happening in the other detector volumes (ECal, magnet, \dots).
-    \item At some point, we should generate a sample of rock muons making it to ND-GAr.
-    \item I think I should comment on the run plan (at least the part that concerns ND-GAr), and what it means in terms of generating a full production sample. It will be good to have an understanding of the POT we need on-axis and at each off-axis positions (for both FHR and RHC).
-\end{itemize}
-}
+For the event selection studies I used a MC sample consisting of $10^{5}$ FHC neutrino interaction events inside the HPgTPC volume. The version of \texttt{GENIE} used was \texttt{v3_04_00}, with the \texttt{G18} tune. This is a preliminary version of the re-tune produced from CCQE, CC$1\pi$, CC$2\pi$, and CC inclusive bubble chamber cross section data \cite{GENIE2021}. It uses the local Fermi gas as a description of the nuclear model. The quasielastic-like events are described by the Nieves quasielastic \cite{Nieves2004} and Valencia $2p2h$ \cite{Nieves2011} models. The Berger-Seghal model \cite{Berger2007,Berger2008} is used for the resonant and coherent pion production. As in all the \texttt{GENIE} tunes, the Bodek-Yang model \cite{Bodek2002} describes the DIS interactions. Finally, the FSI are described using the effective intranuclear transport model in INTRANUKE.
+
+For this sample, I used \texttt{GArG4} instead of \texttt{edep-sim} for the particle propagation. Because both \texttt{Geant4} wrappers use different configurations for the simulation, the results obtained are different. The default \texttt{edep-sim} configuration used by the DUNE ND is appropriate for ND-LAr, where thresholds for particle production are higher. In the case of ND-GAr, these parameters need to be adjusted accordingly. For the time being, in these first productions of analysis files, we will use our standalone \texttt{Geant4} implementation.
+
+The detector simulation and reconstruction used was GArSoft version \texttt{v02_21_00}. I made use of the standard routines for the readout simulation and the reconstruction, which include the additions described in section \ref{section:integration}. A summary of the GArSoft outputs is extracted in the form of a plain \texttt{ROOT} \texttt{TTree}. These are then used, together with the \texttt{GENIE} output files, to produce the files known within DUNE as common analysis files (CAFs). The version of the CAF format used in this analysis is \texttt{duneanaobj} \texttt{v3_07_00}.
+
+This sample only includes single interaction events. In the future, we will move to simulate full neutrino spills. Also, we will need to include neutrino interactions in the other detector volumes (ECal, magnet, \dots), as well as rock muons making it to ND-GAr. However, this will require a significant amount of work to go into the so-called interaction slicer, the part of the reconstruction in charge of splitting the reconstructed events.
 
 \begin{table}[t]
-	\caption{Event rates in ND-GAr.}
+	\caption[Estimated event rates in ND-GAr.]{Estimated event rates in ND-GAr, divided by interaction type and pion multiplicity, for two different values of the $\mathrm{POT}/\mathrm{year}$.}
 	\begin{center}
 		\begin{small}
 			\begin{tabular}{lcc}
@@ -37,6 +33,10 @@ In this section I need to make sure to mention:
 	\end{center}
 	\label{tab:ndgar_event_rates}
 \end{table}
+
+Looking forward, these sort of small samples are useful to prepare for launching a full production of ND-GAr events. In the original DUNE TDR LBL analysis, the event rates are calculated with a $1.1 \times 10^{21} ~ \mathrm{POT}/\mathrm{year}$ assumption, which assumes a combined uptime and efficiency of the accelerator complex and the LBNF beamline of $57\%$ \cite{DUNE2020}. If we have one spill every $1.2~\mathrm{s}$, that translates into $7.5 \times 10^{13} ~ \mathrm{POT}/\mathrm{spill}$. Therefore, assuming that the POT/spill scales linearly with beam power, in Phase II we will have $1.3 \times 10^{14} ~ \mathrm{POT}/\mathrm{spill}$ for the for the $2.1 ~ \mathrm{MW}$ beam. Or equivalently, $1.9 \times 10^{21} ~ \mathrm{POT}/\mathrm{year}$ using the same efficiency. The event rates per year in ND-GAr computed for these two possible values of the POT/year are shown in Tab. \ref{tab:ndgar_event_rates}.
+
+The latest PRISM plan requires $1.50 ~ \mathrm{POT} \cdot \mathrm{years}$ of data on-axis, followed by $0.25 ~ \mathrm{POT} \cdot \mathrm{years}$ at each off-axis position ($2$, $4$, $8$, $12$, $16$, $20$, $24$, and $28~\mathrm{m}$), both for FHC and RHC mode. This implies that a full on-axis ND-GAr production will require a total of $2.85 \times 10^{21}~\mathrm{POT}$ for both horn currents.
 
 \section[\texorpdfstring{$\nu_{\mu}$}{numu} CC selection]{\boldmath\texorpdfstring{$\nu_{\mu}$}{numu} CC selection}
 
