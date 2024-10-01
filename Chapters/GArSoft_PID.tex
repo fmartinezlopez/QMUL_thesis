@@ -303,7 +303,7 @@ The next step is to optimise the level of truncation we are going to apply to ou
 I do not add the classical normalisation factor of the Gaussian, $1/\sqrt{2\pi}\sigma$, therefore the amplitude $A$ simply represents the maximum of the function. One of the two Gaussian functions describes the core part of the distribution, while the other captures the behaviour of the tails.
 
 For each truncation factor, I look at the bias and the resolution I obtain. I define these as the weighted means of the corresponding parameters in the fits:
-\begin{equation}
+\begin{equation}\label{eq:weighted_par_double_gauss}
 	\bar{x} = \frac{A_{core}~x_{core}+A_{tail}~x_{tail}}{A_{core}+A_{tail}},
 \end{equation}
 where $A_{core}$ and $A_{tail}$ are the amplitudes of the core and tail distributions respectively and $x$ is either the mean $\mu$ or the width $\sigma$ of said distributions.
@@ -375,14 +375,20 @@ The resulting fit (black line), compared to the data points (red points) and the
 \end{table}
 \end{comment}
 
-\subsection{Particle identification}
+It is interesting to look at the results of the fit in momentum space, for the different particle species. Figure \ref{fig:dEdx_vs_momentum} shows the truncated mean $\mathrm{d}E/\mathrm{d}x$ values versus the reconstructed momentum for the neutrino sample. Using a logarithmic scale for the momentum helps visualising the curves corresponding to the various particles. The resulting fits for electrons, muons, pions and protons are also shown (solid black lines). Notice that each curve stops at different momentum values, as the fits only extend up to $\beta\gamma = 200$ and translating this limit into momentum depends on the particle.
+
+From this plot, the particle separation power of the $\left<\mathrm{d}E/\mathrm{d}x\right>$ measurement is evident. In the low momentum regime separating electrons, muons and pions is possible, while protons can be reliably identified up to $1.5~\mathrm{GeV}/c$.
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/dEdx/proton_dEdx_momentum.pdf}
-	\caption[Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias and resolution obtained for the true protons in a FHC neutrino sample.]{Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias (left panel) and resolution (right panel) obtained for the true protons in a FHC neutrino sample.}
+	\caption[Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias and resolution obtained for the true protons in a FHC neutrino sample.]{Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias (left panel) and resolution (right panel) obtained for the true protons in the FHC neutrino sample.}
 	\label{fig:proton_dEdx_momentum}
 \end{figure}
+
+Relevant to the separating power is the $\left<\mathrm{d}E/\mathrm{d}x\right>$ resolution. This can be obtained from the fit, by taking the ratio of the difference between the expected energy loss for a given particle type and momentum and the measured value over the expectation. Then, performing a double Gaussian fit we can extract the bias and the resolution by means of Eq. (\ref{eq:weighted_par_double_gauss}). Figure \ref{fig:proton_dEdx_momentum} presents the values of the $\left<\mathrm{d}E/\mathrm{d}x\right>$ bias (left panel) and resolution (right panel) as a function of the momentum for the true protons in the neutrino sample.
+
+When compared to the values for the resolution obtained for the stopping proton sample (see e.g. Fig. \ref{fig:energy_trucation_opt}), it appears that the performance now is much lower. For that low energy sample the resolution obtained was $5\%$, whereas now we only achieve those numbers for momenta $\geq 0.75~\mathrm{GeV}/c$. However, there are several differences between these two cases. The former was obtained for a single proton sample, with tracks are fully contained in the detector volume. On top of that, I refined the selection requiring a single reconstructed track per event, which eliminates any misreconstruction effects. In this case, we are dealing with tracks that may have fragmented, or even have contributions from different true particles. Also, note that at low energies the $\left<\mathrm{d}E/\mathrm{d}x\right>$ for protons is much higher than it is for other particles. Therefore, having a poor resolution in that range does not have an impact on the proton separation.
 
 \section{Muon and pion separation in the ECal and MuID}\label{section:muon_bdt}
 
@@ -835,9 +841,29 @@ Figure \ref{fig:bdt_calibration_curves} shows the reliability diagrams for the o
 
 One can also compare the responses of the uncalibrated and calibrated classifiers broken down by true particle type, as shown in Fig. \ref{fig:bdt_calibration_output}. It can be seen that the distributions for both muons (blue) and charged pions (red) smoothen after calibration, but still the separating power of the classifier remains unchanged.
 
-At this point, having the trained classifiers and the probability calibration parameters, I am able to assess the performance of the classification strategy in a physics-relevant case.
-
 \subsection{Performance}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/BDT/ecal_bdt_validation_output_regions.pdf}
+	\caption[Calibrated predicted probabilities assigned by the BDT classifiers for the true muons and charged pions in a FHC neutrino sample.]{Calibrated predicted probabilities assigned by the BDT classifiers for the true muons (blue) and charged pions (red) in a FHC neutrino sample.}
+	\label{fig:bdt_validation_output}
+\end{figure}
+
+At this point, having the trained classifiers and the probability calibration parameters, I am able to assess the performance of the classification strategy in a physics-relevant case. For this, I prepared a sample of $10^{5}$ FHC neutrino interaction events in the HPgTPC. Using the truth matching information, I select all true muons and pions, and apply the corresponding BDT classifier based on their momentum.
+
+Figure \ref{fig:bdt_validation_output} shows the resulting calibrated output of the classifiers for the different momentum regions. I do not include the first region, $0.10 \leq p < 0.30 ~ \mathrm{GeV}/c$, as it only contains a small fraction of signal events. The distributions obtained for this validation sample 
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.75\linewidth]{Images/GArSoft_PID/BDT/ecal_bdt_validation_momentum.pdf}
+	\caption[Efficiency and purity of the muon selection as a function of the reconstructed momentum for the FHC neutrino sample.]{Efficiency (blue) and purity (red) of the muon selection as a function of the reconstructed momentum for the FHC neutrino sample.}
+	\label{fig:bdt_validation_output}
+\end{figure}
+
+I also studied the performance of the muon identification in a track-by-track selection. To do so, I apply a simple cut on the output of the BDT classifiers. Every particle with a predicted probability higher than the cut is considered a muon, while the ones not passing the cut are taken to be pions. The results obtained for a cut of $0.50$ are shown in Fig. \ref{fig:bdt_validation_output}. Both the efficiency (blue) and the purity (red) of the selection are displayed as a function of the momentum. The binning was chosen so that there were no bins in between different momentum ranges and each had roughly the same number of events. Even without optimising the value of the cut, the performance of the selection is excellent. The only issues the first momentum range, were efficiency and purity sit slightly below $0.50$. However, a $\mathrm{d}E/\mathrm{d}x$ measurement could help enhance the selection there.
+
+This shows that the method behaves as expected when using unseen data, generalising without problems from single particle to full neutrino events. In the coming Chapter, I will study how to use the outputs of the BDT, hereafter referred to as muon scores, to perform realistic event selections in ND-GAr.
 
 \section{ECal time-of-flight}\label{section:tof}
 
@@ -927,7 +953,7 @@ The results can be seen in Fig. \ref{fig:tof_beta_selection}, for the case $\Del
 	\label{fig:tof_beta_fhc}
 \end{figure}
 
-Figure \ref{fig:tof_beta_fhc}
+Figure \ref{fig:tof_beta_fhc} shows a few examples of the ToF velocity estimation in a FHC neutrino sample. Here, for the different momentum bins, I have taken the fractional residual of the expected value of $\beta$ for a proton and the measured values (black data points). The coloured lines represent Gaussian fits to the distributions of the different true particle, with the gray line being the sum of these. It can be seen that, even for momenta close to $2.0~\mathrm{GeV}/c$, a good proton separation can be achieved. This idea will be explored further later, in the context of the event selection.
 
 \section{Charged pion decay in flight}\label{section:pi_decay}
 
@@ -1086,7 +1112,9 @@ To merge the tile clusters to the combined strip clusters I propagate the princi
 
 The last step is to check if clusters in neighbouring modules should be merged together, both across two barrel modules, across end cap modules and between barrel end cap modules. I check the distance between the two closest hits in the pair of clusters and merge them if it passes this and an additional direction cut.
 
-Figure \ref{fig:clustering_example} presents an example of the clustering steps relevant for strip layer hits, from the input hits (top left panel) to the NN clustering (top right panel) and re-clustering (bottom left panel) for each strip view and the final merging strip clusters (bottom right panel). It shows the hits from a single ECal barrel module in a $\nu_{\mu}$ CC interaction event with a neutral pion and a proton in the final state. The two clusters on the left correspond to the photon pair from the $\pi^{0}$ decay and the one on the upper right corner is associated to the proton.
+\begin{comment}
+	Figure \ref{fig:clustering_example} presents an example of the clustering steps relevant for strip layer hits, from the input hits (top left panel) to the NN clustering (top right panel) and re-clustering (bottom left panel) for each strip view and the final merging strip clusters (bottom right panel). It shows the hits from a single ECal barrel module in a $\nu_{\mu}$ CC interaction event with a neutral pion and a proton in the final state. The two clusters on the left correspond to the photon pair from the $\pi^{0}$ decay and the one on the upper right corner is associated to the proton.
+\end{comment}
 
 \begin{figure}[t]
 	\centering
@@ -1095,20 +1123,23 @@ Figure \ref{fig:clustering_example} presents an example of the clustering steps 
 	\label{fig:clustering_optimisation}
 \end{figure}
 
-\begin{table}[h!]
-	\centering
+\begin{table}[t]
 	\caption{Summary of parameters and sampled values used in the optimisation of the clustering algorithm.}
-	\begin{tabular}{l|l|l|p{7cm}}
-		Name         & Units  & Sampled values & Description                                                                  \\ \hline
-		PrimMinorCut & strips & 2, 3, 4        & Distance along strip length in NN clustering                                 \\
-		RecMinorCut  & strips & 3, 5, 8        & Distance between propagated point and CM along strip length in re-clustering \\
-		RecPerpCut   & strips & 2, 3, 4        & Closest hit pair distance in re-clustering                                   \\
-		StripDistCut & strips & 3, 5, 8        & Distance between CMs in strip cluster merging                                \\
-		StripDirCut  & cos    & 0.5, 0.7, 0.9  & Main axes direction cut in strip cluster merging                             \\
-		PointDistCut & tiles  & 3, 5, 8        & Distance between propagated point and CM in strip-tile matching              \\
-		MergePerpCut & cm     & 10, 20, 30     & Closest hit pair distance in module merging                                  \\
-		MergeDirCut  & cos    & 0.5, 0.7, 0.9  & Main axes direction cut in module merging                                   
-	\end{tabular}
+	\begin{center}
+		\begin{small}
+			\begin{tabular}{l|l|l|p{7cm}}
+				Name         & Units  & Sampled values & Description                                                                  \\[2mm] \hline
+				\rule{0pt}{1.1\normalbaselineskip}PrimMinorCut & strips & 2, 3, 4        & Distance along strip length in NN clustering                                 \\[3mm]
+				RecMinorCut  & strips & 3, 5, 8        & Distance between propagated point and CM along strip length in re-clustering \\[8mm]
+				RecPerpCut   & strips & 2, 3, 4        & Closest hit pair distance in re-clustering                                   \\[3mm]
+				StripDistCut & strips & 3, 5, 8        & Distance between CMs in strip cluster merging                                \\[3mm]
+				StripDirCut  & cos    & 0.5, 0.7, 0.9  & Main axes direction cut in strip cluster merging                             \\[3mm]
+				PointDistCut & tiles  & 3, 5, 8        & Distance between propagated point and CM in strip-tile matching              \\[8mm]
+				MergePerpCut & cm     & 10, 20, 30     & Closest hit pair distance in module merging                                  \\[3mm]
+				MergeDirCut  & cos    & 0.5, 0.7, 0.9  & Main axes direction cut in module merging                                   
+			\end{tabular}
+		\end{small}
+	\end{center}
 	\label{tab:clustering_optimisation}
 \end{table}
 
