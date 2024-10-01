@@ -518,6 +518,8 @@ I also compared the reconstructed energies to the true energy of the neutrino. F
 
 \section{Systematic uncertainties}
 
+Although the implementation and study of the systematic uncertainties relevant for ND-GAr is out of the scope of this preliminary analysis, in this section I give an extended overview of the topic. can be classified in three categories: neutrino flux uncertainties, neutrino-nucleus interaction model uncertainties, and detector response uncertainties.
+
 \subsection{Flux uncertainties}
 
 % Introduction
@@ -530,5 +532,90 @@ The hadron production uncertainties are associated to the kinematic distribution
 The other set of uncertainties affecting the neutrino flux prediction come from the limited precision with which we know the parameters of the different components in the beamline. These include the specifications of the target, the dimensions of the decay pipe, and the current and alignment of the magnetic horns. The effects on the flux predictions of these uncertainties are estimated using the G4LBNF simulation. For each of the parameters, the simulation runs with said parameter shifted by $\pm 1\sigma$ from the nominal value, and the resulting flux prediction is compared to the nominal one.
 
 \subsection{Cross section uncertainties}
+
+As discussed previously in section \ref{sec:nu_interactions}, the neutrino-nucleus interaction model is of great importance for neutrino experiments, as it maps the true neutrino energy to the kinematics of the final state particles. The uncertainties on the cross section model are implemented in three ways: varying the parameters used in the \texttt{GENIE} simulation, using weights that parametrise cross section effects not accounted for in \texttt{GENIE}, and comparing the \texttt{GENIE} predictions to other interaction models.
+
+Within the DUNE TDR LBL analysis, the default interaction model was that implemented in \texttt{GENIE} \texttt{v2_12_10} \cite{DUNE2021}. A summary of the cross section systematic parameters present in \texttt{GENIE} used in that analysis is presented in Tab. \ref{tab:xsec_genie_systs}. The additional systematic parameters used in the analysis are described in Tab. \ref{tab:xsec_non_genie_systs}.
+
+\begin{table}[p!]
+	\caption[Neutrino interaction systematic parameters implemented in \texttt{GENIE} used in the DUNE TDR LBL analysis.]{Neutrino interaction systematic parameters implemented in \texttt{GENIE} used in the DUNE TDR LBL analysis. Events with low $W$ that are not QE are mainly RES, whereas DIS events dominate at high $W$. The initials BY refer to the Bodek-Yang model. Table adapted from Ref. \cite{DUNE2021}.}
+	\begin{center}
+		\begin{small}
+			\begin{tabular}{l|l}
+                Systematic                                     & $1\sigma$ value                 \\[2mm] \hline
+                \rule{0pt}{1.1\normalbaselineskip}\textbf{Quasielastic}                          &                                 \\[2mm]
+                Axial mass for CCQE                            & $^{+0.25}_{-0.15}~\mathrm{GeV}$ \\[2mm]
+                CCQE vector form factor shape                  & N/A                             \\[2mm]
+                Fermi surface momentum for Pauli blocking      & $\pm 30\%$                      \\[2mm] \hline
+                \rule{0pt}{1.1\normalbaselineskip}\textbf{Low $W$}                               &                                 \\[2mm]
+                Axial mass for CC resonance                    & $\pm 0.05 ~ \mathrm{GeV}$       \\[2mm]
+                Vector mass for CC resonance                   & $\pm 10\%$                      \\[2mm]
+                $\theta_{\pi}$ distribution for $\Delta$ decay & N/A                             \\[2mm] \hline
+                \rule{0pt}{1.1\normalbaselineskip}\textbf{High $W$ (BY model)}                   &                                 \\[2mm]
+                $A_{\mathrm{HT}}$                              & $\pm 25\%$                      \\[2mm]
+                $B_{\mathrm{HT}}$                              & $\pm 25\%$                      \\[2mm]
+                $C_{v1u}$                                      & $\pm 30\%$                      \\[2mm]
+                $C_{v2u}$                                      & $\pm 40\%$                      \\[2mm] \hline
+                \rule{0pt}{1.1\normalbaselineskip}\textbf{Other neutral current}                 &                                 \\[2mm]
+                Axial mass for NC resonance                    & $\pm 10\%$                      \\[2mm]
+                Vector mass for NC resonance                   & $\pm 5\%$                       \\[2mm] \hline
+                \rule{0pt}{1.1\normalbaselineskip}\textbf{Intra-nuclear}                         &                                 \\[2mm]
+                Nucleon charge exchange                        & $\pm 50\%$                      \\[2mm]
+                Nucleon elastic reaction                       & $\pm 30\%$                      \\[2mm]
+                Nucleon inelastic reaction                     & $\pm 40\%$                      \\[2mm]
+                Nucleon absorption                             & $\pm 20\%$                      \\[2mm]
+                Nucleon $\pi$-production                       & $\pm 20\%$                      \\[2mm]
+                $\pi$ charge exchange                          & $\pm 50\%$                      \\[2mm]
+                $\pi$ elastic reaction                         & $\pm 10\%$                      \\[2mm]
+                $\pi$ inelastic reaction                       & $\pm 40\%$                      \\[2mm]
+                $\pi$ absorption                               & $\pm 20\%$                      \\[2mm]
+                $\pi$ $\pi$-production                         & $\pm 20\%$                     
+            \end{tabular}
+		\end{small}
+	\end{center}
+	\label{tab:xsec_genie_systs}
+\end{table}
+
+% Nuclear model
+In this default \texttt{GENIE} configuration, the initial state of the nucleons is described by the Bodek-Ritchie global Fermi gas model \cite{Bodek1980}. The model is known give a poor agreement whe compared to neutrino-nucleon data \cite{Wilkinson2016}. Because of the limitations of the model, the current versions of \texttt{GENIE} use the local Fermi gas approach, which takes into account the correlation between the momentum of the nucleons and their location within the nucleus.
+
+% CCQE
+For the CCQE events, the dominant model uncertainties arise from the axial form factor of the nucleon, for which a dipole parametrisation is used, and the nuclear correlation effects computed using the random phase approximation (RPA). In the analysis, a parametrisation of the Valencia RPA effect \cite{Nieves2011} is used. This consists of a third-order Bernstein polynomial up to $Q^{2} = 1.2 ~ \mathrm{GeV}^{2}$ followed by an exponential decay (BeRPA), originally proposed by the T2K collaboration \cite{T2K2018}.
+
+\begin{table}[t]
+	\caption[Neutrino interaction systematic parameters used in the DUNE TDR LBL analysis not present in \texttt{GENIE}.]{Neutrino interaction systematic parameters used in the DUNE TDR LBL analysis not present in \texttt{GENIE}. I have omitted the parameters only relevant for the FD. Table adapted from Ref. \cite{DUNE2021}.}
+	\begin{center}
+		\begin{small}
+			\begin{tabular}{l|l|l}
+                Systematic         & Mode        & Description                         \\[2mm] \hline
+                \rule{0pt}{1.1\normalbaselineskip}BeRPA              & $1p1h$/QE   & Nuclear model suppression           \\[2mm]
+                ArC2p2h            & $2p2h$ Ar/C   & Electron scattering SRC pairs       \\[2mm]
+                $E_{2p2h}$         & $2p2h$        & $2p2h$ energy dependence            \\[2mm]
+                CC non-resonant    & CC DIS $1\pi$ & $\nu + n/p \rightarrow \ell + 1\pi$ \\[2mm]
+                Other non-resonant & DIS $N\pi$    & $1 < W < 5 ~ \mathrm{GeV}/c^{2}$    \\[2mm]
+                NC normalisation   & NC            & $\pm 20\%$ to all NC events at the ND
+            \end{tabular}
+		\end{small}
+	\end{center}
+	\label{tab:xsec_non_genie_systs}
+\end{table}
+
+% CCMEC (2p2h)
+The $2p2h$ interactions are included using the Valencia model \cite{Nieves2011}, with an additional correction following the observation of an underprediction of these events in MINERvA \cite{MINERvA2015}. Additional uncertainties for the energy dependence of the missing strength were added. Also, the uncertainties in the scaling from carbon to argon are included, based on measurements of electron scattering off short-range correlated (SRC) nucleon pairs on multiple targets \cite{Colle2015}.
+
+% CCRES
+In this version of \texttt{GENIE}, the Rein-Sehgal model describes the single pion resonant production events \cite{Rein1980}. It includes 16 different resonances, with no interference between them. Two parameters account for the uncertainties on the axial and vector masses of the resonances. In subsequent \texttt{GENIE} tunes, like the one used in the studies presented in this Chapter, the Berger-Sehgal model is used \cite{Berger2007}. This is an improved version of the Rein-Sehgal model, which includes the lepton mass effects in the calculations.
+
+% DIS (BY and NOvA)
+The Bodek-Yang parametrisation is used to describe the DIS events \cite{Bodek2002}. The parameters $A_{\mathrm{HT}}$ and $B_{\mathrm{HT}}$ account for higher twist effects in the scaling variable, while $C_{v1u}$ and $C_{v2u}$ control the form of the valence quark $K$ factors. For the analysis, the uncertainties on the values of these parameters are taken into consideration. Also, due to the difficulties of \texttt{GENIE} at describing the transition region between RES and DIS events, a set of systematic parameters affecting the different non-resonant pion production channels were developed, following the example of NOvA \cite{Sanchez2018}. There are independent parameters for the interactions on protons and neutrons, except for the CC DIS $1\pi$ case where they are merged. All start with an uncertainty of $50\%$ for $W \leq 3~\mathrm{GeV/c^{2}}$, which linearly decreases until reaching a $5\%$ at $W = 5~\mathrm{GeV/c^{2}}$.
+
+% NC normalisation
+For the TDR analysis, an additional $20\%$ normalisation uncertainty was added to all NC events in the ND. It was implemented to understand if the NC events passing the selection cuts affected the results of the analysis \cite{DUNE2021}.
+
+% INTRANUKE
+Finally, the effective intranuclear transport model (often denoted as $hA$) is a part of \texttt{GENIE}, implemented in the \texttt{INTRANUKE} module. \texttt{GENIE} features a large number of parameters for the uncertainties on the intranuclear cascade model, which are summarised in the last portion of Tab. \ref{tab:xsec_genie_systs}. In following \texttt{GENIE} releases, updated versions of the \texttt{INTRANUKE} model are used.
+
+% Final thoughts
+Although part of this cross section systematic treatment is outdated, as the tunes currently used feature different models, it gives a good idea of what systematic effects are relevant for the different measurements we may want to perform in the future. At the moment, a significant effort is channeled to the creation of new tunes specifically tailored for DUNE, including the development of parametrisations particularly relevant for ND-GAr.
 
 \subsection{Detector uncertainties}
