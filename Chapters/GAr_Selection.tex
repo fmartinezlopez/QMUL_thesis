@@ -619,3 +619,39 @@ Finally, the effective intranuclear transport model (often denoted as $hA$) is a
 Although part of this cross section systematic treatment is outdated, as the tunes currently used feature different models, it gives a good idea of what systematic effects are relevant for the different measurements we may want to perform in the future. At the moment, a significant effort is channeled to the creation of new tunes specifically tailored for DUNE, including the development of parametrisations particularly relevant for ND-GAr.
 
 \subsection{Detector uncertainties}
+
+% Introduction
+The DUNE ND CDR \cite{DUNE2021NDCDR} presents a number of studies on the performance of ND-GAr. These were based on the reference design described in section \ref{sec:mcnd}. Because the detector is still in an R\&D stage, with the design continually evolving, these performance metrics will need to be revisited in the future. However, they still provide valuable information. These studies help understand what detector requirements are needed to achieve the physics goals of the experiment, and on what design aspects we need to improve.
+
+% Spatial resolution
+Since the reference design of ND-GAr repurposes the ALICE MWPCs and other hardware components, the ALICE TPC operation experience point of reference for the spatial resolution performance. They reported a single hit resolution of $0.25~\mathrm{mm}$ and $1.50~\mathrm{mm}$ in the directions perpendicular and parallel to the drift direction, respectively \cite{ALICE2006}. Nevertheless, the MWPCs are not the leading option for the charge readout anymore. Current efforts focus on the study of the effects of different pixelisation choices. of the GEMs setups.
+
+% Two-track separation
+For other performance metrics, a fairer comparison for the ND-GAr HPgTPC could be the PEP-4. It operated with a 80:20 $\mathrm{Ar}$:$\mathrm{CH}_{4}$ mixture at $8.5~\mathrm{bar}$, achieving a two-track separation of $1~\mathrm{cm}$ \cite{Stork1982,Aihara1983}. This metric is particularly relevant in our case, as the neutrino interaction vertex can be an area of very high track multiplicity. Thus, our track separation capabilities will have a direct impact on the primary vertex identification and resolution. There are several difference between our HPgTPC and PEP-4. The operating pressure of ND-GAr will be higher, and the gas mixture likely to contain a higher fraction of Ar.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.90\linewidth]{Images/GAr_selection/length_dEdx_resolution_vs_length.pdf}
+    \caption[Estimated $\mathrm{d}E/\mathrm{d}x$ resolution as a function of the track length for true muons and protons in a $\nu_{\mu}$ CC sample.]{Estimated $\mathrm{d}E/\mathrm{d}x$ resolution as a function of the track length for true muons (left panel) and protons (right panel) in a $\nu_{\mu}$ CC sample.}
+    \label{fig:dEdx_resolution_vs_length}
+\end{figure}
+
+% Energy resolution
+In terms of the ionisation measurement, both the experience from ALICE and PEP-4 are relevant, as this depends on the readout and the running conditions (pressure and gas mixture). They obtained resolutions of $4.5\%$ and $3.0\%$ for typical track lengths of $160$ and $75~\mathrm{cm}$, respectively. According to previous studies on the $\mathrm{d}E/\mathrm{d}x$ resolution in gaseous detectors \cite{Lehraus1983}, ND-GAr can achieve a $2\%$ resolution for a typical track length of $200~\mathrm{cm}$. Figure \ref{fig:dEdx_resolution_vs_length} shows the values of the resolution I estimate for muons (left panel) and proton (right panel) tracks with different lengths, using the procedure described in section \ref{section:dEdx}.
+
+% Tracking studies
+The tracking capabilities of ND-GAr were studied in the context of $\nu_{\mu}$ CC interactions. Using a sample of reconstructed tracks from true muons and charged pions, the tracking efficiency was estimated to be above $90\%$ for momenta $\geq 40 ~ \mathrm{MeV}/c$, with it steadily rising with the momentum. As a function of the angle with respect to the beam direction, the efficiency was almost flat for particles with $p\geq 200 ~ \mathrm{MeV}/c$. In the case of protons, the tracking performs for kinetic energies $\geq 20 ~ \mathrm{MeV}$. A machine learning algorithm is being developed for low energy proton track identification near the interaction vertex. Preliminary results show an efficiency of $30\%$ at $5 ~ \mathrm{MeV}$ for this method.
+
+% Momentum resolution
+The same samples used for the tracking studies were employed to estimate the momentum resolution. The momentum is computed from the curvature of the tracks in the magnetic field, and is therefore limited by the track length in the direction perpendicular to the field. Focusing on the tracks associated to true muons, a double Gaussian fit reveled a width of $2.7\%$ and $12\%$ for the core and tails of the momentum distribution. This same study determined the 3D angular resolution in the HPgTPC to be $0.80^{\circ}$.
+
+The main source of uncertainty in the momentum measurement is the value of the magnetic field. The magnetic field simulations indicate that the overall uncertainty on the central field value is $< 0.05 \%$. A preliminary study investigated the use of $K_{s}^{0}$ decays in the HPgTPC to measure any deviations of the magnetic field from its nominal $0.5 ~ \mathrm{T}$ value. This showed that even a magnetic field bias of $1\%$ will shift the reconstructed invariant mass distribution significantly.
+
+% ECal performance
+The results presented for the ECal in Ref. \cite{DUNE2021NDCDR} use an outdated version of the geometry, where the entire ECal sits outside of the pressure vessel and the layers consist of $5~\mathrm{mm}$ of scintillator and $2~\mathrm{mm}$ of Cu. The sample used consists of single photons in a $20^{\circ}$ cone aligned with the beam direction. In the simulation, an energy threshold of $200~\mathrm{keV}$ and a time resolution of $0.25~\mathrm{ns}$ are assumed.
+
+The energy resolution of the photons is obtained from a Gaussian fit. The resulting resolutions are then fitted to a function of the form:
+\begin{equation}
+    \frac{\sigma_{E}}{E} = \frac{A}{\sqrt{E}} \oplus \frac{B}{E} \oplus C,
+\end{equation}
+where $A$ is the stochastic term, $B$ the noise term and $C$ the constant term. The best fit finds the values $A=6.1\%$, $B=1.6\%$, and $C=4.5\%$. The photon angle is estimated using a PCA analysis of the associated ECal cluster, taken to be the direction of the first principal component. The angular resolution is computed from a Gaussian fit to the core of the distribution. As a function of the photon energy, the values obtained are $\frac{8.17^{\circ}}{\sqrt{E}} + 4.18^{\circ}$. Different arrangements of the layers and alternative absorber choices may improve these results.
