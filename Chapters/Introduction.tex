@@ -2,22 +2,28 @@
 \label{chapter:introduction}
 
 % The SM and what it can't explain
-The Standard Model of particle physics (SM) has provided a deep understanding of the electromagnetic, weak and strong interactions, and over the past decades it has passed all kind of precision tests. However, the SM by itself can not explain certain observed phenomena, such as the baryon asymmetry of the Universe, the nature of Dark Matter (DM), or the origin of neutrino masses.
+The Standard Model (\gls{sm}) of particle physics \cite{Glashow1961,Weinberg1967,Salam1968} has provided a deep understanding of the electromagnetic, weak and strong interactions, and over the past decades it has passed all kind of precision tests \cite{Erler2019}. However, the SM by itself can not explain certain observed phenomena, such as the baryon asymmetry of the universe \cite{Canetti2012}, the existence of Dark Matter (DM) \cite{Bertone2004}, or the origin of neutrino masses \cite{King2014}.
+
+% CP violation
+One of the biggest puzzles in physics nowadays is how the universe came to be matter-dominated. Following the Big Bang, matter and antimatter were created in equal amounts. A. D. Sakharov described what are the necessary conditions to generate a matter-antimatter asymmetry in the early universe \cite{Sakharov1967}. One of them is the existence of interactions that violate the CP symmetry. It has already been established that the amount of CP violation in the quark sector is not enough to generate the baryon asymmetry \cite{Gavela1993}. Leptons could contribute to the CP violation through the neutrino oscillation mechanism \cite{Akhmedov1998}. However, there is no experimental evidence for this so far.
+
+% Dark Matter
+Another yet to be solved mystery of modern physics concerns the nature of DM. From astrophysical observations (see Ref. \cite{Bertone2004} and references therein), we are aware of the existence of some unknown matter which only interacts gravitationally with other particles. Usually, extensions of the SM include feasible DM candidates. These are usually very stable, heavy particles with small interactions (if any) with SM particles. These states are known as weakly interacting massive particles (WIMPs) \cite{Lee1977,Jungman1995}. Experiments looking for DM have set the interaction cross section between DM and SM particles to be very small for DM masses below 1 TeV \cite{Arcadi2024}.
 
 % DUNE
 Among other next generation particle experiments, the Deep Underground Neutrino Experiment (DUNE) stands out. Conceived as a neutrino oscillation experiment, it will provide definitive answers to different open questions in the neutrino sector. Its main goals are the discovery of CP violation in the leptonic sector and the determination of the neutrino mass ordering \cite{DUNE2020TDR1}. It will also provide precision measurements of the oscillation parameters within the three-flavour picture.
 
-The DUNE detectors will also search for baryon-number violation and neutrinos originated from supernova explosions (SNB). This broad physics scope requires a superb performance of the detectors, which can be used to look for other BSM phenomena. Its near detector complex , allowing for a rich neutrino cross section programme.
+The DUNE detectors will also search for baryon-number violation and neutrinos originated from supernova explosions. This broad physics scope requires a superb performance from the detectors, which can also be used to look for other BSM phenomena. Moreover, its near detector complex will sit next to the most powerful neutrino beam to date, allowing for a rich neutrino cross section programme.
 
 % One paragraph summary of each topic covered
 % DUNE FD DAQ - Matched filter
-In this thesis, I explore three different aspects of DUNE. Focusing on the data acquisition system of the far detector, I start by proposing a method to enhance the sensitivity of the online processing to low energy events. The idea is to modify the processing chain in order to have more information available to form trigger decisions. I motive this new approach using both ProtoDUNE data and Monte Carlo samples, and had the opportunity to test it in a real setup.
+In this thesis, I explore three different aspects of DUNE. Focusing on the data acquisition system of the far detector, I start by proposing a method to enhance the sensitivity of the online processing to low energy events. The idea is to modify the processing chain in order to have more information available to form trigger decisions. I motivate this new approach using both ProtoDUNE data and Monte Carlo (MC) samples, as well as with the results from a test in a real detector setup.
 
 % DUNE FD BSM - Solar DM
 Then, I investigate the potential of detecting neutrino fluxes from DM annihilations inside the Sun with DUNE. Although this is the territory of the large volume neutrino telescopes, a detector with the high resolution and pointing capabilities of the DUNE FD can provide complementary information in certain regimes. I present here the results of a preliminary analysis, showing the projected sensitivities for the general case and two particular DM scenarios.
 
 % DUNE ND sim/reco - ND-GAr particle ID
-Finally, I discuss my work on the reconstruction of ND-GAr, the gaseous argon component of the DUNE ND. my efforts towards a particle identification strategy in the detector first event selection studies using fully reconstructed events
+Finally, I discuss my work on the reconstruction of ND-GAr, the gaseous argon component of the DUNE ND. These efforts were focused towards the development of the particle identification strategy in the detector. Following a series of additions and upgrades in the reconstruction, I make use of that to perform the first event selection studies with fully reconstructed events in this detector.
 
 % Thesis overview
 % Neutrino physics
@@ -27,10 +33,13 @@ This thesis opens with an overview of the status of neutrino physics in Chapter 
 Chapter \ref{chapter:dune} introduces DUNE, its physics programme and various components. I give detail descriptions of the LBNF beamline, the near detector and the far detector designs. I also the current staging plans for DUNE, which 
 
 % Matched filter
-In Chapter \ref{chapter:matched_filter} I start by reviewing how the trigger primitives, the basic building blocks of the DUNE far detector trigger chain, are formed. present the studies I performed 
+In Chapter \ref{chapter:matched_filter} I start by reviewing how the trigger primitives (\gls{tp}s), the basic building blocks of the DUNE far detector trigger chain, are formed. I then motive how to use the filtering to enhance the TP generation in the induction channels. I describe the concept of matched filter, and how to optimise it using ProtoDUNE-SP data. I use different MC samples to study its performance, and assess how it improves the hit finding. In the end, I present the results of the tests we performed at the VD ColdBox setup at CERN, were for the first time we collected TP data with a matched filter.
+
+%Solar DM
+The solar DM analysis is presented in Chapter \ref{chapter:dm_analysis}. After reviewing the theoretical for the solar DM capture and how capture and annihilation rates are related, the analysis framework . I focus on the event selection based on two topologies: high-energy DIS events and low-energy $1\mu1p$ QE events. I use these to extract projected sensitivities for the DM-nucleon scattering cross section. Additionally, I discuss the of DUNE in two specific DM models. a discussion of the systematic uncertainties relevant for this analysis.
 
 % ND-GAr PID
-Chapter \ref{chapter:garsoft_pid}
+Chapter \ref{chapter:garsoft_pid} of GArSoft, the simulation and reconstruction software of ND-GAr. 
 
 % ND-GAr selection
 Chapter \ref{chapter:gar_selection}
