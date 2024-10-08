@@ -10,6 +10,7 @@ As discussed previously, it is necessary to evaluate the capabilities of ND-GAr 
 In this Chapter, I present the results of a number of preliminary studies focused on the event selection in ND-GAr, particularly the $\nu_{\mu}$ CC selection and the pion tagging strategies. I also investigate the neutrino energy reconstruction, as well as the systematic uncertainties relevant for our detector.
 
 \section{Data sample}
+\label{sec:gar_data}
 
 For the event selection studies I used a MC sample consisting of $10^{5}$ FHC neutrino interaction events inside the HPgTPC volume. The version of \texttt{GENIE} used was \texttt{v3_04_00}, with the \texttt{G18} tune. This is a preliminary version of the re-tune produced from CCQE, CC$1\pi$, CC$2\pi$, and CC inclusive bubble chamber cross section data \cite{GENIE2021}. It uses the local Fermi gas as a description of the nuclear model. The quasielastic-like events are described by the Nieves quasielastic \cite{Nieves2004} and Valencia $2p2h$ \cite{Nieves2011} models. The Berger-Seghal model \cite{Berger2007,Berger2008} is used for the resonant and coherent pion production. As in all the \texttt{GENIE} tunes, the Bodek-Yang model \cite{Bodek2002} describes the DIS interactions. Finally, the FSI are described using the effective intranuclear transport model in INTRANUKE.
 
@@ -47,6 +48,7 @@ Looking forward, these sort of small samples are useful to prepare for launching
 The latest PRISM plan requires $1.50 ~ \mathrm{POT} \cdot \mathrm{years}$ of data on-axis, followed by $0.25 ~ \mathrm{POT} \cdot \mathrm{years}$ at each off-axis position ($2$, $4$, $8$, $12$, $16$, $20$, $24$, and $28~\mathrm{m}$), both for FHC and RHC mode. This implies that a full on-axis ND-GAr production will require a total of $2.85 \times 10^{21}~\mathrm{POT}$ for both horn currents. The production of these samples is necessary to understand the impact of ND-GAr on the LBL sensitivities, and the studies presented here should be considered as a first step towards the realisation of such analysis.
 
 \section[\texorpdfstring{$\nu_{\mu}$}{numu} CC selection]{\boldmath\texorpdfstring{$\nu_{\mu}$}{numu} CC selection}
+\label{sec:gar_numu_cc}
 
 In a $\nu_{\mu}$ CC inclusive selection, the signal topology we look for is a neutrino-induced muon with or without other final state particles. Here, I also require the neutrino vertex to be located inside the fiducial volume (FV) of ND-GAr.
 
@@ -281,6 +283,7 @@ A byproduct of selecting the primary lepton in the interaction is the position o
 \end{comment}
 
 \section{Charged pion identification}
+\label{sec:gar_charged_pions}
 
 Now that I have checked the robustness of the proposed $\nu_{\mu}$ CC selection, it can be used as a starting point for other, more convoluted, selections. One of the priorities of ND-GAr, as mentioned previously, is the identification of pions. With its lower tracking thresholds, ND-GAr is expected to do better regarding $\pi^{\pm}$ identification than the traditional LArTPCs, like ND-LAr. Moreover, it can make use of the different detector subcomponents to tag the charged pions.
 
@@ -427,6 +430,7 @@ A comparison between the true and the reconstructed values of the pion kinetic e
 One can also study the performance of the pion selection as a function of the truth pion kinematics. Fig. \ref{fig:1pion_kin_efficiency} shows the selection efficiency versus the true kinetic energy (left panel) and the angle between the true primary pion and muon (right panel). The efficiency is computed from the events with a single true and reconstructed pion, comparing their number to the total of events with one true pion. Notice how the efficiency, although it starts with relatively low values, plateaus around $0.70$ quickly after $0.20~\mathrm{GeV}$. In terms of the pion-muon angle, the efficiency looks relatively flat, only dropping slightly towards the back-to-back case.
 
 \section{Neutral pion identification}
+\label{sec:gar_neutral_pions}
 
 The $\nu_{\mu}$ CC selection can also be used as a stepping stone for the identification of neutral pions. Although these particles do not leave any traces in the HPgTPC, using a combination of the different detectors within ND-GAr. Being able to tag the neutral pions is a valuable asset for the estimation of the reconstructed neutrino energy, as both their kinetic and mass components can then be added in the calculation.
 
@@ -475,6 +479,7 @@ This is a robust method to identify the photon pair from the $\pi^{0}$ decay. Ho
 This approach can be complemented with the identification of the secondary vertices from the $e^{+}e^{-}$ conversions. This will make it possible to cover the cases when either one or both photons convert in the HPgTPC. In those cases, one can try pairing the $e^{+}e^{-}$ with unassociated activities in the ECal, or matching pairs of secondary vertices. However, this will require further work on the reconstruction, and thus falls out of the scope of this analysis.
 
 \section{Neutrino energy reconstruction}
+\label{sec:gar_energy}
 
 In a neutrino-nucleus CC interaction, where alongside the charged lepton $N$ nucleons where knocked out and $M$ mesons produced, the reconstructed neutrino energy can be computed as:
 \begin{equation}
@@ -517,6 +522,7 @@ I also compared the reconstructed energies to the true energy of the neutrino. F
 \end{figure}
 
 \section{Systematic uncertainties}
+\label{sec:gar_systematics}
 
 Although the implementation and study of the systematic uncertainties relevant for ND-GAr is out of the scope of this preliminary analysis, in this section I give an extended overview of the topic. can be classified in three categories: neutrino flux uncertainties, neutrino-nucleus interaction model uncertainties, and detector response uncertainties.
 

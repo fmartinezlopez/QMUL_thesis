@@ -9,7 +9,7 @@ The DAQ system is responsible of what data will be collected in the DUNE FD. The
 In this Chapter, I present of a possible method to improve the sensitivity of the DUNE FD by enhancing the production of hits in the online processing. This is possible thanks to a more efficient filter strategy, the matched filter, which benefits the induction channels of the detector.
 
 \section{Motivation}
-\label{sec:2.1}
+\label{sec:matched_filter_motivation}
 
 The lowest-level objects that are formed within the DUNE FD DAQ system are the so-called trigger primitives (TPs). This represent the hits on a channel, and are used as input to the rest of the DAQ trigger chain. The TPs are formed in the hit finder chain. A schematic representation of it is shown in Fig. \ref{fig:tpg_chain}. This chain takes the raw ADC data from the detector, removes the constant pedestal of the signal using a dynamical median estimation method, applies a filter to the signal, and tries to find peaks over a certain threshold. This peaks form the TPs, which contain information such as the start and end time over the threshold, the maximum ADC value and the corresponding ADC integral. Currently, there are two implementations of the hit finder chain, one firmware-based and other software-based.
 
@@ -35,12 +35,12 @@ A possible improvement of the current hit finder chain could require optimising 
 The goal is to implement a better finite-impulse response filter design and to evaluate its performance relative to the current filter. To do so, we need to take into account the limitations of the firmware: the FIR filter shall have maximum 32 coefficients (so-called taps) whose values are 12-bit unsigned integers. Although it is technically possible to include non-integer coefficients, it would be a technical challenge as we have 40 FIR instances per APA, as there are 4 FIR per optical link and 10 optical links per APA. With these restrictions, the task is to provide a set of 32 coefficients which yield an optimal filter performance for the induction wires. A solution compatible with the software hit finder implementation is not considered, due to its current limitations concerning the filtering stage.
 
 \section{Signal-to-noise ratio definition}
-\label{sec:A.1}
+\label{sec:matched_filter_sn_definition}
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=1\linewidth]{Images/Matched_Filter/waveform_example_raw}
-	\caption{\textit{Left panel: Zoomed unfiltered waveform corresponding to channel $7840$ from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} (blue line). The green dashed lines mark the region $\pm3\sigma_{raw}$. The resulting noise waveform is also shown (red line). Top right panel: ADC distribution for channel $7840$, where the green shaded region represents $\pm \sigma_{raw}$. Bottom right panel: noise ADC distribution for channel $7840$, where the green shaded region represents $\pm \sigma_{noise}$.}}
+	\caption[Example unfiltered waveform from a ProtoDUNE-SP raw data capture.]{Left panel: Zoomed unfiltered waveform corresponding to channel $7840$ from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} (blue line). The green dashed lines mark the region $\pm3\sigma_{raw}$. The resulting noise waveform is also shown (red line). Top right panel: ADC distribution for channel $7840$, where the green shaded region represents $\pm \sigma_{raw}$. Bottom right panel: noise ADC distribution for channel $7840$, where the green shaded region represents $\pm \sigma_{noise}$.}
 	\label{fig:adcs_nofir}
 \end{figure}
 
@@ -58,12 +58,12 @@ We can repeat this calculation now for the corresponding filtered waveform (usin
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=1\linewidth]{Images/Matched_Filter/waveform_example_fir}
-	\caption{\textit{Left panel: Zoomed filtered waveform corresponding to channel $7840$ from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} (blue line). The filter used was the current implementation of the low-pass FIR filter in \texttt{dtp-firmware}. The green dashed lines mark the region $\pm3\sigma_{raw}$. The resulting noise waveform is also shown (red line). Top right panel: ADC distribution for channel $7840$ after filtering, where the green shaded region represents $\pm \sigma_{raw}$. Bottom right panel: noise ADC distribution for channel $7840$ after filtering, where the green shaded region represents $\pm \sigma_{noise}$}}
+	\caption[Example filtered waveform from a ProtoDUNE-SP raw data capture.]{Left panel: Zoomed filtered waveform corresponding to channel $7840$ from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} (blue line). The filter used was the current implementation of the low-pass FIR filter in \texttt{dtp-firmware}. The green dashed lines mark the region $\pm3\sigma_{raw}$. The resulting noise waveform is also shown (red line). Top right panel: ADC distribution for channel $7840$ after filtering, where the green shaded region represents $\pm \sigma_{raw}$. Bottom right panel: noise ADC distribution for channel $7840$ after filtering, where the green shaded region represents $\pm \sigma_{noise}$}
 	\label{fig:adcs_fir}
 \end{figure}
 
 \section{Low-pass FIR filter design}
-\label{sec:A.2}
+\label{sec:matched_filter_fir}
 
 In general, when one uses a method to optimize the frequency response of a digital filter, such as the Parks-McClellan algorithm, one finds a set of $N$ real coefficients that give the best response for the specified pass-band and order of the filter \cite{McClellan2005}.
 
@@ -80,7 +80,7 @@ does not suppress that much the stop-band, in a similar way to the current imple
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.8\linewidth]{Images/Matched_Filter/filter_comp}
-	\caption{\textit{Power spectrum in decibels for the current implementation of the low-pass FIR filter in \texttt{dtp-firmware} (blue line), compared to the response of an optimal filter obtained using the Parks-McClellan algorithm for the same pass-band (red line). Also for comparison I include the spectrum of the optimal filter when taking only the integer part of the coefficients (red dashed line).}}
+	\caption[Power spectra for the current low-pass FIR filter and the optimal filter obtained using the Parks-McClellan algorithm.]{Power spectrum in decibels for the current implementation of the low-pass FIR filter in \texttt{dtp-firmware} (blue line), compared to the response of an optimal filter obtained using the Parks-McClellan algorithm for the same pass-band (red line). Also for comparison I include the spectrum of the optimal filter when taking only the integer part of the coefficients (red dashed line).}
 	\label{fig:filter_comp}
 \end{figure}
 
@@ -89,14 +89,14 @@ At this point, I tried to improve the performance of the FIR filter using the Pa
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=1\linewidth]{Images/Matched_Filter/pm_fir_opt.png}
-	\caption{\textit{Relative change in the S/N for the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44}, using different values of the cutoff frequency $f_{c}$ and the transition width $\delta f$. The optimal Chebyshev filters were applied using just the integer part of the coefficients given by the Parks-McClellan algorithm.}}
+	\caption[Relative change in the S/N of the ProtoDUNE-SP raw data capture for different values of the cutoff frequency $f_{c}$ and the transition width $\delta f$.]{Relative change in the S/N for the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44}, using different values of the cutoff frequency $f_{c}$ and the transition width $\delta f$. The optimal Chebyshev filters were applied using just the integer part of the coefficients given by the Parks-McClellan algorithm.}
 	\label{fig:fir_opt}
 \end{figure}
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=0.85\linewidth]{Images/Matched_Filter/pm_fir_perf}
-	\caption{\textit{Distribution of the relative change of the S/N on the different wire planes from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} after the optimal Chebyshev filter was applied. The filter was computed with the Parks-McClellan algorithm using a cutoff of $f_{c} = 0.068 \ \mathrm{ticks}^{-1}$ and a transition width $\delta f = 0.010 \ \mathrm{ticks}^{-1}$.}}
+	\caption[Distribution of the relative change of the S/N on the different wire planes after the optimal FIR filter was applied.]{Distribution of the relative change of the S/N on the different wire planes from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} after the optimal Chebyshev filter was applied. The filter was computed with the Parks-McClellan algorithm using a cutoff of $f_{c} = 0.068 \ \mathrm{ticks}^{-1}$ and a transition width $\delta f = 0.010 \ \mathrm{ticks}^{-1}$.}
 	\label{fig:fir_best}
 \end{figure}
 
@@ -107,14 +107,14 @@ Using the configuration which gives the best mean performance for the three plan
 The results I obtained optimising the low pass filter with the Parks-McClellan method are promising. Nonetheless, the improvement found is rather marginal so I wondered if there could be an alternative approach to the filtering problem which yields better outputs. At this point, I found a possible alternative in matched filters. By construction, this kind of filters offer the best improvement on the S/N.
 
 \section{Matched filters}
-\label{sec:2.4}
+\label{sec:matched_filter_matched_filter}
 
 In the context of signal processing, a matched filter is the optimal linear filter for maximising the signal-to-noise ratio (S/N) in the presence of additive noise, obtained by convolving a conjugated time-reversed known template with an unknown signal to detect the presence of the template in the signal \cite{Turin1960}.
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=1\linewidth]{Images/Matched_Filter/waveform_example_mf}
-	\caption{\textit{Left panel: Zoomed match filtered waveform corresponding to channel $7840$ from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} (blue line). The filter used was directly extracted from the data, being the $32$ values around the first peak in the original waveform. The green dashed lines mark the region $\pm3\sigma_{raw}$. The resulting noise waveform is also shown (red line). Top right panel: ADC distribution for channel $7840$ after match filtering, where the green shaded region represents $\pm \sigma_{raw}$. Bottom right panel: noise ADC distribution for channel $7840$ after match filtering, where the green shaded region represents $\pm \sigma_{noise}$}}
+	\caption[Example matched filtered waveform from a ProtoDUNE-SP raw data capture.]{Left panel: Zoomed match filtered waveform corresponding to channel $7840$ from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} (blue line). The filter used was directly extracted from the data, being the $32$ values around the first peak in the original waveform. The green dashed lines mark the region $\pm3\sigma_{raw}$. The resulting noise waveform is also shown (red line). Top right panel: ADC distribution for channel $7840$ after match filtering, where the green shaded region represents $\pm \sigma_{raw}$. Bottom right panel: noise ADC distribution for channel $7840$ after match filtering, where the green shaded region represents $\pm \sigma_{noise}$}
 	\label{fig:adcs_mf}
 \end{figure}
 
@@ -195,7 +195,7 @@ where $s$ is a reversed signal template sequence of length $N$ equal to the orde
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=1\linewidth]{Images/Matched_Filter/mf_fir_opt.png}
-	\caption{\textit{Relative improvement in the S/N for the raw data capture \texttt{felix-2020-07-17-21:31:44}, using the matched filter following the parametrisation in Eq. (\ref{2.4.13}). The black crosses in both panels denote the location of the maximum ratio value.}}
+	\caption[Relative change in the S/N for the ProtoDUNE-SP raw data capture for different values of $\delta$ and $\sigma$ from the matched filter parametrisation.]{Relative change in the S/N for the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} for different values of $\delta$ and $\sigma$ from the matched filter parametrisation in Eq. (\ref{2.4.13}). The black crosses in both panels denote the location of the maximum ratio value.}
 	\label{fig:mf_opt}
 \end{figure}
 
@@ -227,12 +227,12 @@ Although these results are by themselves great points in favour of the matched f
 		\centering
 		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/improvement_capture}
 	\end{subfigure}
-	\caption{\textit{Left panel: Optimal matched filter coefficients for the U (blue line) and V (red line) planes. The filters were computed with our parametrisation in Eq. (\ref{2.4.13}) for the parameter values $\delta = 0.035$, $\sigma = 0.191$ and $\delta = 0.018$, $\sigma = 0.191$ respectively. Right panel: Distribution of the relative change of the S/N on the two induction wire planes from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} after their respective optimal matched filters were applied.}}
+	\caption[Distribution of the relative change of the S/N on the induction planes from the ProtoDUNE-SP raw data capture after their respective optimal matched filters were applied.]{Left panel: Optimal matched filter coefficients for the U (blue line) and V (red line) planes. The filters were computed with our parametrisation in Eq. (\ref{2.4.13}) for the parameter values $\delta = 0.035$, $\sigma = 0.191$ and $\delta = 0.018$, $\sigma = 0.191$ respectively. Right panel: Distribution of the relative change of the S/N on the two induction wire planes from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} after their respective optimal matched filters were applied.}
 	\label{fig:mf_perf}
 \end{figure}
 
 \section{Monte Carlo studies}
-\label{sec:2.5}
+\label{sec:matched_filter_mc_studies}
 
 In order to further test the matched filter, the next step was to generate and process data samples using \textit{LArSoft} \cite{Church2013}. In this way, one can control the particle content of the samples, the orientation of the tracks and their energy, and therefore see how the matched filter behaves in various situations.
 
@@ -249,7 +249,7 @@ These were generated with the single particle gun and the Geant4 stage of the \t
 		\centering
 		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/gamma_length}
 	\end{subfigure}
-	\caption{\textit{Left panel: distributions of the particles track length in the liquid argon for the generated $E_{k} = 100 \ \mathrm{MeV}$ monoenergetic samples, electrons (blue), muons (red), protons (green) and neutral pions (purple). Right panel: distribution of the length of the longest photon in the neutral pion sample after the decay process $\pi^{0} \rightarrow \gamma\gamma$.}}
+	\caption[Distributions of the particles track length in the liquid argon for the generated single particle monoenergetic samples.]{Left panel: distributions of the particles track length in the liquid argon for the generated $E_{k} = 100 \ \mathrm{MeV}$ monoenergetic samples, electrons (blue), muons (red), protons (green) and neutral pions (purple). Right panel: distribution of the length of the longest photon in the neutral pion sample after the decay process $\pi^{0} \rightarrow \gamma\gamma$.}
 	\label{fig:lengths}
 \end{figure}
 
@@ -272,7 +272,7 @@ For the analysis of the resulting waveforms and truth values I used a custom set
 		\centering
 		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/3D_rotation}
 	\end{subfigure}
-	\caption{\textit{Left panel: schematic representation of the two new rotated reference frames used in this analysis (denoted as prime and double prime), viewed from the $yz$ plane. The magenta stack of lines represent the wires in the U plane, whereas the green lines correspond to the wires in the V plane. Right panel: 3D representation of the momentum of one of the generated monoenergetic muons (red arrow) in the original reference frame (black lines), along with the new reference frame used for the U plane waveforms (blue lines). In the $yz$ plane I added the projection of these three.}}
+	\caption[Schematic representation of the two rotated reference frames used in the analysis of the MC filter performance.]{Left panel: schematic representation of the two new rotated reference frames used in this analysis (denoted as prime and double prime), viewed from the $yz$ plane. The magenta stack of lines represent the wires in the U plane, whereas the green lines correspond to the wires in the V plane. Right panel: 3D representation of the momentum of one of the generated monoenergetic muons (red arrow) in the original reference frame (black lines), along with the new reference frame used for the U plane waveforms (blue lines). In the $yz$ plane I added the projection of these three.}
 	\label{fig:reference_frame}
 \end{figure}
 
@@ -281,7 +281,7 @@ Additionally, for the analysis of the samples it was necessary to use two differ
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.9\linewidth]{Images/Matched_Filter/larsoft_sn_hists.pdf}
-	\caption{\textit{Distributions of the mean S/N improvement per event for the corresponding sample after applying the matched filters. Here I separated the change in the U plane (blue)) and the V plane (red) channels. From top left to the right: muon, electron, proton and neutral pion. All the events have a fixed kinetic energy of $E_{k} = 100 \ \mathrm{MeV}$.}}
+	\caption[Distributions of the mean S/N change per event for the different MC samples after applying the matched filters.]{Distributions of the mean S/N change per event for the different MC samples after applying the matched filters. Here I separated the change in the U plane (blue) and the V plane (red) channels. From top left to the right: muon, electron, proton and neutral pion. All the events have a fixed kinetic energy of $E_{k} = 100 \ \mathrm{MeV}$.}
 	\label{fig:mono_summary_hist}
 \end{figure}
 
@@ -290,7 +290,7 @@ Fig. \ref{fig:mono_summary_hist} shows the distribution of the average S/N impro
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=0.9\linewidth]{Images/Matched_Filter/larsoft_muon_angular.pdf}
-	\caption{Angular dependence of the mean S/N and the S/N improvement, for the different monoenergetic samples considered (from top to bottom: electrons, muons, protons and neutral pions). The two columns on the left represent the values for the U plane waveforms. The top subplots show the mean S/N for raw (green) and filtered (red) waveforms whereas the bottom subplots depict the averaged S/N improvement (black).}
+	\caption[Angular dependence of the mean S/N and the S/N improvement for the monoenergetic muon sample.]{Angular dependence of the mean S/N and the S/N improvement for the monoenergetic muon sample. The top and bottom rows correspond to the U and V planes, respectively. The top subplots show the mean S/N for raw (blue) and filtered (red) waveforms whereas the bottom subplots depict the averaged S/N improvement (black).}
 	\label{fig:angular_muon}
 \end{figure}
 
@@ -318,7 +318,7 @@ Having these monoenergetic samples, one can also study the angular dependence of
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=0.9\linewidth]{Images/Matched_Filter/larsoft_electron_angular.pdf}
-	\caption{Angular dependence of the mean S/N and the S/N improvement, for the different monoenergetic samples considered (from top to bottom: electrons, muons, protons and neutral pions). The two columns on the left represent the values for the U plane waveforms. The top subplots show the mean S/N for raw (green) and filtered (red) waveforms whereas the bottom subplots depict the averaged S/N improvement (black).}
+	\caption[Angular dependence of the mean S/N and the S/N improvement for the monoenergetic electron sample.]{Angular dependence of the mean S/N and the S/N improvement for the monoenergetic electron sample. The top and bottom rows correspond to the U and V planes, respectively. The top subplots show the mean S/N for raw (blue) and filtered (red) waveforms whereas the bottom subplots depict the averaged S/N improvement (black).}
 	\label{fig:angular_electron}
 \end{figure}
 
@@ -337,7 +337,7 @@ Fig. \ref{fig:angular_electron} shows the corresponding angular dependence infor
 		\centering
 		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/evt_xz_90_yz_0_U}
 	\end{subfigure}
-	\caption{\textit{Selected consecutive waveforms corresponding to two monoenergetic $E_{k} = 100 \ \mathrm{MeV}$ muon events, one is parallel to the APA and to the wires in the U plane (left panel) and the other is normal to the APA plane and perpendicular to the U plane wires (right panel). The solid lines represent the raw waveforms whereas the dashed lines correspond to the waveforms after the matched filter was applied. The waveforms on the left panel have been scaled by a factor of $0.15$ to have similar amplitude to the ones on the right panel.}}
+	\caption[Waveforms for two muon events, one parallel to the APA and to the wires in the U plane and other normal to the APA plane and perpendicular to the U plane wires.]{Selected consecutive waveforms corresponding to two monoenergetic $E_{k} = 100 \ \mathrm{MeV}$ muon events, one is parallel to the APA and to the wires in the U plane (left panel) and the other is normal to the APA plane and perpendicular to the U plane wires (right panel). The solid lines represent the raw waveforms whereas the dashed lines correspond to the waveforms after the matched filter was applied. The waveforms on the left panel have been scaled by a factor of $0.15$ to have similar amplitude to the ones on the right panel.}
 	\label{fig:example_orientation}
 \end{figure}
 
@@ -355,13 +355,13 @@ As a little case of study, I selected two of the simulated $E_{k} = 100 \ \mathr
 		\centering
 		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/deltaPeak_SN_ratio}
 	\end{subfigure}
-	\caption{\textit{Left panel: peak asymmetry distribution for the case of the monoenergetic $E_{k} = 100 \ \mathrm{MeV}$ muon sample. Each value corresponds to a single bipolar signal peak from a channel in any event. The blue distribution represents the peaks on U plane channels, whereas the red corresponds to signal peaks in V wires. Right panel: relation between the mean peak asymmetry per event with the S/N for U channel waveforms from the $E_{k} = 100 \ \mathrm{MeV}$ muon sample. The top subplot shows the decimal logarithm of the mean S/N for the raw (red) and the matched filtered (blue) waveforms. The bottom subplot contains the mean S/N improvement ratio after the matched filter was applied.}}
+	\caption[Distribution of the peak asymmetry for the monoenergetic muon sample and dependence of the S/N change on the mean peak asymmetry of the event.]{Left panel: peak asymmetry distribution for the case of the monoenergetic $E_{k} = 100 \ \mathrm{MeV}$ muon sample. Each value corresponds to a single bipolar signal peak from a channel in any event. The blue distribution represents the peaks on U plane channels, whereas the red corresponds to signal peaks in V wires. Right panel: relation between the mean peak asymmetry per event with the S/N for U channel waveforms from the $E_{k} = 100 \ \mathrm{MeV}$ muon sample. The top subplot shows the decimal logarithm of the mean S/N for the raw (red) and the matched filtered (blue) waveforms. The bottom subplot contains the mean S/N improvement ratio after the matched filter was applied.}
 	\label{fig:asymmetry}
 \end{figure}
 
 \begin{table}[h!]
 	\centering
-	\caption{\textit{Characteristic parameters of the two monoenergetic muon events selected, relative to the U plane: projected angles in the $xz'$ and $y'z'$ planes, S/N values for the raw and filtered waveforms, mean improvement of the S/N and peak asymmetry.}}
+	\caption[Characteristic parameters of the two monoenergetic muon events selected for the peak asymmetry study.]{Characteristic parameters of the two monoenergetic muon events selected, relative to the U plane: projected angles in the $xz'$ and $y'z'$ planes, S/N values for the raw and filtered waveforms, mean improvement of the S/N and peak asymmetry.}
 	\begin{tabular}{l|llllll}
 		& $\theta_{xz'} \ (^{\circ})$ & $\theta_{y'z'} \ (^{\circ})$ & $\mathrm{S/N}_{\mathrm{raw}}$ & $\mathrm{S/N}_{\mathrm{MF}}$ & $\frac{\mathrm{S/N}_{\mathrm{MF}}}{\mathrm{S/N}_{\mathrm{raw}}}$ & $\Delta_{peak} \ (\mathrm{ADC})$ \\ \hline
 		High ("parallel") & -1.58                     & -77.76                     & 41.65       & 112.44      & 2.83                          & -35.73                                                          \\
@@ -390,7 +390,7 @@ These results suggest that events with poorer values of the mean S/N, usually as
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\linewidth]{Images/Matched_Filter/electron_k100_full_run_1_evt_3}
-	\caption{\textit{Raw data display in the plane time (in firmware ticks) vs. offline channel number for an $E_{k} = 100 \ \mathrm{MeV}$ electron event. The produced true hits are superimposed (black boxes) as well as the hits comming from the standard hit finder chain (blue circles) and the hit finder using the matched filter (green triangles).}}
+	\caption[Raw event display for an electron event showing the true, standard, and matched filter hits produced.]{Raw event display in the plane time (in firmware ticks) versus offline channel number for a $E_{k} = 100 \ \mathrm{MeV}$ electron event. The produced true hits are superimposed (black boxes) as well as the hits coming from the standard hit finder chain (blue circles) and the hit finder using the matched filter (green triangles).}
 	\label{fig:evthitcomp}
 \end{figure}
 
@@ -413,7 +413,7 @@ To quantify the performance of the two hit finder approaches, I use a classical 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.99\linewidth]{Images/Matched_Filter/hit_study_muon_scores_indct}
-	\caption{\textit{Dependence of the precision (blue), sensitivity (red) and $F_{1}$ (green) scores on the threshold values used in the hit finder, for the FIR (left panel) and matched filter (right panel) cases. The results were obtained after matching the hits to the true hits in the case of the isotropic muon sample with kinetic energy in the range $5$ to $100 \ \mathrm{MeV}$, taking only into account the induction plane channels. The points represent the mean value while the error bars indicate one standard deviation around that mean value.}}
+	\caption[Dependence of the precision, sensitivity, and $F_{1}$ scores on the threshold values used in the hit finder for the FIR and matched filters.]{Dependence of the precision (blue), sensitivity (red), and $F_{1}$ (green) scores on the threshold values used in the hit finder, for the FIR (left panel) and matched filter (right panel) cases. The results were obtained after matching the hits to the true hits in the case of the isotropic muon sample with kinetic energy in the range $5$ to $100 \ \mathrm{MeV}$, taking only into account the induction plane channels. The points represent the mean value while the error bars indicate one standard deviation around that mean value.}
 	\label{fig:threshold_opt}
 \end{figure}
 
@@ -446,7 +446,7 @@ One can see that the precision for the matched filter case is lower when the thr
 		\centering
 		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/hit_study_electron_sensitivity_30}
 	\end{subfigure}
-	\caption{\textit{Dependence of the averaged hit sensitivity on the kinetic energy of the events for the matched filter (blue) and standard (red) hits, for the case of the muon (left panel) and electron (right panel) samples, separated between U (top plots) and V (bottom plots) induction wire planes. The top subplots contain the hit sensitivities for the two hit finder alternatives, while the bottom subplots show the ratio between the two. The horizontal lines sit at the mean value and represent the size of the energy bins, while the vertical error bars indicate one standard deviation around that mean value.}}
+	\caption[Dependence of the averaged hit sensitivity on the kinetic energy of the events for the matched filter and standard hits, for the case of the muon and electron samples.]{Dependence of the averaged hit sensitivity on the kinetic energy of the events for the matched filter (blue) and standard (red) hits, for the case of the muon (left panel) and electron (right panel) samples, separated between U (top plots) and V (bottom plots) induction wire planes. The top subplots contain the hit sensitivities for the two hit finder alternatives, while the bottom subplots show the ratio between the two. The horizontal lines sit at the mean value and represent the size of the energy bins, while the vertical error bars indicate one standard deviation around that mean value.}
 	\label{fig:sensitivity_energy}
 \end{figure}
 
@@ -455,7 +455,7 @@ In Fig. \ref{fig:sensitivity_energy} I show the averaged hit sensitivity versus 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.99\linewidth]{Images/Matched_Filter/hit_study_electron_concurrence}
-	\caption{\textit{Distributions of the hit sensitivity in the U (top panels) and V (bottom panels) planes versus the hit sensitivity in the X plane, both for the standard hits (left panels) and the matched filter hits (right panels), in the case of the electron sample and a threshold of $30 \ \mathrm{ADC}$.}}
+	\caption[Distributions of the hit sensitivity in the U and V planes versus the sensitivity in the X plane for the standard hits and the matched filter hits in the electron sample.]{Distributions of the hit sensitivity in the U (top panels) and V (bottom panels) planes versus the hit sensitivity in the X plane, both for the standard hits (left panels) and the matched filter hits (right panels), in the case of the electron sample and a threshold of $30 \ \mathrm{ADC}$.}
 	\label{fig:electron_concurrence}
 \end{figure}
 
@@ -466,7 +466,7 @@ Another interesting observation is the different behaviors for muons and electro
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.99\linewidth]{Images/Matched_Filter/hit_study_electron_residuals}
-	\caption{\textit{Top panels: standard residual plots of the hit sensitivities between the X and U planes. Bottom panels: quantile-quantile plots of the hit sensitivity standard residuals between the X and U planes. In all cases, the left panel corresponds to the standard hits while the right panel represents the matched filter case, all from the electron sample with a $30 \ \mathrm{ADC}$ threshold.}}
+	\caption[Standard residuals and quantile-quantile plots for the hit sensitivity of the X and U planes.]{Top panels: standard residual plots of the hit sensitivities between the X and U planes. Bottom panels: quantile-quantile plots of the hit sensitivity standard residuals between the X and U planes. In all cases, the left panel corresponds to the standard hits while the right panel represents the matched filter case, all from the electron sample with a $30 \ \mathrm{ADC}$ threshold.}
 	\label{fig:electron_residuals}
 \end{figure}
 
@@ -488,6 +488,7 @@ All these results hint at the fact that the concurrence of hits across the wire 
 \end{figure}
 
 \section{VD ColdBox data taking}
+\label{sec:matched_filter_vdcoldbox}
 
 \begin{figure}[t]
     \centering

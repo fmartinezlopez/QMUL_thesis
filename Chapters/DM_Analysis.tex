@@ -1,5 +1,4 @@
-\chapter{DM searches with neutrinos from the Sun}
-\label{chapter:dm_analysis}
+\chapter{DM searches with neutrinos from the Sun}\label{chapter:dm_analysis}
 
 \begin{chapquote}{Leo Tolstoy, \textit{Anna Karenina}}
 	He stepped down, trying not to look long at her, as if she were the Sun, yet he saw her, like the Sun, even without looking.
@@ -12,7 +11,7 @@ The idea of detecting neutrino signals coming from the Sun's core to probe DM is
 In this Chapter, I try to demonstrate the capability of DUNE to constrain different DM scenarios. I used the neutrino fluxes arising from DM annihilations in the core of the Sun to compute the projected limits that DUNE would be able to set on the annihilation rates in the Sun and the DM scattering cross sections.
 
 \section{Gravitational capture of DM by the Sun}
-\label{sec:B.1}
+\label{sec:dm_analysis_theory}
 
 The Sun and the centre of the Earth are possible sources of DM annihilations, specially interesting because of their proximity. Their gravitational attraction ensured the capture of DM from the local halo through repeated scatterings of DM particles crossing them. Only neutrinos produced from DM annihilations can escape the dense interior of these objects. Therefore, neutrino telescopes are the most useful experimental layouts to pursue DM searches from their cores.
 
@@ -139,6 +138,7 @@ This can be regarded as the minimum testable mass one can reach using the annihi
 It was reported in Ref. \cite{Palomares2017} that, in the case of both SD and SI DM interactions off nuclei, this value ranges from $2$ to $4 \ \mathrm{GeV}$ depending on the specific scattering cross section value, compatible with the usual assumptions in the literature. What is interesting is the case of the electron capture. It was found that, when one applies a cutoff in the velocity distribution of the DM trapped in the Sun slightly below the escape velocity, the evaporation mass for the DM-electron interaction decreases remarkably. For a moderate choice of $v_{c}(r) = 0.9 v_{e}(r)$ one gets an evaporation mass of around $200$ to $600 \ \mathrm{MeV}$. This possibility opens a region of the parameter space that could be tested with neutrino detectors.
 
 \section{Neutrino flux from DM annihilations}
+\label{sec:dm_analysis_flux}
 
 When WIMPs annihilate inside the Sun a flux of high-energy neutrinos is expected from heavy quarks, gauge bosons and $\tau^{+}\tau^{-}$ final states, which decay before losing energy in the dense solar medium, as they will produce a continuum spectra up to $E_{\nu} \sim m_{\chi}$ (in the case of direct annihilation to neutrinos one would have a line at $E_{\nu} = m_{\chi}$) \cite{Rott2012}. This kind of signal has been extensively studied  in the literature, allowing to put strong limits on the SD WIMP-proton cross section for large $m_{\chi}$. However, the number of high-energy neutrinos per WIMP annihilation is small and the spectrum depends on the unknown final state. Moreover, background rejection is easier for large $m_{\chi}$ but neutrinos with $E_{\nu} \gtrsim 100 \ \mathrm{GeV}$ are significantly attenuated by interactions in the Sun.
 
@@ -147,6 +147,7 @@ Nevertheless, most WIMP annihilation final states eventually produce a low-energ
 These monoenergetic $\mathrm{MeV}$ neutrinos were previously considered undetectable but, due to the large yield, the known spectra and the modern advances in the detector technology, these low-energy neutrino flux can be a good probe of the SD WIMP-proton cross-section in standard solar WIMP capture scenario, as it is sensitive to low WIMP masses and insensitive to the particular final state. A good place to look for these signals are next-generation neutrino experiments such as DUNE.
 
 \section{Computing limits from solar neutrino fluxes}
+\label{sec:dm_analysis_limits}
 
 \begin{figure}[t]
 	\centering
@@ -200,7 +201,7 @@ where $\eta_{S}$ is the signal efficiency, $\Gamma_{A}^{eq}$ is the total annihi
 Knowing $N_{S}^{90}$ one can use the relation in Eq. (\ref{4.6}) to obtain $\Gamma_{A}^{eq,90}$ for different values of the DM mass. From there I can directly translate those values into the upper limits for DUNE on the DM scattering cross sections, for a given exposure. The relation between the annihilation rate and the DM-nucleon cross section comes from the equilibrium condition through the solar DM capture rate. The details of the evolution of the number of DM particles inside the Sun and the computation of the capture rates are discussed in App. \ref{sec:B.1}.
 
 \section{Example: Kaluza-Klein Dark Matter}
-\label{sec:B.2}
+\label{sec:dm_analysis_kk_dm}
 
 Even though there are plenty of BSM theories which provide viable dark matter candidates, Kaluza-Klein type of models \cite{Kaluza1921, Klein1926} within the universal extra dimensions (UED) paradigm naturally predict the existence of a massive, stable particle that can play the role of the dark matter. In the UED scenario all the SM fields can propagate in one or more compact extra dimensions \cite{Appelquist2000}, as opposed to the idea of brane worlds \cite{Arkani-Hamed1998, Randall1999}, where just gravity can propagate in the bulk while SM particles live at fixed points.
 
@@ -384,6 +385,7 @@ In Fig. \ref{fig:kk_xsection_sd_bounds} I show the projected sensitive for DUNE 
 From the experimental point of view, this estimation lacked a detailed simulation of the detector response and thus this must be consider as a mere optimistic sensitivity computation. However, it shows the potential of DUNE to constrain this kind of exotic scenarios, showing the region where it will be in a position to compete with other neutrino telescopes. A more detailed analysis is needed if I am to make a realistic estimation. Even though the region of the parameter space where DUNE would be sensitive to this particular model is quite constrained by collider searches \cite{Deutschmann2017} and other rare decay measurements \cite{Haisch2007, Freitas2008}, it still constitutes an alternative indirect probe.
 
 \section{High energy DM neutrino signals}
+\label{sec:dm_analysis_high_e_nu}
 
 \begin{figure}[t]
 	\centering
@@ -553,7 +555,7 @@ A pending question is what happens when we add the RES and MEC charged-current i
 \end{comment}
 
 \section{Example: Leptophilic Dark Matter}
-\label{sec:B.3}
+\label{sec:dm_analysis_leptophilic_dm}
 
 In general, the capture rate of DM particles by the Sun via interactions with electrons is several orders of magnitude smaller than the capture via DM-nucleus scattering. Thus, it would be sub-leading even when nucleon capture is loop suppressed. As I showed in Fig. \ref{fig:capture_rates}, the capture rate via scattering off electrons only surpasses the capture rates via DM-nucleons interactions for DM masses $\lesssim 100 - 500 \ \mathrm{MeV}$.
 
@@ -619,6 +621,7 @@ In Fig. \ref{fig:eft_bounds} (right panel) I show similar limits for the exclude
 With the present example, although it focuses on a very specific realisation of the DM interactions, I show the potential of DUNE to constrain exotic DM scenarios. Thanks to its low backgrounds and superb angular resolution DUNE will be able to help with the systematic searches for dark sectors physics.
 
 \section{Systematic uncertainties}
+\label{sec:dm_analysis_systematics}
 
 The estimation of the DM cross sections using neutrinos from WIMP annihilations inside the Sun is affected by systematic uncertainties from different sources. Surely, the atmospheric background estimation is also affected by systematic uncertainties. There are uncertainties common to both types of events, as well as others specific to each. In this section, I try to provide a comprehensive summary of the main sources of uncertainty for this analysis, which should be taken into account in any future extensions of the same.
 
