@@ -43,7 +43,7 @@ The symbol &#9745; indicates that comment(s) have been implemented for that chap
         * Vertical Drift
         * FD Data Acquisition System
 
-* Matched Filter approach to Trigger Primitives &#9744;
+* Matched Filter approach to Trigger Primitives &#9745;
     * Motivation
     * Signal-to-noise ratio definition
     * Low-pass FIR filter design
