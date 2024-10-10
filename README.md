@@ -1,4 +1,4 @@
-# Francisco's thesis (title TBC)
+# Expanding the Physics Reach of DUNE in the Near and Far Detectors
 
 ## Chapters
 
