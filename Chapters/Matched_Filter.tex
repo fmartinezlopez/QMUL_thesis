@@ -306,7 +306,7 @@ therefore:
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.9\linewidth]{Images/Matched_Filter/larsoft_muon_angular.pdf}
+	\includegraphics[width=0.9\linewidth]{Images/Matched_Filter/larsoft_muon_angular_alt.pdf}
 	\caption[Angular dependence of the mean S/N and the S/N improvement for the monoenergetic muon sample.]{Angular dependence of the mean S/N and the S/N improvement for the monoenergetic muon sample. The top and bottom rows correspond to the U and V planes, respectively. The top subplots show the mean S/N for raw (blue) and filtered (red) waveforms whereas the bottom subplots depict the averaged S/N improvement (black).}
 	\label{fig:angular_muon}
 \end{figure}
@@ -315,16 +315,16 @@ Having these monoenergetic samples, one can study the angular dependence of the 
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.9\linewidth]{Images/Matched_Filter/larsoft_electron_angular.pdf}
+	\includegraphics[width=0.9\linewidth]{Images/Matched_Filter/larsoft_electron_angular_alt.pdf}
 	\caption[Angular dependence of the mean S/N and the S/N improvement for the monoenergetic electron sample.]{Angular dependence of the mean S/N and the S/N improvement for the monoenergetic electron sample. The top and bottom rows correspond to the U and V planes, respectively. The top subplots show the mean S/N for raw (blue) and filtered (red) waveforms whereas the bottom subplots depict the averaged S/N improvement (black).}
 	\label{fig:angular_electron}
 \end{figure}
 
-Figure \ref{fig:angular_muon} shows the angular dependence of the S/N for the monoenergetic $E_{k}=100 \ \mathrm{MeV}$ isotropic muons, for the different induction planes and projections. The angles for each event are given by the components of the initial value of the momentum of the particles, taking the angles of the projections on the $xz$ and $yz$ planes with respect to the $z$ axis (more accurately, one needs to compute these angles twice for each event, a pair for the $xy'z'$ coordinate system and the other for the $xy''z''$, as explained previously). The top row shows the dependence on the angles corresponding to the U plane, i.e. $\theta_{xz'}$ and $\theta_{y'z'}$, whereas the bottom row shows the angular dependence viewed from the V plane, $\theta_{xz''}$ and $\theta_{y''z''}$. In each panel, the top subplot represents the mean values of the S/N for the raw (blue) and matched filtered (red) signals, and the bottom subplot the averaged S/N change (black). The solid lines represent the mean value obtained for the corresponding angular bin, whereas the semitransparent bands represent one standard deviation around the mean at each point.
+Figure \ref{fig:angular_muon} shows the angular dependence of the S/N for the monoenergetic $E_{k}=100 \ \mathrm{MeV}$ isotropic muons, for the different induction planes and projections. The angles for each event are given by the components of the initial value of the momentum of the particles, taking the angles of the projections on the $xz$ and $yz$ planes with respect to the $z$ axis (more accurately, one needs to compute these angles twice for each event, a pair for the $xy'z'$ coordinate system and the other for the $xy''z''$, as explained previously). The top row shows the dependence on the angles corresponding to the U plane, i.e. $\theta_{xz'}$ and $\theta_{y'z'}$, whereas the bottom row shows the angular dependence viewed from the V plane, $\theta_{xz''}$ and $\theta_{y''z''}$. In each panel, the top subplot represents the mean values of the S/N for the raw (blue) and matched filtered (red) signals, and the bottom subplot the averaged S/N change (black). The horizontal lines show the most probable value for the corresponding angular bin, obtained from a fit to a Landau distribution. The vertical lines represent the error in the parameter estimation.
 
-As expected, the S/N is in general higher when tracks are parallel to the APA (i.e. $\theta_{xz} \sim 0$) and lower when they are normal to the plane ($\theta_{xz} \sim \pm 90^{\circ}$). In the same way, tracks parallel to the wires ($\theta_{yz} \sim \pm 90^{\circ}$) tend to have higher S/N than those perpendicular to these ($\theta_{yz} \sim \pm 0$).
+Both for the raw and matched filtered samples, the S/N is lower for tracks that are normal to the APA ($\theta_{xz} \sim \pm 90^{\circ}$). Similarly, tracks parallel to the wires ($\theta_{yz} \sim \pm 90^{\circ}$) tend to have higher S/N than those perpendicular to these ($\theta_{yz} \sim 0$). The S/N improvement seems to follow similar trends for both projections in the two planes. In the $xz$ plane there is a slight preference for tracks with $\theta_{xz} \sim \pm 45^{\circ}$ (particularly in the U plane), whereas in $yz$ the S/N change plateaus around the central region.
 
-Figure \ref{fig:angular_electron} shows the corresponding angular dependence results for the $E_{k}=100 \ \mathrm{MeV}$ electrons sample. Notice that, in this case, the S/N behaviour discussed above does not hold. A possible explanation can be that, because most hits in these events are produced by the secondary particles generated in the EM shower, the signal peaks whose S/N ratios were computed do not correspond to the directional information of the primary electron.
+Figure \ref{fig:angular_electron} shows the corresponding angular dependence results for the $E_{k}=100 \ \mathrm{MeV}$ electrons sample. Although the S/N behaviour in this case is similar to what I observed for the muons, some differences are evident. A possible explanation can be that, because a significant fraction of the hits in these events are produced by the secondary particles generated in the EM shower, some of the S/N ratios do not correspond to the directional information of the primary electron. Even so, the S/N change distribution exhibits a consistent pattern and it is clear that the matched filter enhances the signal regardless of the electron direction.
 
 \begin{figure}[t]
 	\begin{subfigure}{0.5\textwidth}
@@ -361,9 +361,9 @@ As a case study, I select two of the simulated $E_{k} = 100 \ \mathrm{MeV}$ mono
 	\centering
 	\caption[Characteristic parameters of the two monoenergetic muon events selected for the peak asymmetry study.]{Characteristic parameters of the two monoenergetic muon events selected, relative to the U plane: projected angles in the $xz'$ and $y'z'$ planes, S/N values for the raw and filtered waveforms, mean improvement of the S/N and peak asymmetry.}
 	\begin{tabular}{l|llllll}
-		& $\theta_{xz'} \ (^{\circ})$ & $\theta_{y'z'} \ (^{\circ})$ & $\mathrm{S/N}_{\mathrm{raw}}$ & $\mathrm{S/N}_{\mathrm{MF}}$ & $\frac{\mathrm{S/N}_{\mathrm{MF}}}{\mathrm{S/N}_{\mathrm{raw}}}$ & $\Delta_{peak} \ (\mathrm{ADC})$ \\ \hline
-		High ("parallel") & -1.58                     & -77.76                     & 41.65       & 112.44      & 2.83                          & -35.73                                                          \\
-		Low ("normal")  & 76.92                     & -2.56                      & 8.07        & 25.46       & 3.12                          & -10.38                                                         
+		& $\theta_{xz'} \ (^{\circ})$ & $\theta_{y'z'} \ (^{\circ})$ & $\mathrm{S/N}_{\mathrm{raw}}$ & $\mathrm{S/N}_{\mathrm{MF}}$ & $\frac{\mathrm{S/N}_{\mathrm{MF}}}{\mathrm{S/N}_{\mathrm{raw}}}$ & $\Delta_{peak} \ (\mathrm{ADC})$ \\[2mm] \hline
+		\rule{0pt}{1.1\normalbaselineskip}High (``parallel'') & -1.58                     & -77.76                     & 41.65       & 112.44      & 2.83                          & -35.73                                                          \\[2mm]
+		Low (``normal'')  & 76.92                     & -2.56                      & 8.07        & 25.46       & 3.12                          & -10.38                                                         
 	\end{tabular}
 	\label{tab:case}
 \end{table}
