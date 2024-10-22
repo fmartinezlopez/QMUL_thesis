@@ -5,9 +5,9 @@
 \end{chapquote}
 
 %\noindent
-Ever since they were postulated in 1930 by Wolfgang Pauli to explain the continuous $\beta$ decay spectrum \cite{Pauli1930} and later found by F. Reines and C. Cowan at the Savannah River reactor in 1953 \cite{Reines1953}, neutrinos have had a special place among all other elementary particles. They provide a unique way to probe a wide range of quite different physics, from nuclear physics to cosmology, from astrophysics to colliders. Moreover, there is compelling evidence to believe that the study of neutrinos may be key to unveil different aspects of physics beyond the SM, difficult to test elsewhere.
+Ever since they were postulated in 1930 by Wolfgang Pauli to explain the continuous $\beta$ decay spectrum \cite{Pauli1930}, and later found by F. Reines and C. Cowan at the Savannah River reactor in 1953 \cite{Reines1953}, neutrinos have had a special place among all other elementary particles. They provide a unique way to probe a wide range of physics, from nuclear physics to cosmology, from astrophysics to colliders. Moreover, there is compelling evidence to believe that the study of neutrinos may be key to unveil different aspects of BSM physics, difficult to test elsewhere.
 
-In this Chapter, I will review the basics of neutrino physics, from its role within the SM to the main open questions related to the neutrino sector, paying special attention to the phenomenology of neutrino oscillations.
+In this Chapter, I review the basics of neutrino physics, from its role within the SM to the main open questions related to the neutrino sector, paying special attention to the phenomenology of neutrino oscillations.
 
 \section{Neutrinos in the SM}\label{sec:sm_and_nu}
 
@@ -26,7 +26,7 @@ Similarly, quarks also exist in both chirality states, and are grouped as:
 	\end{array}
 \end{equation}
 
-The fact that there are no right-handed neutrino fields implies that neutrinos are strictly massless within the SM. This restriction follows from the experimental observation that all neutrinos produced via weak interactions are pure left-handed helicity states (and similarly antineutrinos are pure right-handed states). The hypothetical existence of right-handed neutrinos could be indirectly inferred from the observation of non-zero neutrino masses, nevertheless the existence of neutrino masses is not a sufficient condition for the existence of such fields.
+The fact that there are no right-handed neutrino fields implies that neutrinos are strictly massless within the SM. This restriction follows from the experimental observation that all neutrinos produced via weak interactions are pure left-handed helicity states (and similarly antineutrinos are pure right-handed states). The hypothetical existence of right-handed neutrinos could be indirectly inferred from the observation of non-zero neutrino masses. Nevertheless, the existence of neutrino masses is not a sufficient condition for the existence of such fields.
 
 Left and right-handed fermions transform differently under $\mathrm{SU}(2)_{\mathrm{L}}\times\mathrm{U}(1)_{\mathrm{Y}}$ rotations, as the right-handed particles are singlets under $\mathrm{SU}(2)_{\mathrm{L}}$. Applying a local transformation, they change as:
 \begin{equation}
@@ -41,7 +41,7 @@ The values of the quantum numbers $Y/2$ and $T_{3}$, the third component of the 
 \begin{equation}
 	Q = T_{3} + \frac{Y}{2},
 \end{equation}
-Setting the electric charge to $-1$ for electrons, we can find the values of the hypercharge for the rest of the fermions. The resulting values for the first generation of leptons and quarks are shown in Tab. \ref{tab:sm_charge}.
+Setting the electric charge to $-1$ for electrons, we can find the values of the weak hypercharge for the rest of the fermions. The resulting values for the first generation of leptons and quarks are shown in Tab. \ref{tab:sm_charge}.
 
 \begin{table}[t]
 	\centering
@@ -54,7 +54,7 @@ Setting the electric charge to $-1$ for electrons, we can find the values of the
 	\label{tab:sm_charge}
 \end{table}
 
-It is clear that the free Lagrangian of the theory is not be invariant under the gauge transformations, as the kinetic terms contain derivatives. Therefore, to make it invariant, one needs to introduce a set of gauge bosons. They appear in the so-called covariant derivative, which replaces the common derivative and transforms in the same way as the fermion fields under local rotations. This constrain fixes completely the transformations of the spin-1 fields. For left and right-handed particles, the covariant derivatives are given by:
+It is clear that the free Lagrangian of the theory is not be invariant under the gauge transformations, as the kinetic terms contain derivatives. Therefore, to make it invariant one needs to introduce a set of gauge bosons. They appear in the so-called covariant derivative, which replaces the common derivative and transforms in the same way as the fermion fields under local rotations. This constrain fixes completely the transformations of the spin-1 fields. For left and right-handed particles, the covariant derivatives are given by:
 \begin{equation}
 	\begin{split}
 		D_{\mu} \psi_{L} &= \left(\partial_{\mu} + ig'\frac{Y}{2}B_{\mu}+igT_{a}W^{a}_{\mu}\right)\psi_{L},\\
@@ -97,7 +97,7 @@ At this point, the interacting part of the electroweak Lagrangian can be re-writ
 	\end{split}
 \end{equation}
 with the currents defined as:
-\begin{equation}\label{2.8}
+\begin{equation}\label{eq:currents}
 	\begin{split}
 		J^{\mu}_{\mathrm{EM}} &= \sum_{f} Q_{f} \bar{f}\gamma^{\mu}f,\\
 		J^{\mu}_{\mathrm{CC}} &= \sum_{\ell}\bar{\nu}_{\ell}\gamma^{\mu}(1-\gamma_{5})\ell + \sum_{f}\bar{u}_{f}\gamma^{\mu}(1-\gamma_{5})d_{f},\\
@@ -106,7 +106,7 @@ with the currents defined as:
 \end{equation}
 where $f$ denotes any SM fermion, $\ell$ and $\nu_{\ell}$ a charged lepton and a neutrino of any flavour, and $u_{f}$ and $d_{f}$ an up-like and a down-like quarks of any flavour. For the NC case, the values of the $v_{f}$ and $a_{f}$ couplings are given in Tab. \ref{tab:sm_nc_couplings}.
 
-As seen in Eq. (\ref{2.8}), in the electroweak theory neutrinos are coupled to the $Z$ boson in a universal way. Therefore, by measuring the so-called invisible decay width of the $Z$ boson we have an estimate of the number of light (i.e. lighter than the $Z$ boson) neutrino flavours. This number was measured by LEP in a combined analysis of $e^{+}e^{-} \rightarrow \mu^{+}\mu^{-}$ and $e^{+}e^{-} \rightarrow \mathrm{hadrons}$ to be $N_{\nu} = 2.9840 \pm 0.0082$ \cite{ALEPH2005}.
+As seen in Eq. (\ref{eq:currents}), in the electroweak theory neutrinos are coupled to the $Z$ boson in a universal way. Therefore, by measuring the so-called invisible decay width of the $Z$ boson we have an estimate of the number of light (i.e. lighter than the $Z$ boson) neutrino flavours. This number was measured by LEP in a combined analysis of $e^{+}e^{-} \rightarrow \mu^{+}\mu^{-}$ and $e^{+}e^{-} \rightarrow \mathrm{hadrons}$ to be $N_{\nu} = 2.9840 \pm 0.0082$ \cite{ALEPH2005}.
 
 \section{Trouble in the neutrino sector}\label{sec:nu_trouble}
 
@@ -118,7 +118,7 @@ Neutrinos are produced everywhere in vast amounts. One of the most prominent sou
 \end{equation}
 where part of the released energy is lost to the neutrinos. The electron neutrinos produced are often labelled after the processes that generate them. Figure \ref{fig:solar_nu_flux} shows the solar neutrino flux as a function of the neutrino energy, broken down by the production process.
 
-In the late 1960s, the Brookhaven Solar Neutrino Experiment, led by R. Davis, started data taking with the goal of measuring the solar neutrino flux \cite{Davis1968}. The experiment used a tank containing $380~\mathrm{m}^{3}$ of tetrachloroethene ($\mathrm{C}_{2}\mathrm{Cl}_{4}$), a liquid commonly used in dry-cleaning, located $1.5~\mathrm{km}$ underground in the Homestake mine, in Lead, South Dakota. The incoming neutrinos would get captured following the reaction:
+In the late 1960s, the Brookhaven Solar Neutrino Experiment, led by R. Davis, started data taking with the goal of measuring the solar neutrino flux \cite{Davis1968}. The experiment used a tank containing $380~\mathrm{m}^{3}$ of tetrachloroethene ($\mathrm{C}_{2}\mathrm{Cl}_{4}$), a liquid commonly used in dry-cleaning, located $1.5~\mathrm{km}$ underground in the Homestake mine in Lead, South Dakota. The incoming neutrinos would get captured following the reaction:
 \begin{equation}
 	\nu_{e} + \prescript{37}{}{\mathrm{Cl}} \longrightarrow \prescript{37}{}{\mathrm{Ar}} + e^{-},
 \end{equation}
@@ -147,7 +147,7 @@ they were able to establish that the $\nu_{\mu}$ and $\nu_{\tau}$ solar fluxes a
 
 \subsection{The atmospheric neutrino problem}
 
-When cosmic-rays interact with the atoms in the upper atmosphere, a plethora of hadrons, mainly $\pi$ and $K$ mesons, are produced. In particular, for the charged pions, we have the following decay chain dominates:
+When cosmic-rays interact with the atoms in the upper atmosphere, a plethora of hadrons, mainly $\pi$ and $K$ mesons, are produced. In particular, for the charged pions, the following decay chain dominates:
 \begin{equation}
 	\begin{split}
 		&\pi^{+} \longrightarrow \mu^{+} + \nu_{\mu},\\
@@ -169,19 +169,19 @@ During the 1980s, several proton decay experiments, like Kamiokande \cite{Hirata
 	\label{fig:atmospheric_nu_osc}
 \end{figure}
 
-A few years before the SNO discovery, in 1998, Super-Kamiokande (SK) collaboration measured the atmospheric $\nu_{e}$ and $\nu_{\mu}$ spectra as a function of the zenith angle \cite{SuperKamiokande1998}. Upward-going particles have negative zenith angle, $\mathrm{cos}~\Theta < 0$, indicating that they entered from the bottom of the detector. These upward-going neutrinos had to travel through the Earth in order to reach the detector, allowing SK to probe a broad range of baselines. Figure \ref{fig:atmospheric_nu_osc} shows the reported distributions (black dots), compared to the no oscillations prediction (hatched region). This measurement confirmed that muon neutrinos transition to other flavours, and that this phenomenon depends both on the energy and the path length of the neutrino.
+A few years before the SNO discovery, in 1998, the Super-Kamiokande collaboration (SK) measured the atmospheric $\nu_{e}$ and $\nu_{\mu}$ spectra as a function of the zenith angle \cite{SuperKamiokande1998}. Upward-going particles have negative zenith angle, $\mathrm{cos}~\Theta < 0$, indicating that they entered from the bottom of the detector. These upward-going neutrinos had to travel through the Earth in order to reach the detector, allowing SK to probe a broad range of baselines. Figure \ref{fig:atmospheric_nu_osc} shows the reported distributions (black dots), compared to the no oscillations prediction (hatched region). This measurement confirmed that muon neutrinos transition to other flavours, and that this phenomenon depends both on the energy and the path length of the neutrino.
 
-The SK and SNO findings provided definitive evidence for the existence of neutrino oscillations, and therefore non-zero neutrino masses. This constitutes one of the groundbreaking discoveries of modern physics and has acted as driving force for beyond the Standard Model (BSM) physics. The minimal extension of the SM we can do to address these phenomena is introducing different masses for at least two of the neutrinos. This way, we are left with three neutrino mass eigenstates $\nu_{1}$, $\nu_{2}$, and $\nu_{3}$, with masses $m_{1}$, $m_{2}$, and $m_{3}$ respectively, which in general will not coincide with the flavour eigenstates, $\nu_{e}$, $\nu_{\mu}$, and $\nu_{\tau}$.
+The SK and SNO findings provided definitive evidence for the existence of neutrino oscillations, and therefore non-zero neutrino masses. This constitutes one of the groundbreaking discoveries of modern physics and has acted as driving force for BSM physics. The minimal extension of the SM we can make to address this phenomenon is introducing different masses for at least two of the neutrinos. This way, we are left with three neutrino mass eigenstates $\nu_{1}$, $\nu_{2}$, and $\nu_{3}$, with masses $m_{1}$, $m_{2}$, and $m_{3}$ respectively, which in general will not coincide with the flavour eigenstates, $\nu_{e}$, $\nu_{\mu}$, and $\nu_{\tau}$.
 
 \section{Massive neutrinos}\label{sec:nu_mass}
 
 The existence of neutrino oscillations imply that neutrinos are massive particles. However, as we have seen before, within the SM neutrinos are massless, as they do not have a mass term in the Lagrangian. If one wants to give neutrinos a mass, the particle content of the SM needs to be expanded.
 
 A way of generating massive neutrinos while maintaining gauge invariance is by introducing an arbitrary number of sterile neutrinos $N_{i}$, $i=1,\dots,m$. These allow for two different types of neutrino mass terms:
-\begin{equation}\label{2.10}
+\begin{equation}\label{eq:nu_mass_lagrangian}
 	-\mathcal{L}_{M_{\nu}} = \sum_{i=1}^{m} \sum_{j=1}^{3} M^{ij}_{D} \bar{N}_{i} \nu_{Lj} + \frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} M^{ij}_{N} \bar{N}_{i} N^{c}_{j} + \mathrm{h.c.},
 \end{equation}
-where $M_{D}$ is a complex $m \times 3$ matrix and $M_{N}$ a complex and symmetric $m \times m$ matrix. The first term, often referred to as the Dirac mass term, arises from the corresponding Yukawa interaction after the spontaneous electroweak symmetry breaking, similar to the other fermions. The second term, called the Majorana mass term, is allowed in the Lagrangian, as it is a singlet of the gauge group. However, it violates lepton number conservation by two units.
+where $M_{D}$ is a complex $m \times 3$ matrix and $M_{N}$ a complex and symmetric $m \times m$ matrix. The first term, often referred to as the Dirac mass term, arises from the corresponding Yukawa interaction after the spontaneous electroweak symmetry breaking, similar to the other fermions. The second term, called the Majorana mass term, is allowed in the Lagrangian as it is a singlet of the gauge group. However, it violates lepton number conservation by two units.
 
 If one imposes lepton number symmetry conservation, the Majorana term must banish, $M_{N}=0$. In this case, if $m=3$ we can identify the sterile neutrinos as the right-handed component of the neutrino field. The Dirac mass matrix can be diagonalised using two unitary matrices, $V^{\nu}_{R}$ and $V^{\nu}_{L}$, as:
 \begin{equation}
@@ -200,7 +200,7 @@ with:
 
 In this scenario, both the low energy particle budget and the symmetries of the SM have to be modified. Moreover, the masses of the neutrinos are generated exclusively through the Higgs mechanism, which does not explain why they are much smaller than those of the charged leptons.
 
-Going back to the general case, we can re-write Eq. (\ref{2.10}) in matrix form as:
+Going back to the general case, we can re-write Eq. (\ref{eq:nu_mass_lagrangian}) in matrix form as:
 \begin{equation}
 	-\mathcal{L}_{M_{\nu}} = \frac{1}{2} \begin{pmatrix}\bar{\nu}^{c}_{L},&\bar{N}\end{pmatrix} \begin{pmatrix}0 & M_{D}^{T}\\M_{D} & M_{N}\end{pmatrix}\begin{pmatrix}\nu_{L}\\N^{c}\end{pmatrix} + \mathrm{h.c.} = \bar{\nu}^{c} M_{\nu} \nu + \mathrm{h.c.},
 \end{equation}
@@ -272,14 +272,14 @@ The leptonic mixing matrix, $U$, establishes how the neutrino mass states couple
 \end{figure}
 
 Considering the extended SM without any additional sterile neutrino states, the  resulting $3 \times 3$ mixing matrix is unitary. This matrix, often called the Pontecorvo-Maki-Nakagawa-Sakata (PMNS) matrix \cite{Pontecorvo1957, Maki1962}, relates the set of active neutrinos and the three mass eigenstates as:
-\begin{equation}\label{2.1}
+\begin{equation}\label{eq:nu_flavour_basis}
 \ket{\nu_{\alpha}} = \sum_{i=1}^{3} U^{*}_{\alpha i} \ket{\nu_{i}},
 \end{equation}
-where the Greek index $\alpha$ denotes the flavour $\{e,\mu,\tau\}$ and the Latin index $i$ the mass state $\{1,2,3\}$. This leptonic mixing matrix may be parametrized in terms of 6 parameters, 3 of which are mixing angles $\theta_{12}$, $\theta_{13}$ and $\theta_{23}$, one CP-violating phase $\delta_{CP}$ and 2 Majorana phases $\alpha$ and $\beta$:
-\begin{equation}\label{2.2}
+where the Greek index $\alpha$ denotes the flavour $\{e,\mu,\tau\}$ and the Latin index $i$ the mass state $\{1,2,3\}$. This leptonic mixing matrix may be parametrized in terms of 6 parameters, 3 of which are mixing angles $\theta_{12}$, $\theta_{13}$ and $\theta_{23}$, one CP-violating phase $\delta_{CP}$, and 2 Majorana phases $\alpha$ and $\beta$:
+\begin{equation}\label{eq:pmns_matrix}
 	U = \begin{pmatrix}1&0&0\\0&c_{23}&s_{23}\\0&-s_{23}&c_{23}\end{pmatrix} \begin{pmatrix}c_{13}&0&s_{13} \mathrm{e}^{-i\delta_{CP}}\\0&1&0\\-s_{13} \mathrm{e}^{i\delta_{CP}}&0&c_{13}\end{pmatrix} \begin{pmatrix}c_{12}&s_{12}&0\\-s_{12}&c_{12}&0\\0&0&1\end{pmatrix} \begin{pmatrix}1&0&0\\0&\mathrm{e}^{i\alpha}&0\\0&0&\mathrm{e}^{i\beta}\end{pmatrix},
 \end{equation}
-where $c_{ij} \equiv \cos \theta_{ij}$ and $s_{ij} \equiv \sin \theta_{ij}$. This matrix is analogous to the Cabibbo-Kobayashi-Maskawa (CKM) matrix in the quark sector. If neutrinos are Dirac fermions, we can drop the Majorana phases in the PMNS matrix, as in this case we can perform the phase redefinitions. However, these phases play no role on the neutrino oscillation phenomenology.
+where $c_{ij} \equiv \cos \theta_{ij}$ and $s_{ij} \equiv \sin \theta_{ij}$. This matrix is analogous to the Cabibbo-Kobayashi-Maskawa (CKM) matrix in the quark sector. If neutrinos are Dirac fermions, we can drop the Majorana phases in the PMNS matrix, as in this case we can perform the phase redefinitions. In any case, these phases play no role on the neutrino oscillation phenomenology.
 
 In the case that additional sterile neutrinos states are present, the full leptonic mixing matrix would not be unitary in general. For instance, in the see-saw scenario, the $3 \times 3$ submatrix for the three light Majorana neutrinos is not unitary. However, the deviations from unitarity are of the order $\mathcal{O}(M_{D}/M_{N})$, and therefore expected to be negligible.
 
@@ -292,7 +292,7 @@ Consider the case where a neutrino of flavour $\alpha$ is produced at $t=0$, and
 in the plane wave approximation, as the mass eigenstates are also eigenstates of the free Hamiltonian.
 \begin{comment}
 Now, if we express the mass eigenstates as a superposition of flavour eigenstates, the last expression can be rewritten as:
-\begin{equation}\label{2.4}
+\begin{equation}\label{eq:nu_evolution}
 \ket{\nu_{\alpha}(t)} = \sum_{\beta} \sum_{i=1}^{3} U_{\beta i} \mathrm{e}^{-iE_{i}t} U^{*}_{\alpha i} \ket{\nu_{\beta}}.
 \end{equation}
 \end{comment}
@@ -317,13 +317,13 @@ P(\nu_{\alpha} \rightarrow \nu_{\beta}) &= \sum_{i,j} U^{*}_{\alpha i} U_{\beta 
 &\phantom{=}+ 2  \sum_{i<j} \mathfrak{Im}\left[U^{*}_{\alpha i} U_{\beta i} U_{\alpha j} U^{*}_{\beta j}\right] \sin\left(\frac{\Delta m^{2}_{ij}}{2E}L\right),
 \end{split}
 \end{equation}
-where $\Delta m^{2}_{ij}$ is the difference of the squared masses of the $j$th and $i$th neutrino mass eigenvalues. At this point, it is usual to write the phase responsible for the oscillations as:
-\begin{equation}\label{2.8}
+where $\Delta m^{2}_{ij}$ is the difference of the squared masses of the $j$th and $i$th neutrino mass eigenvalues. A usual way to write the phase responsible for the oscillations is:
+\begin{equation}\label{eq:oscillation_term}
 \Delta_{ij} \equiv \frac{\Delta m^{2}_{ij}}{4E}L \simeq 1.27 \frac{\Delta m^{2}_{ij}}{(\mathrm{eV}^{2})} \frac{L}{(\mathrm{km})} \frac{(\mathrm{GeV})}{E}.
 \end{equation}
 
 Notice that, in the case of antineutrinos, the only difference would be the sign of the last term in the oscillation probability. As the process $\bar{\nu}_{\alpha} \rightarrow \bar{\nu}_{\beta}$ is the CP-mirror image of $\nu_{\alpha} \rightarrow \nu_{\beta}$, the differences between their oscillation probabilities would be a measure of CP symmetry violation:
-\begin{equation}\label{2.9}
+\begin{equation}\label{eq:cp_asymmetry}
 \begin{split}
 A^{\alpha\beta}_{CP}&=P(\nu_{\alpha} \rightarrow \nu_{\beta})-P(\bar{\nu}_{\alpha} \rightarrow \bar{\nu}_{\beta})\\
 &=4  \sum_{i<j} \mathfrak{Im}\left[U^{*}_{\alpha i} U_{\beta i} U_{\alpha j} U^{*}_{\beta j}\right] \sin 2\Delta_{ij}.
@@ -338,7 +338,7 @@ as these two process are related by the CPT symmetry. From the definition of pro
 \begin{equation}
 	\sum_{\beta} P(\nu_{\alpha} \rightarrow \nu_{\beta}) = \sum_{\beta} P(\bar{\nu}_{\alpha} \rightarrow \bar{\nu}_{\beta}) = 1,
 \end{equation}
-where the sum includes all flavours, including $\alpha$. From these two constraints, one can probe that:
+where the sum includes all flavours (also $\alpha$). From these two constraints, one can probe that:
 \begin{equation}
 	A^{\alpha\beta}_{CP} = - A^{\beta\alpha}_{CP},
 \end{equation}
@@ -414,15 +414,15 @@ From this last equation one can see that, when $\mathrm{cos}~2\theta = A > 0$ th
 
 \subsection{Current status of neutrino oscillations}
 
-A wide range of neutrino experiments provide experimental input to the neutrino oscillation framework, both using natural or synthetic neutrino sources. The results from one of the neutrino global fit analyses, shown in Tab. \ref{tab:neutrino_global_fit} \footnote{These are the results reported during M. T\'{o}rtola's talk at Neutrino 2024 (see this \href{https://agenda.infn.it/event/37867/contributions/233956/attachments/121839/178002/MTortola-Neutrino2024.pdf}{link}). I need to keep an eye and see if they publish these or other updated results in the near future.}, summarise well our current understanding of the different oscillation parameters.
+A wide range of neutrino experiments provide experimental input to the neutrino oscillation framework, both using natural or man-made neutrino sources. The results from one of the neutrino global fit analyses, shown in Tab. \ref{tab:neutrino_global_fit} \footnote{These are the results reported during M. T\'{o}rtola's talk at Neutrino 2024 (see this \href{https://agenda.infn.it/event/37867/contributions/233956/attachments/121839/178002/MTortola-Neutrino2024.pdf}{link}). I need to keep an eye and see if they publish these or other updated results in the near future.}, summarise well our current understanding of the different oscillation parameters.
 
 \textbf{Solar neutrino experiments} detect neutrinos produced in thermonuclear reactions inside the Sun, mainly from the so-called $pp$ chain and the CNO cycle. These neutrinos have a typical energy in the range from $0.1$ to $20 \ \mathrm{MeV}$. These experiments (Homestake \cite{Homestake1998}, GALLEX \cite{GALLEX2010}, SAGE \cite{SAGE2009}, Borexino \cite{Borexino2011}, Super-Kamiokande \cite{Super-Kamiokande2005} and SNO \cite{SNO2011}) provide the best sensitivities to $\theta_{12}$ and $\Delta m^{2}_{21}$.
 
-\textbf{Atmospheric neutrino experiments} detect the neutrino flux produced when cosmic rays scatter with particles in Earth's atmosphere. These collisions generate particle showers that eventually produce electron and muon neutrinos (and antineutrinos). Their energies range from few $\mathrm{MeV}$ to about $10^{9} \ \mathrm{GeV}$. Experiments, like Super-Kamiokande \cite{Super-Kamiokande2017} and IceCube \cite{IceCube2017} use atmospheric neutrinos to measure oscillations and are specially sensitive to $\theta_{23}$ and $\Delta m^{2}_{32}$.
+\textbf{Atmospheric neutrino experiments} detect the neutrino flux produced when cosmic rays scatter with particles in Earth's atmosphere. These collisions generate particle showers that eventually produce electron and muon neutrinos (and antineutrinos). Their energies range from few $\mathrm{MeV}$ to about $10^{9} \ \mathrm{GeV}$. Experiments like Super-Kamiokande \cite{Super-Kamiokande2017} and IceCube \cite{IceCube2017} use atmospheric neutrinos to measure oscillations, and are specially sensitive to $\theta_{23}$ and $\Delta m^{2}_{32}$.
 
-\textbf{Reactor neutrino experiments} look for the $\bar{\nu}_{e}$ spectrum produced by nuclear reactors, with energies in the $\mathrm{MeV}$ scale. Depending on the distance to the source, long-baseline experiments like KamLAND \cite{KamLAND2013} are sensitive to the solar mass splitting $\Delta m^{2}_{21}$ whereas much shorter baseline experiment such as RENO \cite{RENO2018} or DayaBay \cite{DayaBay2018} measure $\theta_{13}$ and $\Delta m^{2}_{31}$.
+\textbf{Reactor neutrino experiments} look for the $\bar{\nu}_{e}$ spectrum produced by nuclear reactors, with energies in the $\mathrm{MeV}$ scale. Depending on the distance to the source, long-baseline experiments like KamLAND \cite{KamLAND2013} are sensitive to the solar mass splitting $\Delta m^{2}_{21}$, whereas much shorter baseline experiments such as RENO \cite{RENO2018} or DayaBay \cite{DayaBay2018} measure $\theta_{13}$ and $\Delta m^{2}_{31}$.
 
-\textbf{Accelerator experiments} measure neutrino fluxes generated in particle accelerators. Usually mesons are produced in the accelerator to be focused into a beam, then some decay to muon neutrinos and the rest are absorbed by a target. Depending on the configuration one can obtain a beam made of mostly neutrinos or antineutrinos. The typical energies of these neutrinos are in the $\mathrm{GeV}$ range. Experiments such as NOvA \cite{Nova2020}, T2K \cite{T2K2020}, MINOS \cite{MINOS2014}, OPERA \cite{OPERA2018} and K2K \cite{K2K2006} (and in the future DUNE \cite{DUNE2020}) are primarily sensitive to $\theta_{13}$, $\theta_{23}$ and $\Delta m^{2}_{32}$. Also, in the coming years  DUNE \cite{DUNE2020} and Hyper-Kamiokande \cite{Hyper-Kamiokande2019} will be sensitive to $\delta_{CP}$.
+\textbf{Accelerator experiments} measure neutrino interactions from beams generated by particle accelerators. Mesons are produced when the protons from the accelerator collide into a target. These are focused into a beam, then some of them decay to muon neutrinos while the rest are removed from the beam by an absorber. Depending on the configuration one can obtain a beam made of mostly neutrinos or antineutrinos. The typical energies of these neutrinos are in the $\mathrm{GeV}$ range. Experiments such as NOvA \cite{Nova2020}, T2K \cite{T2K2020}, MINOS \cite{MINOS2014}, OPERA \cite{OPERA2018} and K2K \cite{K2K2006} (and in the future DUNE \cite{DUNE2020}) are primarily sensitive to $\theta_{13}$, $\theta_{23}$ and $\Delta m^{2}_{32}$. Also, in the coming years DUNE \cite{DUNE2020} and Hyper-Kamiokande \cite{Hyper-Kamiokande2019} will be sensitive to $\delta_{CP}$.
 
 \begin{table}
 \centering
@@ -445,15 +445,17 @@ A wide range of neutrino experiments provide experimental input to the neutrino 
 
 \section{Open questions in the neutrino sector}\label{sec:nu_open_questions}
 
-A crucial question that remains open these days, and is of vital importance for oscillation phenomena, is whether the mass eigenvalue $\nu_{3}$ is the heaviest (what we call normal ordering) or the lightest (referred to as inverted ordering) of the mass eigenstates. In other words, this means that we do not know the sign of $\Delta m^{2}_{32}$, so we can either have $m_{1}<m_{2}<m_{3}$ (NO) or $m_{3}<m_{1}<m_{2}$ (IO).
+A crucial question that remains open these days, and is of vital importance for the oscillation phenomenology, is whether the mass eigenstate $\nu_{3}$ is the heaviest (what we call normal ordering) or the lightest (referred to as inverted ordering) of the mass states. In other words, this means that we do not know the sign of $\Delta m^{2}_{32}$, so we can either have $m_{1}<m_{2}<m_{3}$ (NO) or $m_{3}<m_{1}<m_{2}$ (IO).
 
-Another big puzzle is related to the value of $\delta_{CP}$. Nowadays it is poorly constrained, with all values between $\pi$ and $2\pi$ being consistent with data. A prospective measurement different from $\delta_{CP}=0,\pi$ will predict CP-violation in the leptonic sector, and thus contribute along with the one measured in the quark sector to the total amount of CP-violation. Although it is true that these two contributions by themselves are not enough to explain the matter anti-matter asymmetry in our universe, the amount of CP-violation in the leptonic sector can be key to explain such imbalance.
+Also relevant to the neutrino oscillations, there is the problem regarding the $\theta_{23}$ octant. Previous experimental results were compatible with its value being close to maximal, $\theta_{23} \sim 45^{\circ}$ \cite{T2K2015,NOvA2016}. However, global data fits indicate a deviation from the maximal mixing, giving rise to two degenerate solutions, one in the lower octant $\theta_{23} < 45^{\circ}$ and another in the higher octant $\theta_{23} > 45^{\circ}$ (see e.g. Ref. \cite{deSalas2020}).
 
-Both of these questions, because of their nature, could be understood thanks to future oscillation experiments.
+Another big puzzle is related to the value of $\delta_{CP}$. Nowadays it is poorly constrained, with all values between $\pi$ and $2\pi$ being consistent with data. A prospective measurement different from $\delta_{CP}=0,\pm\pi$ will be a sign of CP-violation in the leptonic sector, and thus contribute along with the one measured in the quark sector to the total amount of CP-violation. Although it is true that these two contributions by themselves are not enough to explain the matter anti-matter asymmetry in our universe, the amount of CP-violation in the leptonic sector can be key to explain such imbalance.
 
-Notwithstanding, there are other mysteries that can not be unveiled just by conducting oscillation experiments, as certain quantities do not influence these phenomena. Among these there is the question of the absolute values of the neutrino masses. Depending on the value of the lightest of the neutrino masses we can have different mass spectra, from hierarchical $m_{1} \ll m_{2}<m_{3}$ (NO) or $m_{3} \ll m_{1}<m_{2}$ (IO) to quasi-degenerate $m_{1} \simeq m_{2} \simeq m_{3}$.
+These three questions, because of their nature, could be understood thanks to the next generation of oscillation experiments, like DUNE.
 
-Other open question concerns the nature itself of the neutrinos. If neutrinos are Dirac particles then their mass term can be generated through the usual Higgs mechanism by adding right-handed neutrino fields. However, if they are Majorana particles and therefore their own antiparticles, there is no need to add extra fields to have the mass term in the Lagrangian. Experiments like SuperNEMO \cite{SuperNEMO2010}, SNO+ \cite{SNO2015} and NEXT \cite{NEXT2020}, which search for neutrino-less double beta decay, will be able to determine whether neutrinos are Dirac or Majorana.
+Notwithstanding, there are other mysteries that can not be unveiled just by conducting oscillation experiments, as certain quantities do not influence these phenomenon. Among these there is the question of the absolute values of the neutrino masses. Depending on the value of the lightest of the neutrino masses we can have different mass spectra, from hierarchical $m_{1} \ll m_{2}<m_{3}$ (NO) or $m_{3} \ll m_{1}<m_{2}$ (IO) to quasi-degenerate $m_{1} \simeq m_{2} \simeq m_{3}$.
+
+Other open question concerns the nature itself of the neutrinos. If neutrinos are Dirac particles then their mass term can be generated through the usual Higgs mechanism by adding right-handed neutrino fields. However, if they are Majorana particles and therefore their own antiparticles, there is no need to add extra fields to have the mass term in the Lagrangian. Experiments like SuperNEMO \cite{SuperNEMO2010}, SNO+ \cite{SNO2015}, and NEXT \cite{NEXT2020}, which search for neutrino-less double beta decay, will be able to determine whether neutrinos are Dirac or Majorana.
 
 \section{Neutrino interactions}\label{sec:nu_interactions}
 
@@ -495,7 +497,9 @@ In the case of neutrino interactions with nuclei, at the energies relevant for l
 	\label{fig:numu_cc_cross_section}
 \end{figure}
 
-At low energies, below $1~\mathrm{GeV}$, quasi-elastic (QE) interactions dominate. In a CCQE interaction a neutrino (antineutrino) interacts with a neutron (proton), converting it into a proton (neutron) which is then ejected from the nucleus together with the resulting charged lepton. At energies above $1~\mathrm{GeV}$ the neutrino is able to excite the nucleon into a baryonic resonance, which promptly decays into a nucleon and a pion. These are the so-called resonant (RES) interactions. Neutrinos also interact with entire nucleus coherently, in the process known as coherent (COH) interaction. This kind of reactions also produce a single pion in the final state. At high neutrino energies, above $5~\mathrm{GeV}$, deep inelastic scattering (DIS) takes place. In these processes, the neutrino interacts with a single quark within the nucleon, breaking the nucleon and producing a hadronic shower.
+At low energies, below $1~\mathrm{GeV}$, quasi-elastic (QE) interactions dominate. In a CCQE interaction a neutrino (antineutrino) interacts with a neutron (proton), converting it into a proton (neutron) which is then ejected from the nucleus together with the resulting charged lepton. Neutrinos can also scatter off bound states of nucleons inside the nucleus. These interactions are typically denoted as $npnh$, as the neutrino interacts with a bound state of $n$ nucleons and leave $n$ holes in the nucleus. Particularly relevant are the $2p2h$ events, as distinguishing them from pure CCQE events is challenging. The $2p2h$ neutrino interactions are dominated by meson exchange current events (MEC), where the nucleons are bound by the exchange of a virtual meson.
+
+At energies above $1~\mathrm{GeV}$ the neutrino is able to excite the nucleons into a baryonic resonance, which promptly decays into a nucleon and a pion. These are the so-called resonant (RES) interactions. Neutrinos also interact with entire nucleus coherently, in the process known as coherent (COH) interaction. This kind of reactions also produce a single pion in the final state. At high neutrino energies, above $5~\mathrm{GeV}$, deep inelastic scattering (DIS) takes place. In these processes, the neutrino interacts with a single quark within the nucleon, breaking the nucleon and producing a hadronic shower.
 
 Figure \ref{fig:numu_cc_cross_section} shows a compilation of measurements of the total $\nu_{\mu}$ CC cross section (see Ref. \cite{Formaggio2012} for the details of the different experimental results). Also shown are the contributions from the different interaction modes. The contribution of the CCCOH interaction is omitted, as it is negligible compared to the others. This shows how the interaction model needs to accurately predict the neutrino-nucleon cross section for the different interaction modes across a broad energy range, to obtain the correct relative contributions.
 

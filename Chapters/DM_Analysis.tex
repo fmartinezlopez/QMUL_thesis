@@ -203,9 +203,9 @@ Having obtained $N_{S}^{90}$ one can use the relation in Eq. (\ref{4.6}) to comp
 \section{Example: Kaluza-Klein Dark Matter}
 \label{sec:dm_analysis_kk_dm}
 
-Even though there are plenty of BSM theories which provide viable dark matter candidates, Kaluza-Klein type of models \cite{Kaluza1921, Klein1926} within the universal extra dimensions (UED) paradigm naturally predict the existence of a massive, stable particle that can play the role of the dark matter. In the UED scenario all the SM fields can propagate in one or more compact extra dimensions \cite{Appelquist2000}, as opposed to the idea of brane worlds \cite{Arkani-Hamed1998, Randall1999}, where just gravity can propagate in the bulk while SM particles live at fixed points.
+Even though there are plenty of BSM theories which provide viable DM candidates, the Kaluza-Klein type of models \cite{Kaluza1921, Klein1926} within the universal extra dimensions (UED) paradigm naturally predict the existence of a massive, stable particle that can play the role of the DM. In the UED scenario all the SM fields can propagate in one or more compact extra dimensions \cite{Appelquist2000}, as opposed to the idea of brane worlds \cite{Arkani-Hamed1998, Randall1999}, where just gravity can propagate in the bulk while SM particles live at fixed points.
 
-Furthermore, in UED there is no violation of the translational invariance along the extra dimensions, thus leading to degenerate KK modes masses  and also the conservation of the KK number in the effective four dimensional theory. At loop level, radiative corrections and boundary terms shift the masses of the KK modes and break KK number conservation into a KK parity. As a result, this theory only contains interactions between an even number of odd KK modes and therefore the lightest among the first KK excitations will be stable. This particle is usually denoted as the lightest Kaluza-Klein particle (LKP) and its mass is proportional to $1/R$, being $R$ the size of the extra dimension.
+Furthermore, in UED there is no violation of the translational invariance along the extra dimensions, thus leading to degenerate KK modes masses  and also the conservation of the KK number in the effective four dimensional theory. At loop level, radiative corrections and boundary terms shift the masses of the KK modes and break KK number conservation into a KK parity. As a result, this theory only contains interactions between an even number of odd KK modes, and therefore the lightest among the first KK excitations will be stable. This particle is usually denoted as the lightest Kaluza-Klein particle (LKP) and its mass is proportional to $1/R$, being $R$ the size of the extra dimension.
 
 \begin{figure}
 	\centering
@@ -268,6 +268,7 @@ Furthermore, in UED there is no violation of the translational invariance along 
 		}
 	\end{subfigure}
 	\caption{Feynman diagrams for $B^{1}$$B^{1}$ annihilation into SM fermions.}
+	\label{fig:lkp_diagrams_fermion}
 \end{figure}
 
 \begin{figure}
@@ -284,7 +285,7 @@ Furthermore, in UED there is no violation of the translational invariance along 
 
 				% right side: i2(e+) and f2(e-)
 				\vertex [right=3cm of i1]       (f1) {\(\phi\)};
-				\vertex [right=3cm of i2]       (f2) {\(\phi\)};
+				\vertex [right=3cm of i2]       (f2) {\(\phi^{*}\)};
 
 
 				\diagram* {
@@ -313,7 +314,7 @@ Furthermore, in UED there is no violation of the translational invariance along 
 
 				% right side: i2(e+) and f2(e-)
 				\vertex [right=3cm of i1]       (f1) {\(\phi\)};
-				\vertex [right=3cm of i2]       (f2) {\(\phi\)};
+				\vertex [right=3cm of i2]       (f2) {\(\phi^{*}\)};
 
 
 				\diagram* {
@@ -341,7 +342,7 @@ Furthermore, in UED there is no violation of the translational invariance along 
 
 				% right side: i2(e+) and f2(e-)
 				\vertex [right=3cm of i1]       (f1) {\(\phi\)};
-				\vertex [right=3cm of i2]       (f2) {\(\phi\)};
+				\vertex [right=3cm of i2]       (f2) {\(\phi^{*}\)};
 
 
 				\diagram* {
@@ -358,9 +359,10 @@ Furthermore, in UED there is no violation of the translational invariance along 
 		}
 	\end{subfigure}
 	\caption{Feynman diagrams for $B^{1}$$B^{1}$ annihilation into a Higgs boson pair.}
+	\label{fig:lkp_diagrams_scalar}
 \end{figure}
 
-A viable DM candidate needs to be electrically neutral and non-baryonic, therefore good candidates among the first Kaluza-Klein excitations would be the KK neutral gauge bosons and the KK neutrinos \cite{Servant2002}. Another possible candidate is the first KK excitation of the graviton, which receives negligible radiate contributions and therefore has a mass almost equal to $1/R$, but it has been shown that the lightest eigenstate from the mixing of the gauge mass states $\left(B^{1}, W_{3}^{1}\right)$ would be lighter, as $B^{1}$ and $W_{3}^{1}$ receive negative radiate corrections \cite{Cheng2002}. It is also understood that, when these corrections become sizeable, the eigenstates become approximately pure $B^{1}$ and $W_{3}^{1}$ states as the Weinberg mixing angle grows small with the KK number \cite{Cheng2002}. In that case, the LKP can be well-approximated as being entirely $B^{1}$.
+A viable DM candidate needs to be electrically neutral and non-baryonic, therefore good candidates among the first Kaluza-Klein excitations would be the KK neutral gauge bosons and the KK neutrinos \cite{Servant2002}. Another possible candidate is the first KK excitation of the graviton, which receives negligible radiate contributions and therefore has a mass almost equal to $1/R$, but it has been shown that the lightest eigenstate from the mixing of the gauge mass states $\left(B^{1},~ W_{3}^{1}\right)$ would be lighter, as these receive negative radiate corrections \cite{Cheng2002}. It is also understood that, when these corrections become sizeable, the eigenstates become approximately pure $B^{1}$ and $W_{3}^{1}$ states, as the Weinberg mixing angle grows small with the KK number \cite{Cheng2002}. In that case, the LKP can be well-approximated as being entirely $B^{1}$.
 
 \begin{figure}[t]
 	\centering
@@ -369,7 +371,9 @@ A viable DM candidate needs to be electrically neutral and non-baryonic, therefo
 	\label{fig:KK_nu_flux}
 \end{figure}
 
-I need to compute the neutrino flux produced by the annihilations of the LKP in the core of the Sun, taking into account their propagation in the solar medium, as well as neutrino oscillations.  To this end I used \texttt{WimpSim} \cite{Blennow2007, WimpSim} to generate one million annihilation events in the Sun over a time span of four years and propagate them to the DUNE FD location (44$^{\circ} $ 20' N, 103$^{\circ} $ 45' W), for different values of $M_{\mathrm{LKP}}$. In Fig. \ref{fig:KK_nu_flux} I show the obtained muon neutrino spectra arriving to the detector from LKP annihilations in the Sun, per unit area and per annihilation, plotted in relative energy units for different values of the mass. As one could expect the spectra get steeper the higher is the mass, due to the absorption of high-energy neutrinos in the solar medium. Also, one can see  the peak at $z=1$ due to the direct annihilation into neutrinos $\chi \chi \rightarrow \nu \bar{\nu}$.
+To estimate the sensitivity of DUNE to this particular DM model, I first need to compute the neutrino flux produced by the annihilations of the LKP in the core of the Sun, taking into account their propagation in the solar medium, as well as neutrino oscillations.  To this end I use \texttt{WimpSim} \cite{Blennow2007, WimpSim} to generate $10^{6}$ annihilation events in the Sun over a time span of four years, and propagate them to the DUNE FD location (44$^{\circ} $ 20' N, 103$^{\circ} $ 45' W), for different values of $M_{\mathrm{LKP}}$. The different Feynman diagrams for the annihilation of the $B^{1}$ into a pair of SM fermions and scalars are shown in Figs. \ref{fig:lkp_diagrams_scalar} and \ref{fig:lkp_diagrams_scalar}.
+
+In Fig. \ref{fig:KK_nu_flux} I show the obtained muon neutrino spectra arriving to the detector from LKP annihilations in the Sun, per unit area and per annihilation, plotted in relative energy units for different values of the mass. As one could expect the spectra get steeper the higher is the mass, due to the absorption of high-energy neutrinos in the solar medium. Also, one can see  the peak at $z=1$ due to the direct annihilation into neutrinos $\chi \chi \rightarrow \nu \bar{\nu}$.
 
 Now, one can estimate the sensitivity of DUNE to this particular model by using the methods I previously discussed. To begin with, I will use the optimistic estimation of the background efficiency in Eq. (\ref{4.3}) to get an upper bound. Using it, one can directly compute the number of expected background events to be $N_{B} = 0.11$ for an exposure of $400 \ \mathrm{kT}  \ \mathrm{yr}$. Then, Eq. (\ref{4.5}) give us a value of $N_{S}^{90} = 2.20$ for the $90\%$ exclusion number of expected signal events. By using the \texttt{NuWro} generated cross sections and the computed neutrino fluxes from $B^{1}$ annihilations in the Sun I can estimate the limits on the SD and SI DM-nucleus cross section using the relation in Eq. (\ref{2.2}) and the capture rates I computed with \texttt{DarkSUSY}.
 
@@ -527,7 +531,7 @@ Applying this criteria for each sample, I obtain the mean signal efficiencies sh
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=0.95\linewidth]{Images/DM_Analysis/solardm_xsection_sd.pdf}
-	\caption[Projected 90\% confidence level upper limit for DUNE (400 kT yr) on the spin-dependent DM-nucleon scattering cross section as a function of $m_{\mathrm{DM}}$, for the annihilation channels $\tau^{+}\tau^{-}$ and $b\bar{b}$ separated by interaction mode]{Projected 90\% confidence level upper limit for DUNE (400 kT yr) on the spin-dependent DM-nucleon scattering cross section as a function of $m_{\mathrm{DM}}$, for the annihilation channels $\tau^{+}\tau^{-}$ (blue) and $b\bar{b}$ (red) separated by interaction mode (up triangles denote DIS interactions whereas down triangles represent QE interactions). I also show the previous limits from IceCube \cite{IceCube2021} (solid lines) and the projected sensitivities for Pingu \cite{Chen2014} (dashed lines) and Hyper-Kamiokande \cite{Bell2021} (dash-dotted lines), as well as the direct detection limits from PICASSO \cite{Behnke2016} (solid green line) and PICO-60 $\mathrm{C}_{3}\mathrm{F}_{8}$ \cite{PICO2019} (dashed green line).}
+	\caption[Projected 90\% confidence level upper limit for DUNE (400 kT yr) on the spin-dependent DM-nucleon scattering cross section as a function of $m_{\mathrm{DM}}$, for the annihilation channels $\tau^{+}\tau^{-}$ and $b\bar{b}$ separated by interaction mode]{Projected 90\% confidence level upper limit for DUNE (400 kT yr) on the spin-dependent DM-nucleon scattering cross section as a function of $m_{\mathrm{DM}}$, for the annihilation channels $\tau^{+}\tau^{-}$ (blue) and $b\bar{b}$ (red) separated by interaction mode (up triangles denote DIS interactions whereas down triangles represent QE interactions). I also show the previous limits from IceCube \cite{IceCube2021} (solid lines) and Super-Kamiokande (dash-dotted), and the projected sensitivities for Hyper-Kamiokande \cite{Bell2021} (dotted lines), as well as the direct detection limits from PICASSO \cite{Behnke2016} (solid green line) and PICO-60 $\mathrm{C}_{3}\mathrm{F}_{8}$ \cite{PICO2019} (dashed green line).}
 	\label{fig:solardm_xsection_sd}
 \end{figure}
 
@@ -544,7 +548,7 @@ whereas for QE events we have:
 
 Now, using these together with Eqs. (\ref{4.5}) and (\ref{4.6}) one can obtain the $90\%$ C.L. upper limit on the total annihilation rate at equilibrium for both kind of events. Then, applying the computed DM-nucleons capture rates I can translate these into limits on the DM-nucleon cross section by means of Eqs. (\ref{2.2}), (\ref{2.5}) and (\ref{2.6}).
 
-Fig. \ref{fig:solardm_xsection_sd} shows the obtained limits on the SD DM-nucleon cross section for DUNE, using the DIS (up triangles) and QE (down triangles) events both for the $\tau^{+}\tau^{-}$ (blue) and the $b\bar{b}$ (red) samples, for an exposure of $400 \ \mathrm{kT} \ \mathrm{yr}$. I also include the corresponding current limits from IceCube \cite{IceCube2021} (solid lines), as well as the projected sensitivities of Pingu \cite{Chen2014} (dashed lines) and Hyper-Kamiokande \cite{Bell2021} (dash-dotted lines). For comparison, I also show the reported direct detection limits from PICASSO \cite{Behnke2016} (solid green line) and PICO-60 $\mathrm{C}_{3}\mathrm{F}_{8}$ \cite{PICO2019} (dashed green line).
+Fig. \ref{fig:solardm_xsection_sd} shows the obtained limits on the SD DM-nucleon cross section for DUNE, using the DIS (up triangles) and QE (down triangles) events both for the $\tau^{+}\tau^{-}$ (blue) and the $b\bar{b}$ (red) samples, for an exposure of $400 \ \mathrm{kT} \ \mathrm{yr}$. The coloured bands represent the difference between the realistic efficiencies obtained and the limit of perfect signal efficiency and optimistic background rejection given by Eq. (\ref{4.3}). I also include the corresponding current limits from IceCube \cite{IceCube2021} (solid lines) and Super-Kamiokande (dash-dotted lines), as well as the projected sensitivities for Hyper-Kamiokande \cite{Bell2021} (dotted lines). For comparison, I also show the reported direct detection limits from PICASSO \cite{Behnke2016} (solid green line) and PICO-60 $\mathrm{C}_{3}\mathrm{F}_{8}$ \cite{PICO2019} (dashed green line).
 
 Notice that, for most of the mass range, the limits one can set by using the DIS events are stronger than those of the QE interactions, except for the low mass part of both the $\tau^{+}\tau^{-}$ and the $b\bar{b}$ curves where the QE events dominate. In general, the expected sensitivity of DUNE for DM masses $\lesssim 25 \ \mathrm{GeV}$ surpasses the stronger current indirect limits. However, experiments like Hyper-Kamiokande are foreseen to have an overall better sensitivity in this kind of searches, as they have a bigger active volume and accept a broader energy range.
 
