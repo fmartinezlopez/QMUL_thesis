@@ -54,7 +54,7 @@ The symbol &#9745; indicates that comment(s) have been implemented for that chap
         * Hit sensitivity
     * VD ColdBox data taking
 
-* DM searches with neutrinos from the Sun &#9744;
+* DM searches with neutrinos from the Sun &#9745;
     * Gravitational capture of DM by the Sun
     * Neutrino flux from DM annihilations
     * Computing limits from solar neutrino fluxes
@@ -69,7 +69,7 @@ The symbol &#9745; indicates that comment(s) have been implemented for that chap
         * Systematic uncertainties in the atmospheric background
         * Common systematic uncertainties
 
-* Particle identification in ND-GAr &#9744;
+* Particle identification in ND-GAr &#9745;
     * GArSoft
         * Event generation
         * Detector simulation
@@ -95,7 +95,7 @@ The symbol &#9745; indicates that comment(s) have been implemented for that chap
         * $\pi ^{0}$ reconstruction
     * Integration in GArSoft
 
-* Event selection in ND-GAr &#9744;
+* Event selection in ND-GAr &#9745;
     * Data sample
     * $\nu _{\mu }$ CC selection
         * Selection optimisation
