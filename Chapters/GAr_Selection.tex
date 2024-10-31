@@ -5,18 +5,18 @@
 	You have power over your mind, not outside events. Realise this, and you will find strength.
 \end{chapquote}
 
-As discussed previously, it is necessary to evaluate the capabilities of ND-GAr at identifying different particles. In the context of the LBL analysis, we want ND-GAr to provide data samples containing events of specific topologies, like $\nu_{\mu}$ CC $1\pi^{\pm}$, $\nu_{\mu}$ CC $1p1\pi^{\pm}$, etcetera. Thus, developing a strategy for the event selection using the current reconstruction is required.
+As discussed previously, it is necessary to evaluate the capabilities of ND-GAr at identifying different particles. In the context of the LBL analysis, we want ND-GAr to provide data samples containing events of specific topologies, like $\nu_{\mu}$ CC $1\pi^{\pm}$, $\nu_{\mu}$ CC $1p1\pi^{\pm}$, etcetera. The objective is to demonstrate that the assumptions made in the DUNE TDR are feasible with a full end-to-end ND GAr simulation. This means demonstrating that it is possible to reconstruct muon neutrino interactions, select pion exclusive samples, and measure relevant muon and pion quantities (including neutral pions).
 
 In this Chapter, I present the results of a number of preliminary studies focused on the event selection in ND-GAr, particularly the $\nu_{\mu}$ CC selection and the pion tagging strategies. I also investigate the neutrino energy reconstruction, as well as the systematic uncertainties relevant for our detector.
 
-\section{Data sample}
+\section{Simulated data sample}
 \label{sec:gar_data}
 
-For the event selection studies I used a MC sample consisting of $10^{5}$ FHC neutrino interaction events inside the HPgTPC volume. The version of \texttt{GENIE} used was \texttt{v3_04_00}, with the \texttt{G18} tune. This is a preliminary version of the re-tune produced from CCQE, CC$1\pi$, CC$2\pi$, and CC inclusive bubble chamber cross section data \cite{GENIE2021}. It uses the local Fermi gas as a description of the nuclear model. The quasielastic-like events are described by the Nieves quasielastic \cite{Nieves2004} and Valencia $2p2h$ \cite{Nieves2011} models. The Berger-Seghal model \cite{Berger2007,Berger2008} is used for the resonant and coherent pion production. As in all the \texttt{GENIE} tunes, the Bodek-Yang model \cite{Bodek2002} describes the DIS interactions. Finally, the FSI are described using the effective intranuclear transport model in INTRANUKE.
+For the event selection studies I produced a MC sample consisting of $10^{5}$ FHC neutrino interaction events inside the HPgTPC volume. The version of \texttt{GENIE} used was \texttt{v3_04_00}, with the \texttt{G18} configuration. This is a preliminary version of the re-tune produced from CCQE, CC$1\pi$, CC$2\pi$, and CC inclusive bubble chamber cross-section data \cite{GENIE2021}. It uses the local Fermi gas \cite{Chiang1989} as a description of the nuclear model. The quasielastic-like events are described by the Nieves quasielastic \cite{Nieves2004} and Valencia $2p2h$ \cite{Nieves2011} models. The Berger-Seghal model \cite{Berger2007,Berger2008} is used for the resonant and coherent pion production. As in all the \texttt{GENIE} tunes, the Bodek-Yang model \cite{Bodek2002} describes the DIS interactions. Finally, the FSI are described using the effective intranuclear transport model in INTRANUKE.
 
 For this sample, I used \texttt{GArG4} instead of \texttt{edep-sim} for the particle propagation. Because both \texttt{Geant4} wrappers use different configurations for the simulation, the results obtained are different. The default \texttt{edep-sim} configuration used by the DUNE ND is appropriate for ND-LAr, where thresholds for particle production are higher. In the case of ND-GAr, these parameters need to be adjusted accordingly. For the time being, in these first productions of analysis files, we will use our standalone \texttt{Geant4} implementation.
 
-The detector simulation and reconstruction used was GArSoft version \texttt{v02_21_00}. I made use of the standard routines for the readout simulation and the reconstruction, which include the additions described in section \ref{section:integration}. A summary of the GArSoft outputs is extracted in the form of a plain \texttt{ROOT} \texttt{TTree}. These are then used, together with the \texttt{GENIE} output files, to produce the files known within DUNE as common analysis files (CAFs). The version of the CAF format used in this analysis is \texttt{duneanaobj} \texttt{v3_07_00}.
+The detector simulation and reconstruction used was GArSoft version \texttt{v02_21_00}. I made use of the standard routines for the readout simulation and the reconstruction, which include the additions described in section \ref{section:integration}. A summary of the GArSoft outputs is extracted in the form of a plain \texttt{ROOT} \texttt{TTree}. These are then used, together with the \texttt{GENIE} output files, to produce common analysis files (CAFs). The version of the CAF format used in this analysis is \texttt{duneanaobj} \texttt{v3_07_00}.
 
 This sample only includes single interaction events. In the future, we will move to simulate full neutrino spills. Also, we will need to include neutrino interactions in the other detector volumes (ECal, magnet, \dots), as well as rock muons making it to ND-GAr. However, this will require a significant amount of work to go into the so-called interaction slicer, the part of the reconstruction in charge of splitting the reconstructed events.
 
@@ -128,7 +128,7 @@ Another scoring metric typically used when quantifying the performance of a sele
 \begin{equation}
     \mathrm{Significance} = \frac{S}{\sqrt{S+B}} = \frac{\mathrm{TP}}{\sqrt{\mathrm{TP} + \mathrm{FP}}}.
 \end{equation}
-The significance measures the relative size of the true signal within the selection, $S=\mathrm{TP}$ with respect to one standard deviation of the counting experiment. Assuming Poisson statistics, the variance is equal to the number of observations, and therefore the standard deviation equals to $\sqrt{N}=\sqrt{S+B}=\sqrt{\mathrm{TP} + \mathrm{FP}}$. I use this metric to 
+The significance measures the relative size of the true signal within the selection, $S=\mathrm{TP}$ with respect to one standard deviation of the counting experiment. Assuming Poisson statistics, the variance is equal to the number of observations, and therefore the standard deviation equals to $\sqrt{N}=\sqrt{S+B}=\sqrt{\mathrm{TP} + \mathrm{FP}}$.
 
 \begin{figure}[t]
     \centering
@@ -146,16 +146,22 @@ The significance measures the relative size of the true signal within the select
 
 Figure \ref{fig:numuCC_metrics_opt} shows the change in efficiency (blue) and purity (red) of the $\nu_{\mu}$ CC selection as a function of the different cuts. From left to right, I vary $\mu_{\mathrm{score}}^{\mathrm{cut}}$, $\Delta L_{\mathrm{FV}}$, and $\Delta R_{\mathrm{FV}}$. For each value of the cuts, I compute the median and IQR (represented by the horizontal lines and the heights of the boxes, respectively) of the corresponding conditional distributions of efficiency and purity. This representation is useful to get an idea of the general trend the scores follow with the cuts, as well as the spread. It is clear that the muon score cut has the biggest impact on the efficiency, which ranges between $0.05$ to $0.80$, whereas the purity remains stable with values around $0.85$.
 
-\begin{figure}[t]
+\begin{comment}
+    \begin{figure}[t]
     \centering
     \includegraphics[width=.95\linewidth]{Images/GAr_selection/numuCC_metric_heatmap.pdf}
     \caption{Normalised 2D distributions of efficiency, purity and significance for the $\nu_{\mu}$ CC selection. The $S/\sqrt{S+B}$ is normalised to the highest value achieved. The vertical dashed line indicates a purity value of $0.85$, whereas the horizontal one corresponds to an efficiency of $0.80$.}
     \label{fig:numuCC_metric_heat}
 \end{figure}
+\end{comment}
 
 A similar depiction of the significance can be found in Fig. \ref{fig:numuCC_significance_opt}. In this case, one can see that the $S/\sqrt{S+B}$ decreases as the cuts grow tighter. However, there are hints of local maxima at intermediate values.
 
-Selecting the cut configuration with the highest significance, $147 \pm 11$ for the parameter values explored here, results in an efficiency and purity of $0.754 \pm 0.006$ and $0.833 \pm 0.007$, respectively. Figure \ref{fig:numuCC_metric_heat} shows the 2D distributions resulting when combining pairs of efficiency, purity and significance, obtained for the cut configurations explored. The significance is normalised to the highest value obtained in the parameter scan. Looking at this, it is clear that a selection with highest efficiency and purity can be achieved, maintaining a similar significance level.
+\begin{comment}
+    Selecting the cut configuration with the highest significance, $147 \pm 11$ for the parameter values explored here, results in an efficiency and purity of $0.754 \pm 0.006$ and $0.833 \pm 0.007$, respectively. Figure \ref{fig:numuCC_metric_heat} shows the 2D distributions resulting when combining pairs of efficiency, purity and significance, obtained for the cut configurations explored. The significance is normalised to the highest value obtained in the parameter scan. Looking at this, it is clear that a selection with highest efficiency and purity can be achieved, maintaining a similar significance level.
+\end{comment}
+
+Selecting the cut configuration with the highest significance, $147 \pm 11$ for the parameter values explored here, results in an efficiency and purity of $0.754 \pm 0.006$ and $0.833 \pm 0.007$, respectively. However, there are other selections which allow to achieve higher efficiencies and purities, maintaining similar significance values.
 
 \begin{figure}[t]
 	\centering
@@ -183,10 +189,6 @@ Selecting the cut configuration with the highest significance, $147 \pm 11$ for 
 
 Therefore, to get a more refined selection, I first select the configurations with a purity and an efficiency higher than $0.85$ and $0.80$, respectively. After that, I select the tuple of cuts yielding the highest significance. The resulting value for the muon score cut is $\mu_{\mathrm{score}}^{\mathrm{cut}} = 0.10$, and the FV is given by $\Delta L_{\mathrm{FV}} = 30.0~\mathrm{cm}$ and $\Delta R_{\mathrm{FV}} = 50.0~\mathrm{cm}$. With these, one obtains a total efficiency of $0.800 \pm 0.007$ and purity of $0.851 \pm 0.008$, with a significance of $138 \pm 11$. Hereafter, I use this optimised selection cuts, unless specified otherwise.
 
-A summary of the selection can be found in Tab. \ref{tab:numuCC_selection}. It shows the number of events in the selected sample after each selection cut, as well as the absolute and relative passing rates. Figure \ref{fig:numuCC_selection_steps} shows the overall efficiencies (blue) and purities (red) after each cut in the event selection is applied. As expected, the efficiency drops while the purity increases with the successive cuts.
-
-Notice how, out of the cuts prior to the FV constraint, the sign selection produces the highest increase in purity. This is one of the advantages of having a magnetised TPC, and can also be used for a $\bar{\nu}_{\mu}$ CC selection when running in RHC mode.
-
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.80\linewidth]{Images/GAr_selection/numuCC_selection_true_energy.pdf}
@@ -194,10 +196,14 @@ Notice how, out of the cuts prior to the FV constraint, the sign selection produ
 	\label{fig:numuCC_selection_true_enu}
 \end{figure}
 
+A summary of the selection can be found in Tab. \ref{tab:numuCC_selection}. It shows the number of events in the selected sample after each selection cut, as well as the absolute and relative passing rates. Figure \ref{fig:numuCC_selection_steps} shows the overall efficiencies (blue) and purities (red) after each cut in the event selection is applied. As expected, the efficiency drops while the purity increases with the successive cuts.
+
+Notice how, out of the cuts prior to the FV constraint, the sign selection produces the highest increase in purity. This is one of the advantages of having a magnetised TPC, and can also be used for a $\bar{\nu}_{\mu}$ CC selection when running in RHC mode.
+
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=.99\linewidth]{Images/GAr_selection/numuCC_selection_true_energy_performance.pdf}
-	\caption[True neutrino energy spectra for the $\nu_{\mu}$ CC selection.]{Left panel: efficiency (top panel) and purity (bottom panel) for the $\nu_{\mu}$ CC selection as a function of the true neutrino energy. Right panel: significance for the $\nu_{\mu}$ CC selection as a function of the true neutrino energy}
+	\includegraphics[width=.70\linewidth]{Images/GAr_selection/numuCC_selection_true_energy_performance.pdf}
+	\caption[Efficiency and purity for the $\nu_{\mu}$ CC selection as a function of the true neutrino energy.]{Efficiency (top panel) and purity (bottom panel) for the $\nu_{\mu}$ CC selection as a function of the true neutrino energy.}
 	\label{fig:numuCC_selection_true_enu_performance}
 \end{figure}
 
@@ -212,9 +218,9 @@ Using the stored spectra discussed above, the true neutrino energy distribution 
 	\label{fig:numuCC_sign_selection}
 \end{figure}
 
-These spectra also allow to compute the efficiency and purity of the selection as a function of the true neutrino energy, as shown in Fig. \ref{fig:numuCC_selection_true_enu_performance} (left panel). As it could be expected from the previous ratio plot, the efficiency is low at low neutrino energies. Nonetheless, it raises quickly with the energy, until it stabilises around a value of $0.80$. Looking at the purity, one may notice that, although it starts at around $0.90$, there is a significant decrease towards the high end of the spectrum. Figure \ref{fig:numuCC_selection_true_enu_performance} (right panel) also shows the significance as a function of the energy. In this case, the highest $S/\sqrt{S+B}$ is achieved around the energies where the spectrum peaks.
+These spectra also allow to compute the efficiency and purity of the selection as a function of the true neutrino energy, as shown in Fig. \ref{fig:numuCC_selection_true_enu_performance}. As it could be expected from the previous ratio plot, the efficiency is low at low neutrino energies. Nonetheless, it raises quickly with the energy, until it stabilises around a value of $0.80$. Looking at the purity, one may notice that, although it starts at around $0.90$, there is a significant decrease towards the high end of the spectrum.
 
-A variation of the $\nu_{\mu}$ CC selection one can try is to apply it without the reconstructed charge cut. Figure \ref{fig:numuCC_sign_selection} (top panel) shows the $E_{\nu}$ distributions corresponding to the selection with (blue stacked histogram) and without (red stacked histogram) the sign selection. In the former case, the out of FV contamination amounts to $9.06\%$ of the total, while the NC contamination results $4.77\%$ and the wrong-sign contamination $0.57\%$. For the later, these backgrounds account for the $10.01\%$, $10.82\%$, and $2.18\%$ of the selected events, respectively. As expected, removing the positive particles does not change the FV-related effects noticeably. However, the sign selection proves its worth in the rejection of $\bar{\nu}_{\mu}$ CC events, which drop almost by one order of magnitude. Additionally, the charge selection cuts the NC events in half, as it reduces the chances of misidentifying a positively charged hadron for a muon.
+A variation of the $\nu_{\mu}$ CC selection one can try is to apply it without the reconstructed charge cut. Figure \ref{fig:numuCC_sign_selection} (top panel) shows the $E_{\nu}$ distributions corresponding to the selection with (blue stacked histogram) and without (red stacked histogram) the sign selection. In the former case, the out of FV contamination amounts to $9.06\%$ of the total, while the NC contamination results $4.77\%$ and the wrong-sign contamination $0.57\%$. For the latter, these backgrounds account for the $10.01\%$, $10.82\%$, and $2.18\%$ of the selected events, respectively. As expected, removing the positive particles does not change the FV-related effects noticeably. However, the sign selection proves its worth in the rejection of $\bar{\nu}_{\mu}$ CC events, which drop almost by one order of magnitude. Additionally, the charge selection cuts the NC events in half, as it reduces the chances of misidentifying a positively charged hadron for a muon.
 
 \begin{figure}[t]
 	\centering
@@ -271,7 +277,7 @@ Notice that, for the reconstructed values, the variables do not necessarily come
 
 I also studied the performance of the $\nu_{\mu}$ CC selection as a function of the kinematic variables of the primary muon. As before, these metrics are only possible to compute for true $\nu_{\mu}$ CC events. The efficiency (top panels) and purity (bottom panels) as a function of the truth muon momentum (left) and beam angle (right) are shown in Fig. \ref{fig:numuCC_muon_kinematics}. One can see that there are some similarities in the behaviour of both metrics between the true neutrino energy and the muon momentum cases. This is to be expected, as these two variables are highly correlated. For the efficiency, there is a rapid increase at low momentum values until it peaks at around $1~\mathrm{GeV}/c$, after which it starts decreasing slowly. The purity remains relatively constant, with a slight drop towards high $p_{\mu}^{\mathrm{truth}}$ values. In the case of the muon angle, the decrease in efficiency at high $\theta_{\mu}^{\mathrm{truth}}$ is more noticeable. However, note that the number of events with backward-going muons is much smaller than those aimed towards the forward direction, as can be seen from the size of the vertical error bars. There is also a decline in the purity with the beam angle, but this effect is much smaller.
 
-A byproduct of selecting the primary lepton in the interaction is the position of the reconstructed neutrino vertex candidate. Checking how the position of the selected reconstructed primary vertex and the true vertex position compare is needed to understand the validity of our method. Figure \ref{fig:numuCC_vertex_residuals} shows the distributions of fractional residuals between the truth and reconstructed vertex positions in the $X$ (top panel), $Y$ (middle panel), and $Z$ (bottom panel) directions. Performing a double Gaussian fit to the distributions (red lines), I estimate the reconstructed vertex resolution achieved with this method to be $1.62 \pm 0.08 \%$, $1.23 \pm 0.05 \%$, and $0.32 \pm 0.05 \%$ for the $X$, $Y$, and $Z$ directions, respectively. As expected, the resolution along the drift direction. However, the significant difference in resolution between the two transverse directions is worth noting. Not only the resolution is better for the $Z$ direction, but the layout of the residual distribution is highly asymmetrical. This may be related to the variability in the selection efficiency along that direction.
+A byproduct of selecting the primary lepton in the interaction is the position of the reconstructed neutrino vertex candidate. Checking how the position of the selected reconstructed primary vertex and the true vertex position compare is needed to understand the validity of our method. Figure \ref{fig:numuCC_vertex_residuals} shows the distributions of fractional residuals between the truth and reconstructed vertex positions in the $X$ (top panel), $Y$ (middle panel), and $Z$ (bottom panel) directions. Performing a double Gaussian fit to the distributions (red lines), I estimate the reconstructed vertex resolution achieved with this method to be $1.62 \pm 0.08 \%$, $1.23 \pm 0.05 \%$, and $0.32 \pm 0.05 \%$ for the $X$, $Y$, and $Z$ directions, respectively. As expected, the resolution along the drift direction is slightly worse. However, the significant difference in resolution between the two transverse directions is worth noting. Not only the resolution is better for the $Z$ direction, but the layout of the residual distribution is highly asymmetrical. This may be related to the variability in the selection efficiency along that direction.
 
 \begin{comment}
 \begin{figure}[t]
@@ -364,7 +370,7 @@ For the $\nu_{\mu}$ CC $0\pi^{\pm}$ selection, the performance metrics follow th
 
 To have a working point for our studies, I chose the cut configuration that yields the maximum significance for the $\nu_{\mu}$ CC $1\pi^{\pm}$ selection. Of course, other cuts would be more appropriate in certain scenarios. However, this provides us with a starting point to understand the performance of the selection. A significance of $66\pm7$ for the $1\pi^{\pm}$ selection is achieved for the cut values $p^{\mathrm{cut}}_{\mathrm{d}E/\mathrm{d}x} = 0.30$, $p^{\mathrm{cut}}_{\mathrm{ToF}} = 0.70$, $\Delta^{\pi^{\pm}}_{\mathrm{d}E/\mathrm{d}x} = 0.10$, and $d^{\mathrm{cut}}_{\mu} = 110.0~\mathrm{cm}$.
 
-Figure \ref{fig:pion_selection_metrics} shows the multiplicity matrices resulting from this optimised $\nu_{\mu}$ CC $1\pi^{\pm}$ selection. Although both matrices are produced with the same selection cuts, one is column normalised (left panel), whereas the other is row normalised (right panel). It follows from the definitions in Eqs. (\ref{eq:efficiency_matrix}) and ((\ref{eq:purity_matrix})) that the diagonal entries of these matrices correspond to the efficiencies and the purities, respectively, for each of the possible charged pion multiplicity selections.
+Figure \ref{fig:pion_selection_metrics} shows the multiplicity matrices resulting from this optimised $\nu_{\mu}$ CC $1\pi^{\pm}$ selection. Although both matrices are produced with the same selection cuts, one is column normalised (left panel), whereas the other is row normalised (right panel). It follows from the definitions in Eqs. (\ref{eq:efficiency_matrix}) and (\ref{eq:purity_matrix}) that the diagonal entries of these matrices correspond to the efficiencies and the purities, respectively, for each of the possible charged pion multiplicity selections.
 
 \begin{figure}[t]
     \centering
@@ -524,7 +530,7 @@ I also compared the reconstructed energies to the true energy of the neutrino. F
 \section{Systematic uncertainties}
 \label{sec:gar_systematics}
 
-Although the implementation and study of the systematic uncertainties relevant for ND-GAr is out of the scope of this preliminary analysis, in this section I give an extended overview of the topic. can be classified in three categories: neutrino flux uncertainties, neutrino-nucleus interaction model uncertainties, and detector response uncertainties.
+Although the implementation and study of the systematic uncertainties relevant for ND-GAr is out of the scope of this preliminary analysis, in this section I give an extended overview of the topic. These can be classified in three categories: neutrino flux uncertainties, neutrino-nucleus interaction model uncertainties, and detector response uncertainties.
 
 \subsection{Flux uncertainties}
 
@@ -537,9 +543,9 @@ The hadron production uncertainties are associated to the kinematic distribution
 % Beamline instrumentation uncertainties
 The other set of uncertainties affecting the neutrino flux prediction come from the limited precision with which we know the parameters of the different components in the beamline. These include the specifications of the target, the dimensions of the decay pipe, and the current and alignment of the magnetic horns. The effects on the flux predictions of these uncertainties are estimated using the G4LBNF simulation. For each of the parameters, the simulation runs with said parameter shifted by $\pm 1\sigma$ from the nominal value, and the resulting flux prediction is compared to the nominal one.
 
-\subsection{Cross section uncertainties}
+\subsection{Cross-section uncertainties}
 
-As discussed previously in section \ref{sec:nu_interactions}, the neutrino-nucleus interaction model is of great importance for neutrino experiments, as it maps the true neutrino energy to the kinematics of the final state particles. The uncertainties on the cross section model are implemented in three ways: varying the parameters used in the \texttt{GENIE} simulation, using weights that parametrise cross section effects not accounted for in \texttt{GENIE}, and comparing the \texttt{GENIE} predictions to other interaction models.
+As discussed previously in section \ref{sec:nu_interactions}, the neutrino-nucleus interaction model is of great importance for neutrino experiments, as it maps the true neutrino energy to the kinematics of the final state particles. The uncertainties on the cross-section model are implemented in three ways: varying the parameters used in the \texttt{GENIE} simulation, using weights that parametrise cross-section effects not accounted for in \texttt{GENIE}, and comparing the \texttt{GENIE} predictions to other interaction models.
 
 Within the DUNE TDR LBL analysis, the default interaction model was that implemented in \texttt{GENIE} \texttt{v2_12_10} \cite{DUNE2021}. A summary of the cross section systematic parameters present in \texttt{GENIE} used in that analysis is presented in Tab. \ref{tab:xsec_genie_systs}. The additional systematic parameters used in the analysis are described in Tab. \ref{tab:xsec_non_genie_systs}.
 
@@ -622,7 +628,7 @@ For the TDR analysis, an additional $20\%$ normalisation uncertainty was added t
 Finally, the effective intranuclear transport model (often denoted as $hA$) is a part of \texttt{GENIE}, implemented in the \texttt{INTRANUKE} module. \texttt{GENIE} features a large number of parameters for the uncertainties on the intranuclear cascade model, which are summarised in the last portion of Tab. \ref{tab:xsec_genie_systs}. In following \texttt{GENIE} releases, updated versions of the \texttt{INTRANUKE} model are used.
 
 % Final thoughts
-Although part of this cross section systematic treatment is outdated, as the tunes currently used feature different models, it gives a good idea of what systematic effects are relevant for the different measurements we may want to perform in the future. At the moment, a significant effort is channeled to the creation of new tunes specifically tailored for DUNE, including the development of parametrisations particularly relevant for ND-GAr.
+Although part of this cross-section systematic treatment is outdated, as the tunes currently used feature different models, it gives a good idea of what systematic effects are relevant for the different measurements we may want to perform in the future. At the moment, a significant effort is channeled to the creation of new tunes specifically tailored for DUNE, including the development of parametrisations particularly relevant for ND-GAr.
 
 \subsection{Detector uncertainties}
 
@@ -656,8 +662,32 @@ The main source of uncertainty in the momentum measurement is the value of the m
 % ECal performance
 The results presented for the ECal in Ref. \cite{DUNE2021NDCDR} use an outdated version of the geometry, where the entire ECal sits outside of the pressure vessel and the layers consist of $5~\mathrm{mm}$ of scintillator and $2~\mathrm{mm}$ of Cu. The sample used consists of single photons in a $20^{\circ}$ cone aligned with the beam direction. In the simulation, an energy threshold of $200~\mathrm{keV}$ and a time resolution of $0.25~\mathrm{ns}$ are assumed.
 
+\begin{table}[t]
+	\caption[Expected performance for ND-GAr, both from simulation studies and extrapolated from ALICE and PEP-4.]{Expected performance for ND-GAr, both from simulation studies and extrapolated from ALICE and PEP-4. Table adapted from Ref. \cite{DUNE2021NDCDR}.}
+	\begin{center}
+		\begin{small}
+            \begin{tabular}{l|l}
+                Parameter                            & Value                                        \\[2mm] \hline
+                \rule{0pt}{1.1\normalbaselineskip}Perpendicular hit resolution         & $0.25~\mathrm{mm}$                           \\[2mm] 
+                Parallel hit resolution              & $1.50~\mathrm{mm}$                           \\[2mm] 
+                Two-track separation                 & $1.00~\mathrm{cm}$                           \\[2mm] 
+                $\mathrm{d}E/\mathrm{d}x$ resolution & $5\%$ for protons, $2\%$ for muons           \\[2mm] 
+                Tracking efficiency                  & $>90\%$ for $40 ~ \mathrm{MeV}/c$            \\[2mm] 
+                Momentum resolution                  & $2.7\%$ core, $12\%$ tails                   \\[2mm] 
+                Angular resolution                   & $0.80^{\circ}$                               \\[2mm] 
+                Proton detection threshold           & $5 ~ \mathrm{MeV}$                           \\[2mm] 
+                ECal energy resolution               & $6\% / \sqrt{E} \oplus 1.6\% / E \oplus 4\%$ \\[2mm] 
+                ECal pointing resolution             & $8.17^{\circ} / \sqrt{E} + 4.18^{\circ}$    
+            \end{tabular}
+		\end{small}
+	\end{center}
+	\label{tab:detector_systs}
+\end{table}
+
 The energy resolution of the photons is obtained from a Gaussian fit. The resulting resolutions are then fitted to a function of the form:
 \begin{equation}
     \frac{\sigma_{E}}{E} = \frac{A}{\sqrt{E}} \oplus \frac{B}{E} \oplus C,
 \end{equation}
 where $A$ is the stochastic term, $B$ the noise term and $C$ the constant term. The best fit finds the values $A=6.1\%$, $B=1.6\%$, and $C=4.5\%$. The photon angle is estimated using a PCA analysis of the associated ECal cluster, taken to be the direction of the first principal component. The angular resolution is computed from a Gaussian fit to the core of the distribution. As a function of the photon energy, the values obtained are $\frac{8.17^{\circ}}{\sqrt{E}} + 4.18^{\circ}$. Different arrangements of the layers and alternative absorber choices may improve these results.
+
+Table \ref{tab:detector_systs} summarises the different detector effects discussed above and the performance expected for ND-GAr.
