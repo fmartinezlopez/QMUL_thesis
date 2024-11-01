@@ -30,19 +30,19 @@ Filtering is a vital step in the hit finder chain. It helps suppressing the nois
 
 This is particularly important for the induction planes. In general, signal peaks in the induction channels have smaller amplitude than the ones in the collection plane. This, together with the fact that the pulse shapes are bipolar, reduces our capacity to detect the hits on these channels. The inefficiency of detecting TPs in the induction planes (denoted as U and V planes) leads trigger algorithms to focus mainly on the TPs from the collection plane (so-called X plane). As a result, the possibility of making trigger decisions based on the coincidence of TPs across the three wire planes remains nowadays unexploited in DUNE. This will be beneficial for low energy events, as it adds redundancy to the algorithms, as well as for other physics that requires online directionality information, like the supernova pointing.
 
-A possible improvement of the current hit finder chain may require optimising the existing or choosing a new filter implementation. A filter strategy which benefits the induction signals may be able to enhance the detection efficiency of TPs from the induction planes and ideally make it comparable to that of the collection plane.  
-
-The goal is to implement a better finite-impulse response filter and to evaluate its performance relative to the current filter. To do so, I need to take into account the limitations of the firmware: the FIR filter shall have maximum 32 coefficients (so-called taps) whose values are 12-bit unsigned integers. Although it is technically possible to include non-integer coefficients, it would be a technical challenge. For instance, in the HD design there are 40 FIR instances per APA, as there are 4 FIR blocks per optical link and 10 optical links per APA. Therefore, the impact of increasing the complexity of the filter will be amplified forty times in the FPGA load. With these restrictions, the task is to provide a set of 32 coefficients which yield an optimal filter performance for the induction channels. A solution compatible with the software hit finder implementation is not considered, due to its current limitations concerning the filtering stage.
-
-\section{Signal-to-noise ratio definition}
-\label{sec:matched_filter_sn_definition}
-
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=1\linewidth]{Images/Matched_Filter/waveform_example_raw}
 	\caption[Example unfiltered waveform from a ProtoDUNE-SP raw data capture.]{Left panel: Zoomed unfiltered waveform corresponding to channel $7840$ from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} (blue line). The green dashed lines mark the region $\pm3\sigma_{raw}$. The resulting noise waveform is also shown (red line). Top right panel: ADC distribution for channel $7840$, where the green shaded region represents $\pm \sigma_{raw}$. Bottom right panel: noise ADC distribution for channel $7840$, where the green shaded region represents $\pm \sigma_{noise}$.}
 	\label{fig:adcs_nofir}
 \end{figure}
+
+A possible improvement of the current hit finder chain may require optimising the existing or choosing a new filter implementation. A filter strategy which benefits the induction signals may be able to enhance the detection efficiency of TPs from the induction planes and ideally make it comparable to that of the collection plane.  
+
+The goal is to implement a better finite-impulse response filter and to evaluate its performance relative to the current filter. To do so, I need to take into account the limitations of the firmware: the FIR filter shall have maximum 32 coefficients (so-called taps) whose values are 12-bit unsigned integers. Although it is technically possible to include non-integer coefficients, it would be a technical challenge. For instance, in the HD design there are 40 FIR instances per APA, as there are 4 FIR blocks per optical link and 10 optical links per APA. Therefore, the impact of increasing the complexity of the filter will be amplified forty times in the FPGA load. With these restrictions, the task is to provide a set of 32 coefficients which yield an optimal filter performance for the induction channels. A solution compatible with the software hit finder implementation is not considered, due to its current limitations concerning the filtering stage.
+
+\section{Signal-to-noise ratio definition}
+\label{sec:matched_filter_sn_definition}
 
 In the following, I use the signal to noise ratio (S/N) as a measure of the FIR filter performance. The S/N metrics allow us to compare different filter implementations and serve as a basis for more detailed studies presented later in this Chapter. Here, I demonstrate how to extract its value for a set of 
 ProtoDUNE-SP data. Specifically, I use the ADC capture \texttt{felix-2020-07-17-21:31:44}, a raw data capture taken for firmware validation purposes. I define the S/N of a channel as the height of the signal peaks relative to the size of the noise. To quantify this, I first estimate the standard deviation of the ADC data for each channel, $\sigma_{\mathrm{ADC}}$. Then, I define the corresponding noise waveform to be the ADC values in the range $\pm 3~\sigma_{\mathrm{ADC}}$. From this new noise data I compute the mean and standard deviation, $\mu_{noise}$ and $\sigma_{noise}$, so I can write the S/N for any given channel as:
@@ -51,10 +51,6 @@ ProtoDUNE-SP data. Specifically, I use the ADC capture \texttt{felix-2020-07-17-
 \end{equation}
 where $\max{[\mathrm{ADC}]}$ is simply the maximum ADC value found in the corresponding channel.
 
-As an example, I apply this definition of the S/N to a waveform from one of the channels of the data capture. Figure \ref{fig:adcs_nofir} shows a zoomed region of the waveform corresponding to channel $7840$ (blue line), where one can clearly see three signal peaks and continuous additive noise\footnote{There are actually 6 peaks, 3 positive and 3 negative, but, because by design for induction channels the expected signal pulse shapes are bipolar, we treat them as a collection of 3 individual signals.}. I estimated the standard deviation of this raw waveform to be $\sigma_{raw} = 7.84 ~ \mathrm{ADC}$, and from this I am able to define the noise waveform (red line) as the ADC values in the range $\pm 23.52 ~ \mathrm{ADC}$. This way, I obtain $\mu_{noise} = 0.01 ~ \mathrm{ADC}$ and $\sigma_{noise} = 5.58 ~ \mathrm{ADC}$, which gives $\mathrm{S/N} = 30.84$.
-
-I repeat this calculation now for the corresponding filtered waveform, using the current firmware FIR filter. Figure \ref{fig:adcs_fir} shows the same time window for the filtered waveform from channel $7840$ (blue line). In this case, the standard deviation of the waveform is larger than before, giving $\sigma_{raw} = 10.99 ~ \mathrm{ADC}$. The noise waveform (red line) is formed by selecting the ADC values in the $\pm 32.91 ~ \mathrm{ADC}$ range, which gives $\mu_{noise} = -0.47 ~ \mathrm{ADC}$ and $\sigma_{noise} = 7.03 ~ \mathrm{ADC}$. Finally, one obtains $\mathrm{S/N} = 24.68$. Notice that the value of S/N decreases after the filtering. Clearly, one can see that the noise baseline has increased by a factor of $1.35$ when we applied the FIR filter, and at the same time the amplitude of the signal peaks has remained almost unchanged, leading to this poorer S/N value.
-
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=1\linewidth]{Images/Matched_Filter/waveform_example_fir}
@@ -62,6 +58,11 @@ I repeat this calculation now for the corresponding filtered waveform, using the
 	\label{fig:adcs_fir}
 \end{figure}
 
+As an example, I apply this definition of the S/N to a waveform from one of the channels of the data capture. Figure \ref{fig:adcs_nofir} shows a zoomed region of the waveform corresponding to channel $7840$ (blue line), where one can clearly see three signal peaks and continuous additive noise\footnote{There are actually 6 peaks, 3 positive and 3 negative, but, because by design for induction channels the expected signal pulse shapes are bipolar, we treat them as a collection of 3 individual signals.}. I estimated the standard deviation of this raw waveform to be $\sigma_{raw} = 7.84 ~ \mathrm{ADC}$, and from this I am able to define the noise waveform (red line) as the ADC values in the range $\pm 23.52 ~ \mathrm{ADC}$. This way, I obtain $\mu_{noise} = 0.01 ~ \mathrm{ADC}$ and $\sigma_{noise} = 5.58 ~ \mathrm{ADC}$, which gives $\mathrm{S/N} = 30.84$.
+
+I repeat this calculation now for the corresponding filtered waveform, using the current firmware FIR filter. Figure \ref{fig:adcs_fir} shows the same time window for the filtered waveform from channel $7840$ (blue line). In this case, the standard deviation of the waveform is larger than before, giving $\sigma_{raw} = 10.99 ~ \mathrm{ADC}$. The noise waveform (red line) is formed by selecting the ADC values in the $\pm 32.91 ~ \mathrm{ADC}$ range, which gives $\mu_{noise} = -0.47 ~ \mathrm{ADC}$ and $\sigma_{noise} = 7.03 ~ \mathrm{ADC}$. Finally, one obtains $\mathrm{S/N} = 24.68$. Notice that the value of S/N decreases after the filtering. Clearly, one can see that the noise baseline has increased by a factor of $1.35$ when we applied the FIR filter, and at the same time the amplitude of the signal peaks has remained almost unchanged, leading to this poorer S/N value.
+
+\begin{comment}
 \section{Low-pass FIR filter design}
 \label{sec:matched_filter_fir}
 
@@ -104,6 +105,7 @@ Figure \ref{fig:fir_opt} shows the average relative change in the S/N (i.e. the 
 As it can be seen in Fig. \ref{fig:fir_opt} (bottom right panel) the configuration which gives the best mean performance for the three planes is $f_{c} = 0.068 \ \mathrm{ticks}^{-1}$ and $\delta f = 0.010 \ \mathrm{ticks}^{-1}$. We can use these to see how the filter affects the different channels. Figure \ref{fig:fir_best} shows the distribution of the S/N improvement values for all the channels in the raw ADC capture \texttt{felix-2020-07-17-21:31:44}, separated by wire plane, after the optimal Chebyshev filter was applied. One can see that there is a clear improvement for both U and V induction planes, obtaining a mean change of $1.25$ and $1.30$ for them, respectively. However, in the case of the X collection plane the distribution peaks around $1$, meaning that an important fraction of channels in that plane get a slightly worse S/N after the filter is applied. This is not a big issue, as the S/N for collection channels is usually much higher than the one for induction channels.
 
 The results I obtained optimising the low pass filter with the Parks-McClellan method are promising. Nonetheless, the improvement found is rather marginal. Thus, I explored alternative approaches to the filtering problem, which may yield better outputs. This way, I found a possible solution in matched filters. By construction, this kind of filters offer the best improvement on the S/N.
+\end{comment}
 
 \section{Matched filters}
 \label{sec:matched_filter_matched_filter}
@@ -117,6 +119,13 @@ In the context of signal processing, a matched filter is the optimal linear filt
 	\label{fig:adcs_mf}
 \end{figure}
 
+For a discrete signal, assuming that the additive noise is Gaussian, the impulse-response vector associated to the matched filter is given by:
+\begin{equation}
+	h \propto s,
+\end{equation}
+where $s$ is a reversed signal template sequence of length $N$ equal to the order of the filter. A detailed discussion on the derivation of this formula can be found in App. \ref{sec:matched_filter_impulse}.
+
+\begin{comment}
 Given a known signal sequence $s(t)$ and another (a priori unknown) noise sequence $n(t)$, the input signal can be written as:
 \begin{equation}\label{2.4.1}
 	x(t) = s(t) + n(t).
@@ -190,13 +199,7 @@ where $s$ is a reversed signal template sequence of length $N$ equal to the orde
 \begin{equation}\label{2.4.12}
 	h = \frac{s}{|s|}.
 \end{equation}
-
-\begin{figure}[t]
-	\centering
-	\includegraphics[width=1\linewidth]{Images/Matched_Filter/mf_fir_opt.png}
-	\caption[Relative change in the S/N for the ProtoDUNE-SP raw data capture for different values of $\delta$ and $\sigma$ from the matched filter parametrisation.]{Relative change in the S/N for the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} for different values of $\delta$ and $\sigma$ from the matched filter parametrisation in Eq. (\ref{2.4.13}). The black crosses in both panels denote the location of the maximum ratio value.}
-	\label{fig:mf_opt}
-\end{figure}
+\end{comment}
 
 To test whether this choice of filter is appropriate one needs to choose a signal template. As an example of how a matched filter would affect our signal, I simply took the matched filter coefficients to be the 32 ADC values around a signal peak present in the data. In Fig. \ref{fig:adcs_mf} (left panel) I plotted a zoomed region for channel $7840$ in the raw data capture \texttt{felix-2020-07-17-21:31:44}, after applying the matched filter described before (blue line). When compared to the raw and FIR filtered case (see Figs. \ref{fig:adcs_nofir} and \ref{fig:adcs_fir}), after applying the matched filter the standard deviation of the noise waveform (red line) decreases and at the same time the signal peaks are enhanced. This leads to an improvement of the S/N by a factor of $1.92$ when compared to the raw waveform.
 
@@ -206,13 +209,20 @@ To obtain the matched filter that is more suitable for our data, I explored diff
 \end{equation}
 where the parameter $\delta$ controls the asymmetry between the positive and negative peaks and $\sigma$ controls their width. The amplitude parameter $A$ is set such that it keeps the height of the biggest peak to be less than $200$ ADC in absolute value.
 
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=1\linewidth]{Images/Matched_Filter/mf_fir_opt.png}
+	\caption[Relative change in the S/N for the ProtoDUNE-SP raw data capture for different values of $\delta$ and $\sigma$ from the matched filter parametrisation.]{Relative change in the S/N for the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} for different values of $\delta$ and $\sigma$ from the matched filter parametrisation in Eq. (\ref{2.4.13}). The black crosses in both panels denote the location of the maximum ratio value.}
+	\label{fig:mf_opt}
+\end{figure}
+
 As this parametrisation is only adequate for bipolar signals I will focus exclusively on the induction channels. Also, to achieve the best possible performance, I optimise the coefficients for the U and V planes separately. However, as I will discuss, the differences are not very pronounced. In case it is not technically possible to separate channels in the firmware according to the plane they are coming from and use different sets of filter coefficients for them, we can just find a common set of coefficients. In such case, I do not expect the results to change drastically.
 
 Figure \ref{fig:mf_opt} presents the results of the parameter scan, for channels in the induction planes U (left panel) and V (right panel). For each configuration of $\sigma$ and $\delta$ the resulting matched filter was applied to all channels in the corresponding plane within the data capture \texttt{felix-2020-07-17-21:31:44}. The change in S/N is computed with respect to the raw waveforms, and then the mean value for all channels is kept as a score for each filter. One can see that the improvements obtained for the U plane are in general higher than the ones for the V plane. However, these ratios are substantially higher than the ones obtained for the low-pass FIR filters. For the optimal configurations, I attained improvements up to a factor of $1.85$ for the U plane and $1.65$ for the V plane.
 
 The sets of optimal matched filter coefficients were obtained for the parameters $\delta = 0.035$, $\sigma = 0.191$ for the U plane and $\delta = 0.018$, $\sigma = 0.191$ for the V plane. I show these two sets of coefficients in Fig. \ref{fig:mf_perf} (left panel). Figure \ref{fig:mf_perf} (right panel) shows the distribution of the S/N improvement after the optimal match filters for the U and V were applied to the corresponding channels in the raw data capture \texttt{felix-2020-07-17-21:31:44}. As mentioned before, the mean improvement achieved for the U plane channels is slightly higher than the one for the V channels. Note, however, that the spread of the distribution for the V plane is smaller than the one for the U plane.
 
-Overall, one can see that the improvements on the S/N are much more significant in the case of the matched filter than they were for the low-pass FIR filters. The analysis of the raw data captures from ProtoDUNE-SP suggests that matched filters increase the S/N of induction channels by a factor of $1.5$ more than the optimal low-pass FIR filters.
+Overall, one can see that the improvements on the S/N are much more significant in the case of the matched filter than they were for the low-pass FIR filters, described in App. \ref{sec:matched_filter_fir}. The analysis of the raw data captures from ProtoDUNE-SP suggests that matched filters increase the S/N of induction channels by a factor of $1.5$ more than the optimal low-pass FIR filters.
 
 Although these results are by themselves great points in favour of the matched filter, more studies are needed to completely assess the robustness of this approach. I proceeded then to test the matched filter with simulated data samples.
 
@@ -326,6 +336,7 @@ Both for the raw and matched filtered samples, the S/N is lower for tracks that 
 
 Figure \ref{fig:angular_electron} shows the corresponding angular dependence results for the $E_{k}=100 \ \mathrm{MeV}$ electrons sample. Although the S/N behaviour in this case is similar to what I observed for the muons, some differences are evident. A possible explanation can be that, because a significant fraction of the hits in these events are produced by the secondary particles generated in the EM shower, some of the S/N ratios do not correspond to the directional information of the primary electron. Even so, the S/N change distribution exhibits a consistent pattern and it is clear that the matched filter enhances the signal regardless of the electron direction.
 
+\begin{comment}
 \begin{figure}[t]
 	\begin{subfigure}{0.5\textwidth}
 		\centering
@@ -381,6 +392,7 @@ It is possible to correlate the peak asymmetry with the S/N and the S/N change p
 Also, in the bottom subplot of Fig. \ref{fig:asymmetry} (right panel) I show the relation between the peak asymmetry and the mean S/N change. In this case, one can see that there is a clear maximum at $\Delta_{peak} \sim -10 \ \mathrm{ADC}$. As mentioned previously, this is also the value of the mean of the peak asymmetry distribution. In fact, it is expected that our filter favours the signal peaks with the most common values of the peak asymmetry, as this was one of the features I target in our filter coefficient optimisation through the parameter $\delta$.
 
 These results suggest that events with poorer values of the mean S/N, usually associated to non-favourable track orientations, tend to have smaller values of the mean peak asymmetry (in absolute value). Nonetheless, because our matched filters have been optimised to account for these asymmetries, the improvement on the S/N for these events is sizeable if not better than the one for events which already had a high S/N.
+\end{comment}
 
 \subsection{Hit sensitivity}
 \label{subsec:2.5.3}
