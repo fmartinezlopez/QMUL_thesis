@@ -46,11 +46,9 @@ The symbol &#9745; indicates that comment(s) have been implemented for that chap
 * Matched Filter approach to Trigger Primitives &#9745;
     * Motivation
     * Signal-to-noise ratio definition
-    * Low-pass FIR filter design
     * Matched filters
     * Monte Carlo studies
         * Angular dependence
-        * Distortion and peak asymmetry
         * Hit sensitivity
     * VD ColdBox data taking
 
@@ -58,12 +56,10 @@ The symbol &#9745; indicates that comment(s) have been implemented for that chap
     * Gravitational capture of DM by the Sun
     * Neutrino flux from DM annihilations
     * Computing limits from solar neutrino fluxes
-    * Example: Kaluza-Klein Dark Matter
     * High energy DM neutrino signals
         * DIS events
         * Single proton QEL events
         * Results
-    * Example: Leptophilic Dark Matter
     * Systematic uncertainties
         * Systematic uncertainties in the solar WIMP signal
         * Systematic uncertainties in the atmospheric background
@@ -75,7 +71,6 @@ The symbol &#9745; indicates that comment(s) have been implemented for that chap
         * Detector simulation
         * Reconstruction
     * $\mathrm {d}E/\mathrm {d}x$ measurement in the TPC
-        * Energy calibration
         * Truncated $\mathrm {d}E/\mathrm {d}x$ mean
         * Mean $\mathrm {d}E/\mathrm {d}x$ parametrisation
     * Muon and pion separation in the ECal and MuID
@@ -88,11 +83,6 @@ The symbol &#9745; indicates that comment(s) have been implemented for that chap
     * ECal time-of-flight
         * Arrival time estimations
         * Proton and pion separation
-    * Charged pion decay in flight
-        * Track breakpoints
-    * Neutral particle identification
-        * ECal clustering
-        * $\pi ^{0}$ reconstruction
     * Integration in GArSoft
 
 * Event selection in ND-GAr &#9745;
@@ -111,3 +101,21 @@ The symbol &#9745; indicates that comment(s) have been implemented for that chap
         * Detector uncertainties
 
 * Conclusion and outlook &#9744;
+
+* Additional material on Matched Filter &#9745;
+    * Low-pass FIR filter design
+    * Matched filter impulse-response function
+    * Distortion and peak asymmetry
+
+* Additional material on Solar DM &#9745;
+    * Gravitational capture of DM by the Sun
+    * Example: Kaluza-Klein Dark Matter
+    * Example: Leptophilic Dark Matter
+
+* Additional material on PID &#9745;
+    * Energy calibration
+    * Charged pion decay in flight
+        * Track breakpoints
+    * Neutral particle identification
+        * ECal clustering
+        * $\pi ^{0}$ reconstruction
