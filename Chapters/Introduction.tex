@@ -13,7 +13,7 @@
 The Standard Model (\gls{sm}) of particle physics \cite{Glashow1961,Weinberg1967,Salam1968} has provided a deep understanding of the electromagnetic, weak and strong interactions, and over the past decades it has passed all kind of precision tests \cite{Erler2019}. However, the SM by itself can not explain certain observed phenomena, such as the baryon asymmetry of the universe \cite{Canetti2012}, the existence of Dark Matter (DM) \cite{Bertone2004}, or the origin of neutrino masses \cite{King2014}.
 
 % CP violation
-One of the biggest puzzles in physics nowadays is how the universe came to be matter-dominated. Following the Big Bang, matter and antimatter were created in equal amounts. A. D. Sakharov described what are the necessary conditions to generate a matter-antimatter asymmetry in the early universe \cite{Sakharov1967}. One of them is the existence of interactions that violate the CP symmetry. It has already been established that the amount of CP violation in the quark sector is not enough to generate the baryon asymmetry \cite{Gavela1993}. Leptons could contribute to the CP violation through the neutrino oscillation mechanism \cite{Akhmedov1998}. However, there is no experimental evidence for this so far.
+One of the biggest puzzles in physics nowadays is how the universe came to be matter-dominated. Following the Big Bang, matter and antimatter were created in equal amounts. A. D. Sakharov described what are the necessary conditions to generate a matter-antimatter asymmetry in the early universe \cite{Sakharov1967}. One of them is the existence of interactions that violate the charge-parity (CP) symmetry. It has already been established that the amount of CP violation in the quark sector is not enough to generate the baryon asymmetry \cite{Gavela1993}. Leptons could contribute to the CP violation through the neutrino oscillation mechanism \cite{Akhmedov1998}. However, there is no experimental evidence for this so far.
 
 % Dark Matter
 Another yet to be solved mystery of modern physics concerns the nature of DM. From astrophysical observations (see Ref. \cite{Bertone2004} and references therein), we are aware of the existence of some unknown matter which only interacts gravitationally with other particles. Usually, extensions of the SM include feasible DM candidates. These are usually very stable, heavy particles with small interactions (if any) with SM particles. These states are known as weakly interacting massive particles (WIMPs) \cite{Lee1977,Jungman1995}. Experiments looking for DM have set the interaction cross section between DM and SM particles to be very small for DM masses below 1 TeV \cite{Arcadi2024}.
@@ -24,6 +24,7 @@ Among other next generation particle experiments, the Deep Underground Neutrino 
 % More on DUNE (?)
 The DUNE far detector (FD) will also search for baryon-number violation and neutrinos originated from supernova explosions. Moreover, its near detector (ND) complex will sit next to the most powerful neutrino beam to date, allowing for a rich neutrino cross section programme. This broad physics range requires a superb performance from the detectors, which can also be used to look for other BSM phenomena.
 
+\begin{comment}
 % One paragraph summary of each topic covered
 % DUNE FD DAQ - Matched filter
 In this thesis, I explore three different aspects of DUNE. Focusing on the data acquisition system of the far detector, I start by proposing a method to enhance the sensitivity of the online processing to low energy events. The idea is to modify the processing chain in order to have more information available to form trigger decisions. I motivate this new approach using both ProtoDUNE data and Monte Carlo (MC) samples, as well as with the results from a test in a real detector setup.
@@ -33,7 +34,11 @@ Then, I investigate the potential of detecting neutrino fluxes from DM annihilat
 
 % DUNE ND sim/reco - ND-GAr particle ID
 Finally, I discuss my work on the reconstruction of ND-GAr, the gaseous argon component of the DUNE ND. These efforts were focused towards the development of the particle identification strategy in the detector. Following a series of additions and upgrades in the reconstruction, I make use of that to perform the first event selection studies with fully reconstructed events in this detector.
+\end{comment}
 
+In this thesis, I explore three different aspects of DUNE. First, I propose a method to enhance the sensitivity of the online processing in the FD to low energy events. Then, I investigate the potential of detecting neutrino fluxes from DM annihilations inside the Sun with the DUNE FD. Next, I discuss my work on the reconstruction of ND-GAr, the gaseous argon component of the DUNE ND. Finally, I make use of those upgrades to perform the first event selection studies with fully reconstructed events in this detector.
+
+\begin{comment}
 % Thesis overview
 % Neutrino physics
 This thesis opens with an overview of the status of neutrino physics in Chapter \ref{chapter:neutrinos}. I start summarising the role that neutrinos play in the SM, to then focus on the developments that lead to the discovery of neutrino oscillations and how to accommodate massive neutrinos in the model. I then discuss the phenomenology of the neutrino oscillations, as well as the current experimental landscape and open questions. In the final section, I review the basics of the neutrino-nucleus interaction modelling, which is of great importance for DUNE.
@@ -55,3 +60,6 @@ The event selection studies are covered in Chapter \ref{chapter:gar_selection}. 
 
 % Conclusions
 Eventually, the thesis concludes with Chapter \ref{chapter:conclusion}. There, I summarise the main results presented in this work, and discuss future plans for the different projects.
+\end{comment}
+
+This thesis opens with an overview of the status of neutrino physics in Chapter \ref{chapter:neutrinos}. Chapter \ref{chapter:dune} introduces DUNE, its physics programme and various components, including ND-GAr. In Chapter \ref{chapter:matched_filter} I review the possibility of using matched filters to form online hits in the FD. The solar DM analysis is presented in Chapter \ref{chapter:dm_analysis}. Chapter \ref{chapter:garsoft_pid} describes the work on the ND-GAr reconstruction focused on particle identification. The event selection studies in ND-GAr are covered in Chapter \ref{chapter:gar_selection}. Eventually, the thesis concludes with Chapter \ref{chapter:conclusion}, where I discuss future plans for the different projects.
