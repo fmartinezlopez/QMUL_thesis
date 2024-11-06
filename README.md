@@ -4,9 +4,9 @@
 
 The symbol &#9745; indicates that comment(s) have been implemented for that chapter. Alternatively, &#9744; means that the chapter has not been reviewed.
 
-* Introduction &#9744;
+* Introduction &#9745;
 
-* Neutrino physics &#9744;
+* Neutrino physics &#9745;
     * Neutrinos in the SM
     * Trouble in the neutrino sector
         * The solar neutrino problem
@@ -100,7 +100,7 @@ The symbol &#9745; indicates that comment(s) have been implemented for that chap
         * Cross section uncertainties
         * Detector uncertainties
 
-* Conclusion and outlook &#9744;
+* Conclusion and outlook &#9745;
 
 * Additional material on Matched Filter &#9745;
     * Low-pass FIR filter design
