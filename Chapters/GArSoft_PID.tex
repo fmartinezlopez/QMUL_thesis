@@ -6,34 +6,34 @@
 \end{chapquote}
 
 \begin{comment}
-ND-GAr is a magnetised, high-pressure gaseous argon TPC (HPgTPC), surrounded by an electromagnetic calorimeter (ECal) and a muon detector (commonly refer to as MuID). A detailed discussion on the requirements, design, performance and physics of ND-GAr can be found in the DUNE ND CDR \cite{DUNE2021NDCDR} and the ND-GAr whitepaper (cite).
+\gls{ndgar} is a magnetised, high-pressure gaseous argon \gls{tpc} (\gls{hpgtpc}), surrounded by an electromagnetic calorimeter (\gls{ecal}) and a muon detector (commonly refer to as \gls{muid}). A detailed discussion on the requirements, design, performance and physics of \gls{ndgar} can be found in the \gls{dune} ND \gls{cdr} \cite{DUNE2021NDCDR} and the \gls{ndgar} whitepaper (cite).
 
-In DUNE Phase II ND-GAr will fulfill the role of TMS, measuring the momentum and sign of the charged particles exiting ND-LAr. Additionally, it will be able to measure neutrino interactions inside the HPgTPC, achieving lower energy thresholds than those of the ND and FD LArTPCs. By doing so ND-GAr will allow to constrain the relevant systematic uncertainties for the LBL analysis even further.
+In \gls{dune} Phase II \gls{ndgar} will fulfill the role of TMS, measuring the momentum and sign of the charged particles exiting \gls{ndlar}. Additionally, it will be able to measure neutrino interactions inside the \gls{hpgtpc}, achieving lower energy thresholds than those of the ND and \gls{fd} \gls{lartpc}s. By doing so \gls{ndgar} will allow to constrain the relevant systematic uncertainties for the \gls{lbl} analysis even further.
 
-The goal of the present chapter is to review the requirements that the physics program of DUNE impose on ND-GAr, present the current status of its design and describe the GArSoft package, its simulation and reconstruction software.
+The goal of the present chapter is to review the requirements that the physics program of \gls{dune} impose on \gls{ndgar}, present the current status of its design and describe the GArSoft package, its simulation and reconstruction software.
 
-As decided during the DUNE Phase II workshop in June 2023 [reference], we want to build ND-GAr physics case by showing:
+As decided during the \gls{dune} Phase II workshop in June 2023 [reference], we want to build \gls{ndgar} physics case by showing:
 \begin{itemize}
-    \item That ND-GAr can constrain systematic uncertainties that ND-LAr might miss.
+    \item That \gls{ndgar} can constrain systematic uncertainties that \gls{ndlar} might miss.
     \item The impact on the neutrino oscillation results if such systematic uncertainties are missed.
-    \item That ND-GAr is necessary to reach DUNE's main physics goals.
+    \item That \gls{ndgar} is necessary to reach \gls{dune}'s main physics goals.
 \end{itemize}
 
-This way, the design of ND-GAr will be physics driven.
+This way, the design of \gls{ndgar} will be physics driven.
 
-In order to study the effects of final state interactions (FSI) in CC interactions, ND-GAr should be able to measure the spectrum of protons and charged pions at low energies. ND-GAr also needs to be able to measure the pion multiplicity, specially for energies above $100~\mathrm{MeV}$ as at these energies the pions shower in the LAr, to inform the pion mass correction in the ND and FD LArTPCs.
+In order to study the effects of final state interactions (\gls{fsi}) in \gls{cc} interactions, \gls{ndgar} should be able to measure the spectrum of protons and charged pions at low energies. \gls{ndgar} also needs to be able to measure the pion multiplicity, specially for energies above $100~\mathrm{MeV}$ as at these energies the pions shower in the \gls{lar}, to inform the pion mass correction in the ND and \gls{fd} \gls{lartpc}s.
 
-In order to correctly identify electrons, muons, pions, kaons and protons ND-GAr can use a combination of: $\mathrm{d}E/\mathrm{d}x$ measurements in the HPgTPC, $E_{ECAL}/p$ using the ECAL total energy and the momentum obtained from magnetic spectroscopy in the HPgTPC and penetration information through the ECAL and muon tagger.
+In order to correctly identify electrons, muons, pions, kaons and protons \gls{ndgar} can use a combination of: $\mathrm{d}E/\mathrm{d}x$ measurements in the \gls{hpgtpc}, $E_{ECAL}/p$ using the ECAL total energy and the momentum obtained from magnetic spectroscopy in the \gls{hpgtpc} and penetration information through the ECAL and muon tagger.
 \end{comment}
 
 % more on ND-GAr and the ND, and why we want to do this!
-In DUNE Phase II, ND-GAr will fulfill the role of TMS measuring the momentum and sign of the charged particles exiting ND-LAr. Additionally, it will measure neutrino interactions inside the HPgTPC. This way, ND-GAr will allow to constrain certain cross-section systematic uncertainties and study the effect of FSI in CC interactions. To do so, it needs to measure the spectrum of protons and charged pions at low energies, as well as the pion multiplicity. This puts strong requirements to the particle identification (PID) capabilities of the detector, as well as stimulates the relevant developments in the reconstruction.
+In \gls{dune} Phase II, \gls{ndgar} will fulfill the role of TMS measuring the momentum and sign of the charged particles exiting \gls{ndlar}. Additionally, it will measure neutrino interactions inside the \gls{hpgtpc}. This way, \gls{ndgar} will allow to constrain certain cross-section systematic uncertainties and study the effect of \gls{fsi} in \gls{cc} interactions. To do so, it needs to measure the spectrum of protons and charged pions at low energies, as well as the pion multiplicity. This puts strong requirements to the particle identification (\gls{pid}) capabilities of the detector, as well as stimulates the relevant developments in the reconstruction.
 
-The goal of the present Chapter is to review the status and design of the GArSoft package, the simulation and reconstruction software of ND-GAr, and present the different contributions and upgrades that I have added to the reconstruction with the PID in mind.
+The goal of the present Chapter is to review the status and design of the GArSoft package, the simulation and reconstruction software of \gls{ndgar}, and present the different contributions and upgrades that I have added to the reconstruction with the \gls{pid} in mind.
 
 \section{GArSoft}\label{section:garsoft}
 
-GArSoft is a software package developed for the simulation and reconstruction of events in ND-GAr. It is inspired by the LArSoft toolkit \cite{Church2013} used for the simulation of LArTPC experiments, like the DUNE FD modules. It is based on \texttt{art}, the framework for event processing in particle physics experiments \cite{ART}. Other of its main dependencies are \texttt{ROOT} \cite{Brun1997}, \texttt{GENIE} \cite{Andreopoulos2009} and \texttt{Geant4} \cite{GEANT42002}. It allows the user to run all the steps of a generation-simulation-reconstruction workflow using Fermilab Hierarchical Configuration Language (FHiCL) files.
+GArSoft is a software package developed for the simulation and reconstruction of events in \gls{ndgar}. It is inspired by the LArSoft toolkit \cite{Church2013} used for the simulation of \gls{lartpc} experiments, like the \gls{dune} \gls{fd} modules. It is based on \texttt{art}, the framework for event processing in particle physics experiments \cite{ART}. Other of its main dependencies are \texttt{ROOT} \cite{Brun1997}, \texttt{GENIE} \cite{Andreopoulos2009} and \texttt{Geant4} \cite{GEANT42002}. It allows the user to run all the steps of a generation-simulation-reconstruction workflow using Fermilab Hierarchical Configuration Language (FHiCL) files.
 
 \subsection{Event generation}
 
@@ -50,21 +50,21 @@ The standard generator FHiCLs in GArSoft run the event generation and particle p
 	\footnote{In brief, each event contains at least two  lines.  The first line contains two entries, the event number and the number of particles in the event. Each following line contains 15 entries to describe each particle. The entries are: status code, pdg code for the particle, entry of the first mother for this particle, entry of the second mother for this particle, entry of the first daughter for this particle, entry of the second daughter for this particle, $x$ component of the particle momentum, $y$ component of the particle momentum, $z$ component of the particle momentum, energy of the particle, mass of the particle, $x$ component of the particle initial position, $y$ component of the particle initial position, $z$ component of the particle initial position, and time of the particle production.}
 \end{comment}
 
-The module \texttt{GArG4} searches for all the generated \texttt{simb::MCTruth} data products, using them as inputs to the \texttt{Geant4} simulation with the specified detector geometry. The current version of the simulated ND-GAr geometry is that described in section \ref{subsec:ndgar_design}. A constant $0.5~\mathrm{T}$ magnetic field along the drift coordinate is assumed. The main outputs of this step are \texttt{simb::MCParticle} objects for the generated \texttt{Geant4} particles, \texttt{gar::EnergyDeposit} data products for the energy deposits in the HPgTPC and \texttt{gar::CaloDeposit} data products for the energy deposits in the ECal and muon system.
+The module \texttt{GArG4} searches for all the generated \texttt{simb::MCTruth} data products, using them as inputs to the \texttt{Geant4} simulation with the specified detector geometry. The current version of the simulated \gls{ndgar} geometry is that described in section \ref{subsec:ndgar_design}. A constant $0.5~\mathrm{T}$ magnetic field along the drift coordinate is assumed. The main outputs of this step are \texttt{simb::MCParticle} objects for the generated \texttt{Geant4} particles, \texttt{gar::EnergyDeposit} data products for the energy deposits in the \gls{hpgtpc} and \texttt{gar::CaloDeposit} data products for the energy deposits in the \gls{ecal} and muon system.
 
 \subsection{Detector simulation}
 
-The standard detector simulation step in GArSoft is all run with a single FHiCL, but the different modules can be run independently as well. First the \texttt{IonizationReadout} module simulates the charge readout of the HPgTPC, and later the \texttt{SiPMReadout} module runs twice, once for the ECal and then for the muon system, with different configurations.
+The standard detector simulation step in GArSoft is all run with a single FHiCL, but the different modules can be run independently as well. First the \texttt{IonizationReadout} module simulates the charge readout of the \gls{hpgtpc}, and later the \texttt{SiPMReadout} module runs twice, once for the \gls{ecal} and then for the muon system, with different configurations.
 
-The \texttt{IonizationAndScintillation} module collects all the \texttt{gar::EnergyDeposit} data products, to compute the equivalent number of ionisation electrons for each energy deposit. The \texttt{ElectronDriftAlg} module simulates the electron diffusion numerically, both in the longitudinal and transverse directions, and applies an electron lifetime correction factor. The induced charge on the nearest and neighbouring readout pads is modeled using the provided pad response functions. The digitisation of the data is then simulated with the \texttt{TPCReadoutSimAlg} module. By default, the ADC sampling rate used is $50.505~\mathrm{MHz}$. The resulting raw waveforms for each channel are stored with zero-suppression, in order to save memory and CPU time. The algorithms keep blocks of ADC values above a certain threshold, plus some adjustable additional early and late tick counts. The results of these three steps are \texttt{gar::raw::RawDigit} data products.
+The \texttt{IonizationAndScintillation} module collects all the \texttt{gar::EnergyDeposit} data products, to compute the equivalent number of ionisation electrons for each energy deposit. The \texttt{ElectronDriftAlg} module simulates the electron diffusion numerically, both in the longitudinal and transverse directions, and applies an electron lifetime correction factor. The induced charge on the nearest and neighbouring readout pads is modeled using the provided pad response functions. The digitisation of the data is then simulated with the \texttt{TPCReadoutSimAlg} module. By default, the \gls{adc} sampling rate used is $50.505~\mathrm{MHz}$. The resulting raw waveforms for each channel are stored with zero-suppression, in order to save memory and CPU time. The algorithms keep blocks of \gls{adc} values above a certain threshold, plus some adjustable additional early and late tick counts. The results of these three steps are \texttt{gar::raw::RawDigit} data products.
 
-For the ECal and the muon system the \texttt{SiPMReadout} module calls either the \texttt{ECALReadoutSimStandardAlg} or \texttt{MuIDReadoutSimStandardAlg} modules. These take all the \texttt{gar::CaloDeposit} data products in the corresponding detector, and perform the digitisation depending on whether the hit was in a tile or strip layer. They include single photon statistics, electronic noise, SiPM saturation and time smearing. The resulting objects are \texttt{gar::raw::CaloRawDigit} data products.
+For the \gls{ecal} and the muon system the \texttt{SiPMReadout} module calls either the \texttt{ECALReadoutSimStandardAlg} or \texttt{MuIDReadoutSimStandardAlg} modules. These take all the \texttt{gar::CaloDeposit} data products in the corresponding detector, and perform the digitisation depending on whether the hit was in a tile or strip layer. They include single photon statistics, electronic noise, SiPM saturation and time smearing. The resulting objects are \texttt{gar::raw::CaloRawDigit} data products.
 
 \subsection{Reconstruction}
 
-The reconstruction in GArSoft is also run as a single job by default. It first runs the hit finding, clustering, track fitting and vertex identification in the HPgTPC, followed by the hit finding and clustering in the ECal and muon system. After those, it produces the associations between the tracks and the ECal clusters.
+The reconstruction in GArSoft is also run as a single job by default. It first runs the hit finding, clustering, track fitting and vertex identification in the \gls{hpgtpc}, followed by the hit finding and clustering in the \gls{ecal} and muon system. After those, it produces the associations between the tracks and the \gls{ecal} clusters.
 
-Focusing first on the HPgTPC reconstruction, the \texttt{CompressedHitFinder} module takes the zero-suppressed ADCs from the \texttt{gar::raw::RawDigit} data products. The reconstructed hits largely correspond to the above threshold blocks, however the hit finder identifies waveforms with more than one maximum, diving them in multiple hits if they dip below a certain threshold. The data products produced are of the form \texttt{gar::rec::Hit}. These are the inputs to the clustering of hits in the \texttt{TPCHitCluster} module. Hits close in space and time are merged, and the resulting centroids are found. This module outputs \texttt{gar::rec::TPCClusters} objects and associations to the input hits.
+Focusing first on the \gls{hpgtpc} reconstruction, the \texttt{CompressedHitFinder} module takes the zero-suppressed \gls{adc}s from the \texttt{gar::raw::RawDigit} data products. The reconstructed hits largely correspond to the above threshold blocks, however the hit finder identifies waveforms with more than one maximum, diving them in multiple hits if they dip below a certain threshold. The data products produced are of the form \texttt{gar::rec::Hit}. These are the inputs to the clustering of hits in the \texttt{TPCHitCluster} module. Hits close in space and time are merged, and the resulting centroids are found. This module outputs \texttt{gar::rec::TPCClusters} objects and associations to the input hits.
 
 The following step prior to the track fitting is the pattern recognition. The module called \texttt{tpcvechitfinder2} uses the \texttt{gar::rec::TPCClusters} data products to find track segments, typically called vector hits. They are identified by performing linear 2D fits to the positions of the clusters in a $10~\mathrm{cm}$ radius, one fit for each coordinate pair. For each direction, the sum of slopes (in absolute value) in the 2D fits is computed. Using as independent variable the direction with the smallest slope sum, a final 3D fit defines the line segment of the vector hit. The clusters are merged into a given vector hit if they are less than $2~\mathrm{cm}$ away from the line segment. The outputs are \texttt{gar::rec::VecHit} data products, as well as associations to the clusters. The \texttt{tpcpatrec2} module takes the \texttt{gar::rec::VecHit} objects to form the track candidates. The vector hits are merged together if their direction matches, their centres are within $60~\mathrm{cm}$ and their direction vectors point roughly to their respective centres. Once the clusters of vector hits are formed, they are used to make a first estimation of the track parameters simply taking three clusters along the track. The module produces \texttt{gar::rec::Track} data products and associations between these tracks and the clusters and vector hits.
 
@@ -73,17 +73,17 @@ The track is fitted by means of a Kalman filter in the \texttt{tpctrackfit2} mod
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/gar_workflow.pdf}
-	\caption{Schematic diagram showing the different modules involved in the ND-GAr neutrino event production.}
+	\caption{Schematic diagram showing the different modules involved in the \gls{ndgar} neutrino event production.}
 	\label{fig:gar_workflow}
 \end{figure}
 
 After the tracking step, the \texttt{vertexfinder1} module looks at the reconstructed \texttt{gar::rec::Track} products, creating vertex candidates with the track ends that are within $12~\mathrm{cm}$ of each other. The vertices are then fitted using linear extrapolations from the different track ends associated. The results are \texttt{gar::rec::Vertex} data products, and associations to the tracks and corresponding track ends.
 
-For the ECal and muon tagger, the \texttt{SiPMHitFinder} module runs twice with different configurations, adapted to the particular capabilities of both. The module simply takes the \texttt{gar::raw::CaloRawDigit} products, applies a calibration factor to convert the ADC counts to $\mathrm{MeV}$, and for the strip layer hits it calculates the position along the strip using the times recorded by both SiPMs. This module produces \texttt{gar::rec::CaloHit} data products. Next, these objects are used as inputs to the \texttt{CaloClustering} module. It merges the hits based on a simple nearest neighbours (NN) algorithm. For the resulting clusters it also computes the total energy and position of the centroid. The results are stored as \texttt{gar::rec::Cluster} data products, with associations to the hits.
+For the \gls{ecal} and muon tagger, the \texttt{SiPMHitFinder} module runs twice with different configurations, adapted to the particular capabilities of both. The module simply takes the \texttt{gar::raw::CaloRawDigit} products, applies a calibration factor to convert the \gls{adc} counts to $\mathrm{MeV}$, and for the strip layer hits it calculates the position along the strip using the times recorded by both SiPMs. This module produces \texttt{gar::rec::CaloHit} data products. Next, these objects are used as inputs to the \texttt{CaloClustering} module. It merges the hits based on a simple nearest neighbours (NN) algorithm. For the resulting clusters it also computes the total energy and position of the centroid. The results are stored as \texttt{gar::rec::Cluster} data products, with associations to the hits.
 
-The last step in the reconstruction is associating the reconstructed tracks in the HPgTPC to the clusters formed in the ECal and muon system. The \texttt{TPCECALAssociation} module checks first the position of the track end points, considering only the points that are at least $215~\mathrm{cm}$ away from the cathode or have a radial distance to the centre greater than $230~\mathrm{cm}$. The candidates are propagated up to the radial position, in the case of clusters in the barrel, or the drift coordinate position, for the end cap clusters, of the different clusters in the collection using the track parameters computed at the end point. The end point is associated to the cluster if certain proximity criteria are met. This module creates associations between the tracks, the end points and the clusters. The criteria for the associations are slightly different for the ECal and the muon tagger.
+The last step in the reconstruction is associating the reconstructed tracks in the \gls{hpgtpc} to the clusters formed in the \gls{ecal} and muon system. The \texttt{TPCECALAssociation} module checks first the position of the track end points, considering only the points that are at least $215~\mathrm{cm}$ away from the cathode or have a radial distance to the centre greater than $230~\mathrm{cm}$. The candidates are propagated up to the radial position, in the case of clusters in the barrel, or the drift coordinate position, for the end cap clusters, of the different clusters in the collection using the track parameters computed at the end point. The end point is associated to the cluster if certain proximity criteria are met. This module creates associations between the tracks, the end points and the clusters. The criteria for the associations are slightly different for the \gls{ecal} and the muon tagger.
 
-Figure \ref{fig:gar_workflow} shows the simulation and reconstruction workflow of a neutrino event production in ND-GAr. Apart from the modules here discussed within GArSoft, the diagram also presents other external packages used to produce analysis files.
+Figure \ref{fig:gar_workflow} shows the simulation and reconstruction workflow of a neutrino event production in \gls{ndgar}. Apart from the modules here discussed within GArSoft, the diagram also presents other external packages used to produce analysis files.
 
 \section[\texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} measurement in the TPC]{\boldmath\texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} measurement in the TPC}\label{section:dEdx}
 
@@ -108,7 +108,7 @@ Another standard method to compute the amount of ionisation a charged particle p
 
 In a particle physics experiment, the typical way of determining the energy loss per unit length as a function of the particle velocity is studying identified particles over a range of momenta. Once we have established this relation we can use it for other, unknown particles. In this sense, it makes sense to have a regular mathematical expression for this relation that one can use.
 
-It happens that neither the Bethe-Bloch theory nor the PAI model from Allison and Cobb offer a close mathematical form for the ionisation curve. This is the reason why a full parametrisation of the ionisation curves can be useful. A parametrisation originally proposed for the \gls{aleph} TPC \cite{Blum2008} and later used by the ALICE TPC \cite{ALICETPC2013} group that manages to capture the features of the ionisation energy loss is:
+It happens that neither the Bethe-Bloch theory nor the PAI model from Allison and Cobb offer a close mathematical form for the ionisation curve. This is the reason why a full parametrisation of the ionisation curves can be useful. A parametrisation originally proposed for the \gls{aleph} \gls{tpc} \cite{Blum2008} and later used by the \gls{alice} \gls{tpc} \cite{ALICETPC2013} group that manages to capture the features of the ionisation energy loss is:
 \begin{equation}\label{Eq:3.3}
     f(\beta\gamma) = \frac{P_{1}}{\beta^{P_{4}}}\left(P_{2}-\beta^{P_{4}}-\mathrm{log}\left[P_{3}+\frac{1}{(\beta\gamma)^{P_{5}}}\right]\right),
 \end{equation}
@@ -116,7 +116,7 @@ where $P_{i}$ are five free parameters. Hereafter, I will refer to Eq. (\ref{Eq:
 
 \subsection[Truncated \texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} mean]{Truncated \boldmath\texorpdfstring{$\mathrm{d}E/\mathrm{d}x$}{dE/dx} mean} \label{subsec:mean_dEdx}
 
-GArSoft provides a collection of charge deposits for each reconstructed track. In order to obtain the mapping between charge and energy in the HPgTPC, I produced an MC sample consisting of single, isotropic protons. The starting points of the protons were sampled inside a $50\times50\times25 \ \mathrm{cm}$ box centred at $(100, -150, 1250)~\mathrm{cm}$, and their momenta are uniformly distributed in the range $0.25 - 1.75 ~ \mathrm{GeV}$. The details of the energy calibration method developed are given in App. \ref{section:dEdx_calibration}.
+GArSoft provides a collection of charge deposits for each reconstructed track. In order to obtain the mapping between charge and energy in the \gls{hpgtpc}, I produced an \gls{mc} sample consisting of single, isotropic protons. The starting points of the protons were sampled inside a $50\times50\times25 \ \mathrm{cm}$ box centred at $(100, -150, 1250)~\mathrm{cm}$, and their momenta are uniformly distributed in the range $0.25 - 1.75 ~ \mathrm{GeV}$. The details of the energy calibration method developed are given in App. \ref{section:dEdx_calibration}.
 
 Once we have a collection of $\mathrm{d}E/\mathrm{d}x$ values for each track, we can compute the corresponding most probable ionisation loss per unit length of the particle. This is the value predicted by the Bethe-Bloch or the PAI models, and together with a measurement of the momentum it allows for particle identification.
 
@@ -163,13 +163,13 @@ Figure \ref{fig:energy_trucation_opt} shows the bias (left panel) and the resolu
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/dEdx_betagamma_examples.pdf}
-	\caption[Examples of the truncated mean $\mathrm{d}E/\mathrm{d}x$ LanGauss fits for various $\beta\gamma$ bins, from a simulated FHC neutrino sample.]{Examples of the truncated mean $\mathrm{d}E/\mathrm{d}x$ LanGauss fits for various $\beta\gamma$ bins, from a simulated FHC neutrino sample.}
+	\caption[Examples of the truncated mean $\mathrm{d}E/\mathrm{d}x$ LanGauss fits for various $\beta\gamma$ bins, from a simulated \gls{fhc} neutrino sample.]{Examples of the truncated mean $\mathrm{d}E/\mathrm{d}x$ LanGauss fits for various $\beta\gamma$ bins, from a simulated \gls{fhc} neutrino sample.}
 	\label{fig:dEdx_betagamma_fits}
 \end{figure}
 
-Now that we have a way to estimate the mean energy loss of a particle in the HPgTPC, we can determine the value of the free parameters in the \gls{aleph} formula, Eq. (\ref{Eq:3.3}). For this, I produced a sample of $10^{5}$ reconstructed FHC neutrino events inside ND-GAr. In this case I do not use the stopping proton sample, as we need to cover the full kinematic range of interest for the neutrino interactions in our detector.
+Now that we have a way to estimate the mean energy loss of a particle in the \gls{hpgtpc}, we can determine the value of the free parameters in the \gls{aleph} formula, Eq. (\ref{Eq:3.3}). For this, I produced a sample of $10^{5}$ reconstructed \gls{fhc} neutrino events inside \gls{ndgar}. In this case I do not use the stopping proton sample, as we need to cover the full kinematic range of interest for the neutrino interactions in our detector.
 
-Among the reconstructed data objects, the sample does not include an estimation of the velocity of the tracks. Instead, the tracks have a value for the reconstructed momentum and the associated PDG code of the \texttt{Geant4}-level particle that created the track. Therefore, one can extract some of the tracks in the sample, in this case I select the ones associated to electrons, muons, pions and protons, and compute $\beta$ and $\gamma$ using the reconstructed momentum and their mass. In terms of $\beta\gamma$ the mean $\mathrm{d}E/\mathrm{d}x$ does not depend on the particle species, so one can consider all the dataset as a whole. For this fit, I will express $\beta$ in terms of the $\beta\gamma$ product as:
+Among the reconstructed data objects, the sample does not include an estimation of the velocity of the tracks. Instead, the tracks have a value for the reconstructed momentum and the associated \gls{pdg} code of the \texttt{Geant4}-level particle that created the track. Therefore, one can extract some of the tracks in the sample, in this case I select the ones associated to electrons, muons, pions and protons, and compute $\beta$ and $\gamma$ using the reconstructed momentum and their mass. In terms of $\beta\gamma$ the mean $\mathrm{d}E/\mathrm{d}x$ does not depend on the particle species, so one can consider all the dataset as a whole. For this fit, I will express $\beta$ in terms of the $\beta\gamma$ product as:
 \begin{equation}
     \beta = \frac{\beta\gamma}{\sqrt{1+(\beta\gamma)^{2}}},
 \end{equation}
@@ -178,7 +178,7 @@ which can be easily proven from the definition of $\gamma$.
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/mcmc_weighted_equal_frequency_bin_200.pdf}
-	\caption[Resulting one and two dimensional projections of the posterior probability distributions of the \gls{aleph} $\left<\mathrm{d}E/\mathrm{d}x\right>$ parameters.]{Resulting one and two dimensional projections of the posterior probability distributions of the \gls{aleph} $\left<\mathrm{d}E/\mathrm{d}x\right>$ parameters obtained by fitting the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ values from a FHC neutrino sample in ND-GAr. The vertical dashed lines in the 1D distributions represent the 16th, 50th and 84th percentiles.}
+	\caption[Resulting one and two dimensional projections of the posterior probability distributions of the \gls{aleph} $\left<\mathrm{d}E/\mathrm{d}x\right>$ parameters.]{Resulting one and two dimensional projections of the posterior probability distributions of the \gls{aleph} $\left<\mathrm{d}E/\mathrm{d}x\right>$ parameters obtained by fitting the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ values from a \gls{fhc} neutrino sample in \gls{ndgar}. The vertical dashed lines in the 1D distributions represent the 16th, 50th and 84th percentiles.}
 	\label{fig:dEdx_aleph_fit}
 \end{figure}
 
@@ -187,7 +187,7 @@ Next, I bin the sample in $\beta\gamma$. I chose a fine binning so as to capture
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/dEdx/dEdx_aleph_data_with_fit.pdf}
-	\caption[Truncated mean $\mathrm{d}E/\mathrm{d}x$ as a function of the $\beta\gamma$ product, together with the best fit obtained using the \gls{aleph} parametrisation.]{Truncated mean $\mathrm{d}E/\mathrm{d}x$ obtained for the FHC neutrino sample as a function of the $\beta\gamma$ product (upper panel). Also shown are the fitted most probable values for each $\beta\gamma$ bin (red points) and the best fit obtained using the \gls{aleph} parametrisation (black line). The residuals resulting from the fit are shown in the lower panel.}
+	\caption[Truncated mean $\mathrm{d}E/\mathrm{d}x$ as a function of the $\beta\gamma$ product, together with the best fit obtained using the \gls{aleph} parametrisation.]{Truncated mean $\mathrm{d}E/\mathrm{d}x$ obtained for the \gls{fhc} neutrino sample as a function of the $\beta\gamma$ product (upper panel). Also shown are the fitted most probable values for each $\beta\gamma$ bin (red points) and the best fit obtained using the \gls{aleph} parametrisation (black line). The residuals resulting from the fit are shown in the lower panel.}
 	\label{fig:dEdx_betagamma_aleph}
 \end{figure}
 
@@ -198,7 +198,7 @@ I use the resulting most probable $\left<\mathrm{d}E/\mathrm{d}x\right>$ values 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/dEdx/dEdx_curves_with_fit.pdf}
-	\caption[Distribution of the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ versus reconstructed momentum for the FHC neutrino sample.]{Distribution of the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ versus reconstructed momentum for the FHC neutrino sample. The black lines indicate the predictions of the \gls{aleph} parametrisation for electrons, muons, charged pions and protons.}
+	\caption[Distribution of the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ versus reconstructed momentum for the \gls{fhc} neutrino sample.]{Distribution of the $60\%$ truncated mean $\mathrm{d}E/\mathrm{d}x$ versus reconstructed momentum for the \gls{fhc} neutrino sample. The black lines indicate the predictions of the \gls{aleph} parametrisation for electrons, muons, charged pions and protons.}
 	\label{fig:dEdx_vs_momentum}
 \end{figure}
 
@@ -206,7 +206,7 @@ The resulting fit (black line), compared to the data points (red points) and the
 
 \begin{comment}
 \begin{table}[t]
-	\caption{Best fit parameters obtained fitting a ND-GAr simulated FHC neutrino sample to the \gls{aleph} mean $\mathrm{d}E/\mathrm{d}x$ parametrisation from Eq. (\ref{Eq:3.3}).}
+	\caption{Best fit parameters obtained fitting a \gls{ndgar} simulated \gls{fhc} neutrino sample to the \gls{aleph} mean $\mathrm{d}E/\mathrm{d}x$ parametrisation from Eq. (\ref{Eq:3.3}).}
 	\begin{center}
 		\begin{small}
 			\begin{tabular}{l|l|l}
@@ -230,7 +230,7 @@ From this plot, the particle separation power of the $\left<\mathrm{d}E/\mathrm{
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.90\linewidth]{Images/GArSoft_PID/dEdx/proton_dEdx_momentum.pdf}
-	\caption[Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias and resolution obtained for the true protons in a FHC neutrino sample as a function of the momentum.]{Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias (left panel) and resolution (right panel) obtained for the true protons in the FHC neutrino sample as a function of the reconstructed momentum.}
+	\caption[Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias and resolution obtained for the true protons in a \gls{fhc} neutrino sample as a function of the momentum.]{Estimated values of the mean $\mathrm{d}E/\mathrm{d}x$ bias (left panel) and resolution (right panel) obtained for the true protons in the \gls{fhc} neutrino sample as a function of the reconstructed momentum.}
 	\label{fig:proton_dEdx_momentum}
 \end{figure}
 
@@ -243,23 +243,23 @@ When compared to the values for the resolution obtained for the stopping proton 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.70\linewidth]{Images/GArSoft_PID/BDT/ndgar_fhc_numu_cc_mu_spectrum.pdf}
-	\caption[True momentum distributions for the primary muon and the post FSI charged pions in $\nu_{\mu}$ CC $N\pi^{\pm}$ interactions inside ND-GAr.]{True momentum distribution for the primary muon in $\nu_{\mu}$ CC $N\pi^{\pm}$ interactions inside the fiducial volume of ND-GAr (blue line), compared to the post FSI charged pion spectrum (red line).}
+	\caption[True momentum distributions for the primary muon and the post \gls{fsi} charged pions in $\nu_{\mu}$ \gls{cc} $N\pi^{\pm}$ interactions inside \gls{ndgar}.]{True momentum distribution for the primary muon in $\nu_{\mu}$ \gls{cc} $N\pi^{\pm}$ interactions inside the fiducial volume of \gls{ndgar} (blue line), compared to the post \gls{fsi} charged pion spectrum (red line).}
 	\label{fig:primary_muon_spectrum}
 \end{figure}
 
-As it can be seen from Fig. \ref{fig:dEdx_vs_momentum}, it is not possible to separate muons and charged pions in the HPgTPC using $\mathrm{d}E/\mathrm{d}x$ for momenta $\geq 300~\mathrm{MeV}/c$. In ND-GAr, approximately $70\%$ of the interactions in FHC mode will be $\nu_{\mu}$ CC (compared to the $47\%$ of $\bar{\nu}_{\mu}$ CC interactions when operating in RHC mode), while $24\%$ are neutral currents. Out of these, around $53\%$ and $47\%$ of them will produce at least one charged pion in the final state, respectively. Figure \ref{fig:primary_muon_spectrum} shows a comparison between the spectra of the primary muons and the charged pions for $\nu_{\mu}$ CC interactions in ND-GAr producing one or more charged pions. From this, one can see that (i) the majority of muons and charged pions are not going to be distinguishable with a $\left<\mathrm{d}E/\mathrm{d}x\right>$ measurement, and that (ii) particle identification is necessary both to classify correctly the $\nu_{\mu}$ CC events and identify the primary muon within them.
+As it can be seen from Fig. \ref{fig:dEdx_vs_momentum}, it is not possible to separate muons and charged pions in the \gls{hpgtpc} using $\mathrm{d}E/\mathrm{d}x$ for momenta $\geq 300~\mathrm{MeV}/c$. In \gls{ndgar}, approximately $70\%$ of the interactions in \gls{fhc} mode will be $\nu_{\mu}$ \gls{cc} (compared to the $47\%$ of $\bar{\nu}_{\mu}$ \gls{cc} interactions when operating in \gls{rhc} mode), while $24\%$ are neutral currents. Out of these, around $53\%$ and $47\%$ of them will produce at least one charged pion in the final state, respectively. Figure \ref{fig:primary_muon_spectrum} shows a comparison between the spectra of the primary muons and the charged pions for $\nu_{\mu}$ \gls{cc} interactions in \gls{ndgar} producing one or more charged pions. From this, one can see that (i) the majority of muons and charged pions are not going to be distinguishable with a $\left<\mathrm{d}E/\mathrm{d}x\right>$ measurement, and that (ii) particle identification is necessary both to classify correctly the $\nu_{\mu}$ \gls{cc} events and identify the primary muon within them.
 
-ND-GAr features two other subdetectors which can provide additional information for this task, namely the ECal and MuID. The current ECal design, described in section \ref{subsec:ndgar_design}, consists of $42$ layers, made of $5~\mathrm{mm}$ of Pb, $7~\mathrm{mm}$ of plastic scintillator, and an additional $1~\mathrm{mm}$ PCB board for the tile layers. The total thickness of this calorimeter is $1.66$ nuclear interaction lengths, or $1.39$ pion interaction lengths. The MuID design is in a more conceptual stage, however it is envisioned to feature layers with $10~\mathrm{cm}$ of Fe and $2~\mathrm{cm}$ of plastic scintillator. With its three layers, it will have a thickness of $1.87$ or $1.53$ nuclear or pion interaction lengths, respectively.
+\gls{ndgar} features two other subdetectors which can provide additional information for this task, namely the \gls{ecal} and \gls{muid}. The current \gls{ecal} design, described in section \ref{subsec:ndgar_design}, consists of $42$ layers, made of $5~\mathrm{mm}$ of Pb, $7~\mathrm{mm}$ of plastic scintillator, and an additional $1~\mathrm{mm}$ PCB board for the tile layers. The total thickness of this calorimeter is $1.66$ nuclear interaction lengths, or $1.39$ pion interaction lengths. The \gls{muid} design is in a more conceptual stage, however it is envisioned to feature layers with $10~\mathrm{cm}$ of Fe and $2~\mathrm{cm}$ of plastic scintillator. With its three layers, it will have a thickness of $1.87$ or $1.53$ nuclear or pion interaction lengths, respectively.
 
 \begin{comment}
 	\footnote{It is not mentioned anywhere, but I assume that there should also be another layer of PCB board of $1~\mathrm{mm}$. However, in this case its contribution to the total thickness of the sampling calorimeter would be negligible.}
 \end{comment}
 
-Because pion showers are dominated by inelastic nuclear interactions, the signatures of these particles in the calorimeter will look significantly different from those of muons, or in general any minimum ionising particle (MIP). Although our ECal is not thick enough to fully contain the hadronic showers of the charged pions at their typical energies in FHC neutrino interactions, they can still be used to understand whether the original particle was more hadron-like or MIP-like. In Fig. \ref{fig:ecal_example} I show two examples of energy distributions created by a muon (left panel) and a charged pion (right panel) of similar momenta interacting in the ECal. These figures represent the transverse development of the interactions. For each of them, I computed the principal component and centre of mass of the interaction, projecting the position of the hits onto the plane perpendicular to that direction, and taking the distances relative to the centre. It can be seen that the muon follows an almost MIP-like behaviour, being the central bin in the histogram the one with the highest deposited energy. On the other hand, the pion not only deposits more energy overall, but also this energy is more spread-out among the different hits. It is this kind of information that would allow us to tell apart muons from pions.
+Because pion showers are dominated by inelastic nuclear interactions, the signatures of these particles in the calorimeter will look significantly different from those of muons, or in general any minimum ionising particle (MIP). Although our \gls{ecal} is not thick enough to fully contain the hadronic showers of the charged pions at their typical energies in \gls{fhc} neutrino interactions, they can still be used to understand whether the original particle was more hadron-like or MIP-like. In Fig. \ref{fig:ecal_example} I show two examples of energy distributions created by a muon (left panel) and a charged pion (right panel) of similar momenta interacting in the \gls{ecal}. These figures represent the transverse development of the interactions. For each of them, I computed the principal component and centre of mass of the interaction, projecting the position of the hits onto the plane perpendicular to that direction, and taking the distances relative to the centre. It can be seen that the muon follows an almost MIP-like behaviour, being the central bin in the histogram the one with the highest deposited energy. On the other hand, the pion not only deposits more energy overall, but also this energy is more spread-out among the different hits. It is this kind of information that would allow us to tell apart muons from pions.
 
 This way, I identify three main action points that need to be addressed if one wants to use these detectors to distinguish between muons and charged pions. These are:
 \begin{enumerate}
-	\item the way we make the associations between tracks in the HPgTPC to the activities (what in GArSoft we call clusters) in the ECal and the MuID,
+	\item the way we make the associations between tracks in the \gls{hpgtpc} to the activities (what in GArSoft we call clusters) in the \gls{ecal} and the \gls{muid},
 	\item what variables or features one can extract from the calorimeters that encapsulate the information we are interested about,
 	\item and how to carry out the classification problem.
 \end{enumerate}
@@ -267,15 +267,15 @@ This way, I identify three main action points that need to be addressed if one w
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/BDT/ecal_energy_distribution_example.pdf}
-	\caption[Distributions of energy deposits in the ECal for a muon and a charged pion with similar momenta.]{Distributions of energy deposits in the ECal for a muon (left panel) and a charged pion (right panel) with similar momenta. The energy is projected onto the plane perpendicular to the principal component of the hits, and the positions are relative to the centre of the interaction.}
+	\caption[Distributions of energy deposits in the \gls{ecal} for a muon and a charged pion with similar momenta.]{Distributions of energy deposits in the \gls{ecal} for a muon (left panel) and a charged pion (right panel) with similar momenta. The energy is projected onto the plane perpendicular to the principal component of the hits, and the positions are relative to the centre of the interaction.}
 	\label{fig:ecal_example}
 \end{figure}
 
 \subsection{Track-ECal matching}
 
-One of the main players in the muon and pion separation is the way we associate clusters in the ECal to reconstructed tracks in the HPgTPC. Missing some associations or making wrong ones can bias the ECal quantities that we can use for classifying particles. The current algorithm in GArSoft provides precise associations, i.e. most of the associations that it produces are correct, but it appears to miss an important number of them.
+One of the main players in the muon and pion separation is the way we associate clusters in the \gls{ecal} to reconstructed tracks in the \gls{hpgtpc}. Missing some associations or making wrong ones can bias the \gls{ecal} quantities that we can use for classifying particles. The current algorithm in GArSoft provides precise associations, i.e. most of the associations that it produces are correct, but it appears to miss an important number of them.
 
-The current TPC track-ECal cluster association algorithm is divided in four parts. It first checks whether the track end point fulfils certain conditions to be extrapolated. There are two cut values in this step, one for the drift direction and other radial.
+The current \gls{tpc} track-\gls{ecal} cluster association algorithm is divided in four parts. It first checks whether the track end point fulfils certain conditions to be extrapolated. There are two cut values in this step, one for the drift direction and other radial.
 
 If the point can be extrapolated, the code computes the coordinates of the centre of curvature using the Kalman fit estimates at the track end $(y, \ z, \ 1/R, \ \phi, \ \mathrm{tan}\lambda)$. It then compares the distance between this and the cluster in the $(z,y)$ plane to $R$. This introduces another cut in the perpendicular direction.
 
@@ -283,13 +283,13 @@ The next step is different for clusters in the barrel or in one of the end caps.
 
 If the cluster contains more than a certain number $N$ of hits, it applies an extra cut to the dot product of the direction of the track at the propagated point and the cluster direction.
 
-The code makes sure to only associate one end of the track (if any) to a cluster. However, it can associate more than one track to the same cluster. This makes sense, as different particles can contribute to the same cluster in the ECal, but it makes it difficult to quantify the relative contributions of the tracks to a certain cluster.
+The code makes sure to only associate one end of the track (if any) to a cluster. However, it can associate more than one track to the same cluster. This makes sense, as different particles can contribute to the same cluster in the \gls{ecal}, but it makes it difficult to quantify the relative contributions of the tracks to a certain cluster.
 
-As a way of gauging the performance of this algorithm, I developed a new, simpler association module. The goal was to have a simple and robust algorithm, which depends on as few parameters as possible and that can produce a one-to-one matching between tracks and ECal clusters.
+As a way of gauging the performance of this algorithm, I developed a new, simpler association module. The goal was to have a simple and robust algorithm, which depends on as few parameters as possible and that can produce a one-to-one matching between tracks and \gls{ecal} clusters.
 
 For each reconstructed track, the new algorithm applies the same procedure to the forward and the backward fits irrespective of their end point positions. It first gets the Kalman fit parameters at the corresponding end point, together with the position along the drift direction, $x_{0}$ and $(y_{0}, \ z_{0}, \ 1/R, \ \phi_{0}, \ \mathrm{tan}\lambda)$.
 
-For each ECal cluster, I compute the radial distance to the centre of the TPC and find the $\phi$ value in the range $[\phi_{0}, \ \phi_{0}+\mathrm{sign}(R)\phi_{max})$ that makes the propagated helix intersect with the circle defined with such radius. The $(x,y,z)$ position of the helix for the $\phi$ value found (if any) is then computed. In case there are two intersections, I keep the one that minimises the distance between $(y, z)$ and $(y_{cluster}, z_{cluster})$.
+For each \gls{ecal} cluster, I compute the radial distance to the centre of the \gls{tpc} and find the $\phi$ value in the range $[\phi_{0}, \ \phi_{0}+\mathrm{sign}(R)\phi_{max})$ that makes the propagated helix intersect with the circle defined with such radius. The $(x,y,z)$ position of the helix for the $\phi$ value found (if any) is then computed. In case there are two intersections, I keep the one that minimises the distance between $(y, z)$ and $(y_{cluster}, z_{cluster})$.
 
 \begin{figure}[t]
 	\begin{subfigure}{0.5\textwidth}
@@ -305,35 +305,35 @@ For each ECal cluster, I compute the radial distance to the centre of the TPC an
 \end{figure}
 
 \begin{comment}
-Figure \ref{fig:associations} (left panel) shows an example track (red line) being propagated up to $\phi_{0}+\mathrm{sign}(R)\pi/2$ (dashed blue line). The image also shows the ECal clusters present in the event (green squares). For each of them, the algorithm will try to find the intersections of the propagated helix and the circles defined with their corresponding radii.
+Figure \ref{fig:associations} (left panel) shows an example track (red line) being propagated up to $\phi_{0}+\mathrm{sign}(R)\pi/2$ (dashed blue line). The image also shows the \gls{ecal} clusters present in the event (green squares). For each of them, the algorithm will try to find the intersections of the propagated helix and the circles defined with their corresponding radii.
 \end{comment}
 
 I then calculate a $\chi^{2}$ value based on the Euclidean distance between the propagated point and the cluster:
 \begin{equation}
 	\chi^{2}/ndf = \frac{\sum_{n=0}^{2}\left(x^{(n)}-x^{(n)}_{c}\right)^{2}}{3}.
 \end{equation}
-If there was no intersection I store a $-1$ instead. In the end, for each reconstructed track in the event one ends up with two collections of $\chi^{2}$ values, one for each ECal cluster and fit directions.
+If there was no intersection I store a $-1$ instead. In the end, for each reconstructed track in the event one ends up with two collections of $\chi^{2}$ values, one for each \gls{ecal} cluster and fit directions.
 
-The current code only supports having ECal clusters associated to one end of each track. We have two options to decide what track end to keep. The first one tries to cheat the selection, looking at the distance between the two track ends and the true start position of the associated MC particle. The second one keeps the track end with more $\chi^{2}$ entries below a certain cut.
+The current code only supports having \gls{ecal} clusters associated to one end of each track. We have two options to decide what track end to keep. The first one tries to cheat the selection, looking at the distance between the two track ends and the true start position of the associated \gls{mc} particle. The second one keeps the track end with more $\chi^{2}$ entries below a certain cut.
 
-This feature of only considering one track end limits the algorithm, making it not suitable for reconstructing events with particles originating outside the HPgTPC. However, as for the moment our main concern is the study of neutrino interactions in the gaseous argon volume, this is an acceptable assumption.
+This feature of only considering one track end limits the algorithm, making it not suitable for reconstructing events with particles originating outside the \gls{hpgtpc}. However, as for the moment our main concern is the study of neutrino interactions in the gaseous argon volume, this is an acceptable assumption.
 
 In order to associate a cluster to a track, I take all clusters with a $\chi^{2}$ value in the range $[0, \chi^{2}_{cut})$. If a cluster has been assigned to more than one track we leave it with the one with the lowest $\chi^{2}$.
 
 This default behaviour of the algorithm can be modified to associate more than one track to each cluster. Not only that, but the $\chi^{2}$ values can be used to assign relative weights to the different contributions.
 
-To evaluate the performance of the association method, I use a binary classification approach. In this case, I check the leading MC Track IDs associated to the reconstructed tracks and ECal clusters. I count an association as true positive (TP) if both Track IDs coincide. An association is considered false positive (FP) when the Track IDs are different. If a cluster has not been associated to any track but it shares the Track ID with a reconstructed track it is counted as a false negative (FN).
+To evaluate the performance of the association method, I use a binary classification approach. In this case, I check the leading \gls{mc} Track IDs associated to the reconstructed tracks and \gls{ecal} clusters. I count an association as true positive (TP) if both Track IDs coincide. An association is considered false positive (FP) when the Track IDs are different. If a cluster has not been associated to any track but it shares the Track ID with a reconstructed track it is counted as a false negative (FN).
 
-For the testing, I produced a sample of $10^{4}$ FHC neutrino events inside the HPgTPC. Figure \ref{fig:associations} (left panel) shows the precision (blue line), sensitivity (yellow line), and $F_{1}$ score (red line) I obtain for different values of $\chi^{2}_{cut}$. For comparison, the same metrics computed for the default algorithm with the current configuration are also shown (dashed lines). In the case of the new algorithm, I use both the $\chi^{2}$-based method to estimate the track direction described earlier (square markers) and the cheated direction from the \texttt{Geant4}-level information (circle markers). For either of these we achieve similar values of the precision compared to the old code, while having a considerably higher sensitivity. It can be seen that cheating the direction of the tracks only makes a difference at high $\chi^{2}_{cut}$, past the optimal value of the cut around the $F_{1}$ score maximum. Therefore, I set the $\chi^{2}$ method as the default.
+For the testing, I produced a sample of $10^{4}$ \gls{fhc} neutrino events inside the \gls{hpgtpc}. Figure \ref{fig:associations} (left panel) shows the precision (blue line), sensitivity (yellow line), and $F_{1}$ score (red line) I obtain for different values of $\chi^{2}_{cut}$. For comparison, the same metrics computed for the default algorithm with the current configuration are also shown (dashed lines). In the case of the new algorithm, I use both the $\chi^{2}$-based method to estimate the track direction described earlier (square markers) and the cheated direction from the \texttt{Geant4}-level information (circle markers). For either of these we achieve similar values of the precision compared to the old code, while having a considerably higher sensitivity. It can be seen that cheating the direction of the tracks only makes a difference at high $\chi^{2}_{cut}$, past the optimal value of the cut around the $F_{1}$ score maximum. Therefore, I set the $\chi^{2}$ method as the default.
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.55\linewidth]{Images/GArSoft_PID/associations/drift_correction.png}
-	\caption[Schematics of a method to deal with track-ECal associations in non-zero $t_{0}$ neutrino interaction events using the cluster time.]{Schematics of a possible option to deal with track-ECal associations in non-zero $t_{0}$ neutrino interaction events, trying to correct for the drift direction uncertainty in a cluster-by-cluster basis using the cluster time, $t_{cluster}$.}
+	\caption[Schematics of a method to deal with track-\gls{ecal} associations in non-zero $t_{0}$ neutrino interaction events using the cluster time.]{Schematics of a possible option to deal with track-\gls{ecal} associations in non-zero $t_{0}$ neutrino interaction events, trying to correct for the drift direction uncertainty in a cluster-by-cluster basis using the cluster time, $t_{cluster}$.}
 	\label{fig:associations_drift}
 \end{figure}
 
-One of the possible weak points of this approach is that it relies on the position along the drift direction to make the decisions. Within the current ND-GAr design implemented in GArSoft, the timing information is provided by the ECal. That effectively means that prior to make the track-ECal associations the reconstructed $x$ positions of the track trajectories differ from the simulated ones by an amount:
+One of the possible weak points of this approach is that it relies on the position along the drift direction to make the decisions. Within the current \gls{ndgar} design implemented in GArSoft, the timing information is provided by the \gls{ecal}. That effectively means that prior to make the track-\gls{ecal} associations the reconstructed $x$ positions of the track trajectories differ from the simulated ones by an amount:
 \begin{equation}
 	x_{reco}^{(n)} - x_{sim}^{(n)} = v_{drift} \ t_{0},
 \end{equation}
@@ -358,11 +358,11 @@ Here I try to correct for the drift coordinate position using the time associate
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.80\linewidth]{Images/GArSoft_PID/BDT/fraction_vs_preco_no_duplicates.pdf}
-	\caption[Momentum distribution for the reconstructed muons and charged pions in a FHC sample, together with the fraction of them reaching the ECal and MuID.]{Momentum distribution for the reconstructed muons (top panel) and charged pions (bottom panel) in a FHC neutrino sample, together with the fraction of them reaching the ECal (red) and MuID (blue). Each entry corresponds to a reconstructed track, backtracked to a true muon or pion which has not produced any other reconstructed track.}
+	\caption[Momentum distribution for the reconstructed muons and charged pions in a \gls{fhc} sample, together with the fraction of them reaching the \gls{ecal} and \gls{muid}.]{Momentum distribution for the reconstructed muons (top panel) and charged pions (bottom panel) in a \gls{fhc} neutrino sample, together with the fraction of them reaching the \gls{ecal} (red) and \gls{muid} (blue). Each entry corresponds to a reconstructed track, backtracked to a true muon or pion which has not produced any other reconstructed track.}
 	\label{fig:fraction_particles_ecal_muid}
 \end{figure}
 
-I tested the effect of this correction again using a sample of $10^{4}$ FHC neutrino events, this time with $t_{0}$ values uniformly distributed within the spill. Figure \ref{fig:associations} (right panel) shows the performance of the algorithm for the case where the cluster $t_{0}$ correction is applied (square markers), and for the no correction case (circle markers), as a function of $\chi^{2}_{cut}$. In this case, the differences are particularly notorious at low values of the cut. It makes sense, as the $t_{0}$ effect becomes subdominant when the distance we consider grows large. Overall, the correction increases the sensitivity while keeping the precision almost unchanged. As a result, I apply the $t_{0}$ correction to the generated samples by default.
+I tested the effect of this correction again using a sample of $10^{4}$ \gls{fhc} neutrino events, this time with $t_{0}$ values uniformly distributed within the spill. Figure \ref{fig:associations} (right panel) shows the performance of the algorithm for the case where the cluster $t_{0}$ correction is applied (square markers), and for the no correction case (circle markers), as a function of $\chi^{2}_{cut}$. In this case, the differences are particularly notorious at low values of the cut. It makes sense, as the $t_{0}$ effect becomes subdominant when the distance we consider grows large. Overall, the correction increases the sensitivity while keeping the precision almost unchanged. As a result, I apply the $t_{0}$ correction to the generated samples by default.
 
 \subsection{Classification strategy}
 
@@ -375,53 +375,53 @@ I tested the effect of this correction again using a sample of $10^{4}$ FHC neut
 
 The problem of the muon and charged pion separation has to be viewed in the broader context of the particle identification in our detector. Focusing on the beam neutrino interactions, it is clear that we are going to have muons and pions spanning a broad momentum range. Not only that, but we will also have other particles with similar characteristics that will make the classification even more challenging. Therefore, we are presented with a task that will depend heavily on the kinematic range we are looking at each time, as both the available information and the possible impurities of other particle species vary.
 
-For instance, distinguishing muons from pions could be difficult at low momenta, as a great number of them do not reach the ECal. Therefore, we could think of tailoring a version of the classification for that particular case, which could be complemented with a $\mathrm{d}E/\mathrm{d}x$ measurement. Likewise, for momenta $\geq 1~\mathrm{GeV}$ muons and pions reach the calorimeters efficiently, but so do protons. Because of this, one can try to train another classifier for this energy range, and rely on other methods to remove as many of the protons as possible.
+For instance, distinguishing muons from pions could be difficult at low momenta, as a great number of them do not reach the \gls{ecal}. Therefore, we could think of tailoring a version of the classification for that particular case, which could be complemented with a $\mathrm{d}E/\mathrm{d}x$ measurement. Likewise, for momenta $\geq 1~\mathrm{GeV}$ muons and pions reach the calorimeters efficiently, but so do protons. Because of this, one can try to train another classifier for this energy range, and rely on other methods to remove as many of the protons as possible.
 
-Figure \ref{fig:fraction_particles_ecal_muid} shows the momentum distribution of the reconstructed muons (top) and pions (bottom) in a FHC sample. It also contains the fraction of particles reaching the ECal (red) and MuID (blue), for the different momentum bins. In Fig. \ref{fig:dEdx_vs_momentum_regions} I show the mean $\mathrm{d}E/\mathrm{d}x$ of different particles as a function of the momentum, computed using the \gls{aleph} parametrisation with the best fit parameters found in section \ref{subsec:mean_dEdx}.
+Figure \ref{fig:fraction_particles_ecal_muid} shows the momentum distribution of the reconstructed muons (top) and pions (bottom) in a \gls{fhc} sample. It also contains the fraction of particles reaching the \gls{ecal} (red) and \gls{muid} (blue), for the different momentum bins. In Fig. \ref{fig:dEdx_vs_momentum_regions} I show the mean $\mathrm{d}E/\mathrm{d}x$ of different particles as a function of the momentum, computed using the \gls{aleph} parametrisation with the best fit parameters found in section \ref{subsec:mean_dEdx}.
 
-Using these two figures as references, I decided to approach the classification by dividing the problem into six different momentum regions. A summary of these can be found in Tab. \ref{tab:bdt_regions}. The idea is to select a number of regions where the basic classification can be complemented with other methods. For the problem at hand, I prepared separated samples of isotropic single muons and pions, with momenta uniformly distributed along the corresponding momentum range. Each sample contains $5 \times 10^{4}$ events of the corresponding particle species. I do not generate samples for the first region, as it is assumed that the separation can be achieved using $\mathrm{d}E/\mathrm{d}x$ only. For the last region, I generate particles up to a momentum of $10~\mathrm{GeV}/c$, as that is well above the typical energies of muons and pions from FHC neutrino interactions in ND-GAr. In all cases, the ratios I keep between the training and testing datasets are $80:20$.
+Using these two figures as references, I decided to approach the classification by dividing the problem into six different momentum regions. A summary of these can be found in Tab. \ref{tab:bdt_regions}. The idea is to select a number of regions where the basic classification can be complemented with other methods. For the problem at hand, I prepared separated samples of isotropic single muons and pions, with momenta uniformly distributed along the corresponding momentum range. Each sample contains $5 \times 10^{4}$ events of the corresponding particle species. I do not generate samples for the first region, as it is assumed that the separation can be achieved using $\mathrm{d}E/\mathrm{d}x$ only. For the last region, I generate particles up to a momentum of $10~\mathrm{GeV}/c$, as that is well above the typical energies of muons and pions from \gls{fhc} neutrino interactions in \gls{ndgar}. In all cases, the ratios I keep between the training and testing datasets are $80:20$.
 
-Additionally, I prepared another sample of $10^{5}$ FHC neutrino events. For each interaction, I select the reconstructed particles which were backtracked to true muons or charged pions. I use this dataset to perform validation checks, to see how the models trained with the single particle data generalise to a more realistic scenario.
+Additionally, I prepared another sample of $10^{5}$ \gls{fhc} neutrino events. For each interaction, I select the reconstructed particles which were backtracked to true muons or charged pions. I use this dataset to perform validation checks, to see how the models trained with the single particle data generalise to a more realistic scenario.
 
 \begin{table}[t]
-	\caption{Momentum ranges and description of the PID approach assumed for the muon and pion classification task.}
+	\caption{Momentum ranges and description of the \gls{pid} approach assumed for the muon and pion classification task.}
 	\begin{center}
 		\begin{small}
 			\begin{tabular}{p{2.7cm}|l}
 				Momentum range                                    & Description                                                                          \\[1mm] \hline \rule{0pt}{1.1\normalbaselineskip}
 				$< 0.1$ \hfill $\mathrm{GeV}/c$      & All tracks can be separated with $\mathrm{d}E/\mathrm{d}x$                           \\[2mm]
-				$[0.1,~0.3)$ \hfill $\mathrm{GeV}/c$ & Use ECal for reaching muons and pions, $\mathrm{d}E/\mathrm{d}x$ for the rest        \\[2mm]
-				$[0.3,~0.8)$ \hfill $\mathrm{GeV}/c$ & Use ECal for muons and pions, $\mathrm{d}E/\mathrm{d}x$ for protons                  \\[2mm]
-				$[0.8,~1.5)$ \hfill $\mathrm{GeV}/c$ & Use ECal and MuID for muons and pions,  $\mathrm{d}E/\mathrm{d}x$ for protons        \\[2mm]
-				$[1.5,~3.0)$ \hfill $\mathrm{GeV}/c$ & Use ECal and MuID for muons and pions, ToF for protons                               \\[2mm]
-				$\geq 3.0$ \hfill $\mathrm{GeV}/c$   & Use ECal and MuID for muons and pions, $\mathrm{d}E/\mathrm{d}x$ and ToF for protons
+				$[0.1,~0.3)$ \hfill $\mathrm{GeV}/c$ & Use \gls{ecal} for reaching muons and pions, $\mathrm{d}E/\mathrm{d}x$ for the rest        \\[2mm]
+				$[0.3,~0.8)$ \hfill $\mathrm{GeV}/c$ & Use \gls{ecal} for muons and pions, $\mathrm{d}E/\mathrm{d}x$ for protons                  \\[2mm]
+				$[0.8,~1.5)$ \hfill $\mathrm{GeV}/c$ & Use \gls{ecal} and \gls{muid} for muons and pions,  $\mathrm{d}E/\mathrm{d}x$ for protons        \\[2mm]
+				$[1.5,~3.0)$ \hfill $\mathrm{GeV}/c$ & Use \gls{ecal} and \gls{muid} for muons and pions, \gls{tof} for protons                               \\[2mm]
+				$\geq 3.0$ \hfill $\mathrm{GeV}/c$   & Use \gls{ecal} and \gls{muid} for muons and pions, $\mathrm{d}E/\mathrm{d}x$ and \gls{tof} for protons
 			\end{tabular}
 		\end{small}
 	\end{center}
 	\label{tab:bdt_regions}
 \end{table}
 
-To tackle this classification problem, I make use of Boosted Decision Trees (\gls{bdt}). A decision tree uses a flowchart-like structure to make decisions based on some input data. It starts from a root node, which represents the complete dataset, and then it splits this based on the variable or feature which gives the best separation between classes, creating two new nodes. The process repeats for each node until it reaches a certain limit, like a maximum number of splits or some tolerance criteria. The last set of nodes are often called leave nodes, and represent the final prediction of the classifier. A good example of the use of BDTs in particle physics is that from Ref. \cite{Cornell2021}.
+To tackle this classification problem, I make use of Boosted Decision Trees (\gls{bdt}). A decision tree uses a flowchart-like structure to make decisions based on some input data. It starts from a root node, which represents the complete dataset, and then it splits this based on the variable or feature which gives the best separation between classes, creating two new nodes. The process repeats for each node until it reaches a certain limit, like a maximum number of splits or some tolerance criteria. The last set of nodes are often called leave nodes, and represent the final prediction of the classifier. A good example of the use of \gls{bdt}s in particle physics is that from Ref. \cite{Cornell2021}.
 
 Boosting refers to a family of methods to combine the predictions from multiple classifiers, following a sequential approach where each new model learns from the errors of the previous one. The process starts with a simple decision tree, which is used to make predictions on the training data. Then, the data points misclassified by the first model are assigned higher weights, and another decision tree is trained on the data with adjusted weights. The predictions of the two trees are then combined, and the cycle repeats for a predefined number of iterations. Gradient boosting uses the direction of the steepest error descent to guide the learning process and improve the accuracy with each iteration.
 
 \subsection{Feature selection and importance}
 
-Using the reconstructed tracks as a starting point, I compute a number of ECal and MuID variables for each of them. As there can be more than one cluster associated to a track, what I do is collect all associated clusters and compute these variables from the complete collection of associated hits. For the MuID, because it only features three layers and typically there will be less hits, I also allow single hits to be associated with tracks\footnote{At the reconstruction level what happens is that non-clustered hits are put into single hit clusters, instead of being thrown away. This is necessary to keep the consistency of the track-cluster association code.}. I can roughly divide the variables in three types: energy-related, geometry-related and statistical. In the following, I briefly describe the variables related exclusively to the ECal:
+Using the reconstructed tracks as a starting point, I compute a number of \gls{ecal} and \gls{muid} variables for each of them. As there can be more than one cluster associated to a track, what I do is collect all associated clusters and compute these variables from the complete collection of associated hits. For the \gls{muid}, because it only features three layers and typically there will be less hits, I also allow single hits to be associated with tracks\footnote{At the reconstruction level what happens is that non-clustered hits are put into single hit clusters, instead of being thrown away. This is necessary to keep the consistency of the track-cluster association code.}. I can roughly divide the variables in three types: energy-related, geometry-related and statistical. In the following, I briefly describe the variables related exclusively to the \gls{ecal}:
 
 \begin{itemize}
 	\item \textbf{Energy-related ECal}
 	\begin{itemize}
-		\item ECal total energy (ClusterTotalEnergy): sum of the energy of all the ECal hits.
-		\item Mean ECal hit energy (HitMeanEnergy): mean of the hit energy distribution.
-		\item Standard deviation ECal hit energy (HitStdEnergy): standard deviation of the hit energy distribution.
-		\item Maximum ECal hit energy (HitMaxEnergy): maximum of the hit energy distribution.
+		\item \gls{ecal} total energy (ClusterTotalEnergy): sum of the energy of all the \gls{ecal} hits.
+		\item Mean \gls{ecal} hit energy (HitMeanEnergy): mean of the hit energy distribution.
+		\item Standard deviation \gls{ecal} hit energy (HitStdEnergy): standard deviation of the hit energy distribution.
+		\item Maximum \gls{ecal} hit energy (HitMaxEnergy): maximum of the hit energy distribution.
 	\end{itemize}
 	\item \textbf{Geometry-related ECal}
 	\begin{itemize}
 		\item Mean distance hit-to-cluster (DistHitClusterMean): mean of the distance distribution between the hits and the corresponding cluster's main axis.
 		\item RMS distance hit-to-cluster (DistHitClusterRMS): root mean square of the distance distribution between the hits and the corresponding cluster's main axis.
-		\item Maximum distance hit-to-centre (DistHitCenterMax): maximum of the distance distribution between the hits and the centre of the HPgTPC.
+		\item Maximum distance hit-to-centre (DistHitCenterMax): maximum of the distance distribution between the hits and the centre of the \gls{hpgtpc}.
 		\item Time-of-Flight velocity (TOFVelocity): slope obtained when fitting a straight line to the hit time versus hit distance to the centre (i.e. $d = v \times t$).
 	\end{itemize}
 	\item \textbf{Energy and geometry ECal}
@@ -438,55 +438,55 @@ Using the reconstructed tracks as a starting point, I compute a number of ECal a
 \begin{figure}[p!]
 	\centering
 	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/BDT/ecal_feature_distribution_all_example.pdf}
-	\caption[Example ECal feature distributions for muons and charged pions in the five different momentum ranges considered.]{Example ECal feature distributions for muons (blue) and charged pions (red) in the five different momentum ranges considered (from top to bottom, in ascending momentum order). From left to right: mean hit energy, mean distance hit-to-cluster, and number of layers with hits.}
+	\caption[Example \gls{ecal} feature distributions for muons and charged pions in the five different momentum ranges considered.]{Example \gls{ecal} feature distributions for muons (blue) and charged pions (red) in the five different momentum ranges considered (from top to bottom, in ascending momentum order). From left to right: mean hit energy, mean distance hit-to-cluster, and number of layers with hits.}
 	\label{fig:ecal_feature_example}
 \end{figure}
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/BDT/muid_feature_distribution_all_example.pdf}
-	\caption[Example MuID feature distributions for muons and charged pions in the three different momentum ranges considered.]{Example MuID feature distributions for muons (blue) and charged pions (red) in the three different momentum ranges considered (from top to bottom, in ascending momentum order). From left to right: standard deviation hit energy, maximum distance hit-to-hit, and number of hits.}
+	\caption[Example \gls{muid} feature distributions for muons and charged pions in the three different momentum ranges considered.]{Example \gls{muid} feature distributions for muons (blue) and charged pions (red) in the three different momentum ranges considered (from top to bottom, in ascending momentum order). From left to right: standard deviation hit energy, maximum distance hit-to-hit, and number of hits.}
 	\label{fig:muid_feature_example}
 \end{figure}
 
-Figure \ref{fig:ecal_feature_example} shows the distributions of three different ECal variables, separating true muons (blue) and charged pions (red), for the five momentum ranges considered. I chose to show one feature from each category, namely the mean energy per hit (left column), the mean distance between the hits and the centre of the cluster (middle column), and the number of ECal layers with hits (right column). These give an idea of the separating power of the different features, and how it changes considerably with the energy. In the number of layers with hits distributions, the peak at $6$ is due to the fact that the first six ECal layers sit inside the pressure vessel\footnote{Note to self: check this. I thought the ECal barrel had 8 layers of tiles, and that all of them were inside the pressure vessel.}. Therefore, some of the particles get stopped crossing it, never making it to the seventh layer.
+Figure \ref{fig:ecal_feature_example} shows the distributions of three different \gls{ecal} variables, separating true muons (blue) and charged pions (red), for the five momentum ranges considered. I chose to show one feature from each category, namely the mean energy per hit (left column), the mean distance between the hits and the centre of the cluster (middle column), and the number of \gls{ecal} layers with hits (right column). These give an idea of the separating power of the different features, and how it changes considerably with the energy. In the number of layers with hits distributions, the peak at $6$ is due to the fact that the first six \gls{ecal} layers sit inside the pressure vessel. Therefore, some of the particles get stopped crossing it, never making it to the seventh layer.
 
-In the case of the MuID, because at low momenta a significant fraction of the particles do not make it past the ECal, I only consider the information coming from this detector for momenta $\geq 0.8~\mathrm{GeV}/c$, i.e. for the last three momentum regions. The variables I extract from it are the following:
+In the case of the \gls{muid}, because at low momenta a significant fraction of the particles do not make it past the \gls{ecal}, I only consider the information coming from this detector for momenta $\geq 0.8~\mathrm{GeV}/c$, i.e. for the last three momentum regions. The variables I extract from it are the following:
 \begin{itemize}
 	\item \textbf{Energy-related MuID}
 	\begin{itemize}
-		\item MuID total energy (ClusterMuIDTotalEnergy): sum of the energy of all the MuID hits.
-		\item Mean MuID hit energy (HitMuIDMeanEnergy): mean of the MuID hit energy distribution.
-		\item Standard deviation MuID hit energy (HitMuIDStdEnergy): standard deviation of the MuID hit energy distribution.
-		\item Maximum MuID hit energy (HitMuIDMaxEnergy): maximum of the MuID hit energy distribution.
+		\item \gls{muid} total energy (ClusterMuIDTotalEnergy): sum of the energy of all the \gls{muid} hits.
+		\item Mean \gls{muid} hit energy (HitMuIDMeanEnergy): mean of the \gls{muid} hit energy distribution.
+		\item Standard deviation \gls{muid} hit energy (HitMuIDStdEnergy): standard deviation of the \gls{muid} hit energy distribution.
+		\item Maximum \gls{muid} hit energy (HitMuIDMaxEnergy): maximum of the \gls{muid} hit energy distribution.
 	\end{itemize}
 	\item \textbf{Geometry-related MuID}
 	\begin{itemize}
-		\item Maximum distance MuID hit-to-hit (DistHitMuIDMax): maximum distance between pairs of MuID hits.
-		\item Maximum distance MuID hit-to-centre (DistHitCenterMuIDMax): maximum of the distance distribution between the MuID hits and the centre of the HPgTPC.
+		\item Maximum distance \gls{muid} hit-to-hit (DistHitMuIDMax): maximum distance between pairs of \gls{muid} hits.
+		\item Maximum distance \gls{muid} hit-to-centre (DistHitCenterMuIDMax): maximum of the distance distribution between the \gls{muid} hits and the centre of the \gls{hpgtpc}.
 	\end{itemize}
 	\item \textbf{Statistical MuID}
 	\begin{itemize}
-		\item Number of hits (NHitsMuID): total number of MuID hits associated to the track.
-		\item Number of layers with hits (NLayersMuID): difference between the last and the first layer with MuID hits.
+		\item Number of hits (NHitsMuID): total number of \gls{muid} hits associated to the track.
+		\item Number of layers with hits (NLayersMuID): difference between the last and the first layer with \gls{muid} hits.
 	\end{itemize}
 \end{itemize}
 
-Figure \ref{fig:muid_feature_example} shows the distributions of three different MuID variables, separating true muons (blue) and charged pions (red), for the three momentum ranges which use the muon tagger information. In this case I decided to show the standard deviation of the MuID hit energy distribution (left column), the maximum distance between the MuID hit pairs (middle column), and the number of MuID hits (right column). These variables are used together with the ECal features at high momenta, providing additional disambiguation power.
+Figure \ref{fig:muid_feature_example} shows the distributions of three different \gls{muid} variables, separating true muons (blue) and charged pions (red), for the three momentum ranges which use the muon tagger information. In this case I decided to show the standard deviation of the \gls{muid} hit energy distribution (left column), the maximum distance between the \gls{muid} hit pairs (middle column), and the number of \gls{muid} hits (right column). These variables are used together with the \gls{ecal} features at high momenta, providing additional disambiguation power.
 
-For both the ECal and the MuID, I add as an extra feature the ratio between the total energy from the clusters and the momentum measured in the HPgTPC (ECalRatioFWD and MuIDRatioFWD, as I use the momentum value from the forward fit). This variable is typically used for electron discrimination in calorimeters, as the small difference between their momentum and kinetic energy makes it peak around $1$. I also include another time-of-flight variable, measured with both the ECal and MuID from the arrival times to each detector (TOFMuID).
+For both the \gls{ecal} and the \gls{muid}, I add as an extra feature the ratio between the total energy from the clusters and the momentum measured in the \gls{hpgtpc} (ECalRatioFWD and MuIDRatioFWD, as I use the momentum value from the forward fit). This variable is typically used for electron discrimination in calorimeters, as the small difference between their momentum and kinetic energy makes it peak around $1$. I also include another time-of-flight variable, measured with both the \gls{ecal} and \gls{muid} from the arrival times to each detector (TOFMuID).
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/BDT/summary_pca_p0_0.55_sigmap_0.25.pdf}
-	\caption[Results of the PCA, Shapley and Gini feature importance analyses for the momentum range $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$.]{Left panel: cumulative explained variance for the first three principal components (top panel) and contribution of the different features to the principal axes in feature space (bottom panel). Right panel: Shapley (blue) and Gini (red) feature importances for the different input features. Both figures correspond to the samples in the momentum range $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$.}
+	\caption[Results of the \gls{pca}, Shapley and Gini feature importance analyses for the momentum range $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$.]{Left panel: cumulative explained variance for the first three principal components (top panel) and contribution of the different features to the principal axes in feature space (bottom panel). Right panel: Shapley (blue) and Gini (red) feature importances for the different input features. Both figures correspond to the samples in the momentum range $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$.}
 	\label{fig:bdt_pca_importance_ii}
 \end{figure}
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/BDT/summary_pca_p0_1.15_sigmap_0.35.pdf}
-	\caption[Results of the PCA, Shapley and Gini feature importance analyses for the momentum range $0.8 \leq p < 1.5 ~ \mathrm{GeV}/c$.]{Left panel: cumulative explained variance for the first three principal components (top panel) and contribution of the different features to the principal axes in feature space (bottom panel). Right panel: Shapley (blue) and Gini (red) feature importances for the different input features. Both figures correspond to the samples in the momentum range $0.8 \leq p < 1.5 ~ \mathrm{GeV}/c$.}
+	\caption[Results of the \gls{pca}, Shapley and Gini feature importance analyses for the momentum range $0.8 \leq p < 1.5 ~ \mathrm{GeV}/c$.]{Left panel: cumulative explained variance for the first three principal components (top panel) and contribution of the different features to the principal axes in feature space (bottom panel). Right panel: Shapley (blue) and Gini (red) feature importances for the different input features. Both figures correspond to the samples in the momentum range $0.8 \leq p < 1.5 ~ \mathrm{GeV}/c$.}
 	\label{fig:bdt_pca_importance_iii}
 \end{figure}
 
@@ -504,14 +504,14 @@ For both the ECal and the MuID, I add as an extra feature the ratio between the 
 		\centering
 		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/BDT/importance/feature_importance_p0_6.50_sigmap_3.50_MuID.pdf}
 	\end{subfigure}
-	\caption{Left panel: number of non-decaying, decaying and decaying in the fiducial volume pions for a MC sample of $10^{5}$, $p=500 \ \mathrm{MeV}$ isotropic positively charged pions inside the TPC. Right panel: event display for a positive pion decaying inside the fiducial volume, with a single reconstructed track for the pion and muon system.}
+	\caption{Left panel: number of non-decaying, decaying and decaying in the fiducial volume pions for a \gls{mc} sample of $10^{5}$, $p=500 \ \mathrm{MeV}$ isotropic positively charged pions inside the \gls{tpc}. Right panel: event display for a positive pion decaying inside the fiducial volume, with a single reconstructed track for the pion and muon system.}
 	\label{fig:pion_decays}
 \end{figure}
 \end{comment}
 
-Once our features have been defined, one can do some exploratory analysis to understand how well the variables describe the target class, and avoid the black-box approach by checking what features are most relevant for the learning process. This way, I perform a feature analysis for each of the momentum ranges I divided this classification problem into. It follows three steps: first a principal component analysis (PCA), followed by a feature importance study using Gini and Shapley values, and finally a feature permutation importance analysis.
+Once our features have been defined, one can do some exploratory analysis to understand how well the variables describe the target class, and avoid the black-box approach by checking what features are most relevant for the learning process. This way, I perform a feature analysis for each of the momentum ranges I divided this classification problem into. It follows three steps: first a principal component analysis (\gls{pca}), followed by a feature importance study using Gini and Shapley values, and finally a feature permutation importance analysis.
 
-The PCA is useful to understand the variance of the feature space. It is an unsupervised machine learning technique that allows the user to perform a dimensionality reduction \cite{Jolliffe2016}. It uses a singular value decomposition (SVD) of the input features to project them into a lower dimensional space. The idea is to find the matrix $\mathbf{C}_{q}$, whose columns are the first $q$ orthonormal eigenvectors of the input covariance matrix. Consider the $n \times p$ real matrix of input data $\mathbf{X}$, where $n$ is the number of samples and $p$ the number of features. If $\mathbf{X}$ is centred, i.e. the means of its columns are equal to zero, we can write the covariance matrix of $\mathbf{X}$ as $\mathbf{C}=\mathbf{X}^{\intercal}\mathbf{X}/(n-1)$. This matrix can be diagonalised, yielding:
+The \gls{pca} is useful to understand the variance of the feature space. It is an unsupervised machine learning technique that allows the user to perform a dimensionality reduction \cite{Jolliffe2016}. It uses a singular value decomposition (SVD) of the input features to project them into a lower dimensional space. The idea is to find the matrix $\mathbf{C}_{q}$, whose columns are the first $q$ orthonormal eigenvectors of the input covariance matrix. Consider the $n \times p$ real matrix of input data $\mathbf{X}$, where $n$ is the number of samples and $p$ the number of features. If $\mathbf{X}$ is centred, i.e. the means of its columns are equal to zero, we can write the covariance matrix of $\mathbf{X}$ as $\mathbf{C}=\mathbf{X}^{\intercal}\mathbf{X}/(n-1)$. This matrix can be diagonalised, yielding:
 \begin{equation}
 	\mathbf{C}=\mathbf{V}\mathbf{L}\mathbf{V}^{\intercal},
 \end{equation}
@@ -531,11 +531,11 @@ This way, taking an input data vector $X \in \mathbb{R}^{p}$, the resulting feat
 \end{equation}
 The new features capture most of the variance of the original sample, while being lower dimensional, as $q<p$.
 
-Before applying the PCA reduction one needs to centre and scale the input data. Centring is necessary when using SVD to obtain the eigenvectors of the covariance matrix, as only in that case we can do the identification with the right singular vectors from the input data. Scaling is needed when variables are on different scales, as some can then dominate the PCA procedure.
+Before applying the \gls{pca} reduction one needs to centre and scale the input data. Centring is necessary when using SVD to obtain the eigenvectors of the covariance matrix, as only in that case we can do the identification with the right singular vectors from the input data. Scaling is needed when variables are on different scales, as some can then dominate the \gls{pca} procedure.
 
-I use the PCA module of \texttt{scikit-learn} \cite{scikit-learn}, together with the \texttt{RobustScaler}, which centres the data and scales it based on the interquartile range. In Fig. \ref{fig:bdt_pca_importance_ii} (left panel) and Fig. \ref{fig:bdt_pca_importance_iii} (left panel) I show the results I obtained from the PCA for the momentum ranges $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$ and $0.8 \leq p < 1.5 ~ \mathrm{GeV}/c$, respectively. Notice that in the second case the number of features increases considerably, as this is the first region which uses the MuID variables. I find that, in all the cases, adding a fourth PC does not add additional information. As it can be seen in the top panels of the figures, the cumulative explained variance is already over $80\%$ with three PCs.
+I use the \gls{pca} module of \texttt{scikit-learn} \cite{scikit-learn}, together with the \texttt{RobustScaler}, which centres the data and scales it based on the interquartile range. In Fig. \ref{fig:bdt_pca_importance_ii} (left panel) and Fig. \ref{fig:bdt_pca_importance_iii} (left panel) I show the results I obtained from the \gls{pca} for the momentum ranges $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$ and $0.8 \leq p < 1.5 ~ \mathrm{GeV}/c$, respectively. Notice that in the second case the number of features increases considerably, as this is the first region which uses the \gls{muid} variables. I find that, in all the cases, adding a fourth PC does not add additional information. As it can be seen in the top panels of the figures, the cumulative explained variance is already over $80\%$ with three PCs.
 
-The bottom panels show the contribution of the variables to the principal axes. For the two first momentum regions, I observe a tendency of the energy-related and the geometry-related ECal variables to be clustered together. For the other ranges, when I include the MuID variables, there seems to be a division between ECal and MuID variables. For these, it seems like the number of ECal layers with hits also plays an important role.
+The bottom panels show the contribution of the variables to the principal axes. For the two first momentum regions, I observe a tendency of the energy-related and the geometry-related \gls{ecal} variables to be clustered together. For the other ranges, when I include the \gls{muid} variables, there seems to be a division between \gls{ecal} and \gls{muid} variables. For these, it seems like the number of \gls{ecal} layers with hits also plays an important role.
 
 The next step in the analysis is to quantify the importance of the features based on two additional metrics, namely the Gini and the Shapley values. The Gini importance, often called mean decrease impurity, is based on how much a feature contributes to the purity improvement at the splits in each decision tree. The purity is measured in terms of the Gini impurity index, defined as \cite{Jost2006}:
 \begin{equation}
@@ -547,10 +547,10 @@ where $f_{i}$ is the fractional abundance of the $i$-th class. Then, for each sp
 \end{equation}
 where $N$ represents the total number of samples, $N_{t}$ the number of samples at the current node, $N_{t}^{R}$ and $N_{t}^{L}$ the number of samples in the right and left children respectively, $I_{G}$ is the Gini impurity at the current node, and $I_{G}^{R}$ and $I_{G}^{L}$ the Gini impurities of the resulting right and left children.
 
-For each decision tree, one will have a normalised vector with the accumulated decrease in Gini impurity for each feature. In the case of a BDT, the feature importances are simply the mean for all the estimators in the ensemble.
+For each decision tree, one will have a normalised vector with the accumulated decrease in Gini impurity for each feature. In the case of a \gls{bdt}, the feature importances are simply the mean for all the estimators in the ensemble.
 
 \begin{comment}
-\footnote{Note to self: this appears not to be the case. If you get the \texttt{feature_importance} for each tree in the BDT and take the average, the result is not the same to be one reported in the \texttt{feature_importance} attribute of the BDT.}.
+\footnote{Note to self: this appears not to be the case. If you get the \texttt{feature_importance} for each tree in the \gls{bdt} and take the average, the result is not the same to be one reported in the \texttt{feature_importance} attribute of the \gls{bdt}.}.
 \end{comment}
 
 \begin{figure}[t]
@@ -574,7 +574,7 @@ I train the \texttt{GradientBoostingClassifier} from \texttt{scikit-learn} with 
 	\label{fig:bdt_permutations}
 \end{figure}
 
-Across all momentum ranges, I observe that the most important features are rather consistent. For the five regions considered, only six variables sit in the top five at least once. Figure \ref{fig:bdt_shap_regions} shows the evolution of the SHAP importance of these six features. It is interesting to see that the time-of-flight variable keeps its importance almost unchanged for all momenta. Also, it looks like the ECal energy ratio gets less relevant the higher the momentum is, but the RMS of the hit-to-cluster distance distribution and the maximum ECal hit energy become more important in the high momentum ranges.
+Across all momentum ranges, I observe that the most important features are rather consistent. For the five regions considered, only six variables sit in the top five at least once. Figure \ref{fig:bdt_shap_regions} shows the evolution of the SHAP importance of these six features. It is interesting to see that the time-of-flight variable keeps its importance almost unchanged for all momenta. Also, it looks like the \gls{ecal} energy ratio gets less relevant the higher the momentum is, but the RMS of the hit-to-cluster distance distribution and the maximum \gls{ecal} hit energy become more important in the high momentum ranges.
 
 The last step in the feature selection analysis is the feature permutation. This technique measures the contribution of each feature to the performance of a model by randomly shuffling its values and checking how some scores degrade. For the present case, I am interested in the precision or purity, and the sensitivity or efficiency, as these two are the most relevant metrics from a physics point of view. The \texttt{scikit-learn} module provides the user with a method to perform the permutation scans.
 
@@ -586,9 +586,9 @@ With this, I conclude the study of the features. I have prepared the training an
 
 \subsection{Hyperparameter optimisation}
 
-Any BDT requires the user to specify a number of parameters that will dictate its behaviour. They can be divided into two categories: (i) tree-specific parameters, which affect each individual tree in the model, and (ii) boosting parameters, which control the boosting operation in the model. The value of these so-called hyperparameters affect the performance and predictive power of the models. Therefore, one needs to carefully select their optimal values in order to extract as much information as possible from the data.
+Any \gls{bdt} requires the user to specify a number of parameters that will dictate its behaviour. They can be divided into two categories: (i) tree-specific parameters, which affect each individual tree in the model, and (ii) boosting parameters, which control the boosting operation in the model. The value of these so-called hyperparameters affect the performance and predictive power of the models. Therefore, one needs to carefully select their optimal values in order to extract as much information as possible from the data.
 
-From all the parameters used to define a tree in the \texttt{scikit-learn} implementation of the BDT classifier, I only consider a subset of them. This is due to the fact that some are mutually exclusive, but also because I noticed that others have little effect on the problem at hand. Therefore, the parameters I investigate are the following:
+From all the parameters used to define a tree in the \texttt{scikit-learn} implementation of the \gls{bdt} classifier, I only consider a subset of them. This is due to the fact that some are mutually exclusive, but also because I noticed that others have little effect on the problem at hand. Therefore, the parameters I investigate are the following:
 \begin{itemize}
 	\item \texttt{min_samples_split}: defines the minimum number of samples required in a node to be considered for splitting. High values prevent a model from learning relations which might be highly specific to the particular sample, but may led to underfitting.
 	\item \texttt{min_samples_leaf}: defines the minimum samples required in a leaf node. For imbalanced problems it should take a low value, as there will not be many cases where the minority class dominates.
@@ -597,7 +597,7 @@ From all the parameters used to define a tree in the \texttt{scikit-learn} imple
 In the case of the boosting parameters, the ones I look at are:
 \begin{itemize}
 	\item \texttt{learning_rate}: determines the impact of each tree on the final outcome. Low values make the model robust to the specific characteristics of a tree, and thus allow it to generalise well. However, that usually requires a large number of trees to model the data properly.
-	\item \texttt{n_estimators}: number of sequential trees to be trained. In general, BDTs are fairly robust to high numbers of trees, but they can still overfit at a point.
+	\item \texttt{n_estimators}: number of sequential trees to be trained. In general, \gls{bdt}s are fairly robust to high numbers of trees, but they can still overfit at a point.
 	\item \texttt{subsample}: fraction of observations to be selected for each tree. Values slightly less than $1$ make the model robust by reducing the variance.
 \end{itemize}
 
@@ -618,14 +618,14 @@ In this case, I use the random search to scan the hyperparameter space. Also, be
 		\centering
 		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/BDT/precision_vs_sensitivity_p0_6.50_sigmap_3.50.pdf}
 	\end{subfigure}
-	\caption[Values of the precision and sensitivity obtained for $10^{4}$ BDT hyperparameter configurations, for the momentum regions I, III and V.]{Values of the precision and sensitivity obtained for $10^{4}$ BDT hyperparameter configurations, for the momentum regions I, III and V. The red contours indicate the curves of equal $F_{1}$-score, while the green crosses are the selected configurations.}
+	\caption[Values of the precision and sensitivity obtained for $10^{4}$ \gls{bdt} hyperparameter configurations, for the momentum regions I, III and V.]{Values of the precision and sensitivity obtained for $10^{4}$ \gls{bdt} hyperparameter configurations, for the momentum regions I, III and V. The red contours indicate the curves of equal $F_{1}$-score, while the green crosses are the selected configurations.}
 	\label{fig:hyper_precision_sensitivity}
 \end{figure}
 
 I evaluate 10000 different hyperparameter configurations for each momentum range. For the hyperparameter tuning, I use subsamples containing $10\%$ of the full datasets, keeping the original proportions between classes, in order to reduce the computational load. The performance of the models was assessed using a stratified 3-fold cross-validation with replacement. Cross-validation involves dividing the data in a number of subsets, training the model using some of them, and testing it with the rest. In our case, I divide the data in 3 equal-sized subsets, maintaining the class proportions of the original dataset. Then, for 3 consecutive iterations, I train the models using 2 of the subsets while I compute the precision and sensitivity scores with the other. This approach provides a more robust estimate of the performance on unseen data.
 
 \begin{table}[t]
-	\caption{Optimal values of the hyperparameters used by the BDT, for each momentum range.}
+	\caption{Optimal values of the hyperparameters used by the \gls{bdt}, for each momentum range.}
 	\begin{center}
 		\begin{small}
 			\begin{tabular}{l|l|lllll}
@@ -648,7 +648,7 @@ Figure \ref{fig:hyper_precision_sensitivity} shows the results in the precision 
 The results for the different momentum ranges are summarised in Tab. \ref{tab:bdt_hyperpars}. One can see some consistency in hyperparameter choices, with models generally preferring small values for the tree-specific parameters, small learning rate, and relatively large subsample sizes.
 
 \begin{table}[t]
-	\caption{Performance metrics of the BDTs with optimal hyperparameters, for the different momentum ranges.}
+	\caption{Performance metrics of the \gls{bdt}s with optimal hyperparameters, for the different momentum ranges.}
 	\begin{center}
 		\begin{small}
 			\begin{tabular}{l|lllll}
@@ -665,16 +665,16 @@ The results for the different momentum ranges are summarised in Tab. \ref{tab:bd
 	\label{tab:bdt_metrics}
 \end{table}
 
-Now that I have obtained the optimal values of the hyperparameters, I can train the different BDTs. In this case I use the complete datasets, keeping $20\%$ of the data for testing. Table \ref{tab:bdt_metrics} shows the values of the different performance metrics obtained using the selected hyperparameters and 5-fold cross-validation. The last row indicates the value of the area under the receiver operating characteristic (ROC) curve. This represents the sensitivity of a model as a function of the false positive rate. I have included it here as it is a classic model metric used in the machine learning community. Overall, there is a clear trend of models performing better at high momentum.
+Now that I have obtained the optimal values of the hyperparameters, I can train the different \gls{bdt}s. In this case I use the complete datasets, keeping $20\%$ of the data for testing. Table \ref{tab:bdt_metrics} shows the values of the different performance metrics obtained using the selected hyperparameters and 5-fold cross-validation. The last row indicates the value of the area under the receiver operating characteristic (ROC) curve. This represents the sensitivity of a model as a function of the false positive rate. I have included it here as it is a classic model metric used in the machine learning community. Overall, there is a clear trend of models performing better at high momentum.
 
 \subsection{Probability calibration}
 
-So far, the trained BDTs are able to provide predictions of the class labels. Ideally, one would like the output of a classifier to give a confidence level about the prediction. However, it is not straightforward to interpret the outputs of our BDTs in terms of probabilities.
+So far, the trained \gls{bdt}s are able to provide predictions of the class labels. Ideally, one would like the output of a classifier to give a confidence level about the prediction. However, it is not straightforward to interpret the outputs of our \gls{bdt}s in terms of probabilities.
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.75\linewidth]{Images/GArSoft_PID/BDT/ecal_bdt_output_example_calibration_curves.pdf}
-	\caption[Reliability diagrams for the BDT classifier used in the momentum range $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$.]{Reliability diagrams for the BDT classifier used in the momentum range $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$, both for the original (blue circles) and calibrated (yellow squares) responses. For reference, the response of a perfectly calibrated classifier is also shown (black dashed line).}
+	\caption[Reliability diagrams for the \gls{bdt} classifier used in the momentum range $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$.]{Reliability diagrams for the \gls{bdt} classifier used in the momentum range $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$, both for the original (blue circles) and calibrated (yellow squares) responses. For reference, the response of a perfectly calibrated classifier is also shown (black dashed line).}
 	\label{fig:bdt_calibration_curves}
 \end{figure}
 
@@ -689,7 +689,7 @@ where the parameters $A$ and $B$ are real numbers determined using the method of
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/BDT/ecal_bdt_output_example_calibration.pdf}
-	\caption[Uncalibrated and calibrated predicted probabilities assigned by the BDT classifier in the momentum range $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$.]{Uncalibrated (left panel) and calibrated (right panel) predicted probabilities assigned by the BDT classifiers for true muons (blue) and charged pions (red) in the momentum range $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$.}
+	\caption[Uncalibrated and calibrated predicted probabilities assigned by the \gls{bdt} classifier in the momentum range $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$.]{Uncalibrated (left panel) and calibrated (right panel) predicted probabilities assigned by the \gls{bdt} classifiers for true muons (blue) and charged pions (red) in the momentum range $0.3 \leq p < 0.8 ~ \mathrm{GeV}/c$.}
 	\label{fig:bdt_calibration_output}
 \end{figure}
 
@@ -704,78 +704,78 @@ One can also compare the responses of the uncalibrated and calibrated classifier
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/BDT/ecal_bdt_validation_output_regions.pdf}
-	\caption[Calibrated predicted probabilities assigned by the BDT classifiers for the true muons and charged pions in a FHC neutrino sample.]{Calibrated predicted probabilities assigned by the BDT classifiers for the true muons (blue) and charged pions (red) in a FHC neutrino sample.}
+	\caption[Calibrated predicted probabilities assigned by the \gls{bdt} classifiers for the true muons and charged pions in a \gls{fhc} neutrino sample.]{Calibrated predicted probabilities assigned by the \gls{bdt} classifiers for the true muons (blue) and charged pions (red) in a \gls{fhc} neutrino sample.}
 	\label{fig:bdt_validation_output}
 \end{figure}
 
-At this point, having the trained classifiers and the probability calibration parameters, I am able to assess the performance of the classification strategy in a physics-relevant case. For this, I prepared a sample of $10^{5}$ FHC neutrino interaction events in the HPgTPC. Using the truth matching information, I select all true muons and pions, and apply the corresponding BDT classifier based on their momentum.
+At this point, having the trained classifiers and the probability calibration parameters, I am able to assess the performance of the classification strategy in a physics-relevant case. For this, I prepared a sample of $10^{5}$ \gls{fhc} neutrino interaction events in the \gls{hpgtpc}. Using the truth matching information, I select all true muons and pions, and apply the corresponding \gls{bdt} classifier based on their momentum.
 
 Figure \ref{fig:bdt_validation_output} shows the resulting calibrated output of the classifiers for the different momentum regions. I do not include the first region, $0.10 \leq p < 0.30 ~ \mathrm{GeV}/c$, as it only contains a small fraction of signal events. The distributions obtained for this validation sample appear quite consistent with the results found in the single particle case.
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.75\linewidth]{Images/GArSoft_PID/BDT/ecal_bdt_validation_momentum.pdf}
-	\caption[Efficiency and purity of the muon selection as a function of the reconstructed momentum for the FHC neutrino sample.]{Efficiency (blue) and purity (red) of the muon selection as a function of the reconstructed momentum for the FHC neutrino sample.}
+	\caption[Efficiency and purity of the muon selection as a function of the reconstructed momentum for the \gls{fhc} neutrino sample.]{Efficiency (blue) and purity (red) of the muon selection as a function of the reconstructed momentum for the \gls{fhc} neutrino sample.}
 	\label{fig:bdt_validation_output}
 \end{figure}
 
-I also studied the performance of the muon identification in a track-by-track selection. To do so, I apply a simple cut on the output of the BDT classifiers. Every particle with a predicted probability higher than the cut is considered a muon, while the ones not passing the cut are taken to be pions. The results obtained for a cut of $0.50$ are shown in Fig. \ref{fig:bdt_validation_output}. Both the efficiency (blue) and the purity (red) of the selection are displayed as a function of the momentum. The binning was chosen so that there were no bins in between different momentum ranges and each had roughly the same number of events. Even without optimising the value of the cut, the performance of the selection is excellent. The only issues appear in the first momentum range, where efficiency and purity sit slightly below $0.50$. However, a $\mathrm{d}E/\mathrm{d}x$ measurement could help enhance the selection there.
+I also studied the performance of the muon identification in a track-by-track selection. To do so, I apply a simple cut on the output of the \gls{bdt} classifiers. Every particle with a predicted probability higher than the cut is considered a muon, while the ones not passing the cut are taken to be pions. The results obtained for a cut of $0.50$ are shown in Fig. \ref{fig:bdt_validation_output}. Both the efficiency (blue) and the purity (red) of the selection are displayed as a function of the momentum. The binning was chosen so that there were no bins in between different momentum ranges and each had roughly the same number of events. Even without optimising the value of the cut, the performance of the selection is excellent. The only issues appear in the first momentum range, where efficiency and purity sit slightly below $0.50$. However, a $\mathrm{d}E/\mathrm{d}x$ measurement could help enhance the selection there.
 
-This shows that the method behaves as expected when using unseen data, generalising without problems from single particle to full neutrino events. In the coming Chapter, I will study how to use the outputs of the BDT, hereafter referred to as muon scores, to perform realistic event selections in ND-GAr.
+This shows that the method behaves as expected when using unseen data, generalising without problems from single particle to full neutrino events. In the coming Chapter, I will study how to use the outputs of the \gls{bdt}, hereafter referred to as muon scores, to perform realistic event selections in \gls{ndgar}.
 
 \section{ECal time-of-flight}\label{section:tof}
 
-Looking at Fig. \ref{fig:dEdx_vs_momentum_regions}, it is clear that for momentum values in the range $1.0-3.0 ~ \mathrm{GeV}/c$ it is not possible to separate pions and protons using a $\left<\mathrm{d}E/\mathrm{d}x\right>$ measurement in the HPgTPC. However, in the previous section I assumed that protons at those energies could be identified by other means, and therefore were not an issue for the muon and pion discrimination.
+Looking at Fig. \ref{fig:dEdx_vs_momentum_regions}, it is clear that for momentum values in the range $1.0-3.0 ~ \mathrm{GeV}/c$ it is not possible to separate pions and protons using a $\left<\mathrm{d}E/\mathrm{d}x\right>$ measurement in the \gls{hpgtpc}. However, in the previous section I assumed that protons at those energies could be identified by other means, and therefore were not an issue for the muon and pion discrimination.
 
-Some detectors, like ALICE \cite{ALICE2011} or the ILD concept \cite{Einhaus2021}, complement the PID capabilities of their gaseous trackers with time-of-flight (ToF) measurements. The use of fast timing silicon sensors, with hit time resolutions under $100~\mathrm{ps}$, would allow for the identification of charged hadrons via a ToF measurement up to $5.0 ~ \mathrm{GeV}/c$. In the case of ND-GAr, one could think of using the inner layers of the ECal, the ones consisting of high-granularity tiles, to obtain a ToF-based PID, with some inputs from the TPC.
+Some detectors, like \gls{alice} \cite{ALICE2011} or the ILD concept \cite{Einhaus2021}, complement the \gls{pid} capabilities of their gaseous trackers with time-of-flight (\gls{tof}) measurements. The use of fast timing silicon sensors, with hit time resolutions under $100~\mathrm{ps}$, would allow for the identification of charged hadrons via a \gls{tof} measurement up to $5.0 ~ \mathrm{GeV}/c$. In the case of \gls{ndgar}, one could think of using the inner layers of the \gls{ecal}, the ones consisting of high-granularity tiles, to obtain a \gls{tof}-based \gls{pid}, with some inputs from the \gls{tpc}.
 
 Measuring the momentum and the velocity of a charged particle allows for a determination of the mass through the relativistic momentum formula:
 \begin{equation}\label{8.19}
 	m = \frac{p}{\beta} \sqrt{1-\beta^{2}}.
 \end{equation}
-In our case, the momentum is measured in the TPC, using the curvature and the dip angle of the helix inside the magnetic field. The velocity of the particle can be written as:
+In our case, the momentum is measured in the \gls{tpc}, using the curvature and the dip angle of the helix inside the magnetic field. The velocity of the particle can be written as:
 \begin{equation}
 	\beta = \frac{\ell_{track}}{c \tau},
 \end{equation}
-where $\ell_{track}$ is the length of the track, and $\tau$ the arrival time to the ECal.
+where $\ell_{track}$ is the length of the track, and $\tau$ the arrival time to the \gls{ecal}.
 
-In GArSoft, the track length is computed at the Kalman filter stage. It is simply the sum of the line segments along the track, either in the forward or backward fit. In this case, because we are only interested in the particles that make it to the ECal, I choose the fit direction based on the results of the track-cluster associations.
+In GArSoft, the track length is computed at the Kalman filter stage. It is simply the sum of the line segments along the track, either in the forward or backward fit. In this case, because we are only interested in the particles that make it to the \gls{ecal}, I choose the fit direction based on the results of the track-cluster associations.
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.75\linewidth]{Images/GArSoft_PID/tof/tof_diagram.png}
-	\caption[Schematic diagram of the hit selection used for the ECal ToF measurement.]{Schematic of the hit selection used for the ToF measurement. The grid represents the layers of the inner ECal, with coloured squares indicating the tiles with hits. Green squares indicate the selected hits.}
+	\caption[Schematic diagram of the hit selection used for the \gls{ecal} \gls{tof} measurement.]{Schematic of the hit selection used for the \gls{tof} measurement. The grid represents the layers of the inner \gls{ecal}, with coloured squares indicating the tiles with hits. Green squares indicate the selected hits.}
 	\label{fig:tof_diagram}
 \end{figure}
 
-Additionally, because the last $25~\mathrm{cm}$ of the HPgTPC radius are uninstrumented, I need to correct for the length of the tracks. Using the track fit parameters to propagate the helix to its entry point in the ECal, one can write the total track length as:
+Additionally, because the last $25~\mathrm{cm}$ of the \gls{hpgtpc} radius are uninstrumented, I need to correct for the length of the tracks. Using the track fit parameters to propagate the helix to its entry point in the \gls{ecal}, one can write the total track length as:
 \begin{equation}
 	\ell_{track} = \ell + \left| \frac{\phi_{\mathrm{EP}} - \phi}{R^{-1}} \right| \sqrt{1+\mathrm{tan}^{2}\lambda},
 \end{equation}
 where $\phi_{\mathrm{EP}}$ is the angle of rotation at the entry point to the calorimeter, and $\ell$, $\phi$, $R$ and $\lambda$ are the track length, angle of rotation, radius of curvature and dip angle at the last point in the fit, respectively.
 
-To test the idea of performing a ToF measurement with the inner ECal, I generated two data samples. Each consists of $10^{4}$ single particle events, either charged pions or protons. Their momenta are uniformly distributed in the range $0.5-5.0~\mathrm{GeV}/c$, and their directions are isotropic. I process each sample using different values of the time resolution, from $\Delta \tau = 0$, the perfect time resolution case for comparison, to the current nominal value of $\Delta \tau = 0.7~\mathrm{ns}$, and the worse scenario of $\Delta \tau = 1.0~\mathrm{ns}$.
+To test the idea of performing a \gls{tof} measurement with the inner \gls{ecal}, I generated two data samples. Each consists of $10^{4}$ single particle events, either charged pions or protons. Their momenta are uniformly distributed in the range $0.5-5.0~\mathrm{GeV}/c$, and their directions are isotropic. I process each sample using different values of the time resolution, from $\Delta \tau = 0$, the perfect time resolution case for comparison, to the current nominal value of $\Delta \tau = 0.7~\mathrm{ns}$, and the worse scenario of $\Delta \tau = 1.0~\mathrm{ns}$.
 
 \subsection{Arrival time estimations}
 
-In the simulation, the limited time resolution of the ECal is taken into account by applying a Gaussian smearing to the true hit times. Other effects, like the digitisation of the signals, are not taken into account and fall beyond the scope of this study. After the track-cluster association, one ends up with a collection of ECal hits associated to each particle. From these, the arrival time of the particle to the ECal can be extracted.
+In the simulation, the limited time resolution of the \gls{ecal} is taken into account by applying a Gaussian smearing to the true hit times. Other effects, like the digitisation of the signals, are not taken into account and fall beyond the scope of this study. After the track-cluster association, one ends up with a collection of \gls{ecal} hits associated to each particle. From these, the arrival time of the particle to the \gls{ecal} can be extracted.
 
 The simplest possibilities are to either take the time of the earliest hit or the hit closest to the entry point. Because in general these two coincide, I focus only on the earliest hit time. However, this needs to be corrected, to account for the distance travelled from the entry point to the position of the hit:
 \begin{equation}\label{8.22}
 	\tau_{earliest} = \tau_{hit} - \frac{d_{\mathrm{EP}-hit}}{c},
 \end{equation}
-where $\tau_{hit}$ is the time of the earliest hit, and $d_{\mathrm{EP}-hit}$ is the distance between that hit and the entry point of the particle to the ECal. This is computed as the arc length between the entry point and the point of the extrapolated helix up to the layer of the hit. This way of correcting the time assumes $c$ for the propagation of the particle, which may lead to biased estimates.
+where $\tau_{hit}$ is the time of the earliest hit, and $d_{\mathrm{EP}-hit}$ is the distance between that hit and the entry point of the particle to the \gls{ecal}. This is computed as the arc length between the entry point and the point of the extrapolated helix up to the layer of the hit. This way of correcting the time assumes $c$ for the propagation of the particle, which may lead to biased estimates.
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/tof/beta_vs_momentum_comparison_delta_0.1.pdf}
-	\caption[Particle velocity versus momentum measured with different ECal arrival time estimations.]{Particle velocity versus momentum measured with different ECal arrival time estimations. From left to right: earliest hit time, average hit time, and fitted hit time. In all cases the time resolution is $\Delta \tau = 0.1 ~ \mathrm{ns}$.}
+	\caption[Particle velocity versus momentum measured with different \gls{ecal} arrival time estimations.]{Particle velocity versus momentum measured with different \gls{ecal} arrival time estimations. From left to right: earliest hit time, average hit time, and fitted hit time. In all cases the time resolution is $\Delta \tau = 0.1 ~ \mathrm{ns}$.}
 	\label{fig:tof_beta_comp}
 \end{figure}
 
 I also tried to estimate the arrival times using information from the rest of the hits. In order to do this, as a simplifying assumption, I approximate the hadronic shower considering only its MIP component. For each layer, I keep only the hit in the tile closest to the point of the extrapolated track up to that layer. Figure \ref{fig:tof_diagram} shows an example of how this hit selection works. The dashed line represents the extrapolated track, while the coloured squares are the tiles containing hits. I use green to indicate the tile closest to the track in each layer (in the sketch they correspond to the grid columns).
 
-Now, I can use these collections of hits to estimate the arrival times. A possibility is to take the average of the times of the selected hits, denoted $\tau_{average}$. For that to work, one needs to correct these times, in a similar way as in Eq. (\ref{8.22}), before taking the average. However, as before, this correction assumes that the particle travels at the speed of light inside the ECal. Another option is to perform a linear fit to the hit times and the distances to the entry point. In that case, the arrival time would be the fitted value of the intercept, $\tau_{fit}$. This method would not assume a speed of light propagation.
+Now, I can use these collections of hits to estimate the arrival times. A possibility is to take the average of the times of the selected hits, denoted $\tau_{average}$. For that to work, one needs to correct these times, in a similar way as in Eq. (\ref{8.22}), before taking the average. However, as before, this correction assumes that the particle travels at the speed of light inside the \gls{ecal}. Another option is to perform a linear fit to the hit times and the distances to the entry point. In that case, the arrival time would be the fitted value of the intercept, $\tau_{fit}$. This method would not assume a speed of light propagation.
 
 Figure \ref{fig:tof_beta_comp} shows the velocity estimations as a function of the particle momentum, for the earliest hit time (left panel), average hit time (middle panel), and fitted hit time (right panel), for a time resolution of $\Delta \tau = 0.1 ~ \mathrm{ns}$. The two bands correspond to the $\pi^{\pm}$ and the $p$ particles. Notice how, for the earliest hit time method, the velocities are significantly biased towards larger values. For the multi-hit methods, the $\tau_{fit}$ estimate appears to produce a larger variance than when using the $\tau_{average}$ method.
 
@@ -786,7 +786,7 @@ Once we have the velocities of the particles, one can estimate their masses thro
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/tof/reco_mass_comparison.pdf}
-	\caption[Mass spectra for $p$ and $\pi^{\pm}$ particles, using different ECal time resolution values and arrival time estimates.]{Mass spectra for $p$ (blue) and $\pi^{\pm}$ (yellow) particles, using different ECal time resolution values (from top to bottom, in ascending order), and arrival time estimates. From left to right: earliest hit time, average hit time, and fitted hit time. The dashed lines indicate the true masses of the particles.}
+	\caption[Mass spectra for $p$ and $\pi^{\pm}$ particles, using different \gls{ecal} time resolution values and arrival time estimates.]{Mass spectra for $p$ (blue) and $\pi^{\pm}$ (yellow) particles, using different \gls{ecal} time resolution values (from top to bottom, in ascending order), and arrival time estimates. From left to right: earliest hit time, average hit time, and fitted hit time. The dashed lines indicate the true masses of the particles.}
 	\label{fig:tof_mass_spectra}
 \end{figure}
 
@@ -806,12 +806,12 @@ The results can be seen in Fig. \ref{fig:tof_beta_selection}, for the case $\Del
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.95\linewidth]{Images/GArSoft_PID/tof/numu_cc_proton_tof_summary.pdf}
-	\caption{Distributions of the velocities measured by ToF with the
-	inner ECal, for different momentum bins, in a FHC neutrino interaction sample. The Gaussian fits are performed around the maxima for each particle species.}
+	\caption{Distributions of the velocities measured by \gls{tof} with the
+	inner \gls{ecal}, for different momentum bins, in a \gls{fhc} neutrino interaction sample. The Gaussian fits are performed around the maxima for each particle species.}
 	\label{fig:tof_beta_fhc}
 \end{figure}
 
-Figure \ref{fig:tof_beta_fhc} shows a few examples of the ToF velocity estimation in a FHC neutrino sample. Here, for the different momentum bins, I have taken the fractional residual of the expected value of $\beta$ for a proton and the measured values (black data points). The coloured lines represent Gaussian fits to the distributions of the different true particle, with the gray line being the sum of these. It can be seen that, even for momenta close to $2.0~\mathrm{GeV}/c$, a good proton separation can be achieved. This idea will be explored further later, in the context of the event selection.
+Figure \ref{fig:tof_beta_fhc} shows a few examples of the \gls{tof} velocity estimation in a \gls{fhc} neutrino sample. Here, for the different momentum bins, I have taken the fractional residual of the expected value of $\beta$ for a proton and the measured values (black data points). The coloured lines represent Gaussian fits to the distributions of the different true particle, with the gray line being the sum of these. It can be seen that, even for momenta close to $2.0~\mathrm{GeV}/c$, a good proton separation can be achieved. This idea will be explored further later, in the context of the event selection.
 
 \section{Integration in GArSoft}\label{section:integration}
 
@@ -822,18 +822,18 @@ The new track-cluster association code has been implemented in GArSoft, under th
 \begin{figure}[t]
     \centering
     \includegraphics[width=.99\linewidth]{Images/GArSoft_PID/caf_proton_scores.pdf}
-    \caption[Distributions of proton $\mathrm{d}E/\mathrm{d}x$ and ToF scores for a sample of 100000 FHC neutrino interactions in the HPgTPC.]{Distributions of proton $\mathrm{d}E/\mathrm{d}x$ (left panel) and ToF (right panel) scores for a sample of 100000 FHC neutrino interactions in the HPgTPC. The distributions are broken down by the true particle type associated to the reconstructed particle.}
+    \caption[Distributions of proton $\mathrm{d}E/\mathrm{d}x$ and \gls{tof} scores for a sample of 100000 \gls{fhc} neutrino interactions in the \gls{hpgtpc}.]{Distributions of proton $\mathrm{d}E/\mathrm{d}x$ (left panel) and \gls{tof} (right panel) scores for a sample of 100000 \gls{fhc} neutrino interactions in the \gls{hpgtpc}. The distributions are broken down by the true particle type associated to the reconstructed particle.}
     \label{fig:proton_scores}
 \end{figure}
 
-The computation of the truncated mean $\mathrm{d}E/\mathrm{d}x$ of the tracks, the evaluation of the muon score for muon and pion separation, and the estimation of the velocity from time-of-flight are all orchestrated by the new \texttt{CreateRecoParticles} module. Each one of these is implemented as a separate algorithm, which is then called by the parent module. It generates the \texttt{gar::rec::RecoParticle} products, a new high-level data object in GArSoft. These combine the information from the HPgTPC, ECal, and MuID to create an object useful for analysers. At the moment, these data products are only generated for charged particles. However, in the future the module can be extended to incorporate other algorithms used for the identification of neutral particles, like neutral pions and neutrons.
+The computation of the truncated mean $\mathrm{d}E/\mathrm{d}x$ of the tracks, the evaluation of the muon score for muon and pion separation, and the estimation of the velocity from time-of-flight are all orchestrated by the new \texttt{CreateRecoParticles} module. Each one of these is implemented as a separate algorithm, which is then called by the parent module. It generates the \texttt{gar::rec::RecoParticle} products, a new high-level data object in GArSoft. These combine the information from the \gls{hpgtpc}, \gls{ecal}, and \gls{muid} to create an object useful for analysers. At the moment, these data products are only generated for charged particles. However, in the future the module can be extended to incorporate other algorithms used for the identification of neutral particles, like neutral pions and neutrons.
 
-Additionally, analogous to the muon score, the \texttt{gar::rec::RecoParticle} objects contain two other scores based on the $\left<\mathrm{d}E/\mathrm{d}x\right>$ and ToF estimates which measure the ``protoness'' of a reconstructed particles. These are obtained in a number of momentum bins, and are a measure of the distance to the point in the corresponding distribution that maximises the $F_{1}$-score for the proton separation. This distance is then transformed applying a sigmoid function, which produces a score in the $0-1$ range, with coefficients obtained following a procedure similar to the one used to calibrate the response of the muon score. The $\mathrm{d}E/\mathrm{d}x$ proton score is defined for all particles with momenta $p_{\mathrm{reco}} < 1.5~\mathrm{GeV}/c$, whereas the ToF proton score is available for the particles with at least one associated hit in the inner ECal and momentum in the range $0.5 \leq p_{\mathrm{reco}} < 3.0~\mathrm{GeV}/c$. As an example, Fig. \ref{fig:proton_scores} shows the distributions of the $\mathrm{d}E/\mathrm{d}x$ (left panel) and ToF (right panel) proton scores for the reconstructed particles in a $10^{5}$ FHC neutrino sample.
+Additionally, analogous to the muon score, the \texttt{gar::rec::RecoParticle} objects contain two other scores based on the $\left<\mathrm{d}E/\mathrm{d}x\right>$ and \gls{tof} estimates which measure the ``protoness'' of a reconstructed particles. These are obtained in a number of momentum bins, and are a measure of the distance to the point in the corresponding distribution that maximises the $F_{1}$-score for the proton separation. This distance is then transformed applying a sigmoid function, which produces a score in the $0-1$ range, with coefficients obtained following a procedure similar to the one used to calibrate the response of the muon score. The $\mathrm{d}E/\mathrm{d}x$ proton score is defined for all particles with momenta $p_{\mathrm{reco}} < 1.5~\mathrm{GeV}/c$, whereas the \gls{tof} proton score is available for the particles with at least one associated hit in the inner \gls{ecal} and momentum in the range $0.5 \leq p_{\mathrm{reco}} < 3.0~\mathrm{GeV}/c$. As an example, Fig. \ref{fig:proton_scores} shows the distributions of the $\mathrm{d}E/\mathrm{d}x$ (left panel) and \gls{tof} (right panel) proton scores for the reconstructed particles in a $10^{5}$ \gls{fhc} neutrino sample.
 
 The calculation of the track breakpoint variables for pion decay identification discussed in App. \ref{section:pi_decay} is currently implemented as an analysis module in GArSoft. It would be interesting to add this information to the \texttt{gar::rec::RecoParticle} products, possibly calling the code as an additional algorithm in the \texttt{CreateRecoParticles} module. However, the best way to propagate the information to the high-level objects is still unclear.
 
-About the new ECal clustering algorithm proposed in App. \ref{section:neutral}, it is still in a development phase, and as such it has not replaced the current clustering module. At the moment, its latest version is integrated in GArSoft as the \texttt{CaloClustering2} module. The algorithm used is implemented separately, and then invoked in the main code. The module can be run standalone on the outputs of the reconstruction, creating a second instance of the \texttt{gar::rec::Cluster} collection. In the future it may replace the current algorithm as the default in the reconstruction chain. However, more work is needed in order to understand its performance in all the different use cases.
+About the new \gls{ecal} clustering algorithm proposed in App. \ref{section:neutral}, it is still in a development phase, and as such it has not replaced the current clustering module. At the moment, its latest version is integrated in GArSoft as the \texttt{CaloClustering2} module. The algorithm used is implemented separately, and then invoked in the main code. The module can be run standalone on the outputs of the reconstruction, creating a second instance of the \texttt{gar::rec::Cluster} collection. In the future it may replace the current algorithm as the default in the reconstruction chain. However, more work is needed in order to understand its performance in all the different use cases.
 
 \section{Summary}
 
-This Chapter reviews my work on the reconstruction for ND-GAr. In section \ref{section:dEdx} I describe how to use the calibrated energy deposits in the HPgTPC to compute the mean $\mathrm{d}E/\mathrm{d}x$ for the reconstructed particles. I finish the section providing a parametrisation for how this depends on the momentum. The problem of the muon and pion separation is the topic of section \ref{section:muon_bdt}. I propose to use the information from the ECal to achieve this classification. In this section, I describe the features and the procedure I follow to train the classifier, showing its performance as a function of the particle momentum. In section \ref{section:tof} I explore the possibility of performing a ToF measurement with the ECal. With this, I achieve a separation between pions and protons in a momentum range beyond the reach of the HPgTPC alone. Finally, in section \ref{section:integration} I describe the status of the integration of the different additions to the reconstruction chain.
+This Chapter reviews my work on the reconstruction for \gls{ndgar}. In section \ref{section:dEdx} I describe how to use the calibrated energy deposits in the \gls{hpgtpc} to compute the mean $\mathrm{d}E/\mathrm{d}x$ for the reconstructed particles. I finish the section providing a parametrisation for how this depends on the momentum. The problem of the muon and pion separation is the topic of section \ref{section:muon_bdt}. I propose to use the information from the \gls{ecal} to achieve this classification. In this section, I describe the features and the procedure I follow to train the classifier, showing its performance as a function of the particle momentum. In section \ref{section:tof} I explore the possibility of performing a \gls{tof} measurement with the \gls{ecal}. With this, I achieve a separation between pions and protons in a momentum range beyond the reach of the \gls{hpgtpc} alone. Finally, in section \ref{section:integration} I describe the status of the integration of the different additions to the reconstruction chain.
