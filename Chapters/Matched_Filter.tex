@@ -95,7 +95,7 @@ At this point, I tried to improve the performance of the FIR filter using the Pa
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=0.85\linewidth]{Images/Matched_Filter/pm_fir_perf}
-	\caption[Distribution of the relative change of the S/N on the different wire planes after the optimal FIR filter was applied.]{Distribution of the relative change of the S/N on the different wire planes from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} after the optimal Chebyshev filter was applied. The filter was computed with the Parks-McClellan algorithm using a cutoff of $f_{c} = 0.068 \ \mathrm{ticks}^{-1}$ and a transition width $\delta f = 0.010 \ \mathrm{ticks}^{-1}$.}
+	\caption[Distribution of the change in the S/N after the optimal FIR filter was applied.]{Distribution of the relative change of the S/N on the different planes from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} after the optimal Chebyshev filter was applied. The filter was computed with the Parks-McClellan algorithm using a cutoff of $f_{c} = 0.068 \ \mathrm{ticks}^{-1}$ and a transition width $\delta f = 0.010 \ \mathrm{ticks}^{-1}$.}
 	\label{fig:fir_best}
 \end{figure}
 
@@ -234,7 +234,7 @@ Although these results are by themselves great points in favour of the matched f
 		\centering
 		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/improvement_capture}
 	\end{subfigure}
-	\caption[Distribution of the relative change of the S/N on the induction planes from the ProtoDUNE-SP raw data capture after their respective optimal matched filters were applied.]{Left panel: Optimal matched filter coefficients for the U (blue line) and V (red line) planes. The filters were computed with the parametrisation in Eq. (\ref{2.4.13}) for the parameter values $\delta = 0.035$, $\sigma = 0.191$ and $\delta = 0.018$, $\sigma = 0.191$, respectively. Right panel: Distribution of the relative change of the S/N on the two induction wire planes from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} after their respective optimal matched filters were applied.}
+	\caption[Distribution of the change in the S/N on the induction planes from the ProtoDUNE-SP raw data capture after the optimal matched filters are applied.]{Left panel: Optimal matched filter coefficients for the U (blue line) and V (red line) planes. The filters were computed with the parametrisation in Eq. (\ref{2.4.13}) for the parameter values $\delta = 0.035$, $\sigma = 0.191$ and $\delta = 0.018$, $\sigma = 0.191$, respectively. Right panel: Distribution of the relative change of the S/N on the two induction wire planes from the ProtoDUNE-SP raw data capture \texttt{felix-2020-07-17-21:31:44} after their respective optimal matched filters are applied.}
 	\label{fig:mf_perf}
 \end{figure}
 

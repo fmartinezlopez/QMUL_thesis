@@ -18,7 +18,7 @@ By default, the track fitting algorithm in GArSoft provides a \texttt{TrackIoniz
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/dEdx/geant_selection_dEdx.pdf}
-	\caption[Distribution of the fraction of energy deposits with residual range less than $20\%$ of the total track length, and distribution of the ionisation per unit length after removing the tracks with less than $30\%$ of their energy deposits in the last $20\%$ of the track.]{Left panel: distribution of the fraction of \texttt{Geant4}-level energy deposits per track with residual range less than $20\%$ of the total track length, for the isotropic proton sample. Right panel: distribution of the ionisation per unit length of the energy deposits in the proton sample after removing the tracks with less than $30\%$ of their energy deposits in the last $20\%$ of the track.}
+	\caption[Distribution of the \texttt{Geant4}-level energy deposits per unit length in the stopping proton sample.]{Left panel: distribution of the fraction of \texttt{Geant4}-level energy deposits per track with residual range less than $20\%$ of the total track length, for the isotropic proton sample. Right panel: distribution of the ionisation per unit length of the energy deposits in the proton sample after removing the tracks with less than $30\%$ of their energy deposits in the last $20\%$ of the track.}
 	\label{fig:geant_edeps}
 \end{figure}
 
@@ -27,7 +27,7 @@ For studying the energy loss of the protons, I select the reconstructed tracks t
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/dEdx/reco_dQdx_groups_and_dQdx_recluster_gain.pdf}
-	\caption[Distribution of the reconstructed ionisation charge per unit length for different reclustering values, and distribution of the median change in $\mathrm{d}Q/\mathrm{d}x$ per track for the $N_{group}=4$ reclustering.]{Left panel: distribution of the reconstructed ionisation charge per unit length for our MC stopping proton sample. The different colors indicate how many consecutive $\mathrm{d}Q/\mathrm{d}x$ pairs were grouped together. Right panel: distribution of the median change in $\mathrm{d}Q/\mathrm{d}x$ per track after $N_{group}=4$ clusters were reclustered together.}
+	\caption[Distribution of the reconstructed ionisation charge per unit length for different reclustering values.]{Left panel: distribution of the reconstructed ionisation charge per unit length for our MC stopping proton sample. The different colors indicate how many consecutive $\mathrm{d}Q/\mathrm{d}x$ pairs were grouped together. Right panel: distribution of the median change in $\mathrm{d}Q/\mathrm{d}x$ per track after $N_{group}=4$ clusters were reclustered together.}
 	\label{fig:reco_dQ_groups}
 \end{figure}
 
@@ -122,7 +122,7 @@ The value for the gain I obtained from the fit is in reasonable agreement with o
 \end{figure}
 
 \begin{table}[t]
-	\caption[Calibration parameters obtained from the fit of the ND-GAr simulated stopping proton sample to the calibration function, for different ADC limits.]{Calibration parameters obtained from the fit of the ND-GAr simulated stopping proton sample to the calibration function from Eq. (\ref{Eq:3.5}). The fits were performed for the 10, 12, and 16-bit ADC limits.}
+	\caption[Calibration parameters obtained from the fit of the ND-GAr simulated stopping proton sample to the calibration function.]{Calibration parameters obtained from the fit of the ND-GAr simulated stopping proton sample to the calibration function from Eq. (\ref{Eq:3.5}). The fits were performed for the 10, 12, and 16-bit ADC limits.}
 	\begin{center}
 		\begin{small}
 			\begin{tabular}{cc|ccc}
@@ -142,7 +142,7 @@ One interesting thing to check is what induces this non-linear relation between 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.80\linewidth]{Images/GArSoft_PID/dEdx/reco_dEdx_corrected_1d.pdf}
-	\caption[Area normalised $\mathrm{d}E/\mathrm{d}x$ distributions for the true and the reconstructed energy deposits in the stopping proton sample, both after applying the calibration and the calibration and the normalisation correction.]{Top panel: area normalised $\mathrm{d}E/\mathrm{d}x$ distributions for the true (solid grey) and the reconstructed energy deposits in the stopping proton sample, both after applying the calibration (blue) and the calibration and the normalisation correction (yellow). Also shown is the distribution obtained by applying a correction factor to the $\mathrm{d}Q/\mathrm{d}x$ values but not the calibration (red). Bottom panel: fractional residuals for the uncorrected (blue), corrected (yellow) and uncalibrated (red) samples.}
+	\caption[Area normalised $\mathrm{d}E/\mathrm{d}x$ distributions for the true and the reconstructed energy deposits in the stopping proton sample.]{Top panel: area normalised $\mathrm{d}E/\mathrm{d}x$ distributions for the true (solid grey) and the reconstructed energy deposits in the stopping proton sample, both after applying the calibration (blue) and the calibration and the normalisation correction (yellow). Also shown is the distribution obtained by applying a correction factor to the $\mathrm{d}Q/\mathrm{d}x$ values but not the calibration (red). Bottom panel: fractional residuals for the uncorrected (blue), corrected (yellow) and uncalibrated (red) samples.}
 	\label{fig:energy_correction}
 \end{figure}
 
@@ -172,7 +172,7 @@ As discussed previously, in GArSoft the HPgTPC tracks are formed after a pattern
 		\centering
 		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/pion_decay/pion_decay_evd.png}
 	\end{subfigure}
-	\caption{Left panel: number of non-decaying, decaying and decaying in the fiducial volume pions for a MC sample of $100000$, $p=500 \ \mathrm{MeV}/c$ isotropic positively charged pions inside the TPC. Right panel: event display for a positive pion decaying inside the fiducial volume, with a single reconstructed track for the pion and muon system.}
+	\caption[Fraction of charged pions with $p=500 \ \mathrm{MeV}/c$ decaying in the HPgTPC and example event display.]{Left panel: number of non-decaying, decaying and decaying in the fiducial volume pions for a MC sample of $10^{5}$, $p=500 \ \mathrm{MeV}/c$ isotropic positively charged pions inside the TPC. Right panel: event display for a positive pion decaying inside the fiducial volume, with a single reconstructed track for the pion and muon system.}
 	\label{fig:pion_decays}
 \end{figure}
 
@@ -202,7 +202,7 @@ An alternative approach proposed in the context of the NOMAD experiment was usin
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/pion_decay/pion_decay_variables_event_425.pdf}
-	\caption{Values of $\chi^{2 \ (FB)}_{k}$ (top left panel), $F_{k}$ (top right panel), $D^{1/R}_{k}$ (bottom left panel) and $D^{\phi}_{k}$ (bottom right panel) versus position along the drift direction for a reconstructed track in a positive pion decay event. The vertical red dashed line indicates the true location of the decay point.}
+	\caption[Values of $\chi^{2 \ (FB)}_{k}$, $F_{k}$, $D^{1/R}_{k}$, and $D^{\phi}_{k}$ versus position along the drift direction for a reconstructed track in a $\pi^{+}$ decay event.]{Values of $\chi^{2 \ (FB)}_{k}$ (top left panel), $F_{k}$ (top right panel), $D^{1/R}_{k}$ (bottom left panel) and $D^{\phi}_{k}$ (bottom right panel) versus position along the drift direction for a reconstructed track in a positive pion decay event. The vertical red dashed line indicates the true location of the decay point.}
 	\label{fig:breakpoint_variables_example}
 \end{figure}
 
@@ -237,7 +237,7 @@ where $\hat{\mathrm{X}} = \{\hat{\mathrm{x}}^{B}_{k}, \hat{\mathrm{x}}^{F}_{k}\}
 		\centering
 		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/pion_decay/pion_decay_resolution_fisher.pdf}
 	\end{subfigure}
-	\caption{Fractional residual distributions of the true and reconstructed decay position along the drift coordinate, using the position of the maximum of $\chi^{2 \ (FB)}_{k}$ (left panel) and $F_{k}$ (right panel) as estimates of the decay position. Also shown are double Gaussian fits to these points (red lines).}
+	\caption[Residual distributions of the true and reconstructed decay position along the drift coordinate, using the position of the maximum of $\chi^{2 \ (FB)}_{k}$ and $F_{k}$ as estimates of the decay position.]{Fractional residual distributions of the true and reconstructed decay position along the drift coordinate, using the position of the maximum of $\chi^{2 \ (FB)}_{k}$ (left panel) and $F_{k}$ (right panel) as estimates of the decay position. Also shown are double Gaussian fits to these points (red lines).}
 	\label{fig:pion_decay_resolution}
 \end{figure}
 
@@ -268,7 +268,7 @@ In our case $a-b = 8-5 = 3$, so we would obtain a p-value of $0.05$ at $x=2.60$.
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/pion_decay/pion_decay_variables.pdf}
-	\caption{Distributions of the extreme values of $\chi^{2 \ (FB)}_{k}$ (top left panel), $F_{k}$ (top right panel), $D^{1/R}_{k}$ (bottom left panel) and $D^{\phi}_{k}$ (bottom right panel) for non-decaying reconstructed pion tracks (blue) and tracks which include the decay inside the fiducial volume (red).}
+	\caption[Distributions of the extrema of $\chi^{2 \ (FB)}_{k}$, $F_{k}$, $D^{1/R}_{k}$, and $D^{\phi}_{k}$ for non-decaying and decaying reconstructed pion tracks.]{Distributions of the extrema of $\chi^{2 \ (FB)}_{k}$ (top left panel), $F_{k}$ (top right panel), $D^{1/R}_{k}$ (bottom left panel) and $D^{\phi}_{k}$ (bottom right panel) for non-decaying reconstructed pion tracks (blue) and tracks which include the decay inside the fiducial volume (red).}
 	\label{fig:breakpoint_variables}
 \end{figure}
 
@@ -279,14 +279,14 @@ However, looking at the $D^{1/R \ (min)}_{k}$ distribution we can see there is a
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/pion_decay/pion_decay_summary_bdt.pdf}
-	\caption{Left panel: distributions of the predicted probabilities assigned by the BDT classifier to a test sample of decaying pion+muon tracks (blue) and non-decaying pion tracks (red). Left: signal efficiency versus background acceptance (ROC curve) obtained from the BDT for the test sample.}
+	\caption[Outputs of the BDT classifier for a test sample of decaying pion+muon tracks and non-decaying pion tracks.]{Left panel: distributions of the predicted probabilities assigned by the BDT classifier for a test sample of decaying pion+muon tracks (blue) and non-decaying pion tracks (red). Left: signal efficiency versus background acceptance (ROC curve) obtained from the BDT for the test sample.}
 	\label{fig:breakpoint_bdt}
 \end{figure}
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.85\linewidth]{Images/GArSoft_PID/pion_decay/pion_decay_angle_summary2.pdf}
-	\caption{Left panel: dependence of the decay position finding resolution on the true value of the decay angle for the $\chi_{k}^{2 \ (FB)}$ (red) and $F_{k}$ (blue) methods. Right panel: signal efficiency (blue line) and background rejection (red line) from the BDT classifier versus true decay angle.}
+	\caption[Dependence of the decay position finding resolution and BDT performance on the true value of the decay angle.]{Left panel: dependence of the decay position finding resolution on the true value of the decay angle for the $\chi_{k}^{2 \ (FB)}$ (red) and $F_{k}$ (blue) methods. Right panel: signal efficiency (blue line) and background rejection (red line) from the BDT classifier versus true decay angle.}
 	\label{fig:breakpoint_angle}
 \end{figure}
 
@@ -307,7 +307,7 @@ Another important reconstruction item is the clustering algorithm of ECal hits i
 
 Inspired by the reconstruction of T2K's ND280 downstream ECal \cite{T2KUK2013}, the idea was to put together a clustering module that first builds clusters for the different ECal views (tiles, strips segmented in the $x$ direction and strips segmented in $y$ direction), and then tries to match them together to form the final clusters.
 
-Working on a module-by-module basis, the algorithm first separates the hits depending on the layer type they come from. Then, it performs a NN clustering for the 3 sets of hits separately. For the tile hits it clusters together all the hits which are in nearest-neighbouring tiles and nearest-neighbouring layers. For strip hits it looks at nearest-neighbouring strips and next-to-nearest-neighbouring layers (as the layers with strips along the two directions are alternated). For strip clusters an additional cut in the direction along the strip length is needed.
+Working on a module-by-module basis, the algorithm separates the hits depending on the layer type they come from. Then, it performs a NN clustering for the 3 sets of hits separately. For the tile hits it clusters together all the hits which are in nearest-neighbouring tiles and nearest-neighbouring layers. For strip hits it looks at nearest-neighbouring strips and next-to-nearest-neighbouring layers (as the layers with strips along the two directions are alternated). For strip clusters an additional cut in the direction along the strip length is needed.
 
 After this first clustering I then apply a recursive re-clustering for each collection of strip clusters based on a PCA method. In each case, the algorithm loops over the clusters with $N_{hits}\geq2$, computing the centre of mass and three principal components. Propagating these axes up to the layers of the rest of the clusters, we check if the propagated point and the centre of mass of the second cluster are within next-to-nearest-neighbouring strips. An additional cut in the direction along the strip length is also needed. Moreover, I require that the two closest hits across the two clusters are at most in next-to-nearest-neighbouring strips. I merge the clusters if these three conditions are satisfied. The re-clustering is repeated until no more cluster pairs pass the cuts.
 
@@ -324,7 +324,7 @@ The last step is to check if clusters in neighbouring modules should be merged t
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/Neutral/coolcluster_optimisation_F1S.pdf}
-	\caption{Mean values of the $F_{1}$-score marginal distributions for the different free parameters of the new clustering algorithm, with the error bars representing one standard deviation around the mean. The $F_{1}$-score values were computed for the 6561 possible parameter configurations using 1000 $\nu_{\mu}$ CC interaction events.}
+	\caption[Mean values of the $F_{1}$-score marginal distributions for the different free parameters of the new clustering algorithm.]{Mean values of the $F_{1}$-score marginal distributions for the different free parameters of the new clustering algorithm, with the error bars representing one standard deviation around the mean. The $F_{1}$-score values were computed for the 6561 possible parameter configurations using 1000 $\nu_{\mu}$ CC interaction events.}
 	\label{fig:clustering_optimisation}
 \end{figure}
 
@@ -367,7 +367,7 @@ The working configuration is obtained as follows. I first select all configurati
 		\centering
 		\includegraphics[width=.99\linewidth]{Images/GArSoft_PID/Neutral/coolcluster_invariant_mass_vertex.pdf}
 	\end{subfigure}
-	\caption{Left panel: distributions of the number of ECal clusters per photon from $\pi^{0}$ decays for the standard (red) and new (blue) clustering algorithms. Right panel: reconstructed invariant mass distributions for photon pairs from single $\pi^{0}$ events using the standard (red) and new (blue) ECal clustering algorithms.}
+	\caption[Number of cluster per photon and invariant mass distributions for photon pairs from single $\pi^{0}$ events using the standard and new ECal clustering algorithms.]{Left panel: distributions of the number of ECal clusters per photon from $\pi^{0}$ decays for the standard (red) and new (blue) clustering algorithms. Right panel: reconstructed invariant mass distributions for photon pairs from single $\pi^{0}$ events using the standard (red) and new (blue) ECal clustering algorithms.}
 	\label{fig:clustering_pizero}
 \end{figure}
 
