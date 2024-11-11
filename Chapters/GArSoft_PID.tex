@@ -5,27 +5,6 @@
 	I am no bird; and no net ensnares me; I am a free human being with an independent will.
 \end{chapquote}
 
-\begin{comment}
-\gls{ndgar} is a magnetised, high-pressure gaseous argon \gls{tpc} (\gls{hpgtpc}), surrounded by an electromagnetic calorimeter (\gls{ecal}) and a muon detector (commonly refer to as \gls{muid}). A detailed discussion on the requirements, design, performance and physics of \gls{ndgar} can be found in the \gls{dune} ND \gls{cdr} \cite{DUNE2021NDCDR} and the \gls{ndgar} whitepaper (cite).
-
-In \gls{dune} Phase II \gls{ndgar} will fulfill the role of TMS, measuring the momentum and sign of the charged particles exiting \gls{ndlar}. Additionally, it will be able to measure neutrino interactions inside the \gls{hpgtpc}, achieving lower energy thresholds than those of the ND and \gls{fd} \gls{lartpc}s. By doing so \gls{ndgar} will allow to constrain the relevant systematic uncertainties for the \gls{lbl} analysis even further.
-
-The goal of the present chapter is to review the requirements that the physics program of \gls{dune} impose on \gls{ndgar}, present the current status of its design and describe the GArSoft package, its simulation and reconstruction software.
-
-As decided during the \gls{dune} Phase II workshop in June 2023 [reference], we want to build \gls{ndgar} physics case by showing:
-\begin{itemize}
-    \item That \gls{ndgar} can constrain systematic uncertainties that \gls{ndlar} might miss.
-    \item The impact on the neutrino oscillation results if such systematic uncertainties are missed.
-    \item That \gls{ndgar} is necessary to reach \gls{dune}'s main physics goals.
-\end{itemize}
-
-This way, the design of \gls{ndgar} will be physics driven.
-
-In order to study the effects of final state interactions (\gls{fsi}) in \gls{cc} interactions, \gls{ndgar} should be able to measure the spectrum of protons and charged pions at low energies. \gls{ndgar} also needs to be able to measure the pion multiplicity, specially for energies above $100~\mathrm{MeV}$ as at these energies the pions shower in the \gls{lar}, to inform the pion mass correction in the ND and \gls{fd} \gls{lartpc}s.
-
-In order to correctly identify electrons, muons, pions, kaons and protons \gls{ndgar} can use a combination of: $\mathrm{d}E/\mathrm{d}x$ measurements in the \gls{hpgtpc}, $E_{ECAL}/p$ using the ECAL total energy and the momentum obtained from magnetic spectroscopy in the \gls{hpgtpc} and penetration information through the ECAL and muon tagger.
-\end{comment}
-
 % more on ND-GAr and the ND, and why we want to do this!
 In \gls{dune} Phase II, \gls{ndgar} will fulfill the role of TMS measuring the momentum and sign of the charged particles exiting \gls{ndlar}. Additionally, it will measure neutrino interactions inside the \gls{hpgtpc}. This way, \gls{ndgar} will allow to constrain certain cross-section systematic uncertainties and study the effect of \gls{fsi} in \gls{cc} interactions. To do so, it needs to measure the spectrum of protons and charged pions at low energies, as well as the pion multiplicity. This puts strong requirements to the particle identification (\gls{pid}) capabilities of the detector, as well as stimulates the relevant developments in the reconstruction.
 
@@ -340,16 +319,6 @@ One of the possible weak points of this approach is that it relies on the positi
 where $v_{drift}$ is the mean drift velocity in our medium and the initial time is in the range $t_{0}\in[0, t_{spill})$, with $t_{spill}$ being the spill length. For a $10 \ \mu\mathrm{s}$ spill this translates into a maximum $30 \ \mathrm{cm}$ uncertainty on the drift direction position.
 
 The current default in GArSoft sets $t_{0} = 0$, but the functionality to randomly sample this within the spill time is in place. Therefore, we need to understand what is the impact of a non-zero $t_{0}$ on the associations algorithm and foresee possible ways of minimising a loss in performance.
-
-\begin{comment}
-Figure \ref{fig:associations_drift} represents two different options to tackle the associations problem when having events with a non-zero initial time $t_{0}$. The circles represent the original points, whereas the squares indicate the corrected positions. The end points of the track and the propagated points up to the cluster radius are indicated using filled and unfilled markers respectively. The red square represents the position of the cluster.
-
-In the first option (left panel) I try to correct for the drift coordinate position using the time associated to the cluster. Assuming that the drift time is much larger than the propagation time, $t_{cluster}$ could be used as a good estimation of the $t_{0}$. An alternative can be using the earliest time associated to a hit in said cluster. Doing this for each cluster before computing the $\chi^{2}$ value could be used as an alternative to knowing the specific value of the $t_{0}$, as when the association is correct this will provide the right correction but its impact is small enough to not change the position significantly in the case the cluster does not correspond to a given track.
-
-The second method depicted in Fig. \ref{fig:associations_drift} (right panel) tries to propagate three different helices for each reconstructed track and fit direction. One is the original, uncorrected helix and the other two are obtained by adding factors of $\pm t_{spill}/2$ when computing the drift coordinate position. In this case one would compute a set of $\chi^{2}$ values for each helix, keeping in the end the collection that manages to keep more values below $\chi^{2}_{cut}$. An alternative approach could be using a family of helices instead, using uniformly sampled time correction values in the $\pm t_{spill}/2$ range.
-
-Both options could offer a solution to the $t_{0}$ problem, and still need to be explored.
-\end{comment}
 
 Figure \ref{fig:associations_drift} represents a possible option to tackle the association problem when having events with a non-zero initial time $t_{0}$. The black and white circles represent the original points, whereas the squares indicate the corrected positions. The end points of the track and the propagated points up to the cluster radius are indicated using filled and unfilled markers, respectively. The red square represents the position of the cluster.
 
