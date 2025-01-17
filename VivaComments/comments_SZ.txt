@@ -1,0 +1,15 @@
+- Ensure all abbreviations used are in list of abbreviations (example of missing one: “MO” in Table 3.2)
+
+- End of Chapters 4,5,6: ensure that the overall results, conclusions, and next steps of this work are clearly summarised in as integrated a way as possible. Please reread/reconsider the section-by-section list that currently appears at the end of the chapter.
+
+- Section 5.5: provide a bit more commentary about how systematics are (or aren’t) used in your work, and how exactly they would be used if they were extended
+
+- p152: clarify statement in regard to separating muons and pions
+
+- Chapter 6: Do you need all of the class and module names that appear in the text in order to communicate your work clearly?  It is best to minimise these, although given that you are describing the structure of the software it makes sense to include them at some level.
+
+- Chapter 7:
+-- be clear on exactly what is novel about this work, and what its next steps are (it’s a “first try” according to Chapter 8, but there are many things that could mean)
+-- Give a clearer overview in the introduction as to what the event selection strategy you are pursuing overall is – which selections are you investigating and why?  How do they connect to each other?
+
+- Figs 6.21, 7.17: comment on the shapes in these spaces and their meaning
