@@ -304,5 +304,5 @@ TSWLatexianTemp*
 .DS_Store
 
 # Igonore directory with comments/corrections
-./CorrectionsLinda/*
-./VivaComments/*
+CorrectionsLinda/*
+VivaComments/*
