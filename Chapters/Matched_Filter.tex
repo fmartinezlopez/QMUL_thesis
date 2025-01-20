@@ -4,14 +4,14 @@
 	It is a capital mistake to theorize before one has data. Insensibly one begins to twist facts to suit theories, instead of theories to suit facts.
 \end{chapquote}
 
-The \gls{daq} system is responsible for the data that will be collected in the \gls{dune} \gls{fd}. Therefore, it has the capability of either expanding or limiting our physics reach, depending of its specifications. This is important for the low energy physics programme, as it requires more sensitive and reliable methods to pick up the relevant signals.
+The \gls{daq} system is responsible for the data that will be collected in the \gls{dune} \gls{fd}. Therefore, it has the capability of either expanding or limiting our physics reach, depending on its specifications. This is important for the low energy physics programme, as it requires more sensitive and reliable methods to pick up the relevant signals.
 
 In this Chapter, I present a novel method to improve the sensitivity of the \gls{dune} \gls{fd} by enhancing the production of hits in the online processing. This is possible thanks to a more efficient filtering strategy, the matched filter, which benefits the induction channels of the detector.
 
 \section{Motivation}
 \label{sec:matched_filter_motivation}
 
-The lowest-level objects that are formed within the \gls{dune} \gls{fd} \gls{daq} system are the so-called trigger primitives (\gls{tp}s) \cite{DUNEDAQ2022}. These represent the hits on a channel, and are used as input to the rest of the \gls{daq} trigger chain. The \gls{tp}s are formed in the hit finder chain. A schematic representation of it is shown in Fig. \ref{fig:tpg_chain}. This chain takes the raw \gls{adc} data from the detector, removes the constant pedestal of the signal using a dynamical median estimation method, applies a filter to the waveform, and tries to find peaks over a certain threshold. These peaks form the \gls{tp}s, which contain information such as the start and end times over the threshold, the maximum \gls{adc} value, and the corresponding \gls{adc} integral. Currently, there are two implementations of the hit finder chain, one firmware-based and other software-based.
+The lowest-level objects that are formed within the \gls{dune} \gls{fd} \gls{daq} system are the so-called trigger primitives (\gls{tp}s) \cite{DUNEDAQ2022}. These represent the hits on a channel, and are used as input to the rest of the \gls{daq} trigger chain. The \gls{tp}s are formed in the hit finder chain, shown in Fig. \ref{fig:tpg_chain}. This chain takes the raw \gls{adc} data from the detector, removes the constant pedestal of the signal using a dynamical median estimation method, applies a filter to the waveform, and tries to find peaks over a certain threshold. These peaks form the \gls{tp}s, which contain information such as the start and end times over the threshold, the maximum \gls{adc} value, and the corresponding \gls{adc} integral. Currently, there are two implementations of the hit finder chain, one firmware-based and other software-based.
 
 The filter implemented in the firmware of the upstream \gls{dune} \gls{fd} \gls{daq} is a $32$nd-order low-pass finite impulse response (\gls{fir}) filter. The output of such filter for a discrete system can be written as:
 \begin{equation}\label{2.1.1}
@@ -19,7 +19,7 @@ The filter implemented in the firmware of the upstream \gls{dune} \gls{fd} \gls{
 \end{equation}
 where $N$ is the order of the filter, $y$ is the output sequence, $x$ is the input sequence and $h$ is the set of filter coefficients. The current implementation in the firmware uses a set of 16 non-zero integer coefficients. For the software case, only a 5th-order filter is used, as the filtering is the most CPU-expensive part of the software hit finder.
 
-Filtering is a vital step in the hit finder chain. It helps suppressing the noise and enhances the signal peaks with respect to the noiseless baseline. A good filtering strategy allows us to use lower thresholds when forming the \gls{tp}s, thus increasing the sensitivity of our detector to low energy physics events. In such events, the hits produced by the ionisation electrons tend to have lower amplitudes than those of interest to the \gls{lbl} physics programme of the \gls{dune} experiment.
+Filtering is a vital step in the hit finder chain. It helps suppress the noise and enhances the signal peaks with respect to the noiseless baseline. A good filtering strategy allows us to use lower thresholds when forming the \gls{tp}s, thus increasing the sensitivity of our detector to low energy physics events. In such events, the hits produced by the ionisation electrons tend to have lower amplitudes than those of interest to the \gls{lbl} physics programme of the \gls{dune} experiment.
 
 \begin{figure}[t]
 	\centering
@@ -28,7 +28,7 @@ Filtering is a vital step in the hit finder chain. It helps suppressing the nois
 	\label{fig:tpg_chain}
 \end{figure}
 
-This is particularly important for the induction planes. In general, signal peaks in the induction channels have smaller amplitude than the ones in the collection plane. This, together with the fact that the pulse shapes are bipolar, reduces our capacity to detect the hits on these channels. The inefficiency of detecting \gls{tp}s in the induction planes (denoted as U and V planes) leads trigger algorithms to focus mainly on the \gls{tp}s from the collection plane (so-called X plane). As a result, the possibility of making trigger decisions based on the coincidence of \gls{tp}s across the three readout planes remains nowadays unexploited in \gls{dune}. This will be beneficial for low energy events, as it adds redundancy to the algorithms, as well as for other physics that requires online directionality information, like the supernova pointing.
+This is particularly important for the induction planes. In general, signal peaks in the induction channels have smaller amplitudes than the ones in the collection plane. This, together with the fact that the pulse shapes are bipolar, reduces our capacity to detect the hits on these channels. The inefficiency of detecting \gls{tp}s in the induction planes (denoted as U and V planes) leads trigger algorithms to focus mainly on the \gls{tp}s from the collection plane (so-called X plane). As a result, the possibility of making trigger decisions based on the coincidence of \gls{tp}s across the three readout planes remains nowadays unexploited in \gls{dune}. This will be beneficial for low energy events, as it adds redundancy to the algorithms, as well as for other physics that requires online directionality information, like the supernova pointing.
 
 \begin{figure}[t]
 	\centering
@@ -37,7 +37,7 @@ This is particularly important for the induction planes. In general, signal peak
 	\label{fig:adcs_nofir}
 \end{figure}
 
-A possible improvement of the current hit finder chain may require optimising the existing or choosing a new filter implementation. A filter strategy which benefits the induction signals may be able to enhance the detection efficiency of \gls{tp}s from the induction planes, and ideally make it comparable to that of the collection plane.  
+A possible improvement of the current hit finder chain may require optimising the existing filter or choosing a new filter implementation. A filter strategy which benefits the induction signals may be able to enhance the detection efficiency of \gls{tp}s from the induction planes, and ideally make it comparable to that of the collection plane.  
 
 The goal is to implement a better \gls{fir} filter and to evaluate its performance relative to the current one. To do so, I need to take into account the limitations of the firmware: the \gls{fir} filter shall have maximum 32 coefficients (so-called taps) whose values are 12-bit unsigned integers. Although it is technically possible to include non-integer coefficients, it would be a technical challenge. For instance, in the \gls{hd} design there are 40 \gls{fir} instances per \gls{apa}, as there are 4 \gls{fir} blocks per optical link and 10 optical links per \gls{apa}. Therefore, the impact of increasing the complexity of the filter will be amplified forty times in the FPGA load. With these restrictions, the task is to provide a set of 32 coefficients which yield an optimal filter performance for the induction channels. A solution compatible with the software hit finder implementation is not considered, due to its current limitations concerning the filtering stage.
 
@@ -124,7 +124,7 @@ To further test the matched filter, the next step is to generate and process dat
 
 To begin with, I prepared different monoenergetic and isotropic samples containing a single particle per event. Each sample contains a different particle species, namely electrons, muons, protons and neutral pions, all with a kinetic energy of $E_{k} = 100 \ \mathrm{MeV}$. I chose these because of the fairly different topologies they generate in the liquid argon, ranging from shower-like to track-like.
 
-The events were generated with the single particle gun, and the \texttt{Geant4} stage of the LArSoft simulation was run with the standard configuration for the \gls{dune} \gls{fd} \gls{hd} design.
+The events were generated with the single particle gun, and the \texttt{Geant4} \cite{GEANT42002,GEANT42006,GEANT42016} stage of the LArSoft simulation was run with the standard configuration for the \gls{dune} \gls{fd} \gls{hd} design.
 
 \begin{figure}[t]
 	\begin{subfigure}{0.5\textwidth}
@@ -139,41 +139,21 @@ The events were generated with the single particle gun, and the \texttt{Geant4} 
 	\label{fig:lengths}
 \end{figure}
 
-For simplicity, I restricted the particles to start drifting in a single \gls{tpc} volume\footnote{A \gls{tpc} volume is defined as the drift region between a single \gls{apa} and the cathode.}, so I can focus exclusively on the signals coming from one \gls{apa}. The chosen kinetic energy for all the particles is $E_{k} = 100 \ \mathrm{MeV}$, as this produce tracks which are typically contained in one \gls{tpc} volume. Figure \ref{fig:lengths} (left panel) shows the distributions of the track lengths in the liquid argon of all generated particles with $E_{k} = 100 \ \mathrm{MeV}$. One can see that, in the case of the track-like particles (i.e. muons and protons), their length distributions are quite sharp and centered at relatively low distances ($30$ and $8 \ \mathrm{cm}$, respectively). For electrons, the distribution is quite broad but it does not extend past $\sim 30 \ \mathrm{cm}$. The case of the neutral pions can be misleading. As they decay promptly, the track length associated to the true \gls{mc} particle is always $< 1 \ \mathrm{cm}$. In Fig. \ref{fig:lengths} (right panel) I show the effective length distribution of the longest photon after the pion decays as $\pi^{0} \rightarrow \gamma \gamma$, highlighting the number of fully contained photons in the \gls{tpc} volume per event (either zero, one, or two). One can see that the vast majority of events have both photons contained in the \gls{tpc} volume, whereas just a negligible fraction of them have none. However, for the sake of caution, I keep only the pion events with both photons contained.
+For simplicity, I restricted the particles to start drifting in a single \gls{tpc} volume\footnote{A \gls{tpc} volume is defined as the drift region between a single \gls{apa} and the cathode.}, so I focus exclusively on the signals coming from one \gls{apa}. The chosen kinetic energy for all the particles is $E_{k} = 100 \ \mathrm{MeV}$, as this produce tracks which are typically contained in one \gls{tpc} volume. Figure \ref{fig:lengths} (left panel) shows the distributions of the track lengths in the liquid argon of all generated particles with $E_{k} = 100 \ \mathrm{MeV}$. One can see that, in the case of the track-like particles (i.e. muons and protons), their length distributions are quite sharp and centered at relatively low distances ($30$ and $8 \ \mathrm{cm}$, respectively). For electrons, the distribution is quite broad but it does not extend past $\sim 30 \ \mathrm{cm}$. The case of the neutral pions can be misleading. As they decay promptly, the track length associated to the true \gls{mc} particle is always $< 1 \ \mathrm{cm}$. In Fig. \ref{fig:lengths} (right panel) I show the effective length distribution of the longest photon after the pion decays as $\pi^{0} \rightarrow \gamma \gamma$, highlighting the number of fully contained photons in the \gls{tpc} volume per event (either zero, one, or two). One can see that the vast majority of events have both photons contained in the \gls{tpc} volume, whereas a negligible fraction of them have none. However, for the sake of caution, I keep only the pion events with both photons contained.
 
-The next step is to process the sample through the detector simulation. To make adequate estimations of the noise levels, one needs to turn off the default zero-suppression of the waveforms produced by the simulation. At this stage I am only interested int the waveforms with noise added, so I keep the noise addition option as true in the configuration. However, for studies related to the hit finder performance one also needs to store the noiseless waveforms, to retrieve the truth information of the hits. I will discuss this approach next.
+The next step is to process the sample through the detector simulation. To make adequate estimations of the noise levels, one needs to turn off the default zero-suppression of the waveforms produced by the simulation. At this stage I am only interested in the waveforms with noise added, so I keep the noise addition option as true in the configuration. However, for studies related to the hit finder performance one also needs to store the noiseless waveforms, to retrieve the truth information of the hits. I will discuss this approach next.
 
-To reduce the amount of data that will go for processing, I use the information from the \texttt{Geant4} step of the simulation to select only the active channels, i.e. the channels where some ionisation electrons arrived. Moreover, I only extract the waveforms from one \gls{apa} and exclusively the ones coming from induction channels. The resulting \texttt{ROOT} file contains a \texttt{TTree} with two branches, one containing the waveforms for each event and channel and the other with the corresponding offline channel numbers.
+To reduce the amount of data to process, I use the information from the \texttt{Geant4} step of the simulation to select only the active channels, i.e. the channels where some ionisation electrons arrived. Moreover, I only extract the waveforms from one \gls{apa} and exclusively those coming from induction channels. Finally, I also store the truth values for the orientation of the tracks and the energies of the particles to use them in the analysis.
 
-Finally, I extract the truth values for the orientation of the tracks and the energies of the particles to use them in the analysis. These are stored in a \texttt{ROOT} file with a single \texttt{TTree}, containing several branches with information such as the components of the initial momentum of the particles, initial and final positions, track length, etc.
+\begin{comment}
+	The resulting \texttt{ROOT} file contains a \texttt{TTree} with two branches, one containing the waveforms for each event and channel and the other with the corresponding offline channel numbers.
+	These are stored in a \texttt{ROOT} file with a single \texttt{TTree}, containing several branches with information such as the components of the initial momentum of the particles, initial and final positions, track length, etc.
+	For the analysis of the resulting waveforms and truth values I used a custom analysis code independent of LArSoft. Among other functionality, it allows the user to read the \texttt{ROOT} files, export the raw data as \texttt{pandas} objects, apply the filters and compute the \gls{sn} of both the raw and filtered signals. The default configuration for the filtering uses the set of optimal matched filter coefficients that I found using the ProtoDUNE-SP data samples.
+\end{comment}
 
-For the analysis of the resulting waveforms and truth values I used a custom analysis code independent of LArSoft. Among other functionality, it allows the user to read the \texttt{ROOT} files, export the raw data as \texttt{pandas} objects, apply the filters and compute the \gls{sn} of both the raw and filtered signals. The default configuration for the filtering uses the set of optimal matched filter coefficients that I found using the ProtoDUNE-SP data samples.
+Then, I apply the matched filter to the resulting waveforms. The coefficients used are those that I found using the ProtoDUNE-SP data samples. The \gls{sn} of both the raw and filtered signals is also computed.
 
-\begin{figure}[t]
-	\begin{subfigure}{0.5\textwidth}
-		\centering
-		\includegraphics[width=.8\linewidth]{Images/Matched_Filter/sim_rotation}
-	\end{subfigure}
-	\begin{subfigure}{0.5\textwidth}
-		\centering
-		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/3D_rotation}
-	\end{subfigure}
-	\caption[Schematic representation of the two rotated reference frames used in the analysis of the \gls{mc} filter performance.]{Left panel: schematic representation of the two new rotated reference frames used in this analysis (denoted as prime and double prime), viewed from the $yz$ plane. The magenta stack of lines represent the wires in the U plane, whereas the green lines correspond to the wires in the V plane. Right panel: 3D representation of the momentum of one of the generated monoenergetic muons (red arrow) in the original reference frame (black lines), along with the new reference frame used for the U plane waveforms (blue lines). In the $yz$ plane I added the projection of these three.}
-	\label{fig:reference_frame}
-\end{figure}
-
-Additionally, for the analysis of the samples it was necessary to use two different reference frames, to study separately the signals coming from the U and V induction planes. Focussing on a single \gls{apa}, the U and V channels have a different orientation in the $yz$ plane. In the case of U channels, these are tilted $35.7^{\circ}$ clockwise from the vertical ($y$ direction), whereas the V channels are at the same angle but in the anticlockwise direction. Because of this, the best option is to deal with two new coordinate systems rotated by $\pm 35.7^{\circ}$ along the $x$ axis, so the new $y'$ and $y''$ directions are aligned with the U and V induction channels, respectively. Figure \ref{fig:reference_frame} (left panel) shows a schematic representation of the original reference frame together with the two rotated ones (denoted by primed and double primed). This way, one can easily understand how parallel was a track to the channels in the two induction planes. Figure \ref{fig:reference_frame} (right panel) shows a 3D representation of the momentum of a track (red arrow) in the original reference frame (black lines), along with the new reference frame for the U plane (blue lines). I added the projections onto the $yz$ plane of these, to show the usefulness of the new reference frame to tell whether a track is parallel or perpendicular to the channels in a induction plane.
-
-\begin{figure}[t]
-	\centering
-	\includegraphics[width=0.9\linewidth]{Images/Matched_Filter/larsoft_sn_hists.pdf}
-	\caption[Distributions of the mean \gls{sn} change per event for the different \gls{mc} samples after applying the matched filters.]{Distributions of the mean \gls{sn} change per event for the different \gls{mc} samples after applying the matched filters. Here I separated the change in the U plane (blue) and the V plane (red) channels. From top left to the right: muon, electron, proton and neutral pion. All the events have a fixed kinetic energy of $E_{k} = 100 \ \mathrm{MeV}$.}
-	\label{fig:mono_summary_hist}
-\end{figure}
-
-Figure \ref{fig:mono_summary_hist} shows the distribution of the average \gls{sn} change per event when I apply the optimised matched filters. I produce separate distributions for the channels in the U (red) and V (blue) induction planes. Notice that the \gls{sn} distributions for the track-like particles, i.e. muons (top left panel) and protons (bottom left panel), have significantly larger mean values than the distributions of the shower like particles, i.e. electrons (top right panel) and neutral pions (bottom right panel). An important difference between these results and the ones obtained before for the ProtoDUNE-SP data is that the overall improvements that I get with simulated data are more significant. This could be due to an underestimation of the noise levels in the LArSoft simulation. Nonetheless, the concluding message is that the previously optimised matched filters give an overall significant improvement of the \gls{sn} for the different samples.
-
-About the convention I follow to present the results, in the case of the raw and filtered \gls{sn} of each event I take the average of these quantities over all the active channels in the event. That is, if a certain event has $N_{chan}$ active channels the two \gls{sn} values are computed as:
+The reported values of the \gls{sn} of each event are obtained taking the average of the \gls{sn} over all the active channels in the event. That is, if a certain event has $N_{chan}$ active channels the two \gls{sn} values, both for the raw and filtered waveforms, are computed as:
 \begin{equation}
 \begin{split}
 \left(S/N_{fir}\right)_{event} &= \frac{\sum_{i=0}^{N_{chan}} \left(S/N_{fir}\right)_{i}}{N_{chan}},\\
@@ -189,6 +169,32 @@ therefore:
 \left(\frac{S/N_{fir}}{S/N_{raw}}\right)_{event}  \neq \frac{\left(S/N_{fir}\right)_{event}}{\left(S/N_{raw}\right)_{event}}.
 \end{equation}
 
+\begin{figure}[t]
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.8\linewidth]{Images/Matched_Filter/sim_rotation}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=.99\linewidth]{Images/Matched_Filter/3D_rotation}
+	\end{subfigure}
+	\caption[Schematic representation of the two rotated reference frames used in the analysis of the \gls{mc} filter performance.]{Left panel: schematic representation of the two new rotated reference frames used in this analysis (denoted as prime and double prime), viewed from the $yz$ plane. The magenta stack of lines represent the wires in the U plane, whereas the green lines correspond to the wires in the V plane. Right panel: 3D representation of the momentum of one of the generated monoenergetic muons (red arrow) in the original reference frame (black lines), along with the new reference frame used for the U plane waveforms (blue lines). In the $yz$ plane I added the projection of these three.}
+	\label{fig:reference_frame}
+\end{figure}
+
+Additionally, for the analysis of the samples it was necessary to use two different reference frames, to study separately the signals coming from the U and V induction planes. Focussing on a single \gls{apa}, the U and V channels have a different orientation in the $yz$ plane. In the case of U channels, these are tilted $35.7^{\circ}$ clockwise from the vertical ($y$ direction), whereas the V channels are at the same angle but in the anticlockwise direction. Because of this, the best option is to deal with two new coordinate systems rotated by $\pm 35.7^{\circ}$ along the $x$ axis, so the new $y'$ and $y''$ directions are aligned with the U and V induction channels, respectively.
+
+Figure \ref{fig:reference_frame} (left panel) shows a schematic representation of the original reference frame together with the two rotated ones (denoted by primed and double primed). This way, one can easily understand how parallel was a track to the channels in the two induction planes. Figure \ref{fig:reference_frame} (right panel) shows a 3D representation of the momentum of a track (red arrow) in the original reference frame (black lines), along with the new reference frame for the U plane (blue lines). I added the projections onto the $yz$ plane of these, to show the usefulness of the new reference frame to tell whether a track is parallel or perpendicular to the channels in a induction plane.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.9\linewidth]{Images/Matched_Filter/larsoft_sn_hists.pdf}
+	\caption[Distributions of the mean \gls{sn} change per event for the different \gls{mc} samples after applying the matched filters.]{Distributions of the mean \gls{sn} change per event for the different \gls{mc} samples after applying the matched filters. Here I separated the change in the U plane (blue) and the V plane (red) channels. From top left to bottom right: muon, electron, proton and neutral pion. All the events have a fixed kinetic energy of $E_{k} = 100 \ \mathrm{MeV}$.}
+	\label{fig:mono_summary_hist}
+\end{figure}
+
+Figure \ref{fig:mono_summary_hist} shows the distribution of the average \gls{sn} change per event when I apply the optimised matched filters. I produce separate distributions for the channels in the U (red) and V (blue) induction planes. Notice that the \gls{sn} distributions for the track-like particles, i.e. muons (top left panel) and protons (bottom left panel), have significantly larger mean values than the distributions of the shower like particles, i.e. electrons (top right panel) and neutral pions (bottom right panel). An important difference between these results and the ones obtained before for the ProtoDUNE-SP data is that the overall improvements that I get with simulated data are more significant. This could be due to an underestimation of the noise levels in the LArSoft simulation. Nonetheless, the concluding message is that the previously optimised matched filters give an overall significant improvement of the \gls{sn} for the different samples.
+
 \subsection{Angular dependence}
 \label{subsec:2.5.1}
 
@@ -199,7 +205,7 @@ therefore:
 	\label{fig:angular_muon}
 \end{figure}
 
-Having these monoenergetic samples, one can study the angular dependence of the matched filter performance. This is an important point, as it is a well established fact that for certain track configurations the \gls{sn} is much lower than average as the corresponding waveforms are severely distorted. Therefore, I am interested in seeing how the matched filter behaves in different cases, and how the \gls{sn} change for those compares to the average.
+Having these monoenergetic samples, one can study the angular dependence of the matched filter performance. This is an important point, as it is well established that for certain track configurations the \gls{sn} is much lower than average, as the corresponding waveforms are severely distorted. Therefore, it is necessary to check how the matched filter behaves in different cases, and how the \gls{sn} change for those compares to the average.
 
 \begin{figure}[t]
 	\centering
@@ -217,16 +223,16 @@ Figure \ref{fig:angular_electron} shows the corresponding angular dependence res
 \subsection{Hit sensitivity}
 \label{subsec:2.5.3}
 
-\begin{figure}
-	\centering
-	\includegraphics[width=0.9\linewidth]{Images/Matched_Filter/electron_k100_full_run_1_evt_3}
-	\caption[Raw event display for an electron event showing the true, standard, and matched filter hits produced.]{Raw event display showing the time (in firmware ticks) versus offline channel number for a $E_{k} = 100 \ \mathrm{MeV}$ electron event. The produced true hits are superimposed (black boxes) as well as the hits coming from the standard hit finder chain (blue circles) and the hit finder using the matched filter (green triangles).}
-	\label{fig:evthitcomp}
-\end{figure}
-
 One of the advantages of the matched filter, directly related to increasing the \gls{sn}, is the capability of forming \gls{tp}s that before fell below the threshold. For instance, Fig. \ref{fig:evthitcomp} shows the raw \gls{adc} data from an example electron event with the produced true hits superimposed (black boxes), together with the hits produced by the standard hit finder chain (blue circles), i.e. using the current \gls{fir} filter, and the hits obtained using the matched filters (green triangles). Both the standard and the matched filter hit finders run with a threshold of $10 \ \mathrm{ADC}$. Notice that the standard hits match well the true ones in the initial part of the event, where we have a track-like object. However, it misses most of the hits produced by the EM shower at later times. On the other hand, the hits produced with the matched filter have a better agreement with the true hits even for the more diffuse shower activity.
 
 Even though the matched filter produces more hits as a results of the enhancement of the signal peaks relative to the noise level, it is also true that it may pick up some spurious hits not related to any real activity if one lowers the thresholds too much. Therefore, some optimisation of the threshold is needed, as there is a trade-off between precision and sensitivity.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{Images/Matched_Filter/electron_k100_full_run_1_evt_3}
+	\caption[Raw event display for an electron event showing the true, standard, and matched filter hits produced.]{Raw event display showing the time (in firmware ticks) versus offline channel number for a $E_{k} = 100 \ \mathrm{MeV}$ electron event. The bottom and top panels correspond to the channels in the U and V planes, respectively. The true hits are superimposed (black boxes), as well as the hits from the standard (blue circles) and the matched filter (green triangles) hit finder chains.}
+	\label{fig:evthitcomp}
+\end{figure}
 
 Having this in mind, I compare the produced hits from both the standard  and the matched filter hit finders to the true hits. By running the hit finders on the samples with different values of the threshold I can understand how low these can be pushed, and then evaluate the gains obtained from this.
 
@@ -291,7 +297,7 @@ In Fig. \ref{fig:sensitivity_energy} I show the average hit sensitivity versus t
 
 In general, the improvements are better for the U than for the V plane. While for the U channels I achieve a mean improvement of $50\%$ and $80\%$ for muons and electrons, respectively, the improvement in the V plane is stalled at $10\%$ and $25\%$. Nevertheless, looking at the sensitivities for the matched filter hits in both planes, one can see these have similar mean values for each energy bin. On the other hand, for the standard hits the sensitivity remains higher for the V plane. This way, it looks there is a less significant gain because the hit sensitivity was already high.
 
-Another interesting observation is the different behaviors for muons and electrons. While hit sensitivity for muons grows significantly with energy, in the case of electrons it slightly decreases the higher the kinetic energy of the event is. However, when it comes to the improvement on the sensitivities, this remains almost constant in all cases.
+Another interesting observation is the different behaviors for muons and electrons. While hit sensitivity for muons grows significantly with energy, in the case of electrons it decreases slightly with the kinetic energy. However, when it comes to the improvement on the sensitivities, this remains almost constant in all cases.
 
 \begin{figure}[t]
 	\centering
@@ -300,7 +306,7 @@ Another interesting observation is the different behaviors for muons and electro
 	\label{fig:electron_residuals}
 \end{figure}
 
-Furthermore, we can look at how the concurrence of hits between the different wire planes has changed. For any given event, I expect to have a similar number of hits in the three planes. As the ionisation electrons need to cross the U and V planes prior to reach the collection plane X, they will induce current in those wire planes. A way to check the concurrence of hits across planes is comparing the hit sensitivities in the different planes for each individual event. Although the sensitivities will not be exactly equal across planes, ideally they should be normally distributed around the diagonal.
+Furthermore, we can look at how the concurrence of hits between the different wire planes has changed. For any given event, I expect to have a similar number of hits in the three planes. As the ionisation electrons need to cross the U and V planes prior to reaching the collection plane X, they will induce current in those wire planes. A way to check the concurrence of hits across planes is by comparing the hit sensitivities in the different planes for each individual event. Although the sensitivities will not be exactly equal across planes, ideally they should be normally distributed around the diagonal.
 
 Figure \ref{fig:electron_concurrence} shows the hit sensitivity in the U (top panels) and V (bottom panels) planes versus the hit sensitivity in the X plane, for the case of the standard hits (left panels) and the matched filter hits (right panels). All plots were generated for the electron sample and a threshold of $30 \ \mathrm{ADC}$. From these, one can see a clear trend. The standard hit finder chain produces hit sensitivities in the induction planes that are systematically lower than the sensitivity in the X plane, i.e. most of the points sit below the diagonal (red dashed line). In contrast, when the matched filters are applied, the majority of the events are distributed around the diagonal. This points out that the concurrence of hits across planes has improved.
 
@@ -334,13 +340,13 @@ These prevented us from taking data with the whole system. As a palliative measu
 \begin{figure}[t]
     \centering
     \includegraphics[scale = 0.5]{Images/Matched_Filter/np02_coldbox_tp_comp.pdf}
-    \caption[Comparison between firmware-produced and simulated \gls{tp} quantities for a matched filter run at the \gls{vd} ColdBox.]{Comparison between firmware-produced and simulated \gls{tp} quantities for a matched filter run at the \gls{vd} ColdBox.}
+    \caption[Comparison between firmware-produced and simulated \gls{tp} quantities for a matched filter run at the \gls{vd} ColdBox.]{Comparison between firmware-produced and simulated \gls{tp} quantities for a matched filter run at the \gls{vd} ColdBox. From top left to bottom right: start time, peak time, ADC peak, and ADC sum.}
     \label{fig:vdcoldbox_tp_comp}
 \end{figure}
 
 Additionally, an alternative firmware version was prepared featuring the matched filter coefficients optimised for the induction plane hit finding. The version of the filter we used for the data taking is slightly different from the one of the previous studies, as in this case we needed to apply the same filter coefficients to all channels irrespective of the readout plane they come from. With this, we also managed to run with three \gls{adc} links and the HMA trigger. Figure \ref{fig:example_hma_evd} shows an example event display from the longest run we recorded with the matched filter firmware.
 
-We used the recorded data, together with our standalone TPG simulation tool, to perform comparisons between the firmware and simulated TPs. One such comparison for a matched filter run can be seen in Fig. \ref{fig:vdcoldbox_tp_comp}. The agreement achieved is within the expectation, from what we have seen in previous samples.
+We used the recorded data, together with our standalone TPG simulation tool, to perform comparisons between the firmware and simulated \gls{tp}s. One such comparison for a matched filter run is shown in Fig. \ref{fig:vdcoldbox_tp_comp}. From this, it can be seen that there is a close agreement between firmware and simulation for the time-related variables (top panels). However, there is a noticeable structure to the \gls{adc} peak and integral distributions (bottom panels). It seems that for the induction planes the simulation systematically overpredicts these values, producing the lines below the main diagonal, while the collection plane \gls{tp}s follow the expected behaviour. The reason behind this is still unclear, and is currently being investigated. More details on these comparisons will be included in a planned upcoming publication.
 
 \begin{comment}
 All the studies presented demonstrate the robustness of the matched filter approach to form TPs. I have used both ProtoDUNE-SP data and \gls{mc} samples to assess its impact on the \gls{sn} and \gls{tp} production of the induction channels. Additionally, I have shown that it is possible to run with it in a real detector environment, after the tests at the \gls{vd} ColdBox setup.
@@ -348,4 +354,4 @@ All the studies presented demonstrate the robustness of the matched filter appro
 
 \section{Summary}
 
-The \gls{daq} system of the \gls{dune} \gls{fd} relies on the online identification of hits on channels, the so-called TPs, to form the decisions of what data to store. The goal of this Chapter is to motivate a method to enhance the production of TPs in the induction channels of the detectors. Forming TPs from all the charge readout planes will improve the redundancy of the trigger algorithms. Not only that, but this may be the key to have more complex trigger logic that requires directional information. The aspect I focused on to improve the hit finding is the filtering of the waveforms. I introduce the concept of the matched filter in section \ref{sec:matched_filter_matched_filter}. Using a sample of ProtoDUNE-SP cosmic data, I demonstrate that the these filters provide significant improvements to the \gls{sn} of the induction channels. A series of studies using \gls{mc} samples are presented in section \ref{sec:matched_filter_mc_studies}. These allow to study the dependence of the filtering on the orientation and the energy of the tracks. I also use them to assess the impact of this method on the hit sensitivity. Finally, in section \ref{sec:matched_filter_vdcoldbox} I briefly summarise the results from the VD ColdBox runs which featured the matched filter.
+The \gls{daq} system of the \gls{dune} \gls{fd} relies on the online identification of hits on channels, the so-called \gls{tp}s, to form the decisions of what data to store. The goal of this Chapter was to motivate a method to enhance the production of \gls{tp}s in the induction channels of the detectors. Forming \gls{tp}s from all the charge readout planes will improve the redundancy of the trigger algorithms. Not only that, but this may be the key to have more complex trigger logic that requires directional information. The aspect I focused on to improve the hit finding was the filtering of the waveforms. I introduced the concept of the matched filter in section \ref{sec:matched_filter_matched_filter}. Using a sample of ProtoDUNE-SP cosmic data, I demonstrated that the these filters provide significant improvements to the \gls{sn} of the induction channels. A series of studies using \gls{mc} samples were presented in section \ref{sec:matched_filter_mc_studies}. These allowed me to study the dependence of the filtering on the orientation and the energy of the tracks. I also used them to assess the impact of this method on the hit sensitivity. Finally, in section \ref{sec:matched_filter_vdcoldbox} I briefly summarised the results from the \gls{vd} ColdBox runs which featured the matched filter.
