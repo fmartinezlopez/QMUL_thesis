@@ -209,7 +209,7 @@ The resulting fit (black line), compared to the data points (red points) and the
 
 It is interesting to look at the results of the fit in momentum space, for the different particle species. Figure \ref{fig:dEdx_vs_momentum} shows the truncated mean $\mathrm{d}E/\mathrm{d}x$ values versus the reconstructed momentum for the neutrino sample. Using a logarithmic scale for the momentum helps with visualising the curves corresponding to the various particles. The resulting fits for electrons, muons, pions and protons are also shown (solid black lines). Notice that each curve stops at a different momentum value, as the fits only extend up to $\beta\gamma = 200$ and translating this limit into momentum depends on the particle.
 
-From Fig. \ref{fig:dEdx_vs_momentum}, the particle separation power of the $\left<\mathrm{d}E/\mathrm{d}x\right>$ measurement is evident. In the low momentum regime separating electrons, muons and pions is possible, while protons can be reliably identified up to $1.5~\mathrm{GeV}/c$.
+From Fig. \ref{fig:dEdx_vs_momentum}, the particle separation power of the $\left<\mathrm{d}E/\mathrm{d}x\right>$ measurement is evident. In the low momentum regime, below $300~\mathrm{MeV}/c$, separating muons and pions should be possible using this method, even if it is with a low significance. On the other hand, protons can be reliably identified up to $1.5~\mathrm{GeV}/c$.
 
 \begin{figure}[t]
 	\centering
@@ -618,7 +618,7 @@ I evaluate $10^{4}$ different hyperparameter configurations for each momentum ra
 	\label{tab:bdt_hyperpars}
 \end{table}
 
-Figure \ref{fig:hyper_precision_sensitivity} shows the results in the precision versus sensitivity plane, for the momentum regions I, III and V (from left to right). The contours represent the curves of equal $F_{1}$-score, i.e. the harmonic mean of the precision and the sensitivity. In order to select the optimal configurations (indicated in the plots with a green cross), I chose the point with the highest $F_{1}$-score.
+Figure \ref{fig:hyper_precision_sensitivity} shows the results in the precision versus sensitivity plane, for the momentum regions I, III and V (from left to right). The contours represent the curves of equal $F_{1}$-score, i.e. the harmonic mean of the precision and the sensitivity. The shape of the clusters in this space gives us an idea of the best possible performance of the \gls{bdt} when varying the hyperparameters. In order to select the optimal configurations (indicated in the plots with a green cross), I chose the point with the highest $F_{1}$-score.
 
 The results for the different momentum ranges are summarised in Tab. \ref{tab:bdt_hyperpars}. One can see some consistency in hyperparameter choices, with models generally preferring small values for the tree-specific parameters, small learning rate, and relatively large subsample sizes.
 
@@ -812,3 +812,5 @@ The new \gls{ecal} clustering algorithm proposed in App. \ref{section:neutral} i
 \section{Summary}
 
 This Chapter reviews my work on the reconstruction for \gls{ndgar}. In section \ref{section:dEdx} I describe how to use the calibrated energy deposits in the \gls{hpgtpc} to compute the mean $\mathrm{d}E/\mathrm{d}x$ for the reconstructed particles. I finish the section providing a parametrisation for how this depends on the momentum. The problem of the muon and pion separation is the topic of section \ref{section:muon_bdt}. I propose to use the information from the \gls{ecal} to achieve this classification. In this section, I describe the features and the procedure I follow to train the classifier, showing its performance as a function of the particle momentum. In section \ref{section:tof} I explore the possibility of performing a \gls{tof} measurement with the \gls{ecal}. With this, I achieve a separation between pions and protons in a momentum range beyond the reach of the \gls{hpgtpc} alone. Finally, in section \ref{section:integration} I describe the status of the integration of the different additions to the reconstruction chain.
+
+The contributions to the reconstruction described in this Chapter represent the first attempt at a realistic \gls{pid} using the end-to-end \gls{ndgar} simulation. These \gls{pid} metrics can already be used to explore the event selection capabilities of the detector, which is the topic of the next Chapter. The parallel development of the reconstruction and the selection strategies will allow for a physics-driven optmisation of our algorithms, based on the specific needs of the experiment.
