@@ -82,7 +82,7 @@ To estimate the sensitivity of \gls{dune} to this kind of signal, one can consid
 \begin{equation}\label{4.5}
 	1 - \frac{\Gamma\left(N_{obs}+1, N_{S}^{90}+N_{B}\right)}{N_{obs}!} = 0.9,
 \end{equation}
-where $\Gamma(x,y)$ is the upper incomplete gamma function. I adopt this method from a previous \gls{dune} \gls{fd} analysis which looked for $\nu_{\mu}$ CC interactions from decays at rest of charged kaons in the Sun \cite{DUNE2021}.
+where $\Gamma(x,y)$ is the upper incomplete gamma function. I adopt this method from a previous \gls{dune} \gls{fd} analysis which looked for $\nu_{\mu}$ \gls{cc} interactions from decays at rest of charged kaons in the Sun \cite{DUNE2021}.
 
 The number of signal events is related to the neutrino flux from \gls{dm} annihilations in a similar way as the background events to the atmospheric neutrino flux. In this case I have:
 \begin{equation}\label{4.6}
@@ -208,7 +208,7 @@ As in the previous case, I need to drop the events where the muon or the proton 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=0.95\linewidth]{Images/DM_Analysis/solardm_tau_5_qel_bdt_classifier.pdf}
-	\caption[Performance of the \gls{bdt} classifier for the $\tau^{+}\tau^{-}$ \gls{qe} signal with $m_{\mathrm{DM}} = 5 \ \mathrm{GeV}$.]{Left panel: distributions of the predicted probabilities assigned by the \gls{bdt} classifier to the test sample for the signal (blue) and the atmospheric background (red). Right panel: ROC curve in the signal efficiency versus background rejection plane (blue line). The value of $\eta_{S}$ for which the target background rejection of $99.8\%$ is achieved is also indicated (dashed red line). In both cases, the signal corresponds to the $\tau^{+}\tau^{-}$ \gls{qe} sample with $m_{\mathrm{DM}} = 5 \ \mathrm{GeV}$.}
+	\caption[Performance of the \gls{bdt} classifier for the $\tau^{+}\tau^{-}$ \gls{qe} signal with $m_{\mathrm{DM}} = 5 \ \mathrm{GeV}$.]{Left panel: distributions of the predicted probabilities assigned by the \gls{bdt} classifier to the test sample for the signal (blue) and the atmospheric background (red). Right panel: \gls{roc} curve in the signal efficiency versus background rejection plane (blue line). The value of $\eta_{S}$ for which the target background rejection of $99.8\%$ is achieved is also indicated (dashed red line). In both cases, the signal corresponds to the $\tau^{+}\tau^{-}$ \gls{qe} sample with $m_{\mathrm{DM}} = 5 \ \mathrm{GeV}$.}
 	\label{fig:solardm_tau_5_qel_classifier}
 \end{figure}
 
@@ -232,7 +232,7 @@ For each \gls{dm} mass value and channel, as well as for the background, I divid
 	\label{fig:solardm_qel_signal_acceptance}
 \end{figure}
 
-The results of the training process for the $\tau^{+}\tau^{-}$ \gls{qe} signal with $m_{\mathrm{DM}} = 5 \ \mathrm{GeV}$ are shown in Fig. \ref{fig:solardm_tau_5_qel_classifier}. On the left panel I have the distributions of the probabilities predicted by the model, separated in true signal (blue) and background (red) events, for the test sample. On the right panel I show the receiver operating characteristic (ROC) curve for this same sample. This represents the background rejection of the classifier as a function of the signal efficiency. Requiring a background rejection of $99.80\%$ would give a signal efficiency of $64.47\%$ in this case (indicated by the dashed red line).
+The results of the training process for the $\tau^{+}\tau^{-}$ \gls{qe} signal with $m_{\mathrm{DM}} = 5 \ \mathrm{GeV}$ are shown in Fig. \ref{fig:solardm_tau_5_qel_classifier}. On the left panel I have the distributions of the probabilities predicted by the model, separated in true signal (blue) and background (red) events, for the test sample. On the right panel I show the receiver operating characteristic (\gls{roc}) curve for this same sample. This represents the background rejection of the classifier as a function of the signal efficiency. Requiring a background rejection of $99.80\%$ would give a signal efficiency of $64.47\%$ in this case (indicated by the dashed red line).
 
 To obtain a robust estimate of the signal efficiencies, I use a cross-validation approach. In particular, I use the \texttt{StratifiedKFold} method in \texttt{scikit-learn}. This divides the data into $k$ equal-sized samples (or folds). Then, it performs $k$ training iterations, each time using $k-1$ of the samples as training data while the remaining fold acts as test sample. In this case, I set $k=5$ and the metric I extract from the test data is the signal efficiency value which yields a $99.80\%$ background rejection. The final signal efficiency for each channel and mass point is the mean of the metrics obtained from the cross-validation.
 
